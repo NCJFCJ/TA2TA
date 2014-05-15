@@ -1,4 +1,4 @@
 TA2TA
 =====
 
-A repository for Joomla! extensions used in the TA2TA project.
+This repository houses all Joomla! extensions used in the TA2TA project. To view the documentation for this project and for each extension, see the wiki.

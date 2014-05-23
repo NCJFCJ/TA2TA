@@ -1,0 +1,87 @@
+/*
+
+  -- -- -- -- -- -- -- -- --
+  Expanding Accordion v 1.0 
+  an extension for Twitter Bootstrap
+  last edit: May 9, 2014
+  author:  Zachary Draper
+  -- -- -- -- -- -- -- -- --
+  
+*/
+
+/* --- Small Tablets (>=768px) --- */
+
+@media screen and (min-width: 768px){
+  .panel-group{
+    border-bottom: 0;
+    .panel{
+      overflow: visible;
+    }
+  }
+
+  .panel-collapse{
+    border-bottom: 1px solid rgb(229,229,229);  
+  }
+
+  .panel-collapse.expanding{
+    display: relative;
+    transition:width 0.5s;
+    -webkit-transition:width 0.5s;
+    transition-timing-function: ease-in;
+    -webkit-transition-timing-function: ease-in;
+    min-width: 93px;
+    overflow: hidden;
+    position: relative;
+    width: 93px;
+    z-index: 5;
+    .panel-body{
+      background: #F6F9F6;
+      padding-right: 15px;
+      width: 585px;
+    }
+    .panel-body:after{
+      background: #C0BDBD url(../img/expand-arrow.png) no-repeat center center;
+      border-left: 5px solid #F6F9F6;
+      content: '';
+      display: block;
+      height: 99.75%;
+      position: absolute;
+      right: 0;
+      top: 0.25%;
+      width: 15px;
+    }
+  }
+
+  .panel-collapse.expanding:hover{
+    border-right: 1px solid rgb(229,229,229);
+    transition:width 0.5s;
+    -webkit-transition:width 0.5s;
+    transition-timing-function: ease-in;
+    -webkit-transition-timing-function: ease-in;
+    width: 600px;
+    .panel-body:after{
+      border-left: 0;
+      border-right: 5px solid #F6F9F6;
+      transform:scaleX(-1);
+      -webkit-transform:scaleX(-1);
+    }
+  }
+}
+
+/* --- Small Desktop Screens and Tablets (>=980px) --- */
+
+@media screen and (min-width: 980px){
+  .panel-collapse.expanding{
+      min-width: 130px;
+      width: 130px;
+  }
+}
+
+/* --- Large Desktop Screens (>= 1200px) --- */
+
+@media screen and (min-width: 1200px){
+  .panel-collapse.expanding{
+    min-width: 163px;
+    width: 163px;
+  }
+}

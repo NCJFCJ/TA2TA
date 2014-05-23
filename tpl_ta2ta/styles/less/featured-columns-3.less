@@ -1,0 +1,93 @@
+/*
+
+  -- -- -- -- -- -- -- -- --
+  http://www.ta2ta.org - v2.0.0
+  last edit: April 30, 2014
+  author:  Zachary Draper - NCJFCJ
+  -- -- -- -- -- -- -- -- --
+  
+*/
+
+/* --- Mobile Phones --- */
+
+.featured-columns-3{
+  .items-row{
+    .col-sm-4{
+      .item{
+        padding-top: 20px;
+        h3{
+          background: @themeDark;
+          color: #fff;
+          font-size: 24px;
+          margin: 20px 0;
+          padding: 25px 0;
+          width: 100%;
+        }
+        p{
+          text-align: left;
+          a{
+            margin-top: 20px;
+          }
+          img{
+            float: left;
+            margin: 9px 15px 0 9px;
+            width: 70px;
+          }
+        }
+        p:last-of-type{
+          a{
+            margin: 0 0 15px 0;
+          }
+        }
+      }
+      .item:first-of-type{
+        padding-top: 0;
+      }
+    }
+  }
+}
+
+
+/* --- Small Tablets (>=768px) --- */
+
+@media screen and (min-width: 768px){     
+  .featured-columns-3{
+    .items-row{
+      .col-sm-4{
+        .item{
+          padding-top: 0;
+          text-align: center;
+          h3{
+            background: transparent;
+            color: @themeDarker;
+            display: block;
+            font-size: 35px;
+            margin: 20px 0;
+            padding: 0;
+            text-align: center;
+            width: 100%;
+          }
+          p{
+            text-align: left;
+          }
+          p:first-of-type{
+            text-align: center;
+            width: 100%;
+            img{
+              float: none;
+              margin: 0 auto;
+              width: 65%;
+            }
+          }
+          p:last-of-type{
+            text-align: center;
+            width: 100%;
+            a{
+              margin: 10px auto 0 auto;
+            }
+          }
+        }
+      }
+    }
+  }
+}

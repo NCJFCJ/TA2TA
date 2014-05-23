@@ -1,0 +1,62 @@
+/*
+
+  -- -- -- -- -- -- -- -- --
+  http://www.ta2ta.org - v2.0.0
+  last edit: May 12, 2014
+  author:  Zachary Draper - NCJFCJ
+  -- -- -- -- -- -- -- -- --
+  
+*/
+
+/* --- Small Tablets (>=768px) --- */
+
+#resourceAudiences{
+  label{
+    font-size: @font-size-base * 0.9;
+    font-weight: normal;
+  }
+}
+
+#stateOptions{
+  fieldset{
+    padding-left: 0;
+  }
+}
+
+@media screen and (min-width: @screen-sm-min){
+  .ta-library-item{
+    h3{
+      margin-top: 0;
+    }
+    h5{
+      marign-top: -12px;
+    }
+    .cover{
+      img{
+        width: 100%;
+      }
+    }
+    .new-ribbon{
+      left: 15px;
+      position: absolute;
+      top: 0;
+      width: 100px;
+    }
+  }
+}
+
+@media screen and (min-width: @screen-md-min){
+  .ta-library-item{
+    .new-ribbon{
+      width: 140px;
+    }
+  }
+}
+
+@media screen and (min-width: @screen-lg-min){
+  .ta-library-item{
+    .new-ribbon{
+      width: 168px;
+    }
+  }
+}

@@ -1,0 +1,46 @@
+<?xml version="1.0" encoding="utf-8"?>
+<extension type="component" version="3.0" method="upgrade">
+    <name>com_ta_providers</name>
+    <creationDate>2013-09-04</creationDate>
+    <copyright>Copyright (C) 2013. All rights reserved.</copyright>
+    <license>GNU General Public License version 2 or later; see LICENSE.txt</license>
+    <author>Zachary Draper</author>
+    <authorEmail>zdraper@ncjfcj.org</authorEmail>
+    <authorUrl>http://ta2ta.org</authorUrl>
+    <version>1.0.0</version>
+    <description>This component maintains a list of TA Providers who are eligible to access this website.</description>
+    
+    <install> <!-- Runs on install -->
+        <sql>
+            <file driver="mysql" charset="utf8">sql/install.mysql.utf8.sql</file>
+        </sql>
+    </install>
+    <uninstall> <!-- Runs on uninstall -->
+        <sql>
+            <file driver="mysql" charset="utf8">sql/uninstall.mysql.utf8.sql</file>
+        </sql>
+    </uninstall>
+
+    <administration>
+        <menu img="components/com_ta_providers/assets/images/s_com_ta_providers.png" >COM_TA_PROVIDERS</menu>
+        <files folder="administrator">
+            <filename>access.xml</filename>
+            <filename>config.xml</filename>
+            <filename>controller.php</filename>
+            <filename>index.html</filename>
+            <filename>ta_providers.php</filename>
+            <folder>controllers</folder>
+            <folder>assets</folder>
+            <folder>helpers</folder>
+            <folder>models</folder>
+            <folder>sql</folder>
+            <folder>tables</folder>
+            <folder>views</folder>
+        </files>
+        <languages folder="administrator">
+            
+			<language tag="en-GB">language/en-GB.com_ta_providers.ini</language>
+			<language tag="en-GB">language/en-GB.com_ta_providers.sys.ini</language>
+        </languages>
+    </administration>
+</extension>

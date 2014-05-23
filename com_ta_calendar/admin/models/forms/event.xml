@@ -1,0 +1,196 @@
+<?xml version="1.0" encoding="utf-8"?>
+<form>
+	<fieldset>
+		<field 
+			class="readonly"
+            default="0"
+			description="JGLOBAL_FIELD_ID_DESC"
+			label="COM_TA_CALENDAR_FORM_LBL_EVENT_ID"
+            name="id"
+			readonly="true"
+			type="text" /> 
+		<field
+			class="btn-group"
+			default="1"
+            description="COM_TA_CALENDAR_FORM_DESC_EVENT_APPROVED" 
+            filter="raw"
+			label="COM_TA_CALENDAR_FORM_LBL_EVENT_APPROVED"
+            name="approved"
+			required="true" 
+            type="radio">
+				<option value="1">Approved</option>
+				<option value="0">Not Approved</option>
+        </field>         
+		<field
+			name="filter_approved"
+			onchange="this.form.submit();"
+			type="list">
+				<option value="">COM_TA_CALENDAR_EVENTS_APPROVED_FILTER</option>
+				<option value="1">Approved</option>
+				<option value="0">Not Approved</option>
+		</field>
+		<field
+			description="COM_TA_CALENDAR_FORM_DESC_PROVIDER_PROJECT"
+			label="COM_TA_CALENDAR_FORM_LBL_PROVIDER_PROJECT"
+			name="provider_project"
+			required="true"
+			type="list">
+				<option value="">COM_TA_CALENDAR_FORM_NO_SELECT</option>
+		</field>
+		<field
+			description="COM_TA_CALENDAR_FORM_DESC_ORG"
+			key_field="id"
+			label="COM_TA_CALENDAR_FORM_LBL_ORG"
+			name="org"
+			required="true"
+			type="SQLdisabled"
+			query="SELECT 0 AS `id`, '- Select Organization -' AS `name`, 1 AS `state` UNION SELECT `id`, `name`, `state` FROM `#__ta_providers` ORDER BY `name` ASC;"
+			value_field="name" />							
+		<field
+			description="COM_TA_CALENDAR_FORM_DESC_EVENT_START" 
+            filter="user_utc"
+            format="%Y-%m-%d %H:%M:%S"
+			label="COM_TA_CALENDAR_FORM_LBL_EVENT_START"
+            name="start"
+			required="true"
+			size="22" 
+            type="calendar" /> 
+        <field
+			description="COM_TA_CALENDAR_FORM_DESC_EVENT_END" 
+            filter="user_utc"
+            format="%Y-%m-%d %H:%M:%S"
+			label="COM_TA_CALENDAR_FORM_LBL_EVENT_END"
+            name="end"
+			required="true"
+			size="22" 
+            type="calendar" /> 
+		<field
+			description="COM_TA_CALENDAR_FORM_DESC_EVENT_TITLE" 
+            filter="string"
+            label="COM_TA_CALENDAR_FORM_LBL_EVENT_TITLE"
+            maxlength="255"
+			name="title"
+			required="true" 
+            type="text" /> 
+        <field
+			class="btn-group"
+			default="1"
+            description="COM_TA_CALENDAR_FORM_DESC_EVENT_OPEN" 
+            filter="raw"
+			label="COM_TA_CALENDAR_FORM_LBL_EVENT_OPEN"
+            name="open"
+			required="true" 
+            type="radio">
+				<option value="1">Open</option>
+				<option value="0">Invite Only</option>
+        </field>  
+		<field
+			buttons="article,image,pagebreak,readmore"
+			cols="10"
+            description="COM_TA_CALENDAR_FORM_DESC_EVENT_SUMMARY" 
+            filter="raw"
+			label="COM_TA_CALENDAR_FORM_LBL_EVENT_SUMMARY"
+            name="summary"
+			required="true" 
+            rows="4"
+            type="editor" /> 
+		<field
+			class="inputbox"
+			description="COM_TA_CALENDAR_FORM_DESC_EVENT_TYPE" 
+			key_field="id" 
+			label="COM_TA_CALENDAR_FORM_LBL_EVENT_TYPE"
+            name="type"
+			query="SELECT 0 AS `id`, '- Select Type -' AS `name`, 1 AS `state` UNION SELECT `id`, `name`, `state` FROM `#__ta_calendar_event_types` ORDER BY `name` ASC;" 
+			required="true" 
+			type="SQLdisabled"
+			value_field="name" /> 
+		<field
+			class="inputbox"
+            key_field="id" 
+			name="filter_type"
+			onchange="this.form.submit();"
+            query="SELECT 0 AS `id`, '- Select Type -' AS `name` UNION SELECT `id`, `name` FROM `#__ta_calendar_event_types` ORDER BY `name` ASC;" 
+			type="sql"
+			value_field="name" /> 
+		<field 
+			description="COM_TA_CALENDAR_FORM_DESC_EVENT_EVENT_URL" 
+            filter="url"
+            label="COM_TA_CALENDAR_FORM_LBL_EVENT_EVENT_URL"
+            maxlength="150"
+			name="event_url"
+			type="text" /> 
+		<field
+			description="COM_TA_CALENDAR_FORM_DESC_EVENT_REGISTRATION_URL" 
+            filter="url"
+            label="COM_TA_CALENDAR_FORM_LBL_EVENT_REGISTRATION_URL"
+            maxlength="150"
+			name="registration_url"
+			type="text" />
+		<field
+			default="" 
+            description="COM_TA_CALENDAR_FORM_DESC_EVENT_CREATED_BY"  
+			label="COM_TA_CALENDAR_FORM_LBL_EVENT_CREATED_BY"
+            name="created_by"
+			type="createdby" /> 
+        <field
+			class="inputbox"
+			default="1"
+			description="JFIELD_PUBLISHED_DESC"
+			label="JSTATUS"
+			name="state"
+			size="1"
+			type="list">
+				<option value="1">JPUBLISHED</option>
+				<option value="0">JUNPUBLISHED</option>
+		</field> 
+		<field
+			description="COM_TA_CALENDAR_FORM_DESC_TOPIC_AREAS"
+			key_field="id"
+			label="COM_TA_CALENDAR_FORM_LBL_TOPIC_AREAS"
+            name="topic_areas"
+			type="SQLcheckboxes"
+			query="SELECT `id`, `name`, `state` FROM `#__ta_calendar_topic_areas`;"
+			value_field="name"
+			/>
+		<field
+			cols="3"
+			description="COM_TA_CALENDAR_FORM_DESC_EVENT_GRANT_PROGRAMS"
+			key_field="id"
+			label="COM_TA_CALENDAR_FORM_LBL_EVENT_GRANT_PROGRAMS"
+            name="grant_programs"
+			type="SQLcheckboxes"
+			query="SELECT `id`, `name`, `state` FROM `#__grant_programs`;"
+			value_field="name"
+			/>
+		<field
+			cols="3"
+			description="COM_TA_CALENDAR_FORM_DESC_TARGET_AUDIENCES"
+			key_field="id"
+			label="COM_TA_CALENDAR_FORM_LBL_TARGET_AUDIENCES"
+            name="target_audiences"
+			type="SQLcheckboxes"
+			query="SELECT `id`, `name`, `state` FROM `#__target_audiences`;"
+			value_field="name"
+			/>
+		<field
+			name="approved_by"
+			type="hidden" />
+		<field
+			name="created"
+			type="hidden" />
+		<field
+			name="modified_by"
+			type="hidden" />
+		<field
+			name="modified"
+			type="hidden" />
+        <field
+			filter="unset"
+			name="checked_out"
+			type="hidden" />
+        <field
+			filter="unset"
+			name="checked_out_time"
+			type="hidden" />
+	</fieldset>
+</form>

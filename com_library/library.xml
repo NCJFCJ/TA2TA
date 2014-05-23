@@ -1,0 +1,71 @@
+<?xml version="1.0" encoding="utf-8"?>
+<extension type="component" version="1.6.0" method="upgrade">
+    <name>com_library</name>
+    <creationDate>2013-05-09</creationDate>
+    <copyright>Copyright (C) 2013 NCJFCJ. All rights reserved.</copyright>
+    <license></license>
+    <author>Zachary Draper</author>
+    <authorEmail>zdraper@ncjfcj.org</authorEmail>
+    <authorUrl>http://ncjfcj.org</authorUrl>
+    <version>2.0.0</version>
+    <description>A component to manage and display a list of TA Items on the TA2TA website.</description>
+    
+    <install> <!-- Runs on install -->
+        <sql>
+            <file driver="mysql" charset="utf8">sql/install.mysql.utf8.sql</file>
+        </sql>
+    </install>
+    <uninstall> <!-- Runs on uninstall -->
+        <sql>
+            <file driver="mysql" charset="utf8">sql/uninstall.mysql.utf8.sql</file>
+        </sql>
+    </uninstall>
+
+    <files folder="site">
+        <filename>index.html</filename>
+        <filename>library.php</filename>
+        <filename>controller.php</filename>
+        <filename>router.php</filename>
+        <folder>views</folder>
+        <folder>models</folder>
+        <folder>controllers</folder>
+        <folder>helpers</folder>
+    </files>
+    
+    <languages folder="site">
+        <language tag="en-GB">language/en-GB.com_library.ini
+        </language>
+    </languages>
+    
+    <media destination="com_library" folder="media">
+    	<file>index.html</file>
+        <file>new-ribbon.png</file>
+    	<folder>covers</folder>
+    	<folder>resources</folder>
+    </media>
+    
+    <administration>
+    	
+        <menu img="components/com_library/assets/images/s_com_library.png">COM_LIBRARY</menu>
+        
+        <files folder="administrator">
+            <filename>access.xml</filename>
+            <filename>controller.php</filename>
+            <filename>index.html</filename>
+            <filename>library.php</filename>
+            <folder>controllers</folder>
+            <folder>assets</folder>
+            <folder>helpers</folder>
+            <folder>models</folder>
+            <folder>sql</folder>
+            <folder>tables</folder>
+            <folder>views</folder>
+        </files>
+        
+        <languages folder="administrator">
+			<language tag="en-GB">language/en-GB.com_library.ini</language>
+			<language tag="en-GB">language/en-GB.com_library.sys.ini</language>
+        </languages>
+        
+    </administration>
+</extension>

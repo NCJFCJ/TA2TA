@@ -1,0 +1,35 @@
+<?xml version="1.0" encoding="utf-8"?>
+<config>
+	<fieldset name="component"
+		label="COM_TA_PROVIDER_DIRECTORY_COMPONENT_LABEL"
+		description="COM_TA_PROVIDER_DIRECTORY_COMPONENT_DESC"
+	>
+
+        <field name="test"
+             type="radio"
+             default="1"
+             label="COM_TA_PROVIDER_DIRECTORY_TEST_LABEL"
+             description="COM_TA_PROVIDER_DIRECTORY_TEST_DESC">
+                 <option value="0">JHIDE</option>
+                 <option value="1">JSHOW</option>
+         </field>
+
+	</fieldset>
+
+	<fieldset name="permissions"
+		description="JCONFIG_PERMISSIONS_DESC"
+		label="JCONFIG_PERMISSIONS_LABEL"
+	>
+
+		<field 
+            name="rules" 
+            type="rules"
+			component="com_ta_provider_directory"
+            class="inputbox"
+			filter="rules"
+			validate="rules"
+			label="JCONFIG_PERMISSIONS_LABEL"
+			section="component" />
+	</fieldset>
+
+</config>

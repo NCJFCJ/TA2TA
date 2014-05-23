@@ -1,0 +1,51 @@
+<?xml version="1.0" encoding="utf-8"?>
+<form>
+	<fieldset>
+
+              <field name="id" type="text" default="0" label="COM_TA_PROVIDER_DIRECTORY_FORM_LBL_GRANTPROGRAM_ID"
+            readonly="true" class="readonly"
+            description="JGLOBAL_FIELD_ID_DESC" /> 
+
+       <field name="created_by" type="createdby" default="" 
+            label="COM_TA_PROVIDER_DIRECTORY_FORM_LBL_GRANTPROGRAM_CREATED_BY"
+            description="COM_TA_PROVIDER_DIRECTORY_FORM_DESC_GRANTPROGRAM_CREATED_BY"  /> 
+
+       <field name="name" type="text"
+                
+            label="COM_TA_PROVIDER_DIRECTORY_FORM_LBL_GRANTPROGRAM_NAME"
+            description="COM_TA_PROVIDER_DIRECTORY_FORM_DESC_GRANTPROGRAM_NAME" 
+                
+                
+                 required="true" 
+            filter="string"
+            maxlength="50" /> 
+
+       <field name="fund" type="text"
+                
+            label="COM_TA_PROVIDER_DIRECTORY_FORM_LBL_GRANTPROGRAM_FUND"
+            description="COM_TA_PROVIDER_DIRECTORY_FORM_DESC_GRANTPROGRAM_FUND" 
+                
+                
+                 required="true" 
+            filter="string"
+            size="5"
+            maxlength="3" /> 
+
+         <field
+        name="state"
+        type="list"
+        label="JSTATUS"
+        description="JFIELD_PUBLISHED_DESC"
+        class="inputbox"
+        size="1"
+        default="1">
+        <option value="1">JPUBLISHED</option>
+        <option value="0">JUNPUBLISHED</option>
+    </field> 
+
+                        <field name="checked_out" type="hidden" filter="unset" />
+        <field name="checked_out_time" type="hidden" filter="unset" />
+
+	</fieldset>
+
+</form>

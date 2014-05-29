@@ -40,6 +40,7 @@ $permission_level = Ta_provider_directoryHelper::getPermissionLevel();
 <script type="text/javascript">
 	var displayProviders = new Array;
 	var grantPrograms = $.parseJSON('<?php echo json_encode($this->grantPrograms); ?>');
+	var numGrantPrograms = <?php echo count($this->grantPrograms); ?>;
 	var providers = $.parseJSON('<?php echo str_replace('\n','',json_encode($this->providers)); ?>');
 			
 	// document ready	
@@ -234,10 +235,10 @@ $permission_level = Ta_provider_directoryHelper::getPermissionLevel();
 		var tmpProviders = JSON.parse(JSON.stringify(providers));
 		
 		// clear the old providers
-		displayProviders = new Array;
+		displayProviders = [];
 		
 		// get the grant program filters
-		var grantPrograms = new Array;
+		var grantPrograms = [];
 		jQuery('#filters input:checked').each(function() {
             grantPrograms.push(jQuery(this).val());
         });
@@ -251,15 +252,37 @@ $permission_level = Ta_provider_directoryHelper::getPermissionLevel();
 		}
 
 		// check each provider for a match
-		jQuery.each(tmpProviders, function( index, provider ){
+		jQuery.each(tmpProviders, function(index, provider){
 			// projects of this provider
+			var forceMatch = false;
 			var matchedProjects = new Array();
+			var nameMatch = false;
+			
+			// check the organization name
+			if(searchString !== ''){
+				if((provider.name).match(searchExp)){
+					// there was a match, bold it
+					provider.name = (provider.name).replace(searchExp, '<b>$&</b>');
+					nameMatch = true;	
+					// if the search string is empty, all grant programs are selected, and this organization has no projects, display it
+					if(numGrantPrograms == grantPrograms.length
+						&& provider.projects.length == 0){
+						forceMatch = true;
+					}				
+				}
+			}else{
+				// if the search string is empty, all grant programs are selected, and this organization has no projects, display it
+				if(numGrantPrograms == grantPrograms.length
+					&& provider.projects.length == 0){
+					forceMatch = true;
+				}
+			}
 
 			// loop through each project
-			jQuery.each(provider.projects, function( index2, project ){
+			jQuery.each(provider.projects, function(index2, project){
 				// check if there is a grant program match
 				var grantProgramMatch = false;
-				$.each(project.grantPrograms, function( index3, grantProgram){
+				$.each(project.grantPrograms, function(index3, grantProgram){
 					if($.inArray(grantProgram, grantPrograms) >= 0){
 						grantProgramMatch = true;
 					}
@@ -278,13 +301,6 @@ $permission_level = Ta_provider_directoryHelper::getPermissionLevel();
 
 				// process the string based search
 				var searchStringMatch = false;
-				
-				// check the organization name
-				if((provider.name).match(searchExp)){
-					// there was a match, bold it
-					provider.name = (provider.name).replace(searchExp, '<b>$&</b>');
-					searchStringMatch = true;					
-				}
 				
 				// project title
 				if(project.title
@@ -325,14 +341,14 @@ $permission_level = Ta_provider_directoryHelper::getPermissionLevel();
 				});
 				
 				// check for a match
-				if(searchStringMatch){
+				if(searchStringMatch || nameMatch){
 					// add this project to the list
 					matchedProjects.push(project);
 				}			
 			});
 			
 			// if there was a search match, use it
-			if(matchedProjects.length){	
+			if(matchedProjects.length || forceMatch){	
 				var providerObj = new Object();
 				providerObj.name = provider.name;
 				providerObj.website = provider.website;
@@ -391,7 +407,8 @@ $permission_level = Ta_provider_directoryHelper::getPermissionLevel();
 							</div>
 						</div>
 					</div>
-				</div>					
+				</div>
+				<p><small><span class="glyphicon glyphicon-info-sign"></span> Note: TA Providers who have not yet entered projects will only display if all grant programs are selected.</small></p>
 			</div>
 			<div class="col-sm-10">
 				<div class="row filters">

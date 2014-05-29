@@ -171,13 +171,13 @@ ta2ta.bootstrapHelper = ta2ta.bootstrapHelper || {
 			
 			// determine if the parent element scrolls, if not scroll the body
 			if(!(element_to_scroll[0].scrollHeight > element_to_scroll.innerHeight())){
-				element_to_scroll = $('html, body');
+				element_to_scroll = jQuery('html, body');
 				scroll_offset = this.body_scroll_offset;
 			}
 
 			// scroll to this item relative to its parent
 			element_to_scroll.animate({
-		        scrollTop: $('.alert').offset().top - element_to_scroll.offset().top - scroll_offset
+		        scrollTop: jQuery('.alert').offset().top - element_to_scroll.offset().top - scroll_offset
 		    }, this.scroll_speed);
 		}else{
 			// show a javascript alert insted (yuck!)

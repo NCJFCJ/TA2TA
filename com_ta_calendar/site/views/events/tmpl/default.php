@@ -1209,8 +1209,10 @@ if(!empty($_SERVER["HTTPS"]) && $_SERVER["HTTPS"]!=="off"){
 			element_format: 'html',
 			menubar: false,
 			mode: 'specific_textareas',
+			paste_word_valid_elements: 'b,strong,i,em,u,li,ul,ol,ul',
+			plugins: 'paste',
 			statusbar: false,
-			toolbar: 'bold,itatlic,underline,separator,bullist,numlist,separator,outdent,indent,separator,undo,redo',
+			toolbar: 'bold,italic,underline,separator,bullist,numlist,separator,outdent,indent,separator,undo,redo',
 			setup: function(editor){
 				editor.on('change', function(e){
 					// summary

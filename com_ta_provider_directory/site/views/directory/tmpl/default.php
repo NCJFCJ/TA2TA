@@ -176,7 +176,7 @@ $permission_level = Ta_provider_directoryHelper::getPermissionLevel();
 						}
 						htmlOutput += '<li>' + grantProgramNames[l] + '</li>';
 					}
-					htmlOutput += '</ul></div>';
+					htmlOutput += '</ul></div></div>';
 				}
 				htmlOutput += '</div>'
 			}

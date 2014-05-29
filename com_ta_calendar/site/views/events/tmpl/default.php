@@ -1159,6 +1159,23 @@ if(!empty($_SERVER["HTTPS"]) && $_SERVER["HTTPS"]!=="off"){
 				$('#closeButton').html('Cancel');
 			}
 
+
+			// check if we need to display the project error
+			if(editStep == 1 
+				&& 0 == <?php echo count($this->providerProjects); ?>){
+				// no good, the user cannot proceed
+				$('#step1Form').hide();
+
+				// hide all buttons
+				$('#previousBlock').hide();
+				$('#nextBlock').hide();
+				$('#submitButton').hide();
+				$('.modal-status-text').hide();
+			}else{
+				// everything is normal
+				$('#projectError').hide();
+			}
+
 			// show the warning on step 4 if needed
 			if(editStep == 4
 				&& pastGrantPrograms){
@@ -2132,67 +2149,77 @@ if(!empty($_SERVER["HTTPS"]) && $_SERVER["HTTPS"]!=="off"){
 							<input type="hidden" name="timezone" id="timezone" value="">
 							<input type="hidden" name="id" id="id" value="0">
 							<div class="modal-form-block">
-								<p>To add an event to the calendar, please provide the following information:</p>
-								<div class="form-group" id="typeWrapper">
-									<label class="control-label col-sm-4" for="type">Event Type*</label>
-									<div class="col-sm-8">
-										<select id="type" class="form-control" name="type">
-											<?php foreach($this->eventTypes as $add_button_event_type): ?>
-												<option value="<?php echo $add_button_event_type->id; ?>"><?php echo $add_button_event_type->name; ?></option>		
-											<?php endforeach; ?>
-										</select>
+								<div id="projectError">
+									<div class="alert alert-warning">
+										<h4>Hold on just a minute! You must add a project first.</h4>
+										Before an event can be added to the calendar, you must first add a project to your TA Provider Directory listing. All calendar events are tied to specific projects. Projects are added in the 'Directory' section of your account. Click the button below to get started.
+										<br><br>
+										<a href="/my-account/directory.html?edit=0" class="btn btn-warning"><span class="icomoon-plus-circle"></span>&nbsp; Add Project</a>
 									</div>
 								</div>
-								<div class="form-group">
-									<label class="control-label col-sm-4" for="startdate">Start Date*</label>
-									<div class="col-sm-8">
-										<div class="input-append date short-field" id="startPicker" data-date="" data-date-format="mm-dd-yyyy">
-									    	<input id="startdate" name="startdate" class="input-date form-control" type="text" value="">
-									    	<span class="add-on icomoon-calendar" style="cursor:pointer;"></span>
-									 </div>
-									</div>
-								</div>
-								<div class="form-group">
-									<label class="control-label col-sm-4" for="starttime">Start Time*</label>
-									<div class="col-sm-8 time-quick-pick" style="position: relative;">
-										<div class="short-field">
-											<input type="text" class="form-control" name="starttime" id="starttime">
-											<select name="startQuickPick" class="form-control" size="4">
-												<?php foreach($quick_pick_times as $qpt): ?>
-												<option value="<?php echo $qpt; ?>"><?php echo $qpt; ?></option>
+								<div id="step1Form">
+									<p>To add an event to the calendar, please provide the following information:</p>
+									<div class="form-group" id="typeWrapper">
+										<label class="control-label col-sm-4" for="type">Event Type*</label>
+										<div class="col-sm-8">
+											<select id="type" class="form-control" name="type">
+												<?php foreach($this->eventTypes as $add_button_event_type): ?>
+													<option value="<?php echo $add_button_event_type->id; ?>"><?php echo $add_button_event_type->name; ?></option>		
 												<?php endforeach; ?>
 											</select>
 										</div>
-										<div class="timezoneLabel"></div>
 									</div>
-								</div>
-								<div class="form-group">
-									<label class="control-label col-sm-4" for="enddate">End Date*</label>
-									<div class="col-sm-8">
-										<div class="input-append date short-field" id="endPicker" data-date="" data-date-format="mm-dd-yyyy">
-									    	<input type="text" class="input-date form-control" value="" id="enddate" name="enddate">
-									    	<span class="add-on icomoon-calendar" style="cursor:pointer;"></span>
-									 	</div>
-									</div>
-								</div>
-								<div class="form-group">
-									<label class="control-label col-sm-4" for="endtime">End Time*</label>
-									<div class="col-sm-8 time-quick-pick" style="position: relative;">
-										<div class="short-field">
-											<input type="text" class="form-control" name="endtime" id="endtime" value="">
-											<select class="form-control" name="endQuickPick" id="endQuickPick" size="4">
-												<?php foreach($quick_pick_times as $qpt): ?>
-												<option value="<?php echo $qpt; ?>"><?php echo $qpt; ?></option>
-												<?php endforeach; ?>
-											</select>
+									<div class="form-group">
+										<label class="control-label col-sm-4" for="startdate">Start Date*</label>
+										<div class="col-sm-8">
+											<div class="input-append date short-field" id="startPicker" data-date="" data-date-format="mm-dd-yyyy">
+										    	<input id="startdate" name="startdate" class="input-date form-control" type="text" value="">
+										    	<span class="add-on icomoon-calendar" style="cursor:pointer;"></span>
+										 </div>
 										</div>
-									 	<div class="timezoneLabel"></div>
 									</div>
-								</div>
-								<div class="form-group">
-									<label class="control-label col-sm-4" for="title">Title*</label>
-									<div class="col-sm-8">
-										<input type="text" class="form-control" name="title" id="title" placeholder="Title" required>
+									<div class="form-group">
+										<label class="control-label col-sm-4" for="starttime">Start Time*</label>
+										<div class="col-sm-8 time-quick-pick" style="position: relative;">
+											<div class="short-field">
+												<input type="text" class="form-control" name="starttime" id="starttime">
+												<select name="startQuickPick" class="form-control" size="4">
+													<?php foreach($quick_pick_times as $qpt): ?>
+													<option value="<?php echo $qpt; ?>"><?php echo $qpt; ?></option>
+													<?php endforeach; ?>
+												</select>
+											</div>
+											<div class="timezoneLabel"></div>
+										</div>
+									</div>
+									<div class="form-group">
+										<label class="control-label col-sm-4" for="enddate">End Date*</label>
+										<div class="col-sm-8">
+											<div class="input-append date short-field" id="endPicker" data-date="" data-date-format="mm-dd-yyyy">
+										    	<input type="text" class="input-date form-control" value="" id="enddate" name="enddate">
+										    	<span class="add-on icomoon-calendar" style="cursor:pointer;"></span>
+										 	</div>
+										</div>
+									</div>
+									<div class="form-group">
+										<label class="control-label col-sm-4" for="endtime">End Time*</label>
+										<div class="col-sm-8 time-quick-pick" style="position: relative;">
+											<div class="short-field">
+												<input type="text" class="form-control" name="endtime" id="endtime" value="">
+												<select class="form-control" name="endQuickPick" id="endQuickPick" size="4">
+													<?php foreach($quick_pick_times as $qpt): ?>
+													<option value="<?php echo $qpt; ?>"><?php echo $qpt; ?></option>
+													<?php endforeach; ?>
+												</select>
+											</div>
+										 	<div class="timezoneLabel"></div>
+										</div>
+									</div>
+									<div class="form-group">
+										<label class="control-label col-sm-4" for="title">Title*</label>
+										<div class="col-sm-8">
+											<input type="text" class="form-control" name="title" id="title" placeholder="Title" required>
+										</div>
 									</div>
 								</div>
 							</div>

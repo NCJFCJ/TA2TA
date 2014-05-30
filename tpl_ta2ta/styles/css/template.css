@@ -3,7 +3,7 @@
 
 	-- -- -- -- -- -- -- -- --
 	http://www.ta2ta.org - v2.0.0
-	last edit: May 22, 2014
+	last edit: May 30, 2014
 	author:  Zachary Draper - NCJFCJ
 	-- -- -- -- -- -- -- -- --
 
@@ -6663,7 +6663,7 @@ fieldset[disabled] .datepicker table tr td span.active.disabled:hover.active {
 
   -- -- -- -- -- -- -- -- --
   http://www.ta2ta.org - v1.1
-  last edit: May 23, 2014
+  last edit: May 30, 2014
   author:  Zachary Draper - NCJFCJ
   -- -- -- -- -- -- -- -- --
   
@@ -6830,6 +6830,9 @@ fieldset[disabled] .datepicker table tr td span.active.disabled:hover.active {
   font-size: 110%;
   font-weight: bold;
   padding-right: 7px;
+}
+#eventCalendar #viewPopupContent ul {
+  padding: 0;
 }
 /* --- Small Tablets (>=768px) --- */
 @media screen and (min-width: 768px) {
@@ -7736,10 +7739,14 @@ label.required:after {
 }
 /* --- Mobile Phones --- */
 a {
-  color: #333333;
+  color: #777;
 }
+a:focus,
 a:hover {
-  color: #222222;
+  color: #444;
+}
+.page-header a {
+  color: #333;
 }
 body {
   background: #807c7c;
@@ -7980,6 +7987,7 @@ input[type="checkbox"] {
 }
 #topBar .navbar .nav > li > a:hover {
   background: #d5e3d5;
+  text-decoration: underline;
 }
 #topBar .navbar .nav > li > ul.dropdown-menu > li > a {
   border-radius: 0;
@@ -8123,6 +8131,9 @@ input[type="checkbox"] {
   font-size: 11px;
   font-weight: bold;
   padding: 0 0.6em 0 0;
+}
+#legalMenu .nav > li > a:hover {
+  text-decoration: underline;
 }
 /* --- Small Tablets (>=768px) --- */
 @media screen and (min-width: 768px) {

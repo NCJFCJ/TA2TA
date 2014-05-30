@@ -162,7 +162,7 @@ $permission_level = LibraryHelper::getPermissionLevel();
 			if(displayItems[i].org_website == ''){
 				htmlOutput += '<h5><strong>' + displayItems[i].org + '</strong></h5>';
 			}else{
-				htmlOutput += '<h5><strong><a href="' + displayItems[i].org_website + '" target="_blank">' + displayItems[i].org + '</a></strong></h5>';
+				htmlOutput += '<h5><strong><a href="' + displayItems[i].org_website + '" target="_blank"><span class="icomoon-earth"></span> ' + displayItems[i].org + '</a></strong></h5>';
 			}
 			htmlOutput += '<p>' + displayItems[i].description + '</p>';
 			htmlOutput += '<p><a class="btn btn-primary" href="' + displayItems[i].document_path + '" target="_blank"><span class="icomoon-disk"></span> &nbsp;Download</a></p>';

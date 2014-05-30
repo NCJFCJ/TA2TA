@@ -111,7 +111,7 @@ $permission_level = Ta_provider_directoryHelper::getPermissionLevel();
 			htmlOutput += '<div class="ta-directory-provider row"><div class="col-xs-12">';
 			htmlOutput += '<h3 style="margin: 10px 0 0 0;">' + displayProviders[i].name + '</h3>';
 			if(displayProviders[i].website != ''){
-				htmlOutput += '<p style="margin: 0 0 20px;"><span class="icomoon-earth"></span> <a href="' + displayProviders[i].website + '" target="_blank">' + displayProviders[i].website + '</a></p>';
+				htmlOutput += '<p style="margin: 0 0 20px;"><a href="' + displayProviders[i].website + '" target="_blank"><span class="icomoon-earth"></span> ' + displayProviders[i].website + '</a></p>';
 			}
 			for(var j = 0; j < (displayProviders[i].projects).length; j++){
 				htmlOutput += '<div class="project">';

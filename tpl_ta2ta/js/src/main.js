@@ -12,6 +12,7 @@ var ta2ta = {}
 //@codekit-append "../../plugins/bootstrap/js/modal.js"
 //@codekit-append "../../plugins/bootstrap/js/tooltip.js"
 //@codekit-append "../../plugins/bootstrap/js/popover.js"
+//@codekit-append "../../plugins/jquery/imgareaselect/jquery.imgareaselect.js"
 //@codekit-append "../../plugins/jquery/nivo/jquery.nivo.slider.js"
 //@codekit-append "../../plugins/jquery/waypoints/waypoints.js"
 //@codekit-append "../../plugins/bootstrap/plugins/datepicker/js/bootstrap-datepicker.js"

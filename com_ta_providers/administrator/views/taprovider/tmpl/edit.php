@@ -1,6 +1,5 @@
 <?php
 /**
- * @version     1.0.0
  * @package     com_ta_providers
  * @copyright   Copyright (C) 2013. All rights reserved.
  * @license     GNU General Public License version 2 or later; see LICENSE.txt
@@ -62,6 +61,26 @@ $document->addStyleSheet('components/com_ta_providers/assets/css/ta_providers.cs
 					<div class="control-label"><?php echo $this->form->getLabel('website'); ?></div>
 					<div class="controls"><?php echo $this->form->getInput('website'); ?></div>
 				</div>
+                <div class="control-group">
+                    <div class="control-label"><?php echo $this->form->getLabel('logo'); ?></div>
+                    <div class="controls"><?php echo $this->form->getInput('logo');
+                    if($this->item->id > 0){
+                        // editing, check if prior file exists
+                        if(property_exists($this->item, 'logo')){
+                            $imgPath = '/media/com_ta_providers/logos/' . $this->item->logo;
+                            if(file_exists(JPATH_SITE . $imgPath)){
+                                // show the image
+                                echo '<br><br><img src="' . $imgPath . '" alt="' . $this->item->name . ' Logo" style="width: 200px;">';
+                            }else{
+                                // show the placeholder image
+                                echo '<br><br><img src="/media/com_ta_providers/logos/no-logo.jpg" alt="' . $this->item->name . ' Logo" style="width: 200px;">';
+                            }
+                        }else{
+                            // show the placeholder image
+                            echo '<br><br><img src="/media/com_ta_providers/logos/no-logo.jpg" alt="' . $this->item->name . ' Logo" style="width: 200px;">';
+                        }
+                    }?><p><small>Please upload a logo that is exactly 450px by 280px on either a transparent or white background.</small></p></div>
+                </div>
             </fieldset>
         </div>
         <input type="hidden" name="task" value="" />

@@ -44,7 +44,14 @@
 	        type="list">
 	        	<option value="1">JPUBLISHED</option>
 	        	<option value="0">JUNPUBLISHED</option>
-	    </field> 
+	    </field>
+
+	    <field
+     		accept="image/*"
+	    	description="COM_TA_PROVIDERS_FORM_DESC_TAPROVIDER_LOGO"
+	    	label="COM_TA_PROVIDERS_FORM_LBL_TAPROVIDER_LOGO"
+	    	name="logo"
+	    	type="file" />
 	    
 	    <field
 			name="created"

@@ -150,47 +150,25 @@ class plgUserProfile5 extends JPlugin{
 	}
 
 	/**
-	 * Method is called before user data is stored in the database
+	 * Method is called after user data is stored in the database
 	 *
 	 * @param   array    $user   Holds the old user data.
 	 * @param   boolean  $isnew  True if a new user is stored.
 	 * @param   array    $data   Holds the new user data.
 	 *
-	 * @return    boolean
+	 * @return  boolean
 	 *
-	 * @since   3.1
-	 * @throws    InvalidArgumentException on invalid date.
-	 *
-	public function onUserBeforeSave($user, $isnew, $data)
-	{
-		// Check that the date is valid.
-		if (!empty($data['profile']['dob']))
-		{
-			try
-			{
-				$date = new JDate($data['profile']['dob']);
-				$this->_date = $date->format('Y-m-d');
-			}
-			catch (Exception $e)
-			{
-				// Throw an exception if date is not valid.
-				throw new InvalidArgumentException(JText::_('PLG_USER_PROFILE_ERROR_INVALID_DOB'));
-			}
-		}
-
-		return true;
-	}*/
-
+	 * @since 	3.1
+	 * @throws  InvalidArgumentException on invalid date.
+	 */
 	public function onUserAfterSave($data, $isNew, $result, $error){
 		$userId = JArrayHelper::getValue($data, 'id', 0, 'int');
 
 		if ($userId && $result && isset($data['profile']) && (count($data['profile']))){
 			// add to MyEmma
 			if($data['profile']['newsletter'] == 1 && !empty($data['email'])){
-				// TO DO: Add Emma back in later	
-				/*try{
-					//include_once('Emma.php');
-					$emma = JLoader::Emma();
+				try{
+					$emma = Emma();  /**$account_id, $pub_api_key, $pri_api_key, $debug = false**/
 					$member_info = array(
 						'email' => $data['email'],
 						'fields' => array(

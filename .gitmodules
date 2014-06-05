@@ -1,0 +1,3 @@
+[submodule "plg_emma_for_joomla"]
+	path = plg_emma_for_joomla
+	url = https://github.com/ZadraDesign/plg_emma_for_joomla.git

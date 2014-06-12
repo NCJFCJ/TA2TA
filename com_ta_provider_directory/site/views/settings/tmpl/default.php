@@ -887,37 +887,13 @@ JHtml::_('behavior.keepalive');
 	</div>
 	<?php endif; ?>
 	<p>This page allows you to manage how your organization displays in the TA Provider Directory. Each website user associated with your organization has the ability to modify this information. The information you enter here will be instantly displayed on the website, exactly as you enter it.</p>
-	<h3><?php echo $this->listing->name; ?></h3>
-    <form autocomplete="off" id="form-settings" action="<?php echo JRoute::_('index.php?option=com_ta_provider_directory&task=settings.save'); ?>" method="post" class="form-validate big-inputs" enctype="multipart/form-data">
-		<div class="row">
-       		<div class="col-xs-6">
-                <div class="form-group">
-                    <div class="input-group">
-                        <span 
-                            class="input-group-addon has-tooltip icomoon-earth"
-                            data-original-title="<?php echo JText::_('COM_TA_PROVIDER_DIRECTORY_SETTINGS_WEBSITE_LABEL'); ?>"
-                            data-placement="top"
-                            data-toggle="tooltip">
-                        </span>
-                        <input
-                            type="url"
-                            id="jform_website"
-                            name="jform[website]"
-                            class="form-control"
-                            placeholder="<?php echo JText::_('COM_TA_PROVIDER_DIRECTORY_SETTINGS_WEBSITE_LABEL'); ?>"
-                            value="<?php echo $this->listing->website; ?>"
-                            />
-                        </div>
-                    </div>
-				</div>	
-			</div>
-		</div>
+	<form autocomplete="off" id="form-settings" action="<?php echo JRoute::_('index.php?option=com_ta_provider_directory&task=settings.save'); ?>" method="post" class="form-validate big-inputs" enctype="multipart/form-data">
 		<input type="hidden" id="jform_projects" name="jform[projects]" value='<?php echo json_encode($this->listing->projects, JSON_HEX_APOS | JSON_HEX_QUOT); ?>' />
 		<input type="hidden" name="option" value="com_ta_provider_directory" />
 		<input type="hidden" name="task" value="settings.save" />
 		<?php echo JHtml::_('form.token'); ?>
 	</form>
-	<h3>Provider Projects</h3>				
+	<h3>Your Projects</h3>				
 	<form action="/" method="post" enctype="multipart/form-data" name="projectTableForm" id="projectTableForm" class="form-validate">
 		<div id="gridAlertWrapper"></div>
         <div class="row">

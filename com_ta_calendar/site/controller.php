@@ -13,22 +13,22 @@ defined('_JEXEC') or die;
 jimport('joomla.application.component.controller');
 
 class Ta_calendarController extends JControllerLegacy{
-function deleteEvent(){
-require_once('views/ajax/delete.php');
-}
-function getCalendar(){
-require_once('views/ajax/getCalendar.php');
-}
-function getEvent(){
-require_once('views/ajax/getEvent.php');
-}
-function getPrograms(){
-require_once('views/ajax/getPrograms.php');
-}
-function saveEvent(){
-require_once('views/ajax/save.php');
-}
-function viewEvent(){
-require_once('views/ajax/viewSingleEvent.php');
-}
+	function deleteEvent(){
+		require_once('views/ajax/delete.php');
+	}
+	function getCalendar(){
+		require_once('views/ajax/getCalendar.php');
+	}
+	function getEvent(){
+		require_once('views/ajax/getEvent.php');
+	}
+	function getPrograms(){
+		require_once('views/ajax/getPrograms.php');
+	}
+	function saveEvent(){
+		require_once('views/ajax/save.php');
+	}
+	function viewEvent(){
+		require_once('views/ajax/viewSingleEvent.php');
+	}
 }

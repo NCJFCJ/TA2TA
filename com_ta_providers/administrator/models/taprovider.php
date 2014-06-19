@@ -1,9 +1,8 @@
 <?php
 /**
  * @package     com_ta_providers
- * @copyright   Copyright (C) 2013. All rights reserved.
- * @license     GNU General Public License version 2 or later; see LICENSE.txt
- * @author      Zachary Draper <zdraper@ncjfcj.org> - http://ta2ta.org
+ * @copyright   Copyright (C) 2013-2014 NCJFCJ. All rights reserved.
+ * @author      NCJFCJ - http://ncjfcj.org
  */
 
 // No direct access.
@@ -169,76 +168,6 @@ class Ta_providersModeltaprovider extends JModelAdmin{
 		}else{
 			$data['created'] = $curDateTime;
 		}
-
-		/* --- Process File Upload --- */
-		
-		// Check whether a file upload should be processed
-		$fileUpload = false;
-		$old_logo_uri = '';
-		if(is_uploaded_file($_FILES['jform']['tmp_name']['logo'])){
-			$fileUpload = true;
-			
-			// create an empty class to hold information on the file we are uploading
-			$file = new stdClass;
-			$file->name = '';
-			$file->type = '';
-			$file->tmp_name = '';
-			$file->error = 0;
-			$file->size = '';
-			
-			// get information about the uploaded file
-			if(isset($_FILES['jform'])){
-				$file->name = $_FILES['jform']['name']['logo'];
-				$file->type = $_FILES['jform']['type']['logo'];
-				$file->tmp_name = $_FILES['jform']['tmp_name']['logo'];
-				$file->error = $_FILES['jform']['error']['logo'];
-				$file->size = $_FILES['jform']['size']['logo'];
-			}else{
-				$this->setError(JText::_('COM_TA_PROVIDERS_NO_FILE'));
-			    return false;
-			}
-			
-			// check if an error occured
-			if($file->error){
-				switch($file->error){
-					case 1:
-						$this->setError(JText::_('COM_TA_PROVIDERS_FILE_TOO_LARGE'));
-			        	return false;
-	
-			        case 2:
-						$this->setError(JText::_('COM_TA_PROVIDERS_FILE_TOO_LARGE'));
-			        	return false;
-	 
-			        case 3:
-						$this->setError(JText::_('COM_TA_PROVIDERS_FILE_UPLOAD_FAILED'));
-			        	return false;
-	 
-			        case 4:
-						$this->setError(JText::_('COM_TA_PROVIDERS_NO_FILE'));
-		        		return false;
-				}
-			}
-			
-			//check for filesize
-			if($file->size > 102400){
-				$this->setError(JText::_('COM_TA_PROVIDERS_FILE_TOO_LARGE'));
-				return false;
-			}
-
-			//check the file extension is ok
-			$allowed_extensions = array('jpg', 'gif', 'png');
-			$filePathInfo = pathinfo('/'.$file->name);
-			if(!in_array($filePathInfo['extension'], $allowed_extensions)){
-				$this->setError(JText::_('COM_TA_PROVIDERS_INVALID_FILE_TYPE'));
-				return false;
-			}
-			
-			//lose any special characters in the filename
-			$file->name = strtolower(preg_replace('/[^A-Za-z0-9]/i', '-', substr($data['name'],0,46))) . '.' . $filePathInfo['extension'];
-			
-			// determine and set the base file name
-			$data['logo'] = $file->name;
-		}
 		
 		// Allow an exception to be thrown.
 		try{
@@ -276,21 +205,17 @@ class Ta_providersModeltaprovider extends JModelAdmin{
 				return false;
 			}
 
-			/* -- complete the file upload -- */
-			
-			if($fileUpload){
-				// construct the file path
-				$uploadPath = JPATH_SITE . '/media/com_ta_providers/logos/' . $data['logo'];
-					
-				// if a file already exists, delete it	
-				if(file_exists($uploadPath)){
-					unlink($uploadPath);
-				}	
+			/* -- move the file from the temporary folder, if any -- */
 
-				//move the uploaded file to its permenant home
-				if(!JFile::upload($file->tmp_name, $uploadPath)) {
-					$this->setError(JText::_('COM_TA_PROVIDERS_FILE_MOVE_ERROR'));					
-				    return false;
+			if(filter_has_var(INPUT_POST, 'logoPath')){
+				$logoFile = filter_input_var(INPUT_POST, 'logoPath', FILTER_SANITIZE_STRING);
+				$tmpPath = JPATH_SITE . '/media/com_ta_providers/tmp/' . $logoFile;
+				if(file_exists($tmpPath)){
+					$logoPath = JPATH_SITE . '/media/com_ta_providers/logos/' . $logoFile;
+					if(!rename($tmppath, $logoPath)){
+						$this->setError(JText::_('COM_TA_PROVIDERS_FILE_MOVE_ERROR'));	
+						return false;
+					}
 				}
 			}
 

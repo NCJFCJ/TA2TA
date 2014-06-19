@@ -1,17 +1,14 @@
 <?php
 /**
  * @package     com_ta_providers
- * @copyright   Copyright (C) 2013. All rights reserved.
- * @license     GNU General Public License version 2 or later; see LICENSE.txt
- * @author      Zachary Draper <zdraper@ncjfcj.org> - http://ta2ta.org
+ * @copyright   Copyright (C) 2013-2014 NCJFCJ. All rights reserved.
+ * @author      NCJFCJ - http://ncjfcj.org
  */
-
 
 // No direct access
 defined('_JEXEC') or die;
 
-class Ta_providersController extends JControllerLegacy
-{
+class Ta_providersController extends JControllerLegacy{
 	/**
 	 * Method to display a view.
 	 *
@@ -21,8 +18,7 @@ class Ta_providersController extends JControllerLegacy
 	 * @return	JController		This object to support chaining.
 	 * @since	1.5
 	 */
-	public function display($cachable = false, $urlparams = false)
-	{
+	public function display($cachable = false, $urlparams = false){
 		require_once JPATH_COMPONENT.'/helpers/ta_providers.php';
 
 		$view		= JFactory::getApplication()->input->getCmd('view', 'taproviders');
@@ -31,5 +27,9 @@ class Ta_providersController extends JControllerLegacy
 		parent::display($cachable, $urlparams);
 
 		return $this;
+	}
+
+	function fileUpload(){
+		require_once('views/ajax/fileUpload.php');
 	}
 }

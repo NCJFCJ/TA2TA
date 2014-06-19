@@ -25,15 +25,30 @@
                 <schemapath type="mysql">sql/updates/mysql</schemapath> 
         </schemas> 
     </update>
+
+    <files folder="site">
+        <filename>controller.php</filename>
+        <filename>index.html</filename>
+        <filename>router.php</filename>
+        <filename>ta_providers.php</filename>
+        <folder>controllers</folder>
+        <folder>helpers</folder>
+        <folder>models</folder>
+        <folder>views</folder>
+    </files>
+
+    <languages folder="site">
+        <language tag="en-GB">language/en-GB.com_ta_providers.ini</language>
+    </languages>
     
     <media destination="com_ta_providers" folder="media">
         <file>index.html</file>
-        <folder>imgareaselect</folder>
         <folder>logos</folder>
+        <folder>tmp</folder>
     </media>
 
     <administration>
-        <menu img="components/com_ta_providers/assets/images/s_com_ta_providers.png" >COM_TA_PROVIDERS</menu>
+        <menu img="components/com_ta_providers/assets/images/s_com_ta_providers.png">COM_TA_PROVIDERS</menu>
         <files folder="administrator">
             <filename>access.xml</filename>
             <filename>config.xml</filename>

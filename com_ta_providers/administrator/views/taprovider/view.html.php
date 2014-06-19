@@ -1,9 +1,8 @@
 <?php
 /**
  * @package     com_ta_providers
- * @copyright   Copyright (C) 2013. All rights reserved.
- * @license     GNU General Public License version 2 or later; see LICENSE.txt
- * @author      Zachary Draper <zdraper@ncjfcj.org> - http://ta2ta.org
+ * @copyright   Copyright (C) 2013-2014 NCJFCJ. All rights reserved.
+ * @author      NCJFCJ - http://ncjfcj.org
  */
 
 // No direct access
@@ -23,11 +22,6 @@ class Ta_providersViewTaprovider extends JViewLegacy{
 	 * Display the view
 	 */
 	public function display($tpl = null){
-
-		// add imgareaselect support
-		$document = JFactory::getDocument();
-		$document->addScript('/media/com_ta_providers/imgareaselect/jquery.imgareaselect.js');
-		$document->addStyleSheet('/media/com_ta_providers/imgareaselect/imgareaselect-default.css');
 
 		$this->state = $this->get('State');
 		$this->item	= $this->get('Item');

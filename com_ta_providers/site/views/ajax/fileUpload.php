@@ -107,6 +107,9 @@ if($_SERVER['REQUEST_METHOD'] == 'POST'
 
 	//move the uploaded file to its temporary home
 	if(JFile::upload($file->tmp_name, $uploadPath)){
+		$size = getimagesize($uploadPath);
+		$return['height'] = $size[1];
+		$return['width'] = $size[0];
 		$return['message'] = $file->name;
 		$return['status'] = 'success';
 	}else{

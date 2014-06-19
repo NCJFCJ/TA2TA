@@ -20,6 +20,8 @@ if(!empty($_SERVER["HTTPS"]) && $_SERVER["HTTPS"]!=="off"){
 	// document ready
 	jQuery(function($){
 		var orgName = '<?php echo $this->item->name; ?>';
+		var uploadImageHeight = 0;
+		var uploadImageWidth = 0;
 
 		/**
 		 * Listen for changes to the logo and upload right away
@@ -45,6 +47,10 @@ if(!empty($_SERVER["HTTPS"]) && $_SERVER["HTTPS"]!=="off"){
                     // show the image
                     $('#tmpLogo').attr('src', '<?php echo "http" . ($https ? "s" : "") . "://{$_SERVER['HTTP_HOST']}"; ?>/media/com_ta_providers/tmp/' + data._response.result.message);
 
+	                // store the data that was returned for later use
+	                uploadImageHeight = data._response.result.height;
+	                uploadImageWidth = data._response.result.width;
+
                     // start the editor
                     $('#tmpLogo').imgAreaSelect({
                     	aspectRatio: '45:28',
@@ -62,17 +68,6 @@ if(!empty($_SERVER["HTTPS"]) && $_SERVER["HTTPS"]!=="off"){
                     		$('#jform_logoy2').val(selection.y2);
                     		$('#jform_logoh').val(selection.height);
                     		$('#jform_logow').val(selection.width);
-
-                    		// figure the scaling
-                    		var scaleX = 450 / selection.width;  
-    						var scaleY = 280 / selection.height;
-
-    						$('#logoImg').css({  
-						        width: Math.round(scaleX * ) + 'px',  
-						        height: Math.round(scaleY * ) + 'px',  
-						        marginLeft: '-' + Math.round(scaleX * selection.x1) + 'px',  
-						        marginTop: '-' + Math.round(scaleY * selection.y1) + 'px'  
-						    }); 
                     	}
                     });
 
@@ -103,6 +98,20 @@ if(!empty($_SERVER["HTTPS"]) && $_SERVER["HTTPS"]!=="off"){
 			$('#tmpLogo').imgAreaSelect({
 				remove: true
 			});
+
+			// update the logo image to show the new image
+			$('#logoImg').attr('src', $('#tmpLogo').attr('src'));
+
+    		// figure the scaling
+    		var scaleX = 450 / $('#jform_logow').val();  
+			var scaleY = 280 / $('#jform_logoh').val();
+
+			$('#logoImg').css({  
+		        width: Math.round(scaleX * uploadImageWidth) + 'px',  
+		        height: Math.round(scaleY * uploadImageHeight) + 'px',  
+		        marginLeft: '-' + Math.round(scaleX * $('#jform_logox1').val()) + 'px',  
+		        marginTop: '-' + Math.round(scaleY * $('#jform_logoy1').val()) + 'px'  
+		    }); 
 
 			// hide the modal	
 			$('#imageEditPopup').modal('hide');

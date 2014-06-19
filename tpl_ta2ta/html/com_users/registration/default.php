@@ -127,11 +127,6 @@ JHtml::_('behavior.keepalive');
 		$('#jform_profile_phone').change(function(){
 			ta2ta.validate.hasValue($(this),2);
 		});
-
-		// fix crazy disappearing input-group-addon
-		$('.input-group-addon').mouseout(function(){
-			$(this).show();
-		});
 	});
 </script>
 <div class="registration<?php echo $this->pageclass_sfx?>">

@@ -47,11 +47,39 @@
 	    </field>
 
 	    <field
-     		accept="image/*"
-	    	description="COM_TA_PROVIDERS_FORM_DESC_TAPROVIDER_LOGO"
-	    	label="COM_TA_PROVIDERS_FORM_LBL_TAPROVIDER_LOGO"
 	    	name="logo"
-	    	type="file" />
+	    	type="hidden">
+	    </field>
+
+	    <field
+	    	name="logox1"
+	    	type="hidden">
+	    </field>
+
+	    <field
+	    	name="logox2"
+	    	type="hidden">
+	    </field>
+
+	    <field
+	    	name="logoy1"
+	    	type="hidden">
+	    </field>
+
+	    <field
+	    	name="logoy2"
+	    	type="hidden">
+	    </field>
+
+	    <field
+	    	name="logoh"
+	    	type="hidden">
+	    </field>
+
+	    <field
+	    	name="logow"
+	    	type="hidden">
+	    </field>
 	    
 	    <field
 			name="created"

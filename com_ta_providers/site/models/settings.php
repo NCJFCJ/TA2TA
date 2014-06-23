@@ -199,6 +199,8 @@ class Ta_providersModelSettings extends JModelForm{
 			$mailer->Send();
 		}
 
+
+
 		// grab the database object and begin the query
         $query = $db->getQuery(true);
 
@@ -221,16 +223,7 @@ class Ta_providersModelSettings extends JModelForm{
 		$result = $db->query();
 
 		// check the result
-		if($result){
-			// process the logo image
-			if(!empty($data['logo'])){
-				$tmpPath = JPATH_SITE . '/media/com_ta_providers/tmp/' . $data['logo'];
-				if(file_exists($tmpPath)){
-					// move the tmp file into its permenant home 
-					rename($tmpPath, JPATH_SITE . '/media/com_ta_providers/logos/' . $data['logo']);
-				}
-			}
-
+		if($result){			
 			return true;
 		}else{
 			return false;

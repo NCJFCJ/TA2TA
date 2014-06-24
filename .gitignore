@@ -24,7 +24,6 @@ Thumbs.db
 
 # CodeKit #
 ###########
-*/config.codekit
-config.codekit
+*/*.codekit
+*.codekit
 .codekit-cache
-tpl_ta2ta/config.codekit

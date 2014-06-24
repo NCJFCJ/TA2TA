@@ -12,8 +12,6 @@
 
 	<files>
 		<folder>profiles</folder>
-		<filename>Emma.php</filename>
-		<filename>EmmaExceptions.php</filename>
 		<filename>index.html</filename>
 		<filename plugin="profile5">profile5.php</filename>
 	</files>

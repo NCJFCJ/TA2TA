@@ -1,4 +1,5 @@
 /* ------ Establish Namespace ------- */
+
 var ta2ta = {}
 
 /* ----- Frameworks and Plugins ----- */
@@ -12,6 +13,10 @@ var ta2ta = {}
 //@codekit-append "../../plugins/bootstrap/js/modal.js"
 //@codekit-append "../../plugins/bootstrap/js/tooltip.js"
 //@codekit-append "../../plugins/bootstrap/js/popover.js"
+//@codekit-append "../../plugins/jquery/imgareaselect/jquery.imgareaselect.js"
+//@codekit-append "../../plugins/jquery/jqueryfileupload/vendor/jquery.ui.widget.js"
+//@codekit-append "../../plugins/jquery/jqueryfileupload/jquery.fileupload.js"
+//@codekit-append "../../plugins/jquery/jqueryfileupload/jquery.iframe-transport.js"
 //@codekit-append "../../plugins/jquery/nivo/jquery.nivo.slider.js"
 //@codekit-append "../../plugins/jquery/waypoints/waypoints.js"
 //@codekit-append "../../plugins/bootstrap/plugins/datepicker/js/bootstrap-datepicker.js"
@@ -107,6 +112,11 @@ jQuery(function($){
 		  })
 		});
 	}
+
+	// fix crazy disappearing tooltip parents
+	$("[data-toggle='tooltip']").on('hide', function(e){
+		e.stopPropagation();
+	});
 
 	// use Chosen for all selects
 	$('select').chosen({

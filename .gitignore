@@ -10,7 +10,6 @@ Archive
 ._*
 .Spotlight-V100
 .Trashes
-Icon?
 ehthumbs.db
 Thumbs.db
 
@@ -25,4 +24,7 @@ Thumbs.db
 
 # CodeKit #
 ###########
+*/config.codekit
+config.codekit
 .codekit-cache
+tpl_ta2ta/config.codekit

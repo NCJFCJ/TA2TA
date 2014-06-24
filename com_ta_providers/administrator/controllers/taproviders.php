@@ -1,10 +1,8 @@
 <?php
 /**
- * @version     1.0.0
  * @package     com_ta_providers
- * @copyright   Copyright (C) 2013. All rights reserved.
- * @license     GNU General Public License version 2 or later; see LICENSE.txt
- * @author      Zachary Draper <zdraper@ncjfcj.org> - http://ta2ta.org
+ * @copyright   Copyright (C) 2013-2014 NCJFCJ. All rights reserved.
+ * @author      NCJFCJ - http://ncjfcj.org
  */
 
 // No direct access.

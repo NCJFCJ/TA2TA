@@ -44,7 +44,42 @@
 	        type="list">
 	        	<option value="1">JPUBLISHED</option>
 	        	<option value="0">JUNPUBLISHED</option>
-	    </field> 
+	    </field>
+
+	    <field
+	    	name="logo"
+	    	type="hidden">
+	    </field>
+
+	    <field
+	    	name="logox1"
+	    	type="hidden">
+	    </field>
+
+	    <field
+	    	name="logox2"
+	    	type="hidden">
+	    </field>
+
+	    <field
+	    	name="logoy1"
+	    	type="hidden">
+	    </field>
+
+	    <field
+	    	name="logoy2"
+	    	type="hidden">
+	    </field>
+
+	    <field
+	    	name="logoh"
+	    	type="hidden">
+	    </field>
+
+	    <field
+	    	name="logow"
+	    	type="hidden">
+	    </field>
 	    
 	    <field
 			name="created"

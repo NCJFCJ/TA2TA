@@ -7,7 +7,7 @@
     <author>Zachary Draper</author>
     <authorEmail>zdraper@ncjfcj.org</authorEmail>
     <authorUrl>http://ta2ta.org</authorUrl>
-    <version>1.0.0</version>
+    <version>2.0.0</version>
     <description>This component maintains a list of TA Providers who are eligible to access this website.</description>
     
     <install> <!-- Runs on install -->
@@ -20,9 +20,35 @@
             <file driver="mysql" charset="utf8">sql/uninstall.mysql.utf8.sql</file>
         </sql>
     </uninstall>
+    <update> <!-- Runs on update -->
+        <schemas> 
+                <schemapath type="mysql">sql/updates/mysql</schemapath> 
+        </schemas> 
+    </update>
+
+    <files folder="site">
+        <filename>controller.php</filename>
+        <filename>index.html</filename>
+        <filename>router.php</filename>
+        <filename>ta_providers.php</filename>
+        <folder>controllers</folder>
+        <folder>helpers</folder>
+        <folder>models</folder>
+        <folder>views</folder>
+    </files>
+
+    <languages folder="site">
+        <language tag="en-GB">language/en-GB.com_ta_providers.ini</language>
+    </languages>
+    
+    <media destination="com_ta_providers" folder="media">
+        <file>index.html</file>
+        <folder>logos</folder>
+        <folder>tmp</folder>
+    </media>
 
     <administration>
-        <menu img="components/com_ta_providers/assets/images/s_com_ta_providers.png" >COM_TA_PROVIDERS</menu>
+        <menu img="components/com_ta_providers/assets/images/s_com_ta_providers.png">COM_TA_PROVIDERS</menu>
         <files folder="administrator">
             <filename>access.xml</filename>
             <filename>config.xml</filename>

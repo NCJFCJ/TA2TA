@@ -1,22 +1,20 @@
 <?php
 /**
- * @version     1.0.0
  * @package     com_ta_providers
- * @copyright   Copyright (C) 2013. All rights reserved.
- * @license     GNU General Public License version 2 or later; see LICENSE.txt
- * @author      Zachary Draper <zdraper@ncjfcj.org> - http://ta2ta.org
+ * @copyright   Copyright (C) 2013-2014 NCJFCJ. All rights reserved.
+ * @author      NCJFCJ - http://ncjfcj.org
  */
 
 // No direct access.
 defined('_JEXEC') or die;
 
 jimport('joomla.application.component.modeladmin');
+jimport('joomla.filesystem.file');
 
 /**
  * Ta_providers model.
  */
-class Ta_providersModeltaprovider extends JModelAdmin
-{
+class Ta_providersModeltaprovider extends JModelAdmin{
 	/**
 	 * @var		string	The prefix to use with controller messages.
 	 * @since	1.6
@@ -33,8 +31,7 @@ class Ta_providersModeltaprovider extends JModelAdmin
 	 * @return	JTable	A database object
 	 * @since	1.6
 	 */
-	public function getTable($type = 'Taprovider', $prefix = 'Ta_providersTable', $config = array())
-	{
+	public function getTable($type = 'Taprovider', $prefix = 'Ta_providersTable', $config = array()){
 		return JTable::getInstance($type, $prefix, $config);
 	}
 
@@ -46,8 +43,7 @@ class Ta_providersModeltaprovider extends JModelAdmin
 	 * @return	JForm	A JForm object on success, false on failure
 	 * @since	1.6
 	 */
-	public function getForm($data = array(), $loadData = true)
-	{
+	public function getForm($data = array(), $loadData = true){
 		// Initialise variables.
 		$app	= JFactory::getApplication();
 
@@ -68,8 +64,7 @@ class Ta_providersModeltaprovider extends JModelAdmin
 	 * @return	mixed	The data for the form.
 	 * @since	1.6
 	 */
-	protected function loadFormData()
-	{
+	protected function loadFormData(){
 		// Check the session for previously entered form data.
 		$data = JFactory::getApplication()->getUserState('com_ta_providers.edit.taprovider.data', array());
 
@@ -89,8 +84,7 @@ class Ta_providersModeltaprovider extends JModelAdmin
 	 * @return	mixed	Object on success, false on failure.
 	 * @since	1.6
 	 */
-	public function getItem($pk = null)
-	{
+	public function getItem($pk = null){
 		if ($item = parent::getItem($pk)) {
 
 			//Do any procesing on fields here if needed
@@ -101,12 +95,26 @@ class Ta_providersModeltaprovider extends JModelAdmin
 	}
 
 	/**
+	 * TA providers after delete content method
+	 * TA Provider object is passed by reference, all files associated with it are deleted
+	 * 
+	 * @param string $context The content of the content passed to the plugin
+	 * @param object $table A JTableContent object
+	 */
+	public function onContentAfterDelete($context, $table){
+		// delete the logo file
+		$logo_file = JPATH_SITE . '/media/com_ta_providers/logos/' . $table->logo;
+		if(file_exists($logo_file)){
+			unlink($logo_file);
+		}
+	}
+
+	/**
 	 * Prepare and sanitise the table prior to saving.
 	 *
 	 * @since	1.6
 	 */
-	protected function prepareTable($table)
-	{
+	protected function prepareTable($table){
 		jimport('joomla.filter.output');
 
 		if (empty($table->id)) {
@@ -131,8 +139,7 @@ class Ta_providersModeltaprovider extends JModelAdmin
 	 *
 	 * @since   12.2
 	 */
-	public function save($data)
-	{
+	public function save($data){
 		// check that website is valid
 		if(!empty($data['website'])){
 			$data['website'] = strtolower($data['website']);
@@ -163,18 +170,15 @@ class Ta_providersModeltaprovider extends JModelAdmin
 		}
 		
 		// Allow an exception to be thrown.
-		try
-		{
+		try{
 			// Load the row if saving an existing record.
-			if ($pk > 0)
-			{
+			if ($pk > 0){
 				$table->load($pk);
 				$isNew = false;
 			}
 
 			// Bind the data.
-			if (!$table->bind($data))
-			{
+			if (!$table->bind($data)){
 				$this->setError($table->getError());
 				return false;
 			}
@@ -183,25 +187,36 @@ class Ta_providersModeltaprovider extends JModelAdmin
 			$this->prepareTable($table);
 
 			// Check the data.
-			if (!$table->check())
-			{
+			if (!$table->check()){
 				$this->setError($table->getError());
 				return false;
 			}
 
 			// Trigger the onContentBeforeSave event.
 			$result = $dispatcher->trigger($this->event_before_save, array($this->option . '.' . $this->name, $table, $isNew));
-			if (in_array(false, $result, true))
-			{
+			if (in_array(false, $result, true)){
 				$this->setError($table->getError());
 				return false;
 			}
 
 			// Store the data.
-			if (!$table->store())
-			{
+			if (!$table->store()){
 				$this->setError($table->getError());
 				return false;
+			}
+
+			/* -- move the file from the temporary folder, if any -- */
+
+			if(filter_has_var(INPUT_POST, 'logoPath')){
+				$logoFile = filter_input_var(INPUT_POST, 'logoPath', FILTER_SANITIZE_STRING);
+				$tmpPath = JPATH_SITE . '/media/com_ta_providers/tmp/' . $logoFile;
+				if(file_exists($tmpPath)){
+					$logoPath = JPATH_SITE . '/media/com_ta_providers/logos/' . $logoFile;
+					if(!rename($tmppath, $logoPath)){
+						$this->setError(JText::_('COM_TA_PROVIDERS_FILE_MOVE_ERROR'));	
+						return false;
+					}
+				}
 			}
 
 			// Clean the cache.
@@ -209,9 +224,7 @@ class Ta_providersModeltaprovider extends JModelAdmin
 
 			// Trigger the onContentAfterSave event.
 			$dispatcher->trigger($this->event_after_save, array($this->option . '.' . $this->name, $table, $isNew));
-		}
-		catch (Exception $e)
-		{
+		}catch (Exception $e){
 			$this->setError($e->getMessage());
 
 			return false;
@@ -219,13 +232,11 @@ class Ta_providersModeltaprovider extends JModelAdmin
 
 		$pkName = $table->getKeyName();
 
-		if (isset($table->$pkName))
-		{
+		if(isset($table->$pkName)){
 			$this->setState($this->getName() . '.id', $table->$pkName);
 		}
 		$this->setState($this->getName() . '.new', $isNew);
 
 		return true;
 	}
-
 }

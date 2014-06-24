@@ -1,0 +1,6 @@
+<?xml version="1.0" encoding="utf-8"?>
+<metadata>
+    <layout title="COM_TA_PROVIDERS_SETTINGS_ORGANIZATION_SETTINGS" option="View">
+        <message><![CDATA[COM_TA_PROVIDERS_SETTINGS_ORGANIZATION_SETTINGS_DESC]]></message>
+    </layout>
+</metadata>

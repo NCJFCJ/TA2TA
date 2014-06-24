@@ -53,9 +53,6 @@ class Ta_provider_directoryControllerSettings extends Ta_provider_directoryContr
 		// Get the user data.
 		$data = $app->input->get('jform', array(), 'array');
 
-		// Validate the posted data.
-		$data = $this->validate($data);
-		
 		// Check for errors.
 		if ($data === false) {
 			// Get the validation messages.
@@ -91,25 +88,5 @@ class Ta_provider_directoryControllerSettings extends Ta_provider_directoryContr
 
 		// Flush the data from the session.
 		$app->setUserState('com_ta_provider_directory.edit.settings.data', null);
-	}
-	
-	/**
-	 * Validates the data supplied, returns data on success, false on fail
-	 */
-	function validate($data){
-		// check that the website
-		if(!empty($data['website'])){
-			// check for the http, add if it isn't present	
-			if(substr($data['website'], 0, 4) != 'http'){
-				$data['website'] = 'http://' . $data['website'];
-			}
-			$data['website'] = strtolower($data['website']);
-			// validate the new url
-			if(!filter_var($data['website'], FILTER_VALIDATE_URL, FILTER_FLAG_SCHEME_REQUIRED)){
-				$this->errorMessage = 'The website you entered is invalid.';
-				return false;
-			}
-		}
-		return $data;
 	}
 }

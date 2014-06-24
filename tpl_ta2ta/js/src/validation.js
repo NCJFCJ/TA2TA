@@ -150,7 +150,7 @@ ta2ta.validate = ta2ta.validate || {
 	 * Checks whether the value provided passes the maximum length requirements.
 	 * 
 	 * @param object A jQuery object for a single form element.
-	 * @param int The minimum length
+	 * @param int The maximum length
 	 * @param int Determines when to show the validation state:
 	 *	   3 = success and failure
      *     2 = success only

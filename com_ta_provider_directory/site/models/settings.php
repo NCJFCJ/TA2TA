@@ -91,7 +91,7 @@ class Ta_provider_directoryModelsettings extends JModelForm{
 		// get the provider information
 		$db = JFactory::getDbo();
 		$query = $db->getQuery(true);
-		$query->select($db->quoteName(array('id', 'name', 'website')));
+		$query->select($db->quoteName(array('id', 'name')));
 		$query->from($db->quoteName('#__ta_providers'));
 		$query->where($db->quoteName('id') . '=' . $org);
 		$db->setQuery($query, 0, 1);
@@ -216,26 +216,10 @@ class Ta_provider_directoryModelsettings extends JModelForm{
  		// get the user's organization
 		$org = $this->getUserOrg();
 		
- 		// save the website
- 		$db = JFactory::getDbo();
-		$query = $db->getQuery(true);
-		$query->update($db->quoteName('#__ta_providers'));
-		$query->set(array(
-			$db->quoteName('website') . '=' . $db->quote($data['website']),
-			$db->quoteName('modified') . '=NOW()',
-			$db->quoteName('modified_by') . '=' . $db->quote($this->getUserId())
-		));
-		$query->where($db->quoteName('id') . '=' . $org);
-		$db->setQuery($query);
-		if($db->query()){
-			// save project data
-			if($this->saveProjects($data['projects'], $org)){
-				return true;
-			}else{
-				return false;
-			}
+		// save project data
+		if($this->saveProjects($data['projects'], $org)){
+			return true;
 		}else{
-			JError::raiseWarning(100, 'Unable to save organization information.');
 			return false;
 		}
  	}

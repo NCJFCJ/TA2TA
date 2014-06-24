@@ -1,0 +1,41 @@
+<?xml version="1.0" encoding="utf-8"?>
+<form>
+	<fieldset>
+		<field 
+			class="readonly"
+            default="0"
+			description="JGLOBAL_FIELD_ID_DESC"
+			label="COM_HELP_VIDEOS_FORM_LBL_VIDEO_ID"
+            name="id"
+			readonly="true"
+			type="text" />
+        <field
+			class="inputbox"
+			default="1"
+			description="JFIELD_PUBLISHED_DESC"
+			label="JSTATUS"
+			name="state"
+			size="1"
+			type="list">
+				<option value="1">JPUBLISHED</option>
+				<option value="0">JUNPUBLISHED</option>
+		</field> 
+		<field
+			description="COM_HELP_VIDEOS_FORM_DESC_VIDEO_YOUTUBE_URL" 
+            filter="string"
+            label="COM_HELP_VIDEOS_FORM_LBL_VIDEO_YOUTUBE_URL"
+            maxlength="100"
+			name="youtube_url"
+			required="true" 
+            type="text" /> 
+		<field
+			description="COM_HELP_VIDEOS_FORM_DESC_VIDEO_CATEGORY"
+			key_field="id"
+			label="COM_HELP_VIDEOS_FORM_LBL_VIDEO_CATEGORY"
+			name="category"
+			required="true"
+			type="sql"
+			query="SELECT '' AS `id`, '- Select Category -' AS `name`, 1 AS `state` UNION SELECT `id`, `name`, `state` FROM `#__help_videos_categories` WHERE state = 1 ORDER BY `name` ASC;"
+			value_field="name" />
+	</fieldset>
+</form>

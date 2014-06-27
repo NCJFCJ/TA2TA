@@ -186,7 +186,7 @@ class plgUserProfile5 extends JPlugin{
 					error_log('Unable to add user to MyEmma');	
 					echo 'Error connecting to API';
 					die();
-				}*/
+				}
 			}
 			try{
 				// Sanitize the date

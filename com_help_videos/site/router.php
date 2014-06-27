@@ -1,4 +1,7 @@
 <?php
+
+// http://docs.joomla.org/Supporting_SEF_URLs_in_your_component
+
 /**
  * @package     com_help_videos
  * @copyright   Copyright (C) 2014 NCJFCJ. All rights reserved.
@@ -15,11 +18,11 @@ defined('_JEXEC') or die;
 function Help_videosBuildRoute(&$query){
 	$segments = array();
     
-	if (isset($query['task'])) {
+	if(isset($query['task'])){
 		$segments[] = implode('/',explode('.',$query['task']));
 		unset($query['task']);
 	}
-	if (isset($query['id'])) {
+	if(isset($query['id'])){
 		$segments[] = $query['id'];
 		unset($query['id']);
 	}
@@ -43,21 +46,18 @@ function Help_videosParseRoute($segments){
 	// view is always the first element of the array
 	$count = count($segments);
     
-    if ($count)
-	{
+    if($count){
 		$count--;
-		$segment = array_pop($segments) ;
-		if (is_numeric($segment)) {
+		$segment = array_pop($segments);
+		if(is_numeric($segment)){
 			$vars['id'] = $segment;
-		}
-        else{
+		}ßelse{
             $count--;
             $vars['task'] = array_pop($segments) . '.' . $segment;
         }
 	}
 
-	if ($count)
-	{   
+	if($count){   
         $vars['task'] = implode('.',$segments);
 	}
 	return $vars;

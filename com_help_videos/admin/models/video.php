@@ -13,8 +13,7 @@ jimport('joomla.application.component.modeladmin');
 /**
  * Help_videos model
  */
-class Help_videosModelvideo extends JModelAdmin
-{
+class Help_videosModelvideo extends JModelAdmin{
 	/**
 	 * @var		string	The prefix to use with controller messages
 	 * @since	1.6
@@ -31,8 +30,7 @@ class Help_videosModelvideo extends JModelAdmin
 	 * @return	JTable	A database object
 	 * @since	1.6
 	 */
-	public function getTable($type = 'Video', $prefix = 'Help_videosTable', $config = array())
-	{
+	public function getTable($type = 'Video', $prefix = 'Help_videosTable', $config = array()){
 		return JTable::getInstance($type, $prefix, $config);
 	}
 
@@ -44,8 +42,7 @@ class Help_videosModelvideo extends JModelAdmin
 	 * @return	JForm	A JForm object on success, false on failure
 	 * @since	1.6
 	 */
-	public function getForm($data = array(), $loadData = true)
-	{
+	public function getForm($data = array(), $loadData = true){
 		// Initialise variables.
 		$app	= JFactory::getApplication();
 
@@ -64,13 +61,12 @@ class Help_videosModelvideo extends JModelAdmin
 	 * @return	mixed	The data for the form
 	 * @since	1.6
 	 */
-	protected function loadFormData()
-	{
+	protected function loadFormData(){
 		// Check the session for previously entered form data.
 		$data = JFactory::getApplication()->getUserState('com_help_videos.edit.video.data', array());
 		
 		
-		if (empty($data)) {
+		if(empty($data)){
 			$data = $this->getItem();
 		}
 
@@ -85,8 +81,7 @@ class Help_videosModelvideo extends JModelAdmin
 	 * @return	mixed	Object on success, false on failure
 	 * @since	1.6
 	 */
-	public function getItem($pk = null)
-	{
+	public function getItem($pk = null){
 		if ($item = parent::getItem($pk)) {
 			// Generate the YouTube URL from the ID
 			if(!empty($item->youtube_id)){
@@ -104,8 +99,7 @@ class Help_videosModelvideo extends JModelAdmin
 	 *
 	 * @since	1.6
 	 */
-	protected function prepareTable($table)
-	{
+	protected function prepareTable($table){
 		jimport('joomla.filter.output');
 		
 		if (empty($table->id)) {
@@ -122,8 +116,7 @@ class Help_videosModelvideo extends JModelAdmin
 	 *
 	 * @since   12.2
 	 */
-	public function save($data)
-	{
+	public function save($data){
 		/* Begin YouTube Processing */
 
 		// get the video ID from the provided URL
@@ -133,7 +126,7 @@ class Help_videosModelvideo extends JModelAdmin
 		if(empty($data['youtube_id']) || strlen($data['youtube_id']) != 11){
 			$this->setError('The YouTube URL you entered is not valid.');
 			return false;
-		}	
+		}
 		
 		// get the video data from YouTube
 		try{
@@ -142,6 +135,11 @@ class Help_videosModelvideo extends JModelAdmin
 			$data['summary'] = $YouTubeData->entry->content->{'$t'};
 			$data['duration'] = $YouTubeData->entry->{'media$group'}->{'media$content'}[0]->duration;
 			$data['published'] = $YouTubeData->entry->published->{'$t'};
+
+			// generate the alias
+			jimport('joomla.filter.output');
+			$data['alias'] = JFilterOutput::stringURLSafe($data['title']);
+
 		}catch(Exception $e){
 			$this->setError('Unable to retrieve data from YouTube. Please try again.');
 			return false;
@@ -152,8 +150,7 @@ class Help_videosModelvideo extends JModelAdmin
 		$dispatcher = JEventDispatcher::getInstance();
 		$table = $this->getTable();
 
-		if ((!empty($data['tags']) && $data['tags'][0] != ''))
-		{
+		if((!empty($data['tags']) && $data['tags'][0] != '')){
 			$table->newTags = $data['tags'];
 		}
 
@@ -165,18 +162,15 @@ class Help_videosModelvideo extends JModelAdmin
 		JPluginHelper::importPlugin('content');
 
 		// Allow an exception to be thrown.
-		try
-		{
+		try{
 			// Load the row if saving an existing record.
-			if ($pk > 0)
-			{
+			if($pk > 0){
 				$table->load($pk);
 				$isNew = false;
 			}
 
 			// Bind the data.
-			if (!$table->bind($data))
-			{
+			if(!$table->bind($data)){
 				$this->setError($table->getError());
 				return false;
 			}
@@ -185,23 +179,20 @@ class Help_videosModelvideo extends JModelAdmin
 			$this->prepareTable($table);
 
 			// Check the data.
-			if (!$table->check())
-			{
+			if(!$table->check()){
 				$this->setError($table->getError());
 				return false;
 			}
 
 			// Trigger the onContentBeforeSave event.
 			$result = $dispatcher->trigger($this->event_before_save, array($this->option . '.' . $this->name, $table, $isNew));
-			if (in_array(false, $result, true))
-			{
+			if(in_array(false, $result, true)){
 				$this->setError($table->getError());
 				return false;
 			}
 
 			// Store the data.
-			if (!$table->store())
-			{
+			if(!$table->store()){
 				$this->setError($table->getError());
 				return false;
 			}
@@ -213,9 +204,7 @@ class Help_videosModelvideo extends JModelAdmin
 
 			// Trigger the onContentAfterSave event.
 			$dispatcher->trigger($this->event_after_save, array($this->option . '.' . $this->name, $table, $isNew));
-		}
-		catch (Exception $e)
-		{
+		}catch(Exception $e){
 			$this->setError($e->getMessage());
 
 			return false;
@@ -223,8 +212,7 @@ class Help_videosModelvideo extends JModelAdmin
 
 		$pkName = $table->getKeyName();
 
-		if (isset($table->$pkName))
-		{
+		if(isset($table->$pkName)){
 			$this->setState($this->getName() . '.id', $table->$pkName);
 		}
 		$this->setState($this->getName() . '.new', $isNew);

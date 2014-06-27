@@ -64,6 +64,7 @@ $document->addStyleSheet('components/com_help_videos/assets/css/help_videos.css'
             </fieldset>
         </div>
         <input type="hidden" name="task" value="" />
+        <?php echo $this->form->getInput('alias'); ?>
         <?php echo JHtml::_('form.token'); ?>
     </div>
 </form>

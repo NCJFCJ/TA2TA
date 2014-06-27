@@ -27,6 +27,13 @@
             maxlength="50"
 			name="name"
 			required="true" 
-            type="text" /> 
+            type="text" />
+        <field
+        	description="COM_HELP_VIDEOS_FORM_DESC_ALIAS"
+        	filter="string"
+        	label="COM_HELP_VIDEOS_FORM_LBL_ALIAS"
+        	maxlength="50"
+        	name="alias"
+        	type="hidden" />
 	</fieldset>
 </form>

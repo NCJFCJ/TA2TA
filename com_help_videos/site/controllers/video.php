@@ -13,12 +13,12 @@ require_once JPATH_COMPONENT.'/controller.php';
 /**
  * Events list controller class.
  */
-class Help_videosControllerVideos extends Help_videosController{
+class Help_videosControllerVideo extends Help_videosController{
 	/**
 	 * Proxy for getModel.
 	 * @since	1.6
 	 */
-	public function &getModel($name = 'Videos', $prefix = 'Help_videosModel'){
+	public function &getModel($name = 'Video', $prefix = 'Help_videosModel'){
 		$model = parent::getModel($name, $prefix, array('ignore_request' => true));
 		return $model;
 	}

@@ -7,11 +7,15 @@
  
 // no direct access
 defined('_JEXEC') or die;
+?>
+Hello World!
 
+<?php
 // the number of days to still be considered new
 $newDays = 60;
 
 // print the markup for each category
+/*
 foreach($this->categories as $category):
 ?>
 <div id="help-videos">
@@ -25,7 +29,7 @@ foreach($this->categories as $category):
 				if($vidCount >= 6)
 					break;
 				if($video->category == $category->id):
-					$link = JRoute::_('index.php?&view=video&id=' . $video->id . '&catid=' . $video->category);
+					$link = '';
 			?>
 			<div class="help-video col-xs-6 col-sm-4 col-md-3 col-lg-2">
 				<div class="thumbnail-wrapper">
@@ -59,7 +63,7 @@ foreach($this->categories as $category):
 		</div>
 	</div>
 </div>
-<?php endforeach;
+<?php endforeach; */
 /**
  * Checks if this event is considered 'new'
  *

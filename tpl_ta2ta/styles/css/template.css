@@ -8153,6 +8153,10 @@ input[type="checkbox"] {
 #legalMenu .nav > li > a:hover {
   text-decoration: underline;
 }
+.video-wrapper {
+  height: 187px;
+  width: 250px;
+}
 /* --- Small Tablets (>=768px) --- */
 @media screen and (min-width: 768px) {
   .big-inputs button,
@@ -8395,6 +8399,10 @@ input[type="checkbox"] {
   #bottomBar .row #disclaimer {
     margin-bottom: 0;
   }
+  .video-wrapper {
+    height: 450px;
+    width: 600px;
+  }
 }
 /* --- Small Tablets Only --- */
 @media screen and (min-width: 768px) and (max-width: 991px) {
@@ -8416,6 +8424,10 @@ input[type="checkbox"] {
   }
   #bodyBar #topNav li a {
     padding: 12px 20px;
+  }
+  .video-wrapper {
+    height: 577px;
+    width: 770px;
   }
 }
 /* --- Large Desktop Screens (>= 1200px) --- */

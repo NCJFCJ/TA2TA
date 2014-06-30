@@ -4,7 +4,7 @@ var ta2ta = {}
 
 /* ----- Frameworks and Plugins ----- */
 
-//@codekit-prepend "jquery-1.11.0.js"
+//@codekit-prepend "../../plugins/jquery/jquery-1.11.1.js"
 //@codekit-append "../../plugins/modernizr/modernizr.js"
 //@codekit-append "../../plugins/bootstrap/js/transition.js"
 //@codekit-append "../../plugins/bootstrap/js/alert.js"
@@ -19,6 +19,7 @@ var ta2ta = {}
 //@codekit-append "../../plugins/jquery/jqueryfileupload/jquery.iframe-transport.js"
 //@codekit-append "../../plugins/jquery/nivo/jquery.nivo.slider.js"
 //@codekit-append "../../plugins/jquery/waypoints/waypoints.js"
+//@codekit-append "../../plugins/jwplayer/jwplayer.js"
 //@codekit-append "../../plugins/bootstrap/plugins/datepicker/js/bootstrap-datepicker.js"
 //@codekit-append "../../plugins/jquery/chosen/chosen.jquery.js"
 //@codekit-append "bootstrapHelper.js"
@@ -197,6 +198,68 @@ jQuery(function($){
 	 */
 	$('.uncheckAll').click(function(){
 		$(this).closest('div').find(':checkbox').removeAttr('checked');
+	});
+
+	/* --- JW PLayer --- */
+
+	// construct the necessary URLs
+	var baseURL = window.location.protocol + '//' + window.location.host;
+	var jwPlayerURL = baseURL + '/templates/ta2ta/plugins/jwplayer/';
+
+	// replace all link tags with the video player
+	$('a.video-player').each(function(){
+		// grab the video settings from the link
+		var settingString = $(this).attr("href");
+
+		// settings array [0] = video file, [1] = caption, [2] = high def, [3] = start
+		var settings = settingString.split(':');
+
+		// make sure we have at least a video before proceeding
+		if(settings[0]){
+			// replace the link with a DIV which will hold the video
+			$(this).replaceWith('<div class="video-wrapper"><div id="video"></div></div>');
+
+			// determine whether we are auto starting, default false
+			var start = false;
+			if(settings[3]){
+				start = settings[3];
+			}
+
+			// configure JWPlayer
+			var options = {
+				autostart: start,
+			  	file: baseURL + settings[0],
+			  	flashplayer: jwPlayerURL + 'player.swf',
+			  	height: '100%',
+			  	plugins: {
+			  		'gapro-2':{
+					  	'trackstarts': true,
+					  	'trackpercentage': true,
+					  	'trackseconds': true		  	
+			  		}
+			  	},
+			  	skin: jwPlayerURL + 'skins/ta2ta/ta2ta.xml',
+			  	stretching: 'fill',
+			  	width: '100%'
+			};
+			
+			// append captions settings if present
+			if(settings[1]){
+				if(settings[1].toLowerCase() == 'embedded'){
+					options.plugins['captions-2'] = {state: 'false', back: 'true'};
+				}else{
+					options.plugins['captions-2'] = {file: baseURL + settings[1], state: 'false', back: 'true'};
+				}
+			}
+			
+			// append high def settings if present
+			if(settings[2]){
+				options.plugins['hd-2'] = {file: baseURL + settings[2]};
+			}
+			
+			// build the JWPlayer
+			jwplayer('video').setup(options);
+		}
 	});
 });
 

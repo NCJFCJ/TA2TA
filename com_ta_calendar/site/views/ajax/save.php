@@ -239,6 +239,120 @@ if($permission_level > 0){
 					$db->setQuery($query);
 					if($db->query()){
 						$newId = $db->insertid();
+
+						// email us the details
+							
+						// create a mailer object	
+						$mailer = JFactory::getMailer();
+						$mailer->isHTML(true);
+						$mailer->Encoding = 'base64';
+
+						// set the sender to the site default
+						$config = JFactory::getConfig();
+						$sender = array( 
+						    $config->get('config.mailfrom'),
+						    $config->get('config.fromname')
+						);
+						$mailer->setSender($sender);
+
+						// set the recipient
+						$mailer->addRecipient('info@ta2ta.org');
+					
+						// set the message subject
+						$mailer->setSubject('[TA2TA] - New Calendar Event Added');
+
+						// get the user's organization name
+						$query = $db->getQuery(true);
+						$query->select($db->quoteName('name'));
+						$query->from($db->quoteName('#__ta_providers'));
+						$query->where($db->quoteName('id') . '=' . $org);
+						$db->setQuery($query, 0 ,1);
+						$orgName = $db->loadResult();
+
+						// get the user's name
+						$query = $db->getQuery(true);
+						$query->select($db->quoteName('name'));
+						$query->from($db->quoteName('#__users'));
+						$query->where($db->quoteName('id') . '=' . $db->quote($user->id));
+						$db->setQuery($query, 0 ,1);
+						$userName = $db->loadResult();			 		
+						
+						// start the message body
+						$message = "$userName of $orgName has submitted a new event to the TA2TA Event Calendar. The details of the event are as follows:<br><br>";
+						$message .= '<table>';
+						$message .= "<tr style=\"background: #DDD;\"><td style=\"170px;\"><b>ID<b></td><td>$newId</td></tr>";
+
+						// get the event type
+						$query = $db->getQuery(true);
+						$query->select($db->quoteName('name'));
+						$query->from($db->quoteName('#__ta_calendar_event_types'));
+						$query->where($db->quoteName('id') . '=' . $db->quote($type));
+						$db->setQuery($query, 0 ,1);
+						$typeName = $db->loadResult();	
+
+						$message .= "<tr><td><b>Type<b></td><td>$typeName</td></tr>";
+						$message .= "<tr style=\"background: #DDD;\"><td><b>Title<b></td><td>$title</td></tr>";
+
+						// process the start and end dates
+						$startDateTime->setTimezone($utcTimeZone);
+						$endDateTime->setTimezone($utcTimeZone);
+
+						// update each date time to the user's timezone
+						$tz = new DateTimeZone('America/Los_Angeles');
+						if($startDateTime){
+							$startDateTime->setTimezone($tz);
+						}
+						if($endDateTime){
+							$endDateTime->setTimezone($tz);
+						}
+
+						// configure the date string
+						$dateString = '';					
+						if($startDateTime->format('Y-m-d') == $endDateTime->format('Y-m-d')){
+							// single day
+							$dateString = $startDateTime->format('M j, Y g:ia') . ' - ' . $endDateTime->format('g:ia');
+						}else{
+							// multi-day
+							$dateString = $startDateTime->format('M j, Y g:ia') . ' - ' . $endDateTime->format('M j, Y g:ia');
+						}
+
+						$message .= "<tr><td><b>Date<b></td><td>$dateString PT</td></tr>";
+						$message .= '<tr style="background: #DDD;"><td><b>OVW Approved<b></td><td>' . ($approved == 1 ? 'Yes' : 'No') . '</td></tr>';
+						$message .= "<tr><td><b>Summary<b></td><td>$summary</td></tr>";
+
+						// get the project name
+						$query = $db->getQuery(true);
+						$query->select($db->quoteName('title'));
+						$query->from($db->quoteName('#__tapd_provider_projects'));
+						$query->where($db->quoteName('id') . '=' . $db->quote($project));
+						$db->setQuery($query, 0 ,1);
+						$projectName = $db->loadResult();
+
+						$message .= "<tr style=\"background: #DDD;\"><td><b>Project<b></td><td>$projectName</td></tr>";
+
+						if(!empty($event_url)){
+							$message .= "<tr><td><b>Event URL<b></td><td><a href=\"$event_url\" target=\"_blank\">Click Here</a></td></tr>";
+						}
+						if($open && !empty($registration_url)){
+							$message .= "<tr><td" . (!empty($event_url) ? ' style="background: #DDD;"' : '') . "><b>Registration URL<b></td><td><a href=\"$registration_url\" target=\"_blank\">Click Here</a></td></tr>";
+						}
+
+/*
+$topicAreas = filter_var_array($_POST['topicAreas'], FILTER_SANITIZE_NUMBER_INT);
+$grantPrograms = filter_var_array($_POST['grantPrograms'], FILTER_SANITIZE_NUMBER_INT);
+$targetAudiences = filter_var_array($_POST['targetAudiences'], FILTER_SANITIZE_NUMBER_INT);
+*/
+
+						$message .= '</table><br><br>';
+
+						// view event button
+						$message .= "<div style=\"background:#428BCA;display:inline-block;padding:10px;\"><a href=\"http://{$_SERVER['HTTP_HOST']}/calendar.html?event=$newId\" style=\"color:#fff;font-weight:bold;text-decoration:none;\" target=\"_blank\">View on Website</a></div>";
+
+						// set the body
+						$mailer->setBody($message);
+
+						// send the message
+						$mailer->Send();
 					}else{
 						$return['message'] = 'Unable to store event. Please contact us.';
 						$return['status'] = 'error';

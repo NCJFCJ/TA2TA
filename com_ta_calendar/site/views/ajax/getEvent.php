@@ -166,6 +166,7 @@ if($_SERVER['REQUEST_METHOD'] == "POST"
 
 							// begin building the return object
 							$return['data'] = $eventData;
+							$return['data']->caldate = $eventStart->format('Ymd');
 							$return['data']->startdate = $eventStart->format('m-d-Y');
 							$return['data']->starttime = $eventStart->format('g:ia'); 
 							$return['data']->enddate = $eventEnd->format('m-d-Y');

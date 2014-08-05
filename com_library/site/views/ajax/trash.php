@@ -1,10 +1,8 @@
 <?php
 /**
- * @version     2.0.0
  * @package     com_library
- * @copyright   Copyright (C) 2014. All rights reserved.
- * @license     
- * @author      Zachary Draper <zdraper@ncjfcj.org> - http://ncjfcj.org
+ * @copyright   Copyright (C) 2013 NCJFCJ. All rights reserved.
+ * @author      NCJFCJ <zdraper@ncjfcj.org> - http://ncjfcj.org
  */
   
 // no direct access

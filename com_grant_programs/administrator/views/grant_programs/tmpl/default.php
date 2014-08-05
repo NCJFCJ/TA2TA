@@ -120,7 +120,6 @@ if (!empty($this->extra_sidebar)) {
 				<?php echo JHtml::_('grid.sort',  'COM_GRANT_PROGRAMS_GRANT_PROGRAMS_CREATED_BY', 'a.created_by', $listDirn, $listOrder); ?>
 				</th>
                     
-                    
                 <?php if (isset($this->items[0]->id)): ?>
 					<th width="1%" class="nowrap center hidden-phone">
 						<?php echo JHtml::_('grid.sort', 'JGRID_HEADING_ID', 'a.id', $listDirn, $listOrder); ?>

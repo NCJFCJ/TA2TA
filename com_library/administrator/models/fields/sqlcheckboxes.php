@@ -1,7 +1,8 @@
 <?php
 /**
- * @copyright   Copyright (C) 2013. All rights reserved.  
- * @author      Zachary Draper
+ * @package     com_library
+ * @copyright   Copyright (C) 2013 NCJFCJ. All rights reserved.
+ * @author      NCJFCJ <zdraper@ncjfcj.org> - http://ncjfcj.org
  */
 
 defined('JPATH_BASE') or die;

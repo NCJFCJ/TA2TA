@@ -1,10 +1,8 @@
 <?php
 /**
- * @version     2.0.0
  * @package     com_library
  * @copyright   Copyright (C) 2013 NCJFCJ. All rights reserved.
- * @license     
- * @author      Zachary Draper <zdraper@ncjfcj.org> - http://ncjfcj.org
+ * @author      NCJFCJ <zdraper@ncjfcj.org> - http://ncjfcj.org
  */
 
 defined('_JEXEC') or die;
@@ -14,8 +12,7 @@ jimport('joomla.application.component.modellist');
 /**
  * Methods supporting a list of Library records.
  */
-class LibraryModelitems extends JModelList
-{
+class LibraryModelitems extends JModelList{
 
     /**
      * Constructor.
@@ -24,9 +21,8 @@ class LibraryModelitems extends JModelList
      * @see        JController
      * @since    1.6
      */
-    public function __construct($config = array())
-    {
-        if (empty($config['filter_fields'])) {
+    public function __construct($config = array()){
+        if(empty($config['filter_fields'])){
             $config['filter_fields'] = array(
                 'id', 'a.id',
                 'state', 'a.state',
@@ -46,8 +42,7 @@ class LibraryModelitems extends JModelList
 	 *
 	 * Note. Calling getState in this method will result in recursion.
 	 */
-	protected function populateState($ordering = null, $direction = null)
-	{
+	protected function populateState($ordering = null, $direction = null){
 		// Initialise variables.
 		$app = JFactory::getApplication('administrator');
 
@@ -77,8 +72,7 @@ class LibraryModelitems extends JModelList
 	 * @return	string		A store id.
 	 * @since	1.6
 	 */
-	protected function getStoreId($id = '')
-	{
+	protected function getStoreId($id = ''){
 		// Compile the store id.
 		$id.= ':' . $this->getState('filter.search');
 		$id.= ':' . $this->getState('filter.state');
@@ -92,8 +86,7 @@ class LibraryModelitems extends JModelList
 	 * @return	JDatabaseQuery
 	 * @since	1.6
 	 */
-	protected function getListQuery()
-	{
+	protected function getListQuery(){
 		// Create a new query object.
 		$db		= $this->getDbo();
 		$query	= $db->getQuery(true);
@@ -117,29 +110,29 @@ class LibraryModelitems extends JModelList
 
 	    // Filter by published state
 	    $published = $this->getState('filter.state');
-	    if (is_numeric($published)) {
+	    if(is_numeric($published)){
 	        $query->where('a.state = '.(int) $published);
-	    } else if ($published === '') {
+	    }else if ($published === ''){
 	        $query->where('(a.state IN (0, 1))');
 	    }
     
 		// Filter by search in title
 		$search = $this->getState('filter.search');
-		if (!empty($search)) {
-			if (stripos($search, 'id:') === 0) {
+		if(!empty($search)){
+			if(stripos($search, 'id:') === 0){
 				$query->where('a.id = '.(int) substr($search, 3));
-			} else {
+			}else{
 				$search = $db->Quote('%'.$db->escape($search, true).'%');
                 $query->where('( a.name LIKE '.$search.' )');
 			}
 		}
         
 		// Add the list ordering clause.
-        $orderCol	= $this->state->get('list.ordering');
-        $orderDirn	= $this->state->get('list.direction');
-        if ($orderCol && $orderDirn) {
-            $query->order($db->escape($orderCol.' '.$orderDirn));
-        }
+    $orderCol	= $this->state->get('list.ordering');
+    $orderDirn	= $this->state->get('list.direction');
+    if($orderCol && $orderDirn){
+        $query->order($db->escape($orderCol.' '.$orderDirn));
+    }
 
 		return $query;
 	}

@@ -1,10 +1,8 @@
 <?php
 /**
- * @version     2.0.0
  * @package     com_library
  * @copyright   Copyright (C) 2013 NCJFCJ. All rights reserved.
- * @license     
- * @author      Zachary Draper <zdraper@ncjfcj.org> - http://ncjfcj.org
+ * @author      NCJFCJ <zdraper@ncjfcj.org> - http://ncjfcj.org
  */
 
 // No direct access.
@@ -275,14 +273,46 @@ class LibraryModeledit extends JModelForm{
 	 * @param $data Associative Array containing data to be saved
 	 * @return boolean True on success, false otherwise
 	 */
- 	public function save($data)
-	{
+ 	public function save($data){
 		$data['org'] = $this->getUserOrg();
 		if(!$data['org']){
 			return false;
 		}
 		$admin_model = new LibraryModelitem();
-		return $admin_model->save($data);
+		if($admin_model->save($data)){
+			if($data['id'] == 0){
+				// Email notification that a new item was added
+
+				// create a mailer object	
+				$mailer = JFactory::getMailer();
+				
+				$mailer->isHTML(true);
+				$mailer->Encoding = 'base64';
+				
+				// set the sender to the site default
+				$config = JFactory::getConfig();
+				$sender = array( 
+			    $config->get('config.mailfrom'),
+			    $config->get('config.fromname'));
+
+				$mailer->setSender($sender);
+				
+				// set the recipient
+				$mailer->addRecipient('info@ta2ta.org');
+
+				// set the message subject
+				$mailer->setSubject('[TA2TA] New Library Item Pending Approval');
+
+				// set the message body
+				$mailer->setBody('A user has uploaded a new Library Item entitled "' . $data['name'] . '" to the TA2TA website which is waiting to be approved. Please visit the <a href="https://ta2ta.org/administrator/index.php?option=com_library&view=items">library component</a> in the TA2TA administrator console to review and approve this item. Remember that you must check the website to ensure the library still loads after this item is approved. If it fails to load, please change the status back to Pending Approval and contact our web development team.');
+
+				// send the message, if it errors out, just ignore it as we don't want the user affected
+				$mailer->Send();
+			}
+			return true;
+		}else{
+			return false;
+		}
 	}
 }
 ?>

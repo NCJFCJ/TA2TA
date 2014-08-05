@@ -7,7 +7,7 @@
     <author>Zachary Draper</author>
     <authorEmail>zdraper@ncjfcj.org</authorEmail>
     <authorUrl>http://ncjfcj.org</authorUrl>
-    <version>2.0.1</version>
+    <version>2.0.2</version>
     <description>A component to manage and display a list of TA Items on the TA2TA website.</description>
     
     <install> <!-- Runs on install -->

@@ -1,10 +1,8 @@
 <?php
 /**
- * @version     2.0.0
  * @package     com_library
  * @copyright   Copyright (C) 2013 NCJFCJ. All rights reserved.
- * @license     
- * @author      Zachary Draper <zdraper@ncjfcj.org> - http://ncjfcj.org
+ * @author      NCJFCJ <zdraper@ncjfcj.org> - http://ncjfcj.org
  */
 
 // no direct access
@@ -25,8 +23,7 @@ $listOrder	= $this->state->get('list.ordering');
 $listDirn	= $this->state->get('list.direction');
 $canOrder	= $user->authorise('core.edit.state', 'com_library');
 $saveOrder	= $listOrder == 'a.ordering';
-if ($saveOrder)
-{
+if ($saveOrder){
 	$saveOrderingUrl = 'index.php?option=com_library&task=items.saveOrderAjax&tmpl=component';
 	JHtml::_('sortablelist.sortable', 'itemList', 'adminForm', strtolower($listDirn), $saveOrderingUrl);
 }
@@ -37,9 +34,9 @@ $sortFields = $this->getSortFields();
 		table = document.getElementById("sortTable");
 		direction = document.getElementById("directionTable");
 		order = table.options[table.selectedIndex].value;
-		if (order != '<?php echo $listOrder; ?>') {
+		if(order != '<?php echo $listOrder; ?>'){
 			dirn = 'asc';
-		} else {
+		}else{
 			dirn = direction.options[direction.selectedIndex].value;
 		}
 		Joomla.tableOrdering(order, dirn, '');
@@ -47,7 +44,7 @@ $sortFields = $this->getSortFields();
 </script>
 
 <?php
-if (!empty($this->extra_sidebar)) {
+if(!empty($this->extra_sidebar)){
     $this->sidebar .= $this->extra_sidebar;
 }
 ?>

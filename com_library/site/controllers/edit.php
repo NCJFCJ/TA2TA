@@ -1,10 +1,8 @@
 <?php
 /**
- * @version     2.0.0
  * @package     com_library
- * @copyright   Copyright (C) 2013. All rights reserved.
- * @license     
- * @author      Zachary Draper <zdraper@ncjfcj.org> - http://ncjfcj.org
+ * @copyright   Copyright (C) 2013 NCJFCJ. All rights reserved.
+ * @author      NCJFCJ <zdraper@ncjfcj.org> - http://ncjfcj.org
  */
 
 // No direct access
@@ -15,8 +13,7 @@ require_once JPATH_COMPONENT.'/controller.php';
 /**
  * Event controller class.
  */
-class LibraryControllerEdit extends LibraryController
-{
+class LibraryControllerEdit extends LibraryController{
 	// default error message
 	protected $errorMessage = 'An error occured, please try again later.';
 	
@@ -54,7 +51,7 @@ class LibraryControllerEdit extends LibraryController
 		$data = $this->validate($data);
 
 		// Check for errors.
-		if ($data === false){
+		if($data === false){
 			// Get the validation messages.
 			$app->enqueueMessage($this->errorMessage, 'warning');
 
@@ -70,7 +67,7 @@ class LibraryControllerEdit extends LibraryController
 		$return	= $model->save($data);
 
 		// Check for errors.
-		if ($return === false){
+		if($return === false){
 			// Save the data in the session.
 			$app->setUserState('com_library.edit.settings.data', $data);
 
@@ -80,7 +77,7 @@ class LibraryControllerEdit extends LibraryController
 			return false;
 		}
 
-        // Redirect to the list screen.
+    // Redirect to the list screen.
 		if($data['state'] == -1){
         	$this->setMessage(JText::_('COM_LIBRARY_RESOURCE_SAVED_SUCCESSFULLY_PENDING'));
 		}else{
@@ -95,8 +92,7 @@ class LibraryControllerEdit extends LibraryController
 	/**
 	 * Validates the data entered by the user
 	 */
-	public function validate($data)
-	{
+	public function validate($data){
 		if(!isset($data['id'])
 		|| !isset($data['state'])
 		|| !isset($data['name'])

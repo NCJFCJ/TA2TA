@@ -281,6 +281,31 @@ ta2ta.validate = ta2ta.validate || {
 	},
 
 	/**
+	 * Checks whether the value provided matches the provided regular expression
+	 * 
+	 * @param object A jQuery object for a single form element.
+	 * @param RegExp A regular expression object to test against
+	 * @param int Determines when to show the validation state:
+	 *	   3 = success and failure
+     *     2 = success only
+     *     1 = failure only
+     *     0 = don't show (default)
+	 * @return boolean True if valid, false otherwise.
+ 	 */
+	regex: function(obj, regEx, showState){
+		// make sure the input exists, and if not return false
+		if(!obj.length){
+			return false;
+		}
+
+		// sanitize showState
+		showState = this.sanitizeShowState(showState);
+
+		// check validity
+		return this.validationResult(regEx.test(obj.val()), obj, showState);
+	},
+
+	/**
 	 * Checks whether the value provided passes the time regex. Formatting allowed is hh:mm[am|pm]
 	 * 
 	 * @param object A jQuery object for a single form element.

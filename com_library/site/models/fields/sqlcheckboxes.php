@@ -1,7 +1,8 @@
 <?php
 /**
- * @copyright   Copyright (C) 2013. All rights reserved.  
- * @author      Zachary Draper
+ * @package     com_library
+ * @copyright   Copyright (C) 2013 NCJFCJ. All rights reserved.
+ * @author      NCJFCJ <zdraper@ncjfcj.org> - http://ncjfcj.org
  */
 
 defined('JPATH_BASE') or die;
@@ -35,8 +36,7 @@ JFormHelper::loadFieldClass('checkboxes');
  * warning_symbol(optional) = the symbol that will be displayed at the front of the disabled option. An asterisk will be used if not defined.
  * translate (optional) = will translate the output of the value_field if set to true. It defaults to false. 
  */
-class JFormFieldSQLcheckboxes extends JFormFieldCheckboxes
-{
+class JFormFieldSQLcheckboxes extends JFormFieldCheckboxes{
 	/**
 	 * Properties
 	 */
@@ -56,8 +56,7 @@ class JFormFieldSQLcheckboxes extends JFormFieldCheckboxes
 	 *
 	 * @return  string  The field input markup.
 	 */
-	protected function getInput()
-	{
+	protected function getInput(){
 		$html = array();
 		
 		// Initialize some field attributes.
@@ -86,11 +85,9 @@ class JFormFieldSQLcheckboxes extends JFormFieldCheckboxes
 		$nextRow = 0;
 		$remainingRecords = count($options);
 		$totalRecords = count($options);
-		for($i = 0; $i < $totalRecords; $i++)
-		{
+		for($i = 0; $i < $totalRecords; $i++){
 			// Determine if a spanning div is needed
-			if($i == $nextRow)
-			{
+			if($i == $nextRow){
 				// first, close the current div, if any
 				if($i > 0){
 					$html[] = '</div>';
@@ -109,12 +106,9 @@ class JFormFieldSQLcheckboxes extends JFormFieldCheckboxes
 			}
 			
 			// Initialize some option attributes.
-			if (!isset($this->value) || empty($this->value))
-			{
+			if (!isset($this->value) || empty($this->value)){
 				$checked = (in_array((string) $options[$i]->value, (array) $checkedOptions) ? ' checked="checked"' : '');
-			}
-			else
-			{
+			}else{
 				$value = !is_array($this->value) ? explode(',', $this->value) : $this->value;
 				$checked = (in_array((string) $options[$i]->value, $value) ? ' checked="checked"' : '');
 			}
@@ -163,8 +157,7 @@ class JFormFieldSQLcheckboxes extends JFormFieldCheckboxes
 	 *
 	 * @return	string	The field input markup.
 	 */
-	protected function getOptions()
-	{
+	protected function getOptions(){
 		// Initialize variables.
         $options = array();
 		
@@ -178,44 +171,31 @@ class JFormFieldSQLcheckboxes extends JFormFieldCheckboxes
 		$checkedOptions = explode(',', (string) $this->value);
 				
 		// Get the database object.
-        $db = JFactory::getDbo();
+    $db = JFactory::getDbo();
 
 		// Set the query and get the result list.
 		$db->setQuery($query);
 		$items = $db->loadObjectList();
 		
-		if(!empty($items))
-		{
-			foreach($items as $item)
-			{
+		if(!empty($items)){
+			foreach($items as $item){
 				$tmp = '';
-				if ($translate == true)
-				{
-					if(!isset($item->$state) || $item->$state == 1)
-					{
+				if ($translate == true){
+					if(!isset($item->$state) || $item->$state == 1){
 						$tmp = JHtml::_('select.option', $item->$key, JText::_($item->$value));
-					}
-					else
-					{
+					}else{
 						// this record is disabled, check if it is selected, and only then show it
-						if(in_array($item->$key, $checkedOptions))
-						{
+						if(in_array($item->$key, $checkedOptions)){
 							$tmp = JHtml::_('select.option', $item->$key, JText::_($warning_symbol . ' ' . $item->$value));
 							$this->hasDisabled = true;
 						}
 					}
-				}
-				else
-				{
-					if(!isset($item->$state) || $item->$state == 1)
-					{
+				}else{
+					if(!isset($item->$state) || $item->$state == 1){
 						$tmp = JHtml::_('select.option', $item->$key, $item->$value);
-					}
-					else
-					{
+					}else{
 						// this record is disabled, check if it is selected, and only then show it
-						if(in_array($item->$key, $checkedOptions))
-						{
+						if(in_array($item->$key, $checkedOptions)){
 							$tmp = JHtml::_('select.option', $item->$key, ($warning_symbol . ' ' . $item->$value));
 							$this->hasDisabled = true;
 						}
@@ -224,14 +204,12 @@ class JFormFieldSQLcheckboxes extends JFormFieldCheckboxes
 				
 				if(!empty($tmp)){
 					// Set the class atribute
-					if(isset($item->class))
-					{
+					if(isset($item->class)){
 						$tmp->class = (string) $item->class;
 					}
 					
 					// Set the onclick attribute
-					if(isset($item->onclick))
-					{
+					if(isset($item->onclick)){
 						$tmp->onclick = (string) $item->onclick;
 					}
 					

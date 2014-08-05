@@ -1,10 +1,8 @@
 <?php
 /**
- * @version     2.0.0
  * @package     com_library
  * @copyright   Copyright (C) 2013 NCJFCJ. All rights reserved.
- * @license     
- * @author      Zachary Draper <zdraper@ncjfcj.org> - http://ncjfcj.org
+ * @author      NCJFCJ <zdraper@ncjfcj.org> - http://ncjfcj.org
  */
 
 // No direct access.
@@ -16,8 +14,7 @@ jimport('joomla.filesystem.file');
 /**
  * Library model.
  */
-class LibraryModelitem extends JModelAdmin
-{
+class LibraryModelitem extends JModelAdmin{
 	/**
 	 * @var		string	The prefix to use with controller messages.
 	 * @since	1.6
@@ -32,8 +29,7 @@ class LibraryModelitem extends JModelAdmin
 	 * @return	JForm	A JForm object on success, false on failure
 	 * @since	1.6
 	 */
-	public function getForm($data = array(), $loadData = true)
-	{
+	public function getForm($data = array(), $loadData = true){
 		// Initialise variables.
 		$app	= JFactory::getApplication();
 
@@ -55,8 +51,7 @@ class LibraryModelitem extends JModelAdmin
 	 * @return	JTable	A database object
 	 * @since	1.6
 	 */
-	public function getTable($type = 'Item', $prefix = 'LibraryTable', $config = array())
-	{
+	public function getTable($type = 'Item', $prefix = 'LibraryTable', $config = array()){
 		return JTable::getInstance($type, $prefix, $config);
 	}
 
@@ -66,19 +61,16 @@ class LibraryModelitem extends JModelAdmin
 	 * @return	mixed	The data for the form.
 	 * @since	1.6
 	 */
-	protected function loadFormData()
-	{
+	protected function loadFormData(){
 		// Check the session for previously entered form data.
 		$data = JFactory::getApplication()->getUserState('com_library.edit.item.data', array());
 
-		if(empty($data))
-		{
+		if(empty($data)){
 			$data = $this->getItem();
 			
 			// Support for target audiences
 			$data->target_audiences = '';
-			if($data->id)
-			{
+			if($data->id){
 				$db = JFactory::getDbo();
 				$query = $db->getQuery(true);
 				$query->select($db->quoteName('target_audience'));
@@ -93,44 +85,16 @@ class LibraryModelitem extends JModelAdmin
 	}
 	
 	/**
-	 * Library after delete content method
-	 * Library item is passed by reference, all files associated with it are deleted
-	 * 
-	 * @param string $context The content of the content passed to the plugin
-	 * @param object $table A JTableContent object
-	 *
-	public function onContentAfterDelete($context, $table){
-
-		// delete the pdf file
-		$old_file_name = $table->id . '-' . $old_file_name;
-		$old_file_path = JPATH_SITE . '/media/com_library/resources/' . $old_file_name . '.pdf';
-		if(file_exists($old_file_path))
-		{
-			unlink($old_file_path);
-		}
-		
-		// delete the cover image
-		$old_image_path = JPATH_SITE . '/media/com_library/covers/' . $old_file_name . '.jpg';
-		if(file_exists($old_image_path))
-		{
-			unlink($old_image_path);
-		}
-	}*/
-	
-	/**
 	 * Prepare and sanitise the table prior to saving.
 	 *
 	 * @since	1.6
 	 */
-	protected function prepareTable($table)
-	{
+	protected function prepareTable($table){
 		jimport('joomla.filter.output');
 
-		if(empty($table->id))
-		{
+		if(empty($table->id)){
 			// Set ordering to the last item if not set
-			if (@$table->ordering === '')
-			{
+			if (@$table->ordering === ''){
 				$db = JFactory::getDbo();
 				$db->setQuery('SELECT MAX(ordering) FROM #__tapd_items');
 				$max = $db->loadResult();
@@ -148,13 +112,11 @@ class LibraryModelitem extends JModelAdmin
 	 *
 	 * @since   12.2
 	 */
-	public function save($data)
-	{
+	public function save($data){
 		$dispatcher = JEventDispatcher::getInstance();
 		$table = $this->getTable();
 
-		if ((!empty($data['tags']) && $data['tags'][0] != ''))
-		{
+		if((!empty($data['tags']) && $data['tags'][0] != '')){
 			$table->newTags = $data['tags'];
 		}
 
@@ -177,6 +139,29 @@ class LibraryModelitem extends JModelAdmin
 		}else{
 			$data['created'] = $curDateTime;
 			$data['created_by'] = $user->id;
+		}
+
+		// Support for deleted fields
+		if($data['state'] == 0){
+			if($data['id']){
+				// if this is an existing item, check its state first, if it didn't change, don't update the deleted field as the last person was the deleter
+				$db = JFactory::getDbo();
+				$query = $db->getQuery(true);
+				$query->select($db->quoteName('state'));
+				$query->from($db->quoteName('#__library'));
+				$query->where($db->quoteName('id') . ' = ' . $data['id']);
+				$db->setQuery($query);
+				$old_state = $db->loadResult();
+				if($data['state'] != $old_state){
+					// this user was the deleter
+					$data['deleted'] = $curDateTime;
+					$data['deleted_by'] = $user->id;
+				}
+			}else{
+				// the user deleted this record when they created it.
+				$data['deleted'] = $curDateTime;
+				$data['deleted_by'] = $user->id;
+			}
 		}
 		
 		/* --- Check for Target Audiences --- */
@@ -306,21 +291,7 @@ class LibraryModelitem extends JModelAdmin
 			}
 			
 			$db = $this->getDBO();
-			
-			/* -- TO DO: REMOVE THIS HACK --*/
-			
-			/** Background: The system, for some unknown reason
-			 * is changing the state on every item the user saves from 1 to 0,
-			 * making it unpublished. This should not be the case.
-			 *
-			 
-			$query = $db->getQuery(true);
-			$query->update($db->quoteName('#__library'));
-			$query->set($db->quoteName('state') . '=' . $db->quote('1'));
-			$query->where($db->quoteName('id') . '=' . $db->quote($data['id']));
-			$db->setQuery($query);
-			$db->query();*/
-			
+						
 			/* -- complete the file upload -- */
 			
 			if($fileUpload){

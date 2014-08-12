@@ -122,10 +122,13 @@ ta2ta.bootstrapHelper = ta2ta.bootstrapHelper || {
 			type = 'warning';
 		}
 
+		class_name = type;
+
 		// heading
 		var heading = '';
 		switch(type){
 			case 'error':
+				class_name = 'danger';
 				heading = 'Error';
 				break;
 			case 'warning':
@@ -145,7 +148,7 @@ ta2ta.bootstrapHelper = ta2ta.bootstrapHelper || {
 		aliveTime = typeof aliveTime !== 'undefined' ? aliveTime : 0;
 
 		// creat the alert box
-		var alrt = '<div class="alert alert-' + type + (dismissable ? ' alert-dismissable' : '') + '">';
+		var alrt = '<div class="alert alert-' + class_name + (dismissable ? ' alert-dismissable' : '') + '">';
 		if(dismissable){
 			alrt += '<button type="button" class="close" data-dismiss="alert">&times;</button>';
 		}

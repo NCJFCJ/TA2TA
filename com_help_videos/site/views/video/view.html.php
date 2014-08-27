@@ -14,29 +14,27 @@ jimport('joomla.application.component.view');
  * View class for a list of help videos
  */
 class Help_videosViewVideo extends JViewLegacy{
-	protected $items;
-	protected $pagination;
 	protected $state;
-    protected $params;
-
+  protected $params;
+	protected $video;
+	
 	/**
 	 * Display the view
 	 */
 	public function display($tpl = null){
-        $app               		= JFactory::getApplication();
-        $this->state			= $this->get('State');
-        $this->pagination		= $this->get('Pagination');
-        $this->params       	= $app->getParams('com_help_videos');
-        
-// $this->items			= $this->get('Items');
+		
+    $app             	= JFactory::getApplication();
+    $this->state			= $this->get('State');
+    $this->params    	= $app->getParams('com_help_videos');
+		$this->video			= $this->get('Video');
 
-        // Check for errors.
-        if(count($errors = $this->get('Errors'))){
-            throw new Exception(implode("\n", $errors));
-        }
-        
-        $this->_prepareDocument();
-        parent::display($tpl);
+    // Check for errors.
+    if(count($errors = $this->get('Errors'))){
+      throw new Exception(implode("\n", $errors));
+    }
+    
+    $this->_prepareDocument();
+    parent::display($tpl);
 	}
 
 	/**

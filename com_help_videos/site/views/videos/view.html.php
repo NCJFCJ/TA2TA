@@ -17,27 +17,25 @@ class Help_videosViewVideos extends JViewLegacy {
 	protected $items;
 	protected $pagination;
 	protected $state;
-    protected $params;
+  protected $params;
 
 	/**
 	 * Display the view
 	 */
 	public function display($tpl = null){
-        $app               		= JFactory::getApplication();
-        $this->state			= $this->get('State');
-        $this->items			= $this->get('Items');
-        $this->pagination		= $this->get('Pagination');
-        $this->params       	= $app->getParams('com_help_videos');
-		
-		$this->categories 		= $this->get('Categories');
-        
-        // Check for errors.
-        if(count($errors = $this->get('Errors'))){
-            throw new Exception(implode("\n", $errors));
-        }
-        
-        $this->_prepareDocument();
-        parent::display($tpl);
+    $app               		= JFactory::getApplication();
+    $this->state			= $this->get('State');
+    $this->items			= $this->get('Items');
+    $this->pagination		= $this->get('Pagination');
+    $this->params       	= $app->getParams('com_help_videos');
+
+    // Check for errors.
+    if(count($errors = $this->get('Errors'))){
+        throw new Exception(implode("\n", $errors));
+    }
+    
+    $this->_prepareDocument();
+    parent::display($tpl);
 	}
 
 	/**

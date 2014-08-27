@@ -11,8 +11,21 @@ defined('_JEXEC') or die;
 // the number of days to still be considered new
 $newDays = 60;
 
+// build an array of categories
+$categories = array();
+$lastCategory = 0;
+foreach($this->items as $item){
+	if($item->category_id != $lastCategory){
+		$tmp = new stdClass();
+		$tmp->id = $item->category_id;
+		$tmp->name = $item->category_name;
+		$categories[] = $tmp;
+		$lastCategory = $item->category_id;
+	}
+}
+
 // print the markup for each category
-foreach($this->categories as $category):
+foreach($categories as $category):
 ?>
 <div id="help-videos">
 	<div class="help-video-category">
@@ -24,8 +37,8 @@ foreach($this->categories as $category):
 			foreach($this->items as $video):
 				if($vidCount >= 6)
 					break;
-				if($video->category == $category->id):
-					$link = JRoute::_('index.php?&view=video&id=' . $video->id . '&catid=' . $video->category);
+				if($video->category_id == $category->id):
+					$link = JRoute::_('index.php?view=video&id=' . $video->video_slug . '&catid=' . $video->category_slug);
 			?>
 			<div class="help-video col-xs-6 col-sm-4 col-md-3 col-lg-2">
 				<div class="thumbnail-wrapper">

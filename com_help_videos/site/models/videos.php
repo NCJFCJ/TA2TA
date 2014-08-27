@@ -61,59 +61,37 @@ class Help_videosModelVideos extends JModelList {
         $db = $this->getDbo();
         $query = $db->getQuery(true);
 
-        // Select the required fields from the table.
-        $query->select(
-                $this->getState(
-                        'list.select', 'a.*'
-                )
-        );
+        $query->select(array(
+            $db->quoteName('v.id'),
+            $db->quoteName('v.title'),
+            $db->quoteName('v.alias'),
+            $db->quoteName('v.youtube_id'),
+            $db->quoteName('v.duration'),
+            $db->quoteName('v.published'),
+            $db->quoteName('c.id', 'category_id'),
+            $db->quoteName('c.name', 'category_name'),
+            $db->quoteName('c.alias', 'category_alias'),
+            'CONCAT_WS(":", ' . $db->quoteName('v.id') . ', ' . $db->quoteName('v.alias') . ') as video_slug',
+            'CONCAT_WS(":", ' . $db->quoteName('c.id') . ', ' . $db->quoteName('c.alias') . ') as category_slug',
+        ));
 
-        $query->from('`#__help_videos` AS a');
-        $query->where($db->quoteName('a.state') . '=' . $db->quote('1'));
-    
-		// Join over the foreign key 'category'
-		$query->select($db->quoteName('cat.name', 'category_name'));
-		$query->join('LEFT', $db->quoteName('#__help_videos_categories', 'cat') . ' ON ' . $db->quoteName('cat.id') . '=' . $db->quoteName('a.category'));
+        $query->from($db->quoteName('#__help_videos', 'v'));
+        $query->join('LEFT', $db->quoteName('#__help_videos_categories', 'c') . ' ON ' . $db->quoteName('c.id') . '=' . $db->quoteName('v.category'));
+        $query->where($db->quoteName('v.state') . '=' . $db->quote('1'));
 
-		//Filtering category
-		$filter_category = $this->state->get("filter.category");
-		if ($filter_category) {
-			$query->where($db->quoteName('a.category') . '=' . $db->quote($filter_category));
-		}
+        // filtering category
+        $filter_category = $this->state->get("filter.category");
+        if($filter_category){
+            $query->where($db->quoteName('v.category') . '=' . $db->quote($filter_category));
+        }
 
         // order by published
-        $query->order($db->quoteName('a.published') . ' DESC');
+        $query->order($db->quoteName('category_name') . ' ASC, ' . $db->quoteName('v.published') . ' DESC');
 
         return $query;
     }
 
     public function getItems(){
         return parent::getItems();
-    }
-
-    /**
-     * Returns an object consisting of an alphabetical list of all
-     * active categories containing active videos
-     */
-    public function getCategories(){
-        $db = $this->getDbo();
-        
-        // sub query - active video category ids
-        $subquery = $db->getQuery(true);
-        $subquery->select('DISTINCT ' . $db->quoteName('category'));
-        $subquery->from($db->quoteName('#__help_videos'));
-        $subquery->where($db->quoteName('state') . '=' . $db->quote('1'));
-
-        // category query
-        $query = $db->getQuery(true);
-        $query->select(array(
-            $db->quoteName('id'),
-            $db->quoteName('name')
-        ));
-        $query->from($db->quoteName('#__help_videos_categories'));
-        $query->where($db->quoteName('state') . '=' . $db->quote('1') . ' AND ' . $db->quoteName('id') . ' IN(' . $subquery . ')');
-        $query->order($db->quoteName('name') . ' ASC');
-        $db->setQuery($query);
-        return $db->loadObjectList();
     }
 }

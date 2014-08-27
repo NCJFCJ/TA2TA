@@ -14,6 +14,8 @@ Hello World!
 // the number of days to still be considered new
 $newDays = 60;
 
+print_r($this->video);
+
 // print the markup for each category
 /*
 foreach($this->categories as $category):

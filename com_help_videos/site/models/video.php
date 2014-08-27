@@ -49,4 +49,29 @@ class Help_videosModelVideo extends JModelList{
         // List state information.
         parent::populateState($ordering, $direction);
     }
+
+    /**
+    * Retrieves the details of the current video from the database
+    *
+    * @return object
+    */
+    public function getVideo(){
+        $id = JRequest::getVar('id');
+
+        // get the video information
+        $db = JFactory::getDbo();
+        $query = $db->getQuery(true);
+        $query->select($db->quoteName(array(
+            'title',
+            'summary',
+            'youtube_id',
+            'duration',
+            'published'
+        )));
+        $query->from($db->quoteName('#__help_videos'));
+        $query->where($db->quoteName('id') . '=' . (int) $id);
+        $db->setQuery($query);
+
+        return $db->loadObject();
+    }
 }

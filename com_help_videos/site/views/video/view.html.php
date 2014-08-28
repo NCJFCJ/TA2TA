@@ -26,7 +26,9 @@ class Help_videosViewVideo extends JViewLegacy{
     $app             	= JFactory::getApplication();
     $this->state			= $this->get('State');
     $this->params    	= $app->getParams('com_help_videos');
+		$this->categories	= $this->get('Categories');
 		$this->video			= $this->get('Video');
+		$this->videos = $this->get('Videos');
 
     // Check for errors.
     if(count($errors = $this->get('Errors'))){

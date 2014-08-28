@@ -8,64 +8,79 @@
 // no direct access
 defined('_JEXEC') or die;
 ?>
-Hello World!
-
-<?php
-// the number of days to still be considered new
-$newDays = 60;
-
-print_r($this->video);
-
-// print the markup for each category
-/*
-foreach($this->categories as $category):
-?>
-<div id="help-videos">
-	<div class="help-video-category">
-		<h3><span class="icomoon-movie"></span> <?php echo $category->name; ?></h3>
-		<div class="row">
-			<?php
-			// print the markup for each video in a given category (max of 6)
-			$vidCount = 0;
-			foreach($this->items as $video):
-				if($vidCount >= 6)
-					break;
-				if($video->category == $category->id):
-					$link = '';
-			?>
-			<div class="help-video col-xs-6 col-sm-4 col-md-3 col-lg-2">
-				<div class="thumbnail-wrapper">
-					<a href="<?php echo $link; ?>">
-						<img style="width: 100%;" src="http://img.youtube.com/vi/<?php echo $video->youtube_id; ?>/mqdefault.jpg" alt="Thumbnail">
-					</a>
-					<?php if(is_new($video->published)): ?>
-					<a href="<?php echo $link; ?>" class="new-ribbon"><img src="/media/com_help_videos/new-ribbon.png" alt="New Video"></a>
-					<?php endif; ?>
-					<div class="duration"><?php echo gmdate('i:s', $video->duration); ?></div>
+<div class="item-page">
+	<div class="page-header">
+		<h2><a href="<?php echo $_SERVER['REQUEST_URI']; ?>"><?php echo $this->video->title ?></a></h2>
+	</div>
+	<div class="row">
+		<div class="col-sm-8">
+			<div class="row">
+				<div class="col-xs-12">
+					<div class="youtube-wrapper">
+						<iframe width="100%" height="100%" src="//www.youtube.com/embed/<?php echo $this->video->youtube_id; ?>" frameborder="0" allowfullscreen></iframe>
+					</div>
+					<div class="row">
+						<div class="col-xs-12">
+							Posted: &nbsp;<?php echo time_elapsed_string($this->video->published); ?>
+						</div>
+					</div>
 				</div>
-				<h5><a href="<?php echo $link; ?>"><?php echo $video->title; ?></a></h5>
-				<p class="published"><?php echo time_elapsed_string($video->published); ?></p>
 			</div>
-			<?php 
-					$vidCount++;
-					if($vidCount % 2 == 0):
-						?> <div class="clearfix visible-xs"></div> <?php
-					endif;
-					if($vidCount % 3 == 0):
-						?> <div class="clearfix visible-sm"></div> <?php
-					endif;
-					if($vidCount % 4 == 0):
-						?> <div class="clearfix visible-md"></div> <?php
-					endif;
-					if($vidCount % 6 == 0):
-						?> <div class="clearfix visible-lg"></div> <?php
-					endif;
-				endif;
-			endforeach; ?>
+			<div class="row">
+				<div class="col-xs-12">
+					<br>
+					<p><?php echo $this->video->summary; ?></p>
+				</div>
+			</div>
+		</div>
+		<div class="col-sm-4">
+			<h4 class="similar-videos-heading"><?php echo $this->categories[$this->video->category]->name; ?> Help Videos</h4>
+			<ul class="similar-videos">
+				<?php foreach($this->videos as $video):
+					if($video->category == $this->video->category): 
+					$link = JRoute::_('index.php?view=video&id=' . $video->video_slug . '&catid=' . $video->category_slug);
+				?>
+					<li>
+						<a href="<?php echo $link; ?>">
+							<div class="thumbnail-wrapper">
+									<img style="width: 100%;" src="http://img.youtube.com/vi/<?php echo $video->youtube_id; ?>/mqdefault.jpg" alt="Thumbnail">
+								<?php if(is_new($video->published)): ?>
+								<div class="new-ribbon"><img src="/media/com_help_videos/new-ribbon.png" alt="New Video"></div>
+								<?php endif; ?>
+								<div class="duration"><?php echo gmdate('i:s', $video->duration); ?></div>
+							</div>
+							<h5><?php echo $video->title; ?></h5>
+							<p class="published"><?php echo time_elapsed_string($video->published); ?></p>
+							<div class="clearfix"></div>
+						</a>
+					</li>
+				<?php endif;
+				endforeach; ?>
+			</ul>
+			<br>
+			<h4>Other Help Videos</h4>
+			<ul class="nav nav-pills nav-stacked">
+				<?php foreach($this->categories as $category):
+					if($category->id != $this->video->category):
+						$link = '#';
+
+						// get the link to the first video in this category
+						foreach($this->videos as $video){
+							if($video->category == $category->id){
+								$link = JRoute::_('index.php?view=video&id=' . $video->video_slug . '&catid=' . $video->category_slug);
+								break;
+							}
+						}
+				?>
+				<li><a href="<?php echo $link; ?>"><?php echo $category->name; ?></a></li>
+				<?php endif;
+				endforeach; ?>
+			</ul>
 		</div>
 	</div>
 </div>
-<?php endforeach; */
+
+<?php
 /**
  * Checks if this event is considered 'new'
  *
@@ -73,16 +88,17 @@ foreach($this->categories as $category):
  * @return boolean True if the item is new
  */
 function is_new($datetime){
-	global $newDays;
+	// the number of days to still be considered new
+	$newDays = 60;
 
 	$now = new DateTime;
-    $ago = new DateTime($datetime);
-    $diff = $now->diff($ago);
+  $ago = new DateTime($datetime);
+  $diff = $now->diff($ago)->format('%a');
 
-    if($diff->d <= $newDays){
+  if($diff <= $newDays){
 		return true;    	
-    }
-    return false;
+  }
+  return false;
 }
 
 function time_elapsed_string($datetime, $full = false) {

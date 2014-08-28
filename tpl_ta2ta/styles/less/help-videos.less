@@ -45,26 +45,69 @@
 	margin-top: 20px;
 }
 
-/* --- Small Tablets (>=768px) --- */
-
-@media screen and (min-width: 768px){
-
+.similar-videos{
+	list-style: none;
+	padding: 0;
+	li{
+		a{
+			display: block;
+			padding: 8px 8px 8px 0;
+		}
+		a:hover{
+			background-color: darken(#F6F9F6, 7%);
+			text-decoration: none;
+			h5{
+				text-decoration: underline;
+			}
+		}
+		h5{
+			color: #333;
+			margin: 0;
+		}
+		.published{
+			color: #8C8C8C;
+			font-size: @font-size-small;
+		}
+		.thumbnail-wrapper{
+			float: left;
+			margin-right: 15px;
+			position: relative;
+			width: 120px;
+			img{
+				width: 100%;
+			}
+			.duration{
+				background: #000;
+				bottom: 0;
+				color: #fff;
+				font-size: 11px;
+				padding: 2px 4px;
+				position: absolute;
+				right: 0;
+			}
+			.new-ribbon{
+				position: absolute;
+				top: 0;
+				width: 80%;
+			}
+		}
+	}
 }
 
-/* --- Small Desktop Screens and Tablets (>=980px) --- */
-
-@media screen and (min-width: 980px){
-
+.similar-videos-heading{
+	margin-top: 0;
 }
 
-/* --- Large Desktop Screens (>= 1200px) --- */
-
-@media screen and (min-width: 1200px){
-
-}
-
-/* --- Toolbar Fix --- */
-
-@media screen and (max-width: 979px){
-
+.youtube-wrapper{
+	position: relative;
+  padding-bottom: 56.25%;
+  padding-top: 30px; height: 0;
+  overflow: hidden;
+  embed, iframe, object{
+    height: 100%;
+    left: 0;
+    position: absolute;
+    top: 0;
+    width: 100%;
+  }
 }

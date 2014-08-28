@@ -7038,10 +7038,71 @@ a.jwDisqusArticleCounterLink:hover {
 .help-video-category {
   margin-top: 20px;
 }
-/* --- Small Tablets (>=768px) --- */
-/* --- Small Desktop Screens and Tablets (>=980px) --- */
-/* --- Large Desktop Screens (>= 1200px) --- */
-/* --- Toolbar Fix --- */
+.similar-videos {
+  list-style: none;
+  padding: 0;
+}
+.similar-videos li a {
+  display: block;
+  padding: 8px 8px 8px 0;
+}
+.similar-videos li a:hover {
+  background-color: #e1ebe1;
+  text-decoration: none;
+}
+.similar-videos li a:hover h5 {
+  text-decoration: underline;
+}
+.similar-videos li h5 {
+  color: #333;
+  margin: 0;
+}
+.similar-videos li .published {
+  color: #8C8C8C;
+  font-size: 12px;
+}
+.similar-videos li .thumbnail-wrapper {
+  float: left;
+  margin-right: 15px;
+  position: relative;
+  width: 120px;
+}
+.similar-videos li .thumbnail-wrapper img {
+  width: 100%;
+}
+.similar-videos li .thumbnail-wrapper .duration {
+  background: #000;
+  bottom: 0;
+  color: #fff;
+  font-size: 11px;
+  padding: 2px 4px;
+  position: absolute;
+  right: 0;
+}
+.similar-videos li .thumbnail-wrapper .new-ribbon {
+  position: absolute;
+  top: 0;
+  width: 80%;
+}
+.similar-videos-heading {
+  margin-top: 0;
+}
+.youtube-wrapper {
+  position: relative;
+  padding-bottom: 56.25%;
+  padding-top: 30px;
+  height: 0;
+  overflow: hidden;
+}
+.youtube-wrapper embed,
+.youtube-wrapper iframe,
+.youtube-wrapper object {
+  height: 100%;
+  left: 0;
+  position: absolute;
+  top: 0;
+  width: 100%;
+}
 /*
 
   -- -- -- -- -- -- -- -- --

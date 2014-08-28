@@ -8,9 +8,6 @@
 // no direct access
 defined('_JEXEC') or die;
 
-// the number of days to still be considered new
-$newDays = 60;
-
 // build an array of categories
 $categories = array();
 $lastCategory = 0;
@@ -80,16 +77,17 @@ foreach($categories as $category):
  * @return boolean True if the item is new
  */
 function is_new($datetime){
-	global $newDays;
+	// the number of days to still be considered new
+	$newDays = 60;
 
 	$now = new DateTime;
-    $ago = new DateTime($datetime);
-    $diff = $now->diff($ago);
+  $ago = new DateTime($datetime);
+	$diff = $now->diff($ago)->format('%a');
 
-    if($diff->d <= $newDays){
+  if($diff <= $newDays){
 		return true;    	
-    }
-    return false;
+  }
+  return false;
 }
 
 function time_elapsed_string($datetime, $full = false) {

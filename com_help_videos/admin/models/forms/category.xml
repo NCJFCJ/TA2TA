@@ -1,0 +1,39 @@
+<?xml version="1.0" encoding="utf-8"?>
+<form>
+	<fieldset>
+		<field
+			class="readonly"
+            default="0"
+			description="JGLOBAL_FIELD_ID_DESC"
+			label="COM_HELP_VIDEOS_FORM_LBL_CATEGORY_ID"
+            name="id"
+			readonly="true"
+			type="text" />
+        <field
+			class="inputbox"
+			default="1"
+			description="JFIELD_PUBLISHED_DESC"
+			label="JSTATUS"
+			name="state"
+			size="1"
+			type="list">
+				<option value="1">JPUBLISHED</option>
+				<option value="0">JUNPUBLISHED</option>
+		</field> 
+		<field
+			description="COM_HELP_VIDEOS_FORM_DESC_CATEGORY_NAME" 
+            filter="string"
+            label="COM_HELP_VIDEOS_FORM_LBL_CATEGORY_NAME"
+            maxlength="50"
+			name="name"
+			required="true" 
+            type="text" />
+        <field
+        	description="COM_HELP_VIDEOS_FORM_DESC_ALIAS"
+        	filter="string"
+        	label="COM_HELP_VIDEOS_FORM_LBL_ALIAS"
+        	maxlength="50"
+        	name="alias"
+        	type="hidden" />
+	</fieldset>
+</form>

@@ -1,0 +1,9 @@
+.icon-48-categories, .icon-48-category{
+      background-image: url(../images/l_categories.png);
+      padding-left:60px!important;
+}
+
+.icon-48-videos, .icon-48-video{
+      background-image: url(../images/l_videos.png);
+      padding-left:60px!important;
+}

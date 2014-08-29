@@ -1,0 +1,6 @@
+<?xml version="1.0" encoding="utf-8"?>
+<metadata>
+	<layout title="COM_HELP_VIDEOS_TITLE_LIST_HELP_VIDEOS" option="View">
+        <message> <![CDATA[COM_HELP_VIDEOS_TITLE_LIST_HELP_VIDEOS_DESC]]></message>
+	</layout>
+</metadata>

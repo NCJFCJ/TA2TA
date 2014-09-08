@@ -1,7 +1,8 @@
 <?php
 /**
- * @copyright   Copyright (C) 2013-2014 NCJFCJ. All rights reserved.  
- * @author      Zachary Draper
+ * @package     com_ta_calendar
+ * @copyright   Copyright (C) 2013-2014 NCJFCJ. All rights reserved.
+ * @author      NCJFCJ - http://ncjfcj.org
  */
 
 defined('JPATH_BASE') or die;
@@ -34,8 +35,7 @@ JFormHelper::loadFieldClass('list');
  * warning_symbol(optional) = the symbol that will be displayed at the front of the disabled option. An asterisk will be used if not defined.
  * translate (optional) = will translate the output of the value_field if set to true. It defaults to false. 
  */
-class JFormFieldSQLdisabled extends JFormFieldList
-{
+class JFormFieldSQLdisabled extends JFormFieldList{
 	/**
 	 * Properties
 	 */
@@ -55,8 +55,7 @@ class JFormFieldSQLdisabled extends JFormFieldList
 	 *
 	 * @return  string  The field input markup.
 	 */
-	protected function getInput()
-	{
+	protected function getInput(){
 		$html = array();
 		$attr = '';
 
@@ -64,8 +63,7 @@ class JFormFieldSQLdisabled extends JFormFieldList
 		$attr .= $this->element['class'] ? ' class="' . (string) $this->element['class'] . '"' : '';
 
 		// To avoid user's confusion, readonly="true" should imply disabled="true".
-		if ((string) $this->element['readonly'] == 'true' || (string) $this->element['disabled'] == 'true')
-		{
+		if ((string) $this->element['readonly'] == 'true' || (string) $this->element['disabled'] == 'true'){
 			$attr .= ' disabled="disabled"';
 		}
 
@@ -80,14 +78,10 @@ class JFormFieldSQLdisabled extends JFormFieldList
 		$options = (array) $this->getOptions();
 
 		// Create a read-only list (no name) with a hidden input to store the value.
-		if ((string) $this->element['readonly'] == 'true')
-		{
+		if ((string) $this->element['readonly'] == 'true'){
 			$html[] = JHtml::_('select.genericlist', $options, '', trim($attr), 'value', 'text', $this->value, $this->id);
 			$html[] = '<input type="hidden" name="' . $this->name . '" value="' . $this->value . '"/>';
-		}
-		// Create a regular list.
-		else
-		{
+		}else{
 			$html[] = JHtml::_('select.genericlist', $options, $this->name, trim($attr), 'value', 'text', $this->value, $this->id);
 		}
 		
@@ -113,10 +107,9 @@ class JFormFieldSQLdisabled extends JFormFieldList
 	 *
 	 * @return	string	The field input markup.
 	 */
-	protected function getOptions()
-	{
+	protected function getOptions(){
 		// Initialize variables.
-        $options = array();
+    $options = array();
 		
 		// Initialize some field attributes.
 		$warning_symbol = $this->element['warning_symbol'] ? (string) $this->element['warning_symbol'] : '*';
@@ -127,43 +120,30 @@ class JFormFieldSQLdisabled extends JFormFieldList
 		$value = $this->element['value_field'] ? (string) $this->element['value_field'] : (string) $this->element['name'];
 				
 		// Get the database object.
-        $db = JFactory::getDbo();
+    $db = JFactory::getDbo();
 
 		// Set the query and get the result list.
 		$db->setQuery($query);
 		$items = $db->loadObjectList();
 		
-		if(!empty($items))
-		{
-			foreach($items as $item)
-			{
-				if ($translate == true)
-				{
-					if(!isset($item->$state) || $item->$state == 1)
-					{
+		if(!empty($items)){
+			foreach($items as $item){
+				if($translate == true){
+					if(!isset($item->$state) || $item->$state == 1){
 						$options[] = JHtml::_('select.option', $item->$key, JText::_($item->$value));
-					}
-					else
-					{
+					}else{
 						// this record is disabled, check if it is selected, and only then show it
-						if($this->value == $item->$key)
-						{
+						if($this->value == $item->$key){
 							$options[] = JHtml::_('select.option', $item->$key, JText::_($warning_symbol . ' ' . $item->$value));
 							$this->hasDisabled = true;
 						}
 					}
-				}
-				else
-				{
-					if(!isset($item->$state) || $item->$state == 1)
-					{
+				}else{
+					if(!isset($item->$state) || $item->$state == 1){
 						$options[] = JHtml::_('select.option', $item->$key, $item->$value);
-					}
-					else
-					{
+					}else{
 						// this record is disabled, check if it is selected, and only then show it
-						if($this->value == $item->$key)
-						{
+						if($this->value == $item->$key){
 							$options[] = JHtml::_('select.option', $item->$key, ($warning_symbol . ' ' . $item->$value));
 							$this->hasDisabled = true;
 						}

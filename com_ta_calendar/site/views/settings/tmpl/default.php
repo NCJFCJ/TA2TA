@@ -1,10 +1,8 @@
 <?php
 /**
- * @version     1.3.0
  * @package     com_ta_calendar
  * @copyright   Copyright (C) 2013-2014 NCJFCJ. All rights reserved.
- * @license     
- * @author      Zachary Draper <zdraper@ncjfcj.org> - http://ncjfcj.org
+ * @author      NCJFCJ - http://ncjfcj.org
  */
  
 // no direct access
@@ -78,7 +76,19 @@ JHtml::_('behavior.formvalidation');
 	<?php endif; ?>
 	<p>This page allows you to manage how the Event Calendar will display events each time you visit it. These changes only affect your user, and any selections you make here can be overridden within the calendar itself.</p>
 	<form id="form-event" action="<?php echo JRoute::_('index.php?option=com_ta_calendar&task=settings.save'); ?>" method="post" class="form-validate" enctype="multipart/form-data" role="form">
-		<div class="form-group" style="margin-top: 25px;">
+		<div class="control-group" style="margin-top: 25px;">
+			<label class="control-label" for="jform_alerts"><b>Email Alerts</b></label>
+			<p>If enabled, you will receive email reminders 7 and 30 days before the scheduled start time of your event if it has not yet been OVW approved.</p>
+			<div class="controls">
+				<fieldset id="jform_alerts" class="radio btn-group" style="padding: 0;">
+					<input id="jform_alerts1" type="radio" value="1" name="jform[alerts]" <?php echo ($this->userSettings->alerts == '1' ? ' checked' : ''); ?> />
+					<label class="btn btn-default" class="form-control" for="jform_alerts1">Enabled</label>
+					<input id="jform_alerts0" type="radio" value="0" name="jform[alerts]" <?php echo ($this->userSettings->alerts == '0' ? ' checked' : ''); ?> />
+					<label class="btn btn-default" class="form-control" for="jform_alerts0">Disabled</label>
+				</fieldset>
+			</div>
+		</div>
+		<div class="form-group" style="margin-top: 15px;">
 			<label class="control-label" for="jform_timezone"><b>Timezone</b></label>
 			<div class="input-group">
 				<span class="input-group-addon icomoon-clock"></span>
@@ -88,7 +98,8 @@ JHtml::_('behavior.formvalidation');
 					<?php endforeach; ?>
 				</select>
 			</div>		
-		</div><!--
+		</div>
+		<!--
 		<div class="control-group" style="margin-top: 15px;">
 			<label class="control-label" for="jform_view"><b>Default View</b></label>
 			<div class="controls">
@@ -201,8 +212,8 @@ JHtml::_('behavior.formvalidation');
 				<button type="submit" class="btn btn-primary btn-lg validate"><span class="icomoon-disk"></span> Save Changes</button>
 				<button type="reset" class="btn btn-default btn-lg"><span class="icomoon-undo"></span> Start Over</button>
 				<input type="hidden" name="option" value="com_ta_calendar" />
-	   			<input type="hidden" name="task" value="settings.save" />
-	    		<?php echo JHtml::_('form.token'); ?>
+   			<input type="hidden" name="task" value="settings.save" />
+    		<?php echo JHtml::_('form.token'); ?>
 			</div>
 		</div>		
 	</form>

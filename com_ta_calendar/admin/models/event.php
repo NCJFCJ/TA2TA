@@ -1,10 +1,8 @@
 <?php
 /**
- * @version     1.3.0
  * @package     com_ta_calendar
  * @copyright   Copyright (C) 2013-2014 NCJFCJ. All rights reserved.
- * @license     
- * @author      Zachary Draper <zdraper@ncjfcj.org> - http://ncjfcj.org
+ * @author      NCJFCJ - http://ncjfcj.org
  */
 
 // No direct access.
@@ -15,8 +13,7 @@ jimport('joomla.application.component.modeladmin');
 /**
  * Ta_calendar model.
  */
-class Ta_calendarModelevent extends JModelAdmin
-{
+class Ta_calendarModelevent extends JModelAdmin{
 	/**
 	 * @var		string	The prefix to use with controller messages.
 	 * @since	1.6
@@ -33,8 +30,7 @@ class Ta_calendarModelevent extends JModelAdmin
 	 * @return	JTable	A database object
 	 * @since	1.6
 	 */
-	public function getTable($type = 'Event', $prefix = 'Ta_calendarTable', $config = array())
-	{
+	public function getTable($type = 'Event', $prefix = 'Ta_calendarTable', $config = array()){
 		return JTable::getInstance($type, $prefix, $config);
 	}
 
@@ -46,14 +42,13 @@ class Ta_calendarModelevent extends JModelAdmin
 	 * @return	JForm	A JForm object on success, false on failure
 	 * @since	1.6
 	 */
-	public function getForm($data = array(), $loadData = true)
-	{
+	public function getForm($data = array(), $loadData = true){
 		// Initialise variables.
 		$app	= JFactory::getApplication();
 
 		// Get the form.
 		$form = $this->loadForm('com_ta_calendar.event', 'event', array('control' => 'jform', 'load_data' => $loadData));
-		if (empty($form)) {
+		if(empty($form)){
 			return false;
 		}
 
@@ -66,13 +61,12 @@ class Ta_calendarModelevent extends JModelAdmin
 	 * @return	mixed	The data for the form.
 	 * @since	1.6
 	 */
-	protected function loadFormData()
-	{
+	protected function loadFormData(){
 		// Check the session for previously entered form data.
 		$data = JFactory::getApplication()->getUserState('com_ta_calendar.edit.event.data', array());
 		
 		
-		if (empty($data)) {
+		if(empty($data)){
 			$data = $this->getItem();
             
 			//Support for multiple or not foreign key field: type
@@ -86,8 +80,7 @@ class Ta_calendarModelevent extends JModelAdmin
 			
 			//Support for topic areas
 			$data->topic_areas = '';
-			if($data->id)
-			{
+			if($data->id){
 				$db = JFactory::getDbo();
 				$query = $db->getQuery(true);
 				$query->select($db->quoteName('topic_area'));
@@ -99,8 +92,7 @@ class Ta_calendarModelevent extends JModelAdmin
 			
 			// Support for grant programs
 			$data->grant_programs = '';
-			if($data->id)
-			{
+			if($data->id){
 				$db = JFactory::getDbo();
 				$query = $db->getQuery(true);
 				$query->select($db->quoteName('program'));
@@ -112,8 +104,7 @@ class Ta_calendarModelevent extends JModelAdmin
 
 			// Support for target audiences
 			$data->target_audiences = '';
-			if($data->id)
-			{
+			if($data->id){
 				$db = JFactory::getDbo();
 				$query = $db->getQuery(true);
 				$query->select($db->quoteName('target_audience'));
@@ -138,9 +129,8 @@ class Ta_calendarModelevent extends JModelAdmin
 	 * @return	mixed	Object on success, false on failure.
 	 * @since	1.6
 	 */
-	public function getItem($pk = null)
-	{
-		if ($item = parent::getItem($pk)) {
+	public function getItem($pk = null){
+		if($item = parent::getItem($pk)){
 			// make field modifications here
 		}
 
@@ -152,20 +142,18 @@ class Ta_calendarModelevent extends JModelAdmin
 	 *
 	 * @since	1.6
 	 */
-	protected function prepareTable($table)
-	{
+	protected function prepareTable($table){
 		jimport('joomla.filter.output');
 		
-		if (empty($table->id)) {
+		if(empty($table->id)){
 
 			// Set ordering to the last item if not set
-			if (@$table->ordering === '') {
+			if(@$table->ordering === ''){
 				$db = JFactory::getDbo();
 				$db->setQuery('SELECT MAX(ordering) FROM #__ta_calendar_events');
 				$max = $db->loadResult();
 				$table->ordering = $max+1;
 			}
-
 		}
 	}
 	
@@ -178,13 +166,11 @@ class Ta_calendarModelevent extends JModelAdmin
 	 *
 	 * @since   12.2
 	 */
-	public function save($data)
-	{
+	public function save($data){
 		$dispatcher = JEventDispatcher::getInstance();
 		$table = $this->getTable();
 
-		if ((!empty($data['tags']) && $data['tags'][0] != ''))
-		{
+		if((!empty($data['tags']) && $data['tags'][0] != '')){
 			$table->newTags = $data['tags'];
 		}
 
@@ -218,18 +204,15 @@ class Ta_calendarModelevent extends JModelAdmin
 		}
 
 		// Allow an exception to be thrown.
-		try
-		{
+		try{
 			// Load the row if saving an existing record.
-			if ($pk > 0)
-			{
+			if($pk > 0){
 				$table->load($pk);
 				$isNew = false;
 			}
 
 			// Bind the data.
-			if (!$table->bind($data))
-			{
+			if(!$table->bind($data)){
 				$this->setError($table->getError());
 				return false;
 			}
@@ -238,23 +221,20 @@ class Ta_calendarModelevent extends JModelAdmin
 			$this->prepareTable($table);
 
 			// Check the data.
-			if (!$table->check())
-			{
+			if(!$table->check()){
 				$this->setError($table->getError());
 				return false;
 			}
 
 			// Trigger the onContentBeforeSave event.
 			$result = $dispatcher->trigger($this->event_before_save, array($this->option . '.' . $this->name, $table, $isNew));
-			if (in_array(false, $result, true))
-			{
+			if(in_array(false, $result, true)){
 				$this->setError($table->getError());
 				return false;
 			}
 
 			// Store the data.
-			if (!$table->store())
-			{
+			if(!$table->store()){
 				$this->setError($table->getError());
 				return false;
 			}
@@ -378,15 +358,12 @@ class Ta_calendarModelevent extends JModelAdmin
 				$db->query();
 			}
 			
-
 			// Clean the cache.
 			$this->cleanCache();
 
 			// Trigger the onContentAfterSave event.
 			$dispatcher->trigger($this->event_after_save, array($this->option . '.' . $this->name, $table, $isNew));
-		}
-		catch (Exception $e)
-		{
+		}catch (Exception $e){
 			$this->setError($e->getMessage());
 
 			return false;
@@ -394,8 +371,7 @@ class Ta_calendarModelevent extends JModelAdmin
 
 		$pkName = $table->getKeyName();
 
-		if (isset($table->$pkName))
-		{
+		if(isset($table->$pkName)){
 			$this->setState($this->getName() . '.id', $table->$pkName);
 		}
 		$this->setState($this->getName() . '.new', $isNew);

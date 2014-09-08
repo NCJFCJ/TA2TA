@@ -1,10 +1,8 @@
 <?php
 /**
- * @version     1.3.0
  * @package     com_ta_calendar
  * @copyright   Copyright (C) 2013-2014 NCJFCJ. All rights reserved.
- * @license     
- * @author      Zachary Draper <zdraper@ncjfcj.org> - http://ncjfcj.org
+ * @author      NCJFCJ - http://ncjfcj.org
  */
 
 // No direct access.
@@ -15,8 +13,7 @@ jimport('joomla.application.component.modeladmin');
 /**
  * Ta_calendar model.
  */
-class Ta_calendarModeltopicarea extends JModelAdmin
-{
+class Ta_calendarModeltopicarea extends JModelAdmin{
 	/**
 	 * @var		string	The prefix to use with controller messages.
 	 * @since	1.6
@@ -33,8 +30,7 @@ class Ta_calendarModeltopicarea extends JModelAdmin
 	 * @return	JTable	A database object
 	 * @since	1.6
 	 */
-	public function getTable($type = 'Topicarea', $prefix = 'Ta_calendarTable', $config = array())
-	{
+	public function getTable($type = 'Topicarea', $prefix = 'Ta_calendarTable', $config = array()){
 		return JTable::getInstance($type, $prefix, $config);
 	}
 
@@ -46,14 +42,13 @@ class Ta_calendarModeltopicarea extends JModelAdmin
 	 * @return	JForm	A JForm object on success, false on failure
 	 * @since	1.6
 	 */
-	public function getForm($data = array(), $loadData = true)
-	{
+	public function getForm($data = array(), $loadData = true){
 		// Initialise variables.
 		$app	= JFactory::getApplication();
 
 		// Get the form.
 		$form = $this->loadForm('com_ta_calendar.topicarea', 'topicarea', array('control' => 'jform', 'load_data' => $loadData));
-		if (empty($form)) {
+		if(empty($form)){
 			return false;
 		}
 
@@ -66,12 +61,11 @@ class Ta_calendarModeltopicarea extends JModelAdmin
 	 * @return	mixed	The data for the form.
 	 * @since	1.6
 	 */
-	protected function loadFormData()
-	{
+	protected function loadFormData(){
 		// Check the session for previously entered form data.
 		$data = JFactory::getApplication()->getUserState('com_ta_calendar.edit.topicarea.data', array());
 
-		if (empty($data)) {
+		if(empty($data)){
 			$data = $this->getItem();
             
 		}
@@ -87,9 +81,8 @@ class Ta_calendarModeltopicarea extends JModelAdmin
 	 * @return	mixed	Object on success, false on failure.
 	 * @since	1.6
 	 */
-	public function getItem($pk = null)
-	{
-		if ($item = parent::getItem($pk)) {
+	public function getItem($pk = null){
+		if($item = parent::getItem($pk)){
 
 			//Do any procesing on fields here if needed
 
@@ -103,21 +96,17 @@ class Ta_calendarModeltopicarea extends JModelAdmin
 	 *
 	 * @since	1.6
 	 */
-	protected function prepareTable($table)
-	{
+	protected function prepareTable($table){
 		jimport('joomla.filter.output');
 
-		if (empty($table->id)) {
-
+		if(empty($table->id)){
 			// Set ordering to the last item if not set
-			if (@$table->ordering === '') {
+			if(@$table->ordering === ''){
 				$db = JFactory::getDbo();
 				$db->setQuery('SELECT MAX(ordering) FROM #__ta_calendar_topic_areas');
 				$max = $db->loadResult();
 				$table->ordering = $max+1;
 			}
-
 		}
 	}
-
 }

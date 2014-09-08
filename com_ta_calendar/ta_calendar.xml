@@ -42,6 +42,7 @@
         <language tag="en-GB">language/en-GB.com_ta_calendar.ini</language>
     </languages>
 	<media destination="com_ta_calendar" folder="media">
+        <filename>cron.php</filename>
 		<filename>index.html</filename>
         <folder>images</folder>
 	</media>

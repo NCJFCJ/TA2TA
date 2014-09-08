@@ -1,11 +1,10 @@
 <?php
 /**
- * @version     1.3.0
  * @package     com_ta_calendar
  * @copyright   Copyright (C) 2013-2014 NCJFCJ. All rights reserved.
- * @license     
- * @author      Zachary Draper <zdraper@ncjfcj.org> - http://ncjfcj.org
+ * @author      NCJFCJ - http://ncjfcj.org
  */
+
 // no direct access
 defined('_JEXEC') or die;
 
@@ -28,142 +27,84 @@ if(!empty($_SERVER["HTTPS"]) && $_SERVER["HTTPS"]!=="off"){
 <script type="text/javascript">
 	var selectedProject = <?php echo ($this->item->provider_project > 0 ? $this->item->provider_project : 0); ?>;
 
-    js = jQuery.noConflict();
-    js(document).ready(function($){
-		$('input:hidden.type').each(function(){
-			var name = $(this).attr('name');
-			if(name.indexOf('typehidden')){
-				$('#jform_type option[value="' + $(this).val() + '"]').attr('selected',true);
-			}
-		});
-		$("#jform_type").trigger("liszt:updated");
-
-		/**
-		 * Checks all checkboxes within the same fieldset on click
-		 */
-		$('.checkAll').click(function(){
-			$(this).closest('.control-group').find(':checkbox').prop('checked', true);
-			loadCalendar();
-		});
-
-		/**
-		 * Unchecks all checkboxes within the same fieldset on click
-		 */
-		$('.uncheckAll').click(function(){
-			$(this).closest('.control-group').find(':checkbox').removeAttr('checked');
-			loadCalendar();
-		});
-
-		/**
-		 * Toggle the Registration URL field based on the value of the open field
-		 */
-		function toggleRegistrationURLField(){
-			var registrationURLwrapper = $('#jform_registration_url').parent().parent();
-			if($('#jform_open0').is(':checked')){
-				registrationURLwrapper.show();
-			}else{
-				registrationURLwrapper.hide();
-			}
+  js = jQuery.noConflict();
+  js(document).ready(function($){
+	$('input:hidden.type').each(function(){
+		var name = $(this).attr('name');
+		if(name.indexOf('typehidden')){
+			$('#jform_type option[value="' + $(this).val() + '"]').attr('selected',true);
 		}
+	});
+	$("#jform_type").trigger("liszt:updated");
 
-		// listen for changes to open
-		$('#jform_open label').click(toggleRegistrationURLField);
+	/**
+	 * Checks all checkboxes within the same fieldset on click
+	 */
+	$('.checkAll').click(function(){
+		$(this).closest('.control-group').find(':checkbox').prop('checked', true);
+		loadCalendar();
+	});
 
-		/**
-		 * Populate the grant program checkboxes
-		 */
+	/**
+	 * Unchecks all checkboxes within the same fieldset on click
+	 */
+	$('.uncheckAll').click(function(){
+		$(this).closest('.control-group').find(':checkbox').removeAttr('checked');
+		loadCalendar();
+	});
 
-		function populateGrantPrograms(){
-			var project = $('#jform_provider_project').val();
-			
-			// only proceed if a project was selected
-			if(project > 0){
-				// close the notice
-				$('#grantProgramNotice').hide();
-
-				// make AJAX request
-				var request = $.ajax({
-					data: {'project':project},
-					dataType: 'json',
-					type: 'POST',
-					url: '<?php echo 'http' . ($https ? 's' : '') . '://'. $_SERVER['HTTP_HOST'] . '/administrator/index.php?option=com_ta_calendar&task=getPrograms';?>'
-				});
-
-				// fires when the AJAX call completes
-				request.done(function(response, textStatus, jqXHR){
-					// check if this has an error
-					if(response.status == 'success'){
-						// check if any selections were made previously
-						if($("input[name='jform[grant_programs][]']:checked").length){
-							// show the notice
-							$('#grantProgramNotice').show();
-						}
-						
-						// uncheck all programs
-						$("input[name='jform[grant_programs][]']").prop('checked', false);
-
-						// check the corresponding programs
-						$.each(response.data, function(index,value){
-							$("input[name='jform[grant_programs][]'][value='" + value + "'] ").prop('checked', true);
-						});					
-					}else{
-						$('#error-message').html('<strong>Error!</strong> ' + response.message);
-						$('#error').show();
-					}
-				});
-
-				// catch if the AJAX call fails completelly
-				request.fail(function(jqXHR, textStatus, errorThrown){
-					// notify the user that an error occured
-					$('#error-message').html('<strong>Error!</strong> AJAX error. Please contact Zachary at 41966.');
-					$('#error').show();
-				});
-			}
+	/**
+	 * Toggle the Registration URL field based on the value of the open field
+	 */
+	function toggleRegistrationURLField(){
+		var registrationURLwrapper = $('#jform_registration_url').parent().parent();
+		if($('#jform_open0').is(':checked')){
+			registrationURLwrapper.show();
+		}else{
+			registrationURLwrapper.hide();
 		}
+	}
 
-		// listen for changes to the project
-		$('#jform_provider_project').change(populateGrantPrograms);
+	// listen for changes to open
+	$('#jform_open label').click(toggleRegistrationURLField);
 
-		// hide the notice on load
-		$('#grantProgramNotice').hide();
+	/**
+	 * Populate the grant program checkboxes
+	 */
 
-		/**
-		 * Populate the TA Project field from the database
-		 */
-		function populateProjectsByOrg(){			
-			var org = $('#jform_org').val();
-
-			// hide the error, just incase
-			$('#error').hide();
-
-			// remove all options
-			$("#jform_provider_project option").remove();
-
-			// add back in the select option
-			$("#jform_provider_project").append('<option value="">--Select One--</option>');
-
-			// update Chosen
-			$('#jform_provider_project').trigger("liszt:updated");
+	function populateGrantPrograms(){
+		var project = $('#jform_provider_project').val();
+		
+		// only proceed if a project was selected
+		if(project > 0){
+			// close the notice
+			$('#grantProgramNotice').hide();
 
 			// make AJAX request
 			var request = $.ajax({
-				data: {'org':org},
+				data: {'project':project},
 				dataType: 'json',
 				type: 'POST',
-				url: '<?php echo 'http' . ($https ? 's' : '') . '://'. $_SERVER['HTTP_HOST'] . '/administrator/index.php?option=com_ta_calendar&task=getProjects';?>'
+				url: '<?php echo 'http' . ($https ? 's' : '') . '://'. $_SERVER['HTTP_HOST'] . '/administrator/index.php?option=com_ta_calendar&task=getPrograms';?>'
 			});
 
 			// fires when the AJAX call completes
 			request.done(function(response, textStatus, jqXHR){
 				// check if this has an error
 				if(response.status == 'success'){
-					// add in relevant options from the response
-					$.each(response.data, function(index, value){
-						$("#jform_provider_project").append('<option value="' + value.id + '"' + (value.id == selectedProject ? ' selected' : '') + '>' +  value.title + '</option>');
-					});
+					// check if any selections were made previously
+					if($("input[name='jform[grant_programs][]']:checked").length){
+						// show the notice
+						$('#grantProgramNotice').show();
+					}
+					
+					// uncheck all programs
+					$("input[name='jform[grant_programs][]']").prop('checked', false);
 
-					// update Chosen
-					$('#jform_provider_project').trigger("liszt:updated");					
+					// check the corresponding programs
+					$.each(response.data, function(index,value){
+						$("input[name='jform[grant_programs][]'][value='" + value + "'] ").prop('checked', true);
+					});					
 				}else{
 					$('#error-message').html('<strong>Error!</strong> ' + response.message);
 					$('#error').show();
@@ -177,34 +118,90 @@ if(!empty($_SERVER["HTTPS"]) && $_SERVER["HTTPS"]!=="off"){
 				$('#error').show();
 			});
 		}
+	}
 
-		// listen for changes to organization
-		$('#jform_org').change(populateProjectsByOrg);
+	// listen for changes to the project
+	$('#jform_provider_project').change(populateGrantPrograms);
 
-		// run on load
-		toggleRegistrationURLField();
-		if($('#jform_org').val() > 0){
-			populateProjectsByOrg();
-		}
+	// hide the notice on load
+	$('#grantProgramNotice').hide();
 
-		// hide the error
+	/**
+	 * Populate the TA Project field from the database
+	 */
+	function populateProjectsByOrg(){			
+		var org = $('#jform_org').val();
+
+		// hide the error, just incase
 		$('#error').hide();
-    });
 
-    Joomla.submitbutton = function(task)
-    {
-        if(task == 'event.cancel'){
-            Joomla.submitform(task, document.getElementById('event-form'));
-        }else{
-            
-            if(task != 'event.cancel' && document.formvalidator.isValid(document.id('event-form'))){
-                
-                Joomla.submitform(task, document.getElementById('event-form'));
-            }else{
-                alert('<?php echo $this->escape(JText::_('JGLOBAL_VALIDATION_FORM_FAILED')); ?>');
-            }
-        }
+		// remove all options
+		$("#jform_provider_project option").remove();
+
+		// add back in the select option
+		$("#jform_provider_project").append('<option value="">--Select One--</option>');
+
+		// update Chosen
+		$('#jform_provider_project').trigger("liszt:updated");
+
+		// make AJAX request
+		var request = $.ajax({
+			data: {'org':org},
+			dataType: 'json',
+			type: 'POST',
+			url: '<?php echo 'http' . ($https ? 's' : '') . '://'. $_SERVER['HTTP_HOST'] . '/administrator/index.php?option=com_ta_calendar&task=getProjects';?>'
+		});
+
+		// fires when the AJAX call completes
+		request.done(function(response, textStatus, jqXHR){
+			// check if this has an error
+			if(response.status == 'success'){
+				// add in relevant options from the response
+				$.each(response.data, function(index, value){
+					$("#jform_provider_project").append('<option value="' + value.id + '"' + (value.id == selectedProject ? ' selected' : '') + '>' +  value.title + '</option>');
+				});
+
+				// update Chosen
+				$('#jform_provider_project').trigger("liszt:updated");					
+			}else{
+				$('#error-message').html('<strong>Error!</strong> ' + response.message);
+				$('#error').show();
+			}
+		});
+
+		// catch if the AJAX call fails completelly
+		request.fail(function(jqXHR, textStatus, errorThrown){
+			// notify the user that an error occured
+			$('#error-message').html('<strong>Error!</strong> AJAX error. Please contact Zachary at 41966.');
+			$('#error').show();
+		});
+	}
+
+	// listen for changes to organization
+	$('#jform_org').change(populateProjectsByOrg);
+
+	// run on load
+	toggleRegistrationURLField();
+	if($('#jform_org').val() > 0){
+		populateProjectsByOrg();
+	}
+
+	// hide the error
+	$('#error').hide();
+  });
+
+  Joomla.submitbutton = function(task){
+    if(task == 'event.cancel'){
+      Joomla.submitform(task, document.getElementById('event-form'));
+    }else{ 
+      if(task != 'event.cancel' && document.formvalidator.isValid(document.id('event-form'))){
+          
+          Joomla.submitform(task, document.getElementById('event-form'));
+      }else{
+          alert('<?php echo $this->escape(JText::_('JGLOBAL_VALIDATION_FORM_FAILED')); ?>');
+      }
     }
+  }
 </script>
 
 <form action="<?php echo JRoute::_('index.php?option=com_ta_calendar&layout=edit&id=' . (int) $this->item->id); ?>" method="post" enctype="multipart/form-data" name="adminForm" id="event-form" class="form-validate">

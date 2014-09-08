@@ -1,10 +1,8 @@
 <?php
 /**
- * @version     1.3.0
  * @package     com_ta_calendar
  * @copyright   Copyright (C) 2013-2014 NCJFCJ. All rights reserved.
- * @license     
- * @author      Zachary Draper <zdraper@ncjfcj.org> - http://ncjfcj.org
+ * @author      NCJFCJ - http://ncjfcj.org
  */
 
 // No direct access
@@ -15,8 +13,7 @@ require_once JPATH_COMPONENT.'/controller.php';
 /**
  * Event controller class.
  */
-class Ta_calendarControllerSettings extends Ta_calendarController
-{
+class Ta_calendarControllerSettings extends Ta_calendarController{
 	/**
 	 * Method to get a model object, loading it if required.
 	 *
@@ -54,7 +51,7 @@ class Ta_calendarControllerSettings extends Ta_calendarController
 		$data = $this->validate($data);
 		
 		// Check for errors.
-		if ($data === false) {
+		if($data === false){
 			// Get the validation messages.
 			$app->enqueueMessage('An error occured, please try again later.', 'warning');
 
@@ -73,7 +70,7 @@ class Ta_calendarControllerSettings extends Ta_calendarController
 		$return	= $model->save($data);
 
 		// Check for errors.
-		if ($return === false) {
+		if($return === false){
 			// Save the data in the session.
 			$app->setUserState('com_ta_calendar.edit.settings.data', $data);
 
@@ -83,11 +80,11 @@ class Ta_calendarControllerSettings extends Ta_calendarController
 			return false;
 		}
 
-        // Redirect to the list screen.
-        $this->setMessage(JText::_('COM_TA_CALENDAR_ITEM_SAVED_SUCCESSFULLY'));
-        $menu = & JSite::getMenu();
-        $item = $menu->getActive();
-        $this->setRedirect(JRoute::_($item->link, false));
+    // Redirect to the list screen.
+    $this->setMessage(JText::_('COM_TA_CALENDAR_ITEM_SAVED_SUCCESSFULLY'));
+    $menu = & JSite::getMenu();
+    $item = $menu->getActive();
+    $this->setRedirect(JRoute::_($item->link, false));
 
 		// Flush the data from the session.
 		$app->setUserState('com_ta_calendar.edit.settings.data', null);
@@ -156,6 +153,11 @@ class Ta_calendarControllerSettings extends Ta_calendarController
 					return false;
 				}
 			}
+		}
+		
+		// check that the view is valid
+		if($data['alerts'] != '0' && $data['alerts'] != '1'){
+			return false;
 		}
 		
 		return $data;

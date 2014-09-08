@@ -1,12 +1,10 @@
 <?php
-
 /**
- * @version     1.3.0
  * @package     com_ta_calendar
  * @copyright   Copyright (C) 2013-2014 NCJFCJ. All rights reserved.
- * @license     
- * @author      Zachary Draper <zdraper@ncjfcj.org> - http://ncjfcj.org
+ * @author      NCJFCJ - http://ncjfcj.org
  */
+
 defined('_JEXEC') or die;
 
 jimport('joomla.application.component.modellist');
@@ -14,7 +12,7 @@ jimport('joomla.application.component.modellist');
 /**
  * Methods supporting a list of Ta_calendar records.
  */
-class Ta_calendarModeltopicareas extends JModelList {
+class Ta_calendarModeltopicareas extends JModelList{
 
     /**
      * Constructor.
@@ -23,10 +21,10 @@ class Ta_calendarModeltopicareas extends JModelList {
      * @see        JController
      * @since    1.6
      */
-    public function __construct($config = array()) {
-        if (empty($config['filter_fields'])) {
+    public function __construct($config = array()){
+        if(empty($config['filter_fields'])){
             $config['filter_fields'] = array(
-                                'id', 'a.id',
+                'id', 'a.id',
                 'state', 'a.state',
                 'name', 'a.name',
                 'created_by', 'a.created_by',
@@ -42,7 +40,7 @@ class Ta_calendarModeltopicareas extends JModelList {
      *
      * Note. Calling getState in this method will result in recursion.
      */
-    protected function populateState($ordering = null, $direction = null) {
+    protected function populateState($ordering = null, $direction = null){
         // Initialise variables.
         $app = JFactory::getApplication('administrator');
 
@@ -74,7 +72,7 @@ class Ta_calendarModeltopicareas extends JModelList {
      * @return	string		A store id.
      * @since	1.6
      */
-    protected function getStoreId($id = '') {
+    protected function getStoreId($id = ''){
         // Compile the store id.
         $id.= ':' . $this->getState('filter.search');
         $id.= ':' . $this->getState('filter.state');
@@ -88,7 +86,7 @@ class Ta_calendarModeltopicareas extends JModelList {
      * @return	JDatabaseQuery
      * @since	1.6
      */
-    protected function getListQuery() {
+    protected function getListQuery(){
         // Create a new query object.
         $db = $this->getDbo();
         $query = $db->getQuery(true);
@@ -102,23 +100,21 @@ class Ta_calendarModeltopicareas extends JModelList {
         $query->from('`#__ta_calendar_topic_areas` AS a');
 
         
-    // Join over the users for the checked out user.
-    $query->select('uc.name AS editor');
-    $query->join('LEFT', '#__users AS uc ON uc.id=a.checked_out');
+        // Join over the users for the checked out user.
+        $query->select('uc.name AS editor');
+        $query->join('LEFT', '#__users AS uc ON uc.id=a.checked_out');
     
 		// Join over the user field 'created_by'
 		$query->select('created_by.name AS created_by');
 		$query->join('LEFT', '#__users AS created_by ON created_by.id = a.created_by');
-
         
-    // Filter by published state
-    $published = $this->getState('filter.state');
-    if (is_numeric($published)) {
-        $query->where('a.state = '.(int) $published);
-    } else if ($published === '') {
-        $query->where('(a.state IN (0, 1))');
-    }
-    
+        // Filter by published state
+        $published = $this->getState('filter.state');
+        if (is_numeric($published)) {
+            $query->where('a.state = '.(int) $published);
+        } else if ($published === '') {
+            $query->where('(a.state IN (0, 1))');
+        }
 
         // Filter by search in title
         $search = $this->getState('filter.search');
@@ -131,9 +127,6 @@ class Ta_calendarModeltopicareas extends JModelList {
             }
         }
 
-        
-
-
         // Add the list ordering clause.
         $orderCol = $this->state->get('list.ordering');
         $orderDirn = $this->state->get('list.direction');
@@ -144,10 +137,9 @@ class Ta_calendarModeltopicareas extends JModelList {
         return $query;
     }
 
-    public function getItems() {
+    public function getItems(){
         $items = parent::getItems();
         
         return $items;
     }
-
 }

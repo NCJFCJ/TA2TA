@@ -1,10 +1,8 @@
 <?php
 /**
- * @version     1.3.0
  * @package     com_ta_calendar
  * @copyright   Copyright (C) 2013-2014 NCJFCJ. All rights reserved.
- * @license     
- * @author      Zachary Draper <zdraper@ncjfcj.org> - http://ncjfcj.org
+ * @author      NCJFCJ - http://ncjfcj.org
  */
   
 // no direct access
@@ -20,7 +18,7 @@ $return['message'] = '';
 $return['status'] = '';
 
 // Check that data was submitted via post, that the proper variable was received, and that we have a user
-if ($_SERVER['REQUEST_METHOD'] == "POST"
+if($_SERVER['REQUEST_METHOD'] == "POST"
 	&& filter_has_var(INPUT_POST, 'project')
 ){
 	// retrieve and sanitize the data

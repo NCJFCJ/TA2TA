@@ -1,10 +1,8 @@
 <?php
 /**
- * @version     1.3.0
  * @package     com_ta_calendar
  * @copyright   Copyright (C) 2013-2014 NCJFCJ. All rights reserved.
- * @license     
- * @author      Zachary Draper <zdraper@ncjfcj.org> - http://ncjfcj.org
+ * @author      NCJFCJ - http://ncjfcj.org
  */
 
 defined('JPATH_BASE') or die;
@@ -14,8 +12,7 @@ jimport('joomla.form.formfield');
 /**
  * Supports an HTML select list of categories
  */
-class JFormFieldCreatedby extends JFormField
-{
+class JFormFieldCreatedby extends JFormField{
 	/**
 	 * The form field type.
 	 *
@@ -30,17 +27,16 @@ class JFormFieldCreatedby extends JFormField
 	 * @return	string	The field input markup.
 	 * @since	1.6
 	 */
-	protected function getInput()
-	{
+	protected function getInput(){
 		// Initialize variables.
 		$html = array();
         
         
 		//Load user
 		$user_id = $this->value;
-		if ($user_id) {
+		if($user_id){
 			$user = JFactory::getUser($user_id);
-		} else {
+		}else{
 			$user = JFactory::getUser();
 			$html[] = '<input type="hidden" name="'.$this->name.'" value="'.$user->id.'" />';
 		}

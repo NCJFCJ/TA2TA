@@ -30,18 +30,20 @@ $query = $db->getQuery(true);
 $query->select($db->quoteName(array(
 	'id',
 	'org',
+	'start',
 	'title',
 	'type',
 	'7dayalert',
 	'30dayalert'
 )));
 $query->from($db->quoteName('#__ta_calendar_events'));
-$query->where($db->quoteName('state') . '=' . $db->quote('1') . ' AND ' . $db->quoteName('approved') . '=' . $db->quote('0000-00-00 00:00:00') . ' AND (' . $db->quoteName('7dayalert') . '=' . $db->quote('0') . ' OR ' . $db->quoteName('30dayalert') . '=' . $db->quote('0') . ')');
+$query->where($db->quoteName('state') . '=' . $db->quote('1') . ' AND ' . $db->quoteName('approved') . '=' . $db->quote('0000-00-00 00:00:00') . ' AND ((' . $db->quoteName('7dayalert') . '=' . $db->quote('0') . ' AND ' . $db->quoteName('start') . ' BETWEEN NOW() AND DATE_ADD(NOW(), INTERVAL 7 DAY)) OR (' . $db->quoteName('30dayalert') . '=' . $db->quote('0') . ' AND ' . $db->quoteName('start') . ' BETWEEN NOW() AND DATE_ADD(NOW(), INTERVAL 30 DAY)));');
 $db->setQuery($query); 
 $events = $db->loadObjectList();
 
 // send each notification to only those users that want it
-$eventsComplete = array();
+$day7AlertsCompleted = array();
+$day30AlertsCompleted = array();
 foreach($events as $event){
 	// build a subquery that matches only the users in this organization
 	$subquery =  $db->getQuery(true);
@@ -84,20 +86,42 @@ foreach($events as $event){
 		$mailer->setSubject('TA2TA Event Requires Approval');
 					
 		// set the message body
-		$message = "Dear $user-name,\n\n";
-		$message .= "The following event your organization entered on the TA2TA website requires OVW approval:\n";
-		$message .= $event->title . "\n\n"; 
-		$message .= "If OVW has already approved this event, please login to the TA2TA website, edit your event, and indicate that it has been approved. If the event will not be approved by OVW, please delete it from the website.\n\n";
-		$message .= "Thank you for your attention and for helping us to keep the TA2TA Event Calendar up-to-date. Have a great day!";
+		$message = "Dear $user->name,<br><br>";
+		$message .= 'The following event your organization entered on the TA2TA website requires OVW approval:<br><br>';
+		$message .= "<b>$event->title</b> ($event->id)<br><br>"; 
+		$message .= 'If OVW has already approved this event, please login to the TA2TA website, edit your event, and indicate that it has been approved. If the event will not be approved by OVW, please delete it from the website.<br><br>';
+		$message .= 'Thank you for your attention and for helping us to keep the TA2TA Event Calendar up-to-date. Have a great day!';
 		$mailer->setBody($message);
 
 		// send the message
-		$mailer->Send());
-
-		// save this event ID for further processing
-		if(!in_array($event->id, $eventsComplete)){
-			$eventsComplete[] = $event->id;
-		}
+		$mailer->Send();
 	}
+
+	// determine which alert was sent and save this event ID for further processing
+	if($event->{'30dayalert'} == '1'){
+		$day7AlertsCompleted[] = $event->id;
+	}else{
+		$day30AlertsCompleted[] = $event->id;
+	}
+}
+
+// mark all 7 day alert flags
+if(!empty($day7AlertsCompleted)){
+	$query = $db->getQuery(true);
+	$query->update($db->quoteName('#__ta_calendar_events'));
+	$query->set($db->quoteName('7dayalert') . '=' . $db->quote('1'));
+	$query->where($db->quoteName('id') . ' IN (' . join(',', $day7AlertsCompleted) . ')');
+	$db->setQuery($query);
+	$result = $db->query();
+}
+
+// mark all 30 day alert flags
+if(!empty($day30AlertsCompleted)){
+	$query = $db->getQuery(true);
+	$query->update($db->quoteName('#__ta_calendar_events'));
+	$query->set($db->quoteName('30dayalert') . '=' . $db->quote('1'));
+	$query->where($db->quoteName('id') . ' IN (' . join(',', $day30AlertsCompleted) . ')');
+	$db->setQuery($query);
+	$result = $db->query();
 }
 ?>

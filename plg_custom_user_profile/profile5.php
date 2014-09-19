@@ -168,7 +168,7 @@ class plgUserProfile5 extends JPlugin{
 			// add to MyEmma
 			if($data['profile']['newsletter'] == 1 && !empty($data['email'])){
 				try{
-					$emma = Emma();  /**$account_id, $pub_api_key, $pri_api_key, $debug = false**/
+					/*$emma = new Emma();  //$account_id, $pub_api_key, $pri_api_key, $debug = false
 					$member_info = array(
 						'email' => $data['email'],
 						'fields' => array(
@@ -180,7 +180,7 @@ class plgUserProfile5 extends JPlugin{
 						'opt_in_subject' => 'Confirming your subscription to the TA2TA email list',
 						'opt_in_message' => "Thank you for joining the TA2TA (techical assistance to technical assistance providers) email list!\r\n\r\nTo confirm your subscription, please click this link or paste it into your browser: [opt_in_url]\r\n\r\nTo ensure proper delivery of our future emails, please take a moment to add our address - [rsvp_email] - to your address book, trusted sender list, or company white list.\r\n\r\nIf you do not wish to receive our emails, or this email has reached you in error, please click this link or paste it into your browser: [opt_out_url]\r\n\r\nTA2TA is a project of the [rsvp_name].",
 					);
-					$emma->membersSignup($member_info);
+					$emma->membersSignup($member_info);*/
 				}catch(Exception $e){
 					// Log this error
 					error_log('Unable to add user to MyEmma');	

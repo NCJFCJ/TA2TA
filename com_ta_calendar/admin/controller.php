@@ -1,18 +1,14 @@
 <?php
 /**
- * @version     1.3.0
  * @package     com_ta_calendar
  * @copyright   Copyright (C) 2013-2014 NCJFCJ. All rights reserved.
- * @license     
- * @author      Zachary Draper <zdraper@ncjfcj.org> - http://ncjfcj.org
+ * @author      NCJFCJ - http://ncjfcj.org
  */
-
 
 // No direct access
 defined('_JEXEC') or die;
 
-class Ta_calendarController extends JControllerLegacy
-{
+class Ta_calendarController extends JControllerLegacy{
 	/**
 	 * Method to display a view.
 	 *
@@ -22,12 +18,11 @@ class Ta_calendarController extends JControllerLegacy
 	 * @return	JController		This object to support chaining.
 	 * @since	1.5
 	 */
-	public function display($cachable = false, $urlparams = false)
-	{
+	public function display($cachable = false, $urlparams = false){
 		require_once JPATH_COMPONENT.'/helpers/ta_calendar.php';
 
 		$view = JFactory::getApplication()->input->getCmd('view', 'events');
-        JFactory::getApplication()->input->set('view', $view);
+    JFactory::getApplication()->input->set('view', $view);
 
 		parent::display($cachable, $urlparams);
 

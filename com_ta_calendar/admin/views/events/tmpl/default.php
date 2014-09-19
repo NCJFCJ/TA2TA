@@ -1,10 +1,8 @@
 <?php
 /**
- * @version     1.3.0
  * @package     com_ta_calendar
  * @copyright   Copyright (C) 2013-2014 NCJFCJ. All rights reserved.
- * @license     
- * @author      Zachary Draper <zdraper@ncjfcj.org> - http://ncjfcj.org
+ * @author      NCJFCJ - http://ncjfcj.org
  */
 
 // no direct access
@@ -25,21 +23,20 @@ $listOrder	= $this->state->get('list.ordering');
 $listDirn	= $this->state->get('list.direction');
 $canOrder	= $user->authorise('core.edit.state', 'com_ta_calendar');
 $saveOrder	= $listOrder == 'a.ordering';
-if ($saveOrder)
-{
+if ($saveOrder){
 	$saveOrderingUrl = 'index.php?option=com_ta_calendar&task=events.saveOrderAjax&tmpl=component';
 	JHtml::_('sortablelist.sortable', 'eventList', 'adminForm', strtolower($listDirn), $saveOrderingUrl);
 }
 $sortFields = $this->getSortFields();
 ?>
 <script type="text/javascript">
-	Joomla.orderTable = function() {
+	Joomla.orderTable = function(){
 		table = document.getElementById("sortTable");
 		direction = document.getElementById("directionTable");
 		order = table.options[table.selectedIndex].value;
-		if (order != '<?php echo $listOrder; ?>') {
+		if(order != '<?php echo $listOrder; ?>'){
 			dirn = 'asc';
-		} else {
+		}else{
 			dirn = direction.options[direction.selectedIndex].value;
 		}
 		Joomla.tableOrdering(order, dirn, '');
@@ -48,7 +45,7 @@ $sortFields = $this->getSortFields();
 
 <?php
 //Joomla Component Creator code to allow adding non select list filters
-if (!empty($this->extra_sidebar)) {
+if(!empty($this->extra_sidebar)){
     $this->sidebar .= $this->extra_sidebar;
 }
 ?>
@@ -257,6 +254,4 @@ if (!empty($this->extra_sidebar)) {
 		<input type="hidden" name="filter_order_Dir" value="<?php echo $listDirn; ?>" />
 		<?php echo JHtml::_('form.token'); ?>
 	</div>
-</form>        
-
-		
+</form>

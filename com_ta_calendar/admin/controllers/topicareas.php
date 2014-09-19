@@ -1,10 +1,8 @@
 <?php
 /**
- * @version     1.3.0
  * @package     com_ta_calendar
  * @copyright   Copyright (C) 2013-2014 NCJFCJ. All rights reserved.
- * @license     
- * @author      Zachary Draper <zdraper@ncjfcj.org> - http://ncjfcj.org
+ * @author      NCJFCJ - http://ncjfcj.org
  */
 
 // No direct access.
@@ -15,15 +13,13 @@ jimport('joomla.application.component.controlleradmin');
 /**
  * Topicareas list controller class.
  */
-class Ta_calendarControllerTopicareas extends JControllerAdmin
-{
+class Ta_calendarControllerTopicareas extends JControllerAdmin{
 
 	/**
 	 * Proxy for getModel.
 	 * @since	1.6
 	 */
-	public function getModel($name = 'topicarea', $prefix = 'Ta_calendarModel', $config = array())
-	{
+	public function getModel($name = 'topicarea', $prefix = 'Ta_calendarModel', $config = array()){
 		$config['ignore_request'] = true;
 		$model = parent::getModel($name, $prefix, $config);
 		return $model;
@@ -37,8 +33,7 @@ class Ta_calendarControllerTopicareas extends JControllerAdmin
 	 *
 	 * @since   3.0
 	 */
-	public function saveOrderAjax()
-	{
+	public function saveOrderAjax(){
 		// Get the input
 		$input = JFactory::getApplication()->input;
 		$pks = $input->post->get('cid', array(), 'array');
@@ -54,15 +49,11 @@ class Ta_calendarControllerTopicareas extends JControllerAdmin
 		// Save the ordering
 		$return = $model->saveorder($pks, $order);
 
-		if ($return)
-		{
+		if($return){
 			echo "1";
 		}
 
 		// Close the application
 		JFactory::getApplication()->close();
-	}
-    
-    
-    
+	}   
 }

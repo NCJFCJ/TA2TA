@@ -1,26 +1,24 @@
 <?php
-
 /**
- * @version     1.3.0
  * @package     com_ta_calendar
  * @copyright   Copyright (C) 2013-2014 NCJFCJ. All rights reserved.
- * @license     
- * @author      Zachary Draper <zdraper@ncjfcj.org> - http://ncjfcj.org
+ * @author      NCJFCJ - http://ncjfcj.org
  */
+
 // No direct access
 defined('_JEXEC') or die;
 
 /**
  * event Table class
  */
-class Ta_calendarTableevent extends JTable {
+class Ta_calendarTableevent extends JTable{
 
     /**
      * Constructor
      *
      * @param JDatabase A database connector object
      */
-    public function __construct(&$db) {
+    public function __construct(&$db){
         parent::__construct('#__ta_calendar_events', 'id', $db);
     }
 
@@ -32,16 +30,15 @@ class Ta_calendarTableevent extends JTable {
      * @see		JTable:bind
      * @since	1.5
      */
-    public function bind($array, $ignore = '') {
+    public function bind($array, $ignore = ''){
 
-        
-		$input = JFactory::getApplication()->input;
-		$task = $input->getString('task', '');
-		if(($task == 'save' || $task == 'apply') && (!JFactory::getUser()->authorise('core.edit.state','com_ta_calendar') && $array['state'] == 1)){
-			$array['state'] = 0;
-		}
+  		$input = JFactory::getApplication()->input;
+  		$task = $input->getString('task', '');
+  		if(($task == 'save' || $task == 'apply') && (!JFactory::getUser()->authorise('core.edit.state','com_ta_calendar') && $array['state'] == 1)){
+  			$array['state'] = 0;
+  		}
 
-		//Support for multiple or not foreign key field: type
+  		//Support for multiple or not foreign key field: type
 			if(isset($array['type'])){
 				if(is_array($array['type'])){
 					$array['type'] = implode(',',$array['type']);
@@ -54,13 +51,13 @@ class Ta_calendarTableevent extends JTable {
 				}
 			}
 
-      if (isset($array['params']) && is_array($array['params'])) {
+      if(isset($array['params']) && is_array($array['params'])){
           $registry = new JRegistry();
           $registry->loadArray($array['params']);
           $array['params'] = (string) $registry;
       }
 
-      if (isset($array['metadata']) && is_array($array['metadata'])) {
+      if(isset($array['metadata']) && is_array($array['metadata'])){
           $registry = new JRegistry();
           $registry->loadArray($array['metadata']);
           $array['metadata'] = (string) $registry;
@@ -76,7 +73,7 @@ class Ta_calendarTableevent extends JTable {
       }
 
       //Bind the rules for ACL where supported.
-  		if (isset($array['rules']) && is_array($array['rules'])) {
+  		if(isset($array['rules']) && is_array($array['rules'])){
   			$this->setRules($array['rules']);
   		}
 
@@ -102,10 +99,9 @@ class Ta_calendarTableevent extends JTable {
     /**
      * Overloaded check function
      */
-    public function check() {
-
+    public function check(){
         //If there is an ordering column and this is a new row then get the next ordering value
-        if (property_exists($this, 'ordering') && $this->id == 0) {
+        if(property_exists($this, 'ordering') && $this->id == 0){
             $this->ordering = self::getNextOrder();
         }
 
@@ -124,7 +120,7 @@ class Ta_calendarTableevent extends JTable {
      * @return    boolean    True on success.
      * @since    1.0.4
      */
-    public function publish($pks = null, $state = 1, $userId = 0) {
+    public function publish($pks = null, $state = 1, $userId = 0){
         // Initialise variables.
         $k = $this->_tbl_key;
 

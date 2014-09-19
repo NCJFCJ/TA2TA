@@ -7,7 +7,7 @@
     <author>Zachary Draper</author>
     <authorEmail>zdraper@ncjfcj.org</authorEmail>
     <authorUrl>http://ncjfcj.org</authorUrl>
-    <version>2.0.2</version>
+    <version>2.1.0</version>
     <description>A custom calendar for the TA2TA website that categories events by a number of different criteria and allows users to post their own events.</description>
     
     <scriptfile>script.php</scriptfile> <!-- Runs on install/uninstall/update -->
@@ -42,6 +42,7 @@
         <language tag="en-GB">language/en-GB.com_ta_calendar.ini</language>
     </languages>
 	<media destination="com_ta_calendar" folder="media">
+        <filename>cron.php</filename>
 		<filename>index.html</filename>
         <folder>images</folder>
 	</media>

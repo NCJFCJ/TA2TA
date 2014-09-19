@@ -1,10 +1,8 @@
 <?php
 /**
- * @version     1.3.0
  * @package     com_ta_calendar
  * @copyright   Copyright (C) 2013-2014 NCJFCJ. All rights reserved.
- * @license     
- * @author      Zachary Draper <zdraper@ncjfcj.org> - http://ncjfcj.org
+ * @author      NCJFCJ - http://ncjfcj.org
  */
   
 // no direct access
@@ -166,6 +164,7 @@ if($_SERVER['REQUEST_METHOD'] == "POST"
 
 							// begin building the return object
 							$return['data'] = $eventData;
+							$return['data']->caldate = $eventStart->format('Ymd');
 							$return['data']->startdate = $eventStart->format('m-d-Y');
 							$return['data']->starttime = $eventStart->format('g:ia'); 
 							$return['data']->enddate = $eventEnd->format('m-d-Y');

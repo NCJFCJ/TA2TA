@@ -1,12 +1,10 @@
 <?php
-
 /**
- * @version     1.3.0
  * @package     com_ta_calendar
  * @copyright   Copyright (C) 2013-2014 NCJFCJ. All rights reserved.
- * @license     
- * @author      Zachary Draper <zdraper@ncjfcj.org> - http://ncjfcj.org
+ * @author      NCJFCJ - http://ncjfcj.org
  */
+
 defined('_JEXEC') or die;
 
 jimport('joomla.application.component.modellist');
@@ -141,7 +139,7 @@ class Ta_calendarModelEvents extends JModelList {
 		// build the query
 		$db = JFactory::getDbo();
 		$query = $db->getQuery(true);
-		$query->select('timezone, view, filters');
+		$query->select('timezone, view, filters, alerts');
 		$query->from('#__ta_calendar_user_settings');
 		$query->where('user = ' . ($user->id ? $user->id : 0));
 		$db->setQuery($query, 0, 1);

@@ -1,10 +1,8 @@
 <?php
 /**
- * @version     1.3.0
  * @package     com_ta_calendar
  * @copyright   Copyright (C) 2013-2014 NCJFCJ. All rights reserved.
- * @license     
- * @author      Zachary Draper <zdraper@ncjfcj.org> - http://ncjfcj.org
+ * @author      NCJFCJ - http://ncjfcj.org
  */
  
 // no direct access
@@ -82,6 +80,7 @@ if(!empty($_SERVER["HTTPS"]) && $_SERVER["HTTPS"]!=="off"){
 	jQuery(function($){
 		// variables
 		var currentDate = '<?php echo $currentDate; ?>';
+		var currentEvent = <?php echo (filter_has_var(INPUT_GET, 'event') ? filter_input(INPUT_GET, 'event', FILTER_SANITIZE_NUMBER_INT) : 0); ?>;
 		var currentView = '<?php echo $currentView; ?>';
 		var editStep = 1;
 		var errors = new Array();
@@ -170,6 +169,7 @@ if(!empty($_SERVER["HTTPS"]) && $_SERVER["HTTPS"]!=="off"){
 					calDate: currentDate,
 					calTimezone: timezone,
 					calView: currentView,
+					curEvent: currentEvent,
 					filters: jsonFilters,
 				},
 				dataType: 'html',
@@ -181,7 +181,13 @@ if(!empty($_SERVER["HTTPS"]) && $_SERVER["HTTPS"]!=="off"){
 			loadAjaxRequest.done(function(msg){
 				// hide the loading indicator and show the content
 				$('#calendarPane .loading').hide();
-				$('#calendarContent').html(msg).show();				
+				$('#calendarContent').html(msg).show();
+
+				// if there is a current event, display it
+				if(currentEvent){
+					// display the event details
+					showEventDetails(currentEvent);
+				}			
 				
 				// checked for and display any queued message
 				if(queuedMessage instanceof Object && queuedMessage.hasOwnProperty('message')){
@@ -221,8 +227,6 @@ if(!empty($_SERVER["HTTPS"]) && $_SERVER["HTTPS"]!=="off"){
 
 			return true;
 		}
-
-
 				
 		/**
 		 * Displays an alert box above the calendar, removes any open popovers
@@ -541,7 +545,9 @@ if(!empty($_SERVER["HTTPS"]) && $_SERVER["HTTPS"]!=="off"){
 					$('#viewPopup .loading').hide();
 
 					// show the content pane
-					$('#viewPopupContent').show();	
+					$('#viewPopupContent').show();
+
+					
 				});
 
 				// fires when the AJAX call completes
@@ -564,6 +570,16 @@ if(!empty($_SERVER["HTTPS"]) && $_SERVER["HTTPS"]!=="off"){
 						$('#viewEventProject').html(response.data.provider_project_name);
 						$('#viewEventDate').html(response.data.date_string);
 						$('#viewEventSummary').html(response.data.summary);
+
+						// process the current event, if any
+						if(currentEvent){
+							// set the current date, it is likely wrong
+							currentDate = response.data.caldate;
+							updateDate();
+
+							// clear the current event so it doesn't affect anything going forward
+							currentEvent = 0;
+						}
 
 						// grant programs
 						if((response.data.grant_programs).length > 1){

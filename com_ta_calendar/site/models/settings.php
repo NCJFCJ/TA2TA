@@ -1,10 +1,8 @@
 <?php
 /**
- * @version     1.3.0
  * @package     com_ta_calendar
  * @copyright   Copyright (C) 2013-2014 NCJFCJ. All rights reserved.
- * @license     
- * @author      Zachary Draper <zdraper@ncjfcj.org> - http://ncjfcj.org
+ * @author      NCJFCJ - http://ncjfcj.org
  */
 
 // No direct access.
@@ -110,7 +108,7 @@ class Ta_calendarModelSettings extends JModelForm{
 	 */
 	protected function loadFormData(){
 		$data = JFactory::getApplication()->getUserState('com_ta_calendar.edit.settings.data', array());
-        if (empty($data)) {
+        if(empty($data)){
             $data = $this->getData();
         }
         
@@ -129,17 +127,18 @@ class Ta_calendarModelSettings extends JModelForm{
 		$user = JFactory::getUser();
 		
 		// grab the database object and begin the query
-        $db = JFactory::getDbo();
+    $db = JFactory::getDbo();
 				
 		// construct the query
 		$query = 'INSERT INTO ' . $db->quoteName('#__ta_calendar_user_settings');
-		$query .= ' (' . $db->quoteName('user') . ',' . $db->quoteName('timezone') . ',' . $db->quoteName('view') . ',' . $db->quoteName('filters') . ')';
-		$query .= ' VALUES (' . $user->id . ',' . $db->quote($data['timezone']) . ',' . $db->quote($data['view']) . ',' . $db->quote($data['filters']) . ')';
+		$query .= ' (' . $db->quoteName('user') . ',' . $db->quoteName('timezone') . ',' . $db->quoteName('view') . ',' . $db->quoteName('filters') . ',' . $db->quoteName('alerts') . ')';
+		$query .= ' VALUES (' . $user->id . ',' . $db->quote($data['timezone']) . ',' . $db->quote($data['view']) . ',' . $db->quote($data['filters']) . ',' . $db->quote($data['alerts']) . ')';
 		$query .= ' ON DUPLICATE KEY UPDATE ';
 		$query .= ' ' . $db->quoteName('user') . '=' . $user->id . ',';
 		$query .= ' ' . $db->quoteName('timezone') . '=' . $db->quote($data['timezone']) . ',';
 		$query .= ' ' . $db->quoteName('view') . '=' . $db->quote($data['view']) . ',';
-		$query .= ' ' . $db->quoteName('filters') . '=' . $db->quote($data['filters']) . ';';
+		$query .= ' ' . $db->quoteName('filters') . '=' . $db->quote($data['filters']) . ',';
+		$query .= ' ' . $db->quoteName('alerts') . '=' . $db->quote($data['alerts']) . ';';
 		
 		// set and execute the query
 		$db->setQuery($query);

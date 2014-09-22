@@ -81,6 +81,19 @@ foreach($events as $event){
 					
 		// set the recipient
 		$mailer->addRecipient($user->email);
+
+		// if this event has not yet been processed, email it to info@ta2ta.org also
+		if(!in_array($event->id, $day7AlertsCompleted)
+			&& !in_array($event->id, $day30AlertsCompleted)){
+			$mailer->addBCC('info@ta2ta.org');
+
+			// determine which alert was sent and save this event ID for further processing
+			if($event->{'30dayalert'} == '1'){
+				$day7AlertsCompleted[] = $event->id;
+			}else{
+				$day30AlertsCompleted[] = $event->id;
+			}
+		}
 					
 		// set the message subject
 		$mailer->setSubject('TA2TA Event Requires Approval');
@@ -95,13 +108,6 @@ foreach($events as $event){
 
 		// send the message
 		$mailer->Send();
-	}
-
-	// determine which alert was sent and save this event ID for further processing
-	if($event->{'30dayalert'} == '1'){
-		$day7AlertsCompleted[] = $event->id;
-	}else{
-		$day30AlertsCompleted[] = $event->id;
 	}
 }
 

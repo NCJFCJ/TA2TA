@@ -12,7 +12,7 @@ defined('_JEXEC') or die;
  * @param	array	A named array
  * @return	array
  */
-function event_managerBuildRoute(&$query){
+function Event_managerBuildRoute(&$query){
 	$segments = array();
     
 	if (isset($query['task'])) {
@@ -37,7 +37,7 @@ function event_managerBuildRoute(&$query){
  *
  * index.php?/ta_calendar/id/Itemid
  */
-function event_managerParseRoute($segments){
+function Event_managerParseRoute($segments){
 	$vars = array();
     
 	// view is always the first element of the array

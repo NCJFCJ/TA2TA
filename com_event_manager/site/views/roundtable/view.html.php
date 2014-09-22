@@ -13,7 +13,7 @@ jimport('joomla.application.component.view');
 /**
  * View to edit
  */
-class event_managerViewRoundtable extends JViewLegacy {
+class Event_managerViewRoundtable extends JViewLegacy {
     protected $state;
     protected $form;
     protected $params;

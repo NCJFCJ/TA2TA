@@ -13,7 +13,7 @@ jimport('joomla.application.component.view');
 /**
  * View to edit
  */
-class event_managerViewWebinar extends JViewLegacy {
+class Event_managerViewWebinar extends JViewLegacy {
     protected $state;
     protected $form;
     protected $params;

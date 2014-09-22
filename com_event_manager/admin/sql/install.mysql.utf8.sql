@@ -40,7 +40,7 @@ CREATE TABLE IF NOT EXISTS `#__event_manager_meetings` (
 	`registration_service` TINYINT(1) NOT NULL ,
 	`assistance_request` TEXT NOT NULL ,
 	`registration_url` VARCHAR(150)  NOT NULL ,
-	PRIMARY KEY (`event`),
+	PRIMARY KEY (`event`)
 ) ENGINE=InnoDB DEFAULT COLLATE=utf8_general_ci;
 
 CREATE TABLE IF NOT EXISTS `#__event_manager_roundtables` (
@@ -54,7 +54,7 @@ CREATE TABLE IF NOT EXISTS `#__event_manager_roundtables` (
 	`benefits_to_dv` TEXT NOT NULL ,
 	`advance_mission` TEXT NOT NULL ,
 	`goals` TEXT NOT NULL ,
-	PRIMARY KEY (`event`),
+	PRIMARY KEY (`event`)
 ) ENGINE=InnoDB DEFAULT COLLATE=utf8_general_ci;
 
 CREATE TABLE IF NOT EXISTS `#__event_manager_webinars` (
@@ -65,17 +65,5 @@ CREATE TABLE IF NOT EXISTS `#__event_manager_webinars` (
 	`number_staff` INT(5) NOT NULL ,
 	`features` VARCHAR(255) NOT NULL ,
 	`asl_request` TINYINT(1) NOT NULL ,
-	PRIMARY KEY (`event`),
+	PRIMARY KEY (`event`)
 ) ENGINE=InnoDB DEFAULT COLLATE=utf8_general_ci;
-
-
-
-
-
-
-
-
-
-
-
-

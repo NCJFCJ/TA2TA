@@ -1,6 +1,6 @@
 <?xml version="1.0" encoding="utf-8"?>
 <metadata>
-    <layout title="COM_EVENT_MANAGER_VIEW_ROUNDTABLE" option="View">
+    <layout title="COM_EVENT_MANAGER_VIEW_TITLE_ROUNDTABLE" option="View">
         <message><![CDATA[COM_EVENT_MANAGER_VIEW_ROUNDTABLE_DESC]]></message>
     </layout>
 </metadata>

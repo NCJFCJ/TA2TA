@@ -24,7 +24,10 @@ class Event_managerViewMeeting extends JViewLegacy {
     public function display($tpl = null){
 		$app 					= JFactory::getApplication();
         $this->state 			= $this->get('State');
-		
+        $this->grantPrograms	= $this->get('GrantPrograms');
+        $this->targetAudiences	= $this->get('TargetAudiences');
+        $this->topicAreas		= $this->get('TopicAreas');
+        $this->providerProjects	= $this->get('ProviderProjects');
 		
         // Check for errors.
 		if (count($errors = $this->get('Errors'))) {

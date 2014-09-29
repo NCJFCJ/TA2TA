@@ -17,6 +17,7 @@ jimport('joomla.event.dispatcher');
 class Event_managerModelMeeting extends JModelForm{
     
     var $_item = null;
+   	protected $user = null;
     
 	/**
 	 * Method to auto-populate the model state.
@@ -116,39 +117,128 @@ class Event_managerModelMeeting extends JModelForm{
 	}
 
 	/**
-	 * Method to save the form data.
+	 * Method to retrieve topic areas from the calendar data, table ta_calendar_topic_areas.
 	 *
-	 * @param	array		The form data.
-	 * @return	mixed		The user id on success, false on failure.
-	 * @since	1.6
+	 * @return	array of objects	Id and description of topic areas.
 	 */
-	public function save($data){
-		// grab the user object
-		$user = JFactory::getUser();
-		
+	public function getTopicAreas(){
 		// grab the database object and begin the query
-    $db = JFactory::getDbo();
-				
-		// construct the query
-		$query = 'INSERT INTO ' . $db->quoteName('#__event_manager_user_meeting');
-		$query .= ' (' . $db->quoteName('user') . ',' . $db->quoteName('timezone') . ',' . $db->quoteName('view') . ',' . $db->quoteName('filters') . ',' . $db->quoteName('alerts') . ')';
-		$query .= ' VALUES (' . $user->id . ',' . $db->quote($data['timezone']) . ',' . $db->quote($data['view']) . ',' . $db->quote($data['filters']) . ',' . $db->quote($data['alerts']) . ')';
-		$query .= ' ON DUPLICATE KEY UPDATE ';
-		$query .= ' ' . $db->quoteName('user') . '=' . $user->id . ',';
-		$query .= ' ' . $db->quoteName('timezone') . '=' . $db->quote($data['timezone']) . ',';
-		$query .= ' ' . $db->quoteName('view') . '=' . $db->quote($data['view']) . ',';
-		$query .= ' ' . $db->quoteName('filters') . '=' . $db->quote($data['filters']) . ',';
-		$query .= ' ' . $db->quoteName('alerts') . '=' . $db->quote($data['alerts']) . ';';
-		
-		// set and execute the query
-		$db->setQuery($query);
-		$result = $db->execute();
+	    $db = JFactory::getDbo();
+	    $query = $db->getQuery(true);
 
-		// check the result
-		if($result){
-			return true;
-		}else{
-			return false;
+		$query->select($db->quoteName(array('id', 'name')));
+		$query->from($db->quoteName('#__ta_calendar_topic_areas'));
+		$query->where($db->quoteName('state') . ' = '. $db->quote('1'));
+		$query->order('name ASC');
+
+		$db->setQuery($query);
+		return $db->loadObjectList();
+		 
+	}
+	
+	/**
+	 * Method to retrieve grant descripsions from table grant_programs.
+	 *
+	 * @return	array of objects	Id and description of grant programs.
+	 */
+	public function getGrantPrograms(){
+		$db = $this->getDbo();
+		$query = $db->getQuery(true);
+
+		$query->select($db->quoteName(array('id', 'name')));
+		$query->from($db->quoteName('#__grant_programs'));
+		$query->where($db->quoteName('state') . ' = '. $db->quote('1'));
+		$query->order('name ASC');
+
+		$db->setQuery($query);
+		return $db->loadObjectList();
+	}
+
+	/**
+	 * Method to retrieve target audiences from table target_audiences.
+	 *
+	 * @return	array of objects	Id and description of target audiences.
+	 */
+	public function getTargetAudiences(){
+		$db = $this->getDbo();
+		$query = $db->getQuery(true);
+
+		$query->select($db->quoteName(array('id', 'name')));
+		$query->from($db->quoteName('#__target_audiences'));
+		$query->where($db->quoteName('state') . ' = '. $db->quote('1'));
+		$query->order('name ASC');
+
+		$db->setQuery($query);
+		return $db->loadObjectList();
+	}
+
+	/**
+	 * Returns the ID of the current user
+	 */
+	protected function getUserId(){
+		// get the user object	
+		$user = $this->getUserObj();
+		
+		return $user->id;
+	}
+	
+	/**
+	 * Returns the user object
+	 */
+	protected function getUserObj(){
+		// check if we already have the user object, return it if we do
+		if($this->user){
+			return $this->user;
 		}
+		return JFactory::getUser();
+	}
+	
+	/**
+	 * Gets the organization of this user
+	 * @return int The ID of the user's organization, 0 on fail
+	 */
+	public function getUserOrg(){
+		// get the user's organization
+		$db = JFactory::getDBO();
+		$query = $db->getQuery(true);
+		$query->select($db->quoteName('profile_value'));
+		$query->from($db->quoteName('#__user_profiles'));
+		$query->where($db->quoteName('user_id') . '=' . $db->quote($this->getUserId()) . ' AND ' . $db->quoteName('profile_key') . ' = ' . $db->quote('profile.org'));
+		$db->setQuery($query, 0, 1);
+		
+		// check that the query was successful
+		if(!($org = $db->loadResult())){
+			JError::raiseWarning(100, 'Unable to determine user\'s organization.');
+			return 0;
+		}
+		
+		// remove quotes
+		$org = substr($org, 1, -1);
+		
+		// return the result
+		return (int)$org;
+	}
+	
+	/**
+	 * Returns all provider programs
+	 */
+	public function getProviderProjects(){
+		// get the user's organization
+		$org = $this->getUserOrg();
+		if($org > 0){
+			// get the projects for this provider
+			$db = $this->getDbo();
+			$query = $db->getQuery(true);
+			$query->select(array(
+				$db->quoteName('id'),
+				$db->quoteName('title')
+			));
+			$query->from($db->quoteName('#__tapd_provider_projects'));
+			$query->where($db->quoteName('state') . '=1 AND ' . $db->quoteName('provider') . '=' . $org);
+			$query->order($db->quoteName('title') . ' ASC');
+			$db->setQuery($query);
+			return $db->loadObjectList();
+		}
+		return new stdClass();
 	}
 }

@@ -199,6 +199,10 @@ $permission_level = LibraryHelper::getPermissionLevel();
 	<div class="page-header">
 		<h2><a href="<?php echo $_SERVER['REQUEST_URI']; ?>">Technical Assistance Resource Library</a></h2>
 	</div>
+	<div class="alert alert-info alert-dismissible" role="alert">
+		<button type="button" class="close" data-dismiss="alert"><span aria-hidden="true">&times;</span><span class="sr-only">Close</span></button>
+		<strong>Note:</strong> Products and resources are posted on this page pursuant to the special conditions of the Cooperative Agreements between OVW and the individual TA Providers. Please contact the individual TA Provider for permission to use or reprint these products and resources.
+	</div>
 	<div class="row">
 		<form id="filters" method="post" action="<?php echo $_SERVER['REQUEST_URI']; ?>">
 			<div class="col-sm-2 filters">

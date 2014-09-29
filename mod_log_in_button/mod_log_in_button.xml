@@ -1,0 +1,79 @@
+<?xml version="1.0" encoding="utf-8"?>
+<extension type="module" version="2.5" client="site" method="upgrade">
+	<name>MOD_LOG_IN_BUTTON</name>
+	<creationDate>September 2014</creationDate>
+	<author>Zachary Draper</author>
+	<authorEmail>zdraper@ncjfcj.org</authorEmail>
+	<authorUrl>http://www.ncjfcj.org</authorUrl>
+	<copyright>Copyright 2014 NCJFCJ. All rigths reserved.</copyright>
+	<version>1.0.0</version>
+	<description>MOD_LOG_IN_BUTTON_DESCRIPTION</description>
+	 
+	<files>
+		<folder>language</folder>
+		<filename>index.html</filename>
+		<filename module="mod_log_in_button">mod_log_in_button.php</filename>
+		<filename>mod_log_in_button.xml</filename>
+	</files>
+	
+	<languages folder="language">
+    	<language tag="en-GB">en-GB/en-GB.mod_log_in_button.ini</language>
+    	<language tag="en-GB">en-GB/en-GB.mod_log_in_button.sys.ini</language>
+  	</languages>
+  	<config>
+		<fields name="params">
+			<fieldset name="logged-in">
+				<field
+					description="MOD_LOG_IN_BUTTON_FIELD_BUTTON_MENU_ITEM_DESC"
+					label="MOD_LOG_IN_BUTTON_FIELD_BUTTON_MENU_ITEM_LABEL"
+					name="menu_item"
+					type="menuitem">
+					<option value="">JCURRENT</option>
+				</field>
+				<field
+					description="MOD_LOG_IN_BUTTON_FIELD_BUTTON_TEXT_DESC"
+					label="MOD_LOG_IN_BUTTON_FIELD_BUTTON_TEXT_LABEL"
+					name="btn_text"
+					type="text" />
+				<field
+					default="btn-primary btn-lg"
+					description="MOD_LOG_IN_BUTTON_FIELD_BUTTON_CLASS_DESC"
+					label="MOD_LOG_IN_BUTTON_FIELD_BUTTON_CLASS_LABEL"
+					name="btn_class"
+					type="text" />
+				<field
+					description="MOD_LOG_IN_BUTTON_FIELD_BUTTON_ICON_DESC"
+					label="MOD_LOG_IN_BUTTON_FIELD_BUTTON_ICON_LABEL"
+					name="btn_icon"
+					type="text" />
+			</fieldset>
+			<fieldset name="not-logged-in">
+				<field
+					description="MOD_LOG_IN_BUTTON_FIELD_NLI_BUTTON_MENU_ITEM_DESC"
+					label="MOD_LOG_IN_BUTTON_FIELD_NLI_BUTTON_MENU_ITEM_LABEL"
+					name="nli_menu_item"
+					type="menuitem">
+					<option value="">JCURRENT</option>
+				</field>
+				<field
+					default="Sign In"
+					description="MOD_LOG_IN_BUTTON_FIELD_NLI_BUTTON_TEXT_DESC"
+					label="MOD_LOG_IN_BUTTON_FIELD_NLI_BUTTON_TEXT_LABEL"
+					name="nli_btn_text"
+					type="text" />
+				<field
+					default="btn-default btn-lg"
+					description="MOD_LOG_IN_BUTTON_FIELD_NLI_BUTTON_CLASS_DESC"
+					label="MOD_LOG_IN_BUTTON_FIELD_NLI_BUTTON_CLASS_LABEL"
+					name="nli_btn_class"
+					type="text" />
+				<field
+					default="icomoon-enter"
+					description="MOD_LOG_IN_BUTTON_FIELD_NLI_BUTTON_ICON_DESC"
+					label="MOD_LOG_IN_BUTTON_FIELD_NLI_BUTTON_ICON_LABEL"
+					name="nli_btn_icon"
+					type="text" />
+			</fieldset>
+		</fields>
+	</config>
+</extension>

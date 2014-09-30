@@ -43,9 +43,10 @@
   .conference.past.unapproved{
     background: lighten(@conference, @lightenPast) url(/media/com_ta_calendar/images/stripes.png);
   }
-  .input-date{
-    display: inline-block;
-    width: 179px;
+  .date{
+    .form-control-feedback{
+      right: 40px;
+    }
   }
   .meeting{
     background: @meeting;

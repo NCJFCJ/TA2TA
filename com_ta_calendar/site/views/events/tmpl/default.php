@@ -2190,9 +2190,9 @@ if(!empty($_SERVER["HTTPS"]) && $_SERVER["HTTPS"]!=="off"){
 									<div class="form-group">
 										<label class="control-label col-sm-4" for="startdate">Start Date*</label>
 										<div class="col-sm-8">
-											<div class="input-append date short-field" id="startPicker" data-date="" data-date-format="mm-dd-yyyy">
-										    	<input id="startdate" name="startdate" class="input-date form-control" type="text" value="">
-										    	<span class="add-on icomoon-calendar" style="cursor:pointer;"></span>
+											<div class="input-group date" id="startPicker" data-date="" data-date-format="mm-dd-yyyy">
+										    	<input id="startdate" name="startdate" class="form-control" type="text" value="">
+										    	<span class="input-group-addon icomoon-calendar" style="cursor:pointer;"></span>
 										 </div>
 										</div>
 									</div>
@@ -2213,9 +2213,9 @@ if(!empty($_SERVER["HTTPS"]) && $_SERVER["HTTPS"]!=="off"){
 									<div class="form-group">
 										<label class="control-label col-sm-4" for="enddate">End Date*</label>
 										<div class="col-sm-8">
-											<div class="input-append date short-field" id="endPicker" data-date="" data-date-format="mm-dd-yyyy">
-										    	<input type="text" class="input-date form-control" value="" id="enddate" name="enddate">
-										    	<span class="add-on icomoon-calendar" style="cursor:pointer;"></span>
+											<div class="input-group date" id="endPicker" data-date="" data-date-format="mm-dd-yyyy">
+										    	<input type="text" class="form-control" value="" id="enddate" name="enddate">
+										    	<span class="input-group-addon icomoon-calendar" style="cursor:pointer;"></span>
 										 	</div>
 										</div>
 									</div>

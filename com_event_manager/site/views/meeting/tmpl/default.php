@@ -9,8 +9,8 @@
 defined('_JEXEC') or die;
 
 JHtml::_('behavior.keepalive');
-JHtml::_('behavior.tooltip');
-JHtml::_('behavior.formvalidation');
+//JHtml::_('behavior.tooltip');
+//JHtml::_('behavior.formvalidation');
 
 // Time quick pick options
 $quick_pick_times = array(
@@ -38,11 +38,24 @@ $quick_pick_times = array(
   '5:30pm',
   '6:00pm'
 );
+// determine the user's timezone, and adopt it
+$timezoneAbbr = 'PST';
+if(isset($this->userSettings->timezone)){
+  foreach($this->timezones as $tz){
+    if($tz->abbr == $this->userSettings->timezone){
+      $timezoneAbbr = $tz->abbr;
+      break;
+    }
+  }
+}
 
 ?>
+<script type="text/javascript" src="/media/editors/tinymce/tinymce.min.js"></script>
+
 <script type = "text/javascript">
-var currentStep = 1;
+
 jQuery(function($){
+  var currentStep = 1;
   changeStep(currentStep);
   // Click handler for Next button 
   $('#nextBlock').click(function(){
@@ -55,7 +68,72 @@ jQuery(function($){
     changeStep(currentStep);
   });
   
-  // date pickers
+   /**
+   * Function to change current step/pagination.
+   *
+   * @param int currentStep   current step/pg number.
+   */
+  function changeStep(currentStep){
+    $('.step-wrapper').hide();
+    $('.step-wrapper').eq(currentStep-1).show();
+    $('#currentStep').text(currentStep);
+    // Handles Prev button display
+    if(currentStep>1){
+      $('#previousBlock').show();
+    }else{
+      $('#previousBlock').hide();
+    }
+    // Handles Next button display
+   console.log(currentStep + "<" + $('.step-wrapper').length);
+    if(currentStep<$('.step-wrapper').length){
+      $('#nextBlock').show();
+      $('#submitButton').hide();
+    }else{
+      $('#nextBlock').hide();
+      $('#submitButton').show();
+    }
+  }
+
+// Initialize TinyMCE for summary, assitance and comments fields
+    tinyMCE.init({
+      dialog_type: 'modal',
+      doctype: '<!DOCTYPE html>',
+      editor_selector: 'mce-editor',
+      element_format: 'html',
+      menubar: false,
+      mode: 'specific_textareas',
+      paste_word_valid_elements: 'b,strong,i,em,u,li,ul,ol,ul',
+      plugins: 'paste',
+      statusbar: false,
+      toolbar: 'bold,italic,underline,separator,bullist,numlist,separator,outdent,indent,separator,undo,redo',
+      setup: function(editor){
+        editor.on('change', function(e){
+          // summary
+          var summary = tinyMCE.activeEditor.getContent();
+          if(summary.length < 20 || summary.length > 1500){
+            ta2ta.bootstrapHelper.showValidationState($('.mce-tinymce'), 'error', true);
+          }else{
+            ta2ta.bootstrapHelper.showValidationState($('.mce-tinymce'), 'success', true);
+          }
+          // assistance
+          var assistance = tinyMCE.activeEditor.getContent();
+          if(assistance.length < 20 || assistance.length > 1500){
+            ta2ta.bootstrapHelper.showValidationState($('.mce-tinymce'), 'error', true);
+          }else{
+            ta2ta.bootstrapHelper.showValidationState($('.mce-tinymce'), 'success', true);
+          }
+          // comments
+          var comments = tinyMCE.activeEditor.getContent();
+          if(comments.length < 20 || comments.length > 1500){
+            ta2ta.bootstrapHelper.showValidationState($('.mce-tinymce'), 'error', true);
+          }else{
+            ta2ta.bootstrapHelper.showValidationState($('.mce-tinymce'), 'success', true);
+          }
+        });
+      }
+    });
+    
+ // date pickers
    var nowTemp = new Date();
     var now = new Date(nowTemp.getFullYear(), nowTemp.getMonth(), nowTemp.getDate(), 0, 0, 0, 0);
   
@@ -77,59 +155,222 @@ jQuery(function($){
      editLimitEndTimeSelect();
    }).data('datepicker');
 
-  /**
-   * Function to change current step/pagination.
-   *
-   * @param int currentStep   current step/pg number.
-   */
-  function changeStep(currentStep){
-    $('.step-wrapper').hide();
-    $('.step-wrapper')[currentStep-1].show();
-    $('#currentStep').text(currentStep);
-    // Handles Prev button display
-    if(currentStep>1){
-      $('#previousBlock').show();
-    }else{
-      $('#previousBlock').hide();
-    }
-    // Handles Next button display
-   console.log(currentStep + "<" + $('.step-wrapper').length);
-    if(currentStep<$('.step-wrapper').length){
-      $('#nextBlock').show();
-      $('#submitButton').hide();
-    }else{
-      $('#nextBlock').hide();
-      $('#submitButton').show();
-    }
-  }
 
+    /* --- time quick pick --- */
+    
+    var listeningToFormat = false;
+    
+    $('.time-quick-pick input').focus(function(){
+      // Show the select list when the time field gains
+      $(this).next().show();
+    }).keypress(function(event){
+      // hide the select if the user begins typing in the time field, ignore tab
+      if(event.keyCode != 9){
+        $(this).next().hide();
+      }
+      if(!listeningToFormat){
+        $(this).one('blur', function(){
+          // set the value of the field
+          var newTime = formatTime($(this));
+          $(this).val(newTime);
+          $(this).change();
+          
+          // udpate the select to match, if there is one and scroll to it
+          var selectObj = $(this).next();
+          selectObj.val(newTime);
+          
+          listeningToFormat = false;
+        });
+        listeningToFormat = true;
+      }
+    }).blur(function(event){
+      var thisObj = $(this);
+      setTimeout(function(){
+        var selectObj = thisObj.next();
+        if(!(selectObj.is(':focus'))){
+          selectObj.hide();
+        }
+      },100);
+    });
 
+    $('.time-quick-pick select').blur(function(){
+      // Hide the select list when it loses focus
+      $(this).hide();
+    }).change(function(){
+      // Update the time input field when a selection is made
+      $(this).prev().val($(this).val());
+      if($(this).prev().attr('id') == 'starttime'){
+        $('#starttime').change();
+      }
+    }).click(function(event){
+      // Close the select on click
+      $(this).hide();         
+    });
+    
+    /**
+     * This function takes user input and tries to make it a logical time string
+     * @param input A $ object for the field to be validated
+     */
+    function formatTime(input){
+      // variables
+      var timeString = input.val();
+      var returnString = '';
+      
+      // strip any non-valid characters
+      timeString = timeString.replace(/[^\d:ampAMP ]/g,'');
+      
+      // convert to lower case
+      timeString.toLowerCase();
+      
+      // checks
+      var hasColon = timeString.indexOf(':') > -1 ? true : false;
+      var hasLetter = timeString.indexOf('a') > -1 
+              || timeString.indexOf('m') > -1
+              || timeString.indexOf('p') > -1 ? true : false;
+      
+      // Note: The following code intentionally drops malformed data. You will see no trapping for bad dates,
+      // these are addressed by a default below.
+      if(hasColon){
+        // there is a colon
+        // split the string based on the colon
+        var stringArray = timeString.split(':');
+        // only bother processing if there is the proper number of colons (1)
+        if(stringArray.length == 2){
+          // check hour
+          var hour = parseInt(stringArray[0], 10);
+          if(hour >= 1 && hour <= 23){
+            // strip AM or PM from the minute string
+            var minutes = parseInt(stringArray[1].replace(/[^\d]/g,''), 10);
+            if(minutes >= 0 && minutes <= 59){
+              // both the hour and minutes are valid, let's reconstruct and format the string
+              var ampm = 'am';
+              if(hour > 12){
+                // correcting military time
+                hour = hour - 12;
+                ampm = 'pm';
+              }else{
+                if(hasLetter){
+                  var letters = stringArray[1].replace(/[^amp]/g,'');
+                  if(letters == 'p' || letters == 'pm'){
+                    ampm = 'pm';
+                  }else{
+                    ampm = 'am';
+                  }
+                }else{
+                  // base am or pm on the hour provided
+                  if((hour >= 1 && hour <= 6) || hour == 12){
+                    ampm = 'pm';
+                  }
+                }
+              }
+              returnString = hour + ':' + (minutes < 10 ? '0' + minutes : minutes) + ampm;
+            }
+          }
+        }
+      }else{
+        // no colon exists
+        switch(timeString){
+          case '1':
+            returnString = '1:00pm';
+            break;
+          case '2':
+            returnString = '2:00pm';
+            break;
+          case '3':
+            returnString = '3:00pm';
+            break;
+          case '4':
+            returnString = '4:00pm';
+            break;
+          case '5':
+            returnString = '5:00pm';
+            break;
+          case '6':
+            returnString = '6:00pm';
+            break;
+          case '7':
+            returnString = '7:00am';
+            break;
+          case '8':
+            returnString = '8:00am';
+            break;
+          case '9':
+            returnString = '9:00am';
+            break;
+          case '10':
+            returnString = '10:00am';
+            break;
+          case '11':
+            returnString = '11:00am';
+            break;
+          case '12':
+            returnString = '12:00pm';
+            break;
+        }
+      }
+      
+      if(returnString != ''){
+        return returnString;
+      }
+      // if this is an end time, base it on the start time
+      if(input.attr('name') == 'endtime'){
+        var startTime = $('#starttime').val();
+        if(startTime != ''){
+          // split this on the colon
+          var startTimeArray = startTime.split(':');
+          var endHour = parseInt(startTimeArray[0], 10) + 1;
+          var endMinutes = startTimeArray[1].replace(/[^\d]/g,'');
+          var endAmpm = startTimeArray[1].replace(/[^amp]/g,'');
+          
+          // is the hour in bounds?
+          if(endHour > 12){
+            if(endAmpm == 'am'){
+              endHour = 1;
+            }else{
+              endHour = 12;
+            }
+            endAmpm = 'pm';
+          }
+          
+          // build the return, adding one hour
+          return endHour + ':' + endMinutes + endAmpm;
+        }
+      }
+      
+      // just send 5pm for end times and 8am for all else
+      if(input.attr('name') == 'endtime'){
+        return '5:00pm';
+      }else{
+        return '8:00am';
+      }
+    }
+
+        // on load, update the edit box timezone
+    $('.timezoneLabel').text('<?php echo $timezoneAbbr; ?>');
 
   /** ----- Meeting Registration Form Live Validation ----- **/
+  // Page 1
+  // start date
+      $('#startdate').change(function(){
+    ta2ta.validate.date($(this),3);
+      });
 
-    /* --- Page 1 --- */
+  // start time
+      $('#starttime').change(function(){
+        ta2ta.validate.time($(this),3);
+      });
 
-//  // start date
-//      $('#startdate').change(function(){
-//    ta2ta.validate.date($(this),3);
-//      });
+      // end date
+      $('#enddate').change(function(){
+        ta2ta.validate.date($(this),3);
+      });
 
-//  // start time
-//      $('#starttime').change(function(){
-//        ta2ta.validate.time($(this),3);
-//      });
+  // end time
+      $('#endtime').change(function(){
+        ta2ta.validate.time($(this),3);
+      });
 
-//      // end date
-//      $('#enddate').change(function(){
-//        ta2ta.validate.date($(this),3);
-//      });
-
-//  // end time
-//      $('#endtime').change(function(){
-//        ta2ta.validate.time($(this),3);
-//      });
-
-      // title
+  // title
       $('#title').change(function(){
         if(!ta2ta.validate.hasValue($(this))
         || !ta2ta.validate.minLength($(this),10)
@@ -141,98 +382,84 @@ jQuery(function($){
           }
       });
 
-    /* --- Page 2 --- */
+  // event_url
+      $('#event_url').change(function(){
+      if($(this).val()){
+        ta2ta.validate.url($(this), 3);
+       }
+      });
 
-    // project
-//  $('#project').change(function(){
-//    ta2ta.validate.hasValue($(this),3);
-//  });
-//
-//  // event_url
-//  $('#event_url').change(function(){
-//    if($(this).val()){
-//      ta2ta.validate.url($(this), 3);
-//    }
-//  });
+  // Page 2
+    
+  // project
+      $('#project').change(function(){
+        ta2ta.validate.hasValue($(this),3);
+      });
 
-//  // registration_url
-//  $('#registration_url').change(function(){
-//    if($(this).val()){
-//      ta2ta.validate.url($(this), 3);
-//    }
-//  });
-      
-    /**
-     * These are the validation procedures for each page of the edit popup. Triggers the display of error messages.
-     * @return boolean Each function returns false if there is a validation error, true otherwise
+  // grantPrograms
+ 
+  // approval
+
+  // Page 3
+
+  // topicAreas
+
+  // targetAudiences
+
+  // Page 4
+
+  // regchoice
+
+  // registration_url
+    $('#registration_url').change(function(){
+      if($(this).val()){
+        ta2ta.validate.url($(this), 3);
+      }
+    
+  // open
+
+  // assistance
+
+  // comments
+
+/**
+     * Populate the grant programs from the selected TA Project
      */
-//  var pageValidation = {
-//    1: function(){
-//      var rtn = true;
-//      
-//      // type
-//      if(!ta2ta.validate.hasValue($('#type'),1)){
-//        errors.push('You must select an event type.');
-//        rtn = false;
-//      }
 
-//      // start date
-//      var startdate = $('#startdate').val();
-//      if(ta2ta.validate.hasValue($('#startdate'),1)){
-//        if(!ta2ta.validate.date($('#startdate'), 1)){
-//          errors.push('The start date you entered is invalid (format: mm-dd-yyyy).');
-//          rtn = false;
-//        }
-//      }else{
-//        errors.push('You must select a start date.');
-//        rtn = false;
-//      }
-//      
-//      // start time
-//      var starttime = $('#starttime').val();
-//      if(ta2ta.validate.hasValue($('#starttime'),1)){
-//        if(!ta2ta.validate.time($('#starttime'),1)){
-//          errors.push('The start time you entered is invalid (example: 8:30am).');
-//          rtn = false;
-//        }
-//      }else{
-//        errors.push('You must select a start time.');
-//        rtn = false;
-//      }
-        
-      // end date
-//      var enddate = $('#enddate').val();
-//      if(ta2ta.validate.hasValue($('#enddate'),1)){
-//        if(!ta2ta.validate.date($('#enddate'), 1)){
-//          errors.push('The end date you entered is invalid (format: mm-dd-yyyy).');
-//          rtn = false;
-//        }
-//      }else{
-//        errors.push('You must select an end date.');
-//        rtn = false;
-//      }
-        
-//       // end time
-//       var endtime = $('#endtime').val();
-//       if(ta2ta.validate.hasValue($('#endtime'),1)){
-//         if(!ta2ta.validate.time($('#endtime'),1)){
-//           errors.push('The end time you entered is invalid (example: 3:30pm).');
-//           rtn = false;
-//         }
-//       }else{
-//         errors.push('You must select an end time.');
-//         rtn = false;
-//       }
-        
-        // end must be after start
-//       var startDateObj = new Date(parseInt(startdate.substr(6,4)), parseInt(startdate.substr(0,2)) - 1, parseInt(startdate.substr(3,2)), (starttime.substring(0,starttime.indexOf(':')) != '12' && starttime.substr(-2) == 'pm' ? parseInt(starttime.substring(0,starttime.indexOf(':'))) + 12 : parseInt(starttime.substring(0,starttime.indexOf(':')))), parseInt(starttime.substr(starttime.indexOf(':') + 1, 2)));
-//       var endDateObj = new Date(parseInt(enddate.substr(6,4)), parseInt(enddate.substr(0,2)) - 1, parseInt(enddate.substr(3,2)), (endtime.substr(-2) == 'pm' ? parseInt(endtime.substring(0,endtime.indexOf(':'))) + 12 : parseInt(endtime.substring(0,endtime.indexOf(':')))), parseInt(endtime.substr(endtime.indexOf(':') + 1, 2)));
-//       if(startDateObj.getTime() >= endDateObj.getTime()){
-//         errors.push('You must enter an end date and time that is after your start date and time.');
-//         ta2ta.bootstrapHelper.showValidationState($('#enddate'), 'error', true);
-//         ta2ta.bootstrapHelper.showValidationState($('#endtime'), 'error', true);
-//         rtn = false;
-//       }
+    $('#project').change(function(){
+      // send the AJAX request
+      var request = $.ajax({
+        data: {project: $(this).val()},
+        dataType: 'json',
+        type: 'POST',
+        url: '<?php echo 'http' . ($https ? 's' : '') . '://'. $_SERVER['HTTP_HOST'] . '/index.php?option=com_ta_calendar&task=getPrograms';?>',
+      });
+      
+      // fires when the AJAX call completes
+      request.done(function(response, textStatus, jqXHR){
+        // check if this has an error
+        if(response.status == 'success'){
+          // check if any selections were made previously
+          if($("#editPopup input[name='grantPrograms[]']:checked").length){
+            pastGrantPrograms = true;
+          }
+
+          // check the appropriate boxes
+          checkEditCheckboxes('grantPrograms',response.data);
+        }else{
+          editAlert(response.message, response.status);
+        }
+      });
+
+      // catch if the AJAX call fails completelly
+      request.fail(function(jqXHR, textStatus, errorThrown){
+        // notify the user that an error occured
+        editAlert('Server error. AJAX connection failed.', 'error', true);
+      });
+    });
+
+    });
+
 });        
 </script>
 
@@ -247,8 +474,8 @@ jQuery(function($){
         <!-- Meeting Start Date and Time -->
         <div class="form-group">
           <label class="control-label" for="startdate">Start Date*</label>
-          <div class="input-group date" id="startPicker" data-date="" data-date-format="mm-dd-yyyy">
-            <input id="startdate" name="startdate" class="input-date form-control" type="text" value="">
+          <div class="input-group date col-xs-3" id="startPicker" data-date="" data-date-format="mm-dd-yyyy">
+            <input id="startdate" name="startdate" class="form-control" type="text" value="">
             <span class="input-group-addon icomoon-calendar" style="cursor:pointer;"></span>
           </div>
         </div>
@@ -263,14 +490,14 @@ jQuery(function($){
                 <?php endforeach; ?>
               </select>
             </div>
+            <div class="timezoneLabel"></div>
           </div>
-          <div class="timezoneLabel"></div>
         </div>
         <div class="form-group">
         <label class="control-label" for="enddate">End Date*</label>
-          <div class="input-group" id="endPicker" data-date="" data-date-format="mm-dd-yyyy">
-            <input type="text" class="input-date form-control" value="" id="enddate" name="enddate">
-            <span class="add-on icomoon-calendar" style="cursor:pointer;"></span>
+          <div class="input-group date col-xs-3" id="endPicker" data-date="" data-date-format="mm-dd-yyyy">
+            <input type="text" class="form-control" value="" id="enddate" name="enddate">
+            <span class="input-group-addon icomoon-calendar" style="cursor:pointer;"></span>
           </div>
         </div>
         <!-- End Time -->
@@ -285,8 +512,8 @@ jQuery(function($){
                 <?php endforeach; ?>
               </select>
             </div>
+            <div class="timezoneLabel"></div>
           </div>
-          <div class="timezoneLabel"></div>
         </div>
         <!-- Meeting Title -->
         <div class="form-group">
@@ -421,12 +648,12 @@ jQuery(function($){
         <!-- Assistance -->
         <div class="form-group">
           <label for="assistance" >Please desribe what type of assistance you are requesting.</label>
-          <textarea class="form-control" rows="3" id="assistance" name="assistance" maxlength="255"></textarea>
+         <textarea class="mce-editor form-control" id="assistance" name="assistance" rows="3"></textarea>
         </div>   
         <!-- Comments -->
         <div class="form-group">
           <label for="comments" >Additional Comments</label>
-          <textarea class="form-control" rows="3" id="comments" name="comments" maxlength="255"></textarea>
+          <textarea class="mce-editor form-control" id="comments" name="comments" rows="3"></textarea>
         </div>
       </div>
       <div>

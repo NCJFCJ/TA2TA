@@ -37,10 +37,6 @@
 		<position>left-menu</position>
 		<position>legal-menu</position>
 		<position>main-nav</position>
-		<position>manual-1</position>
-		<position>manual-2</position>
-		<position>manual-3</position>
-		<position>manual-4</position>
 		<position>search</position>
 		<position>small-top-nav</position>
 	</positions>

@@ -39,37 +39,108 @@ defined( '_JEXEC' ) or die;
 	</div>
 	<?php endif; ?>
 </div>
+<div id="latestNews">
 	<?php
 	// articles
 	$summary_length = $this->params->get('summary_length');
 	for($i = 0; $i < count($this->items); $i++):
+		// get the data for the next article
 		$articleData = $this->items[$i];
+		$imgData = (isset($articleData->images) ? json_decode($articleData->images) : false);
+
+		// determine the link to the article
 		$articleURL = '/ta-updates/' . $articleData->id . '-' . $articleData->alias . '.html';
-		if($i > 0 && $this->params->get('show_horizontal_dividers')):?>
-			<hr class="clr divider">
-		<?php endif; ?>
-		<div class="row <?php echo $this->params->get('row_class'); ?> latest-news">
-			<article class="col-xs-12">
-				<header>
-					<h3><a href="<?php echo $articleURL; ?>"><?php echo $articleData->title; ?></a></h3>
-					<p class="blogDate"><?php echo date('F j, Y',strtotime($articleData->publish_up)); ?></p>
-				</header>
-				<?php 
-				if($summary_length > 0){
-					$article_text = truncateHTML($articleData->introtext, $summary_length);
-					echo $article_text;
-					if(strlen($article_text) < strlen($articleData->introtext)): ?>
-					<div class="more-btn">
-						<a href="<?php echo $articleURL; ?>" class="more"><span class="icomoon-arrow-right"></span> <?php echo $this->params->get('read_more_text'); ?></a>
+		
+		// draw the top side-by-side items
+		if($i < 2):
+			if($i == 0):
+				// start the row ?>
+				<div class="row top-articles <?php echo ($this->params->get('show_dividers') ? 'show-dividers ' : ''); ?><?php echo $this->params->get('row_class'); ?>">
+			<?php endif; 
+			// draw the article code for a top column
+			?>
+			<div class="col-sm-6">
+				<div class="row">
+					<div class="col-xs-12 intro-image">
+						<?php if($imgData && isset($imgData->image_intro)): ?>
+							<img src="<?php echo $imgData->image_intro; ?>" alt="<?php echo (isset($imgData->image_intro_alt) ? $imgData->image_intro_alt : ''); ?>">
+						<?php endif; ?>
 					</div>
-					<?php endif; 
-				}else{
-					echo $articleData->introtext;
-				}
-				?>
-			</article>		
-		</div>		
-	<?php endfor;
+				</div>
+				<div class="row">
+					<article class="col-xs-12">
+						<header>
+							<h3><a href="<?php echo $articleURL; ?>"><?php echo $articleData->title; ?></a></h3>
+						</header>
+						<?php 
+						$article_text = $articleData->introtext;
+						if($summary_length > 0){
+							// shorten the article to the specified length
+							$article_text = truncateHTML($article_text, $summary_length);
+							echo $article_text;
+						}else{
+							// display the entire article
+							echo $article_text;
+						} ?>
+						<div class="row">
+							<div class="col-xs-6 post-date">
+								Posted: <?php echo date('F j, Y',strtotime($articleData->publish_up)); ?>
+							</div>
+							<div class="col-xs-6">
+								<?php if(strlen($article_text) < strlen($articleData->introtext)): ?>
+								<div class="more-btn">
+									<a href="<?php echo $articleURL; ?>" class="more"><span class="icomoon-arrow-right"></span> <?php echo $this->params->get('read_more_text'); ?></a>
+								</div>
+								<?php endif; ?>
+							</div>
+						</div>
+					</article>
+				</div>
+			</div>
+			<?php if($i == 1):
+				// end the row ?>
+				</div>
+			<?php endif;
+		else: // draw the full-width articles
+			if($i > 1 && $this->params->get('show_dividers')):?>
+				<hr class="clr divider">
+			<?php endif; ?>
+			<div class="row <?php echo $this->params->get('row_class'); ?>">
+				<div class="col-sm-3 intro-image">
+					<?php if($imgData && isset($imgData->image_intro)): ?>
+						<img src="<?php echo $imgData->image_intro; ?>" alt="<?php echo (isset($imgData->image_intro_alt) ? $imgData->image_intro_alt : ''); ?>">
+					<?php endif; ?>
+				</div>
+				<article class="col-sm-9">
+					<header>
+						<h3><a href="<?php echo $articleURL; ?>"><?php echo $articleData->title; ?></a></h3>
+					</header>
+					<?php 
+					$article_text = $articleData->introtext;
+					if($summary_length > 0){
+						// shorten the article to the specified length
+						$article_text = truncateHTML($article_text, $summary_length);
+						echo $article_text;
+					}else{
+						// display the entire article
+						echo $article_text;
+					} ?>
+					<div class="row">
+						<div class="col-xs-6">
+							<?php if(strlen($article_text) < strlen($articleData->introtext)): ?>
+							<div class="more-btn">
+								<a href="<?php echo $articleURL; ?>" class="more"><span class="icomoon-arrow-right"></span> <?php echo $this->params->get('read_more_text'); ?></a>
+							</div>
+							<?php endif; ?>
+						</div>
+						<div class="col-xs-6 post-date">
+							Posted: <?php echo date('F j, Y',strtotime($articleData->publish_up)); ?>
+						</div>
+					</div>
+				</article>		
+			</div>		
+	<?php endif;
+	endfor;
 	if (($this->params->def('show_pagination', 1) == 1  || ($this->params->get('show_pagination') == 2)) && ($this->pagination->get('pages.total') > 1)) : ?>
 	<div class="pagination">
 		<?php  if ($this->params->def('show_pagination_results', 1)) : ?>
@@ -77,7 +148,9 @@ defined( '_JEXEC' ) or die;
 		<?php endif; ?>
 		<?php echo $this->pagination->getPagesLinks(); ?>
 	</div>
-	<?php  endif;
+	<?php  endif; ?>
+</div>
+<?php
 /**
  * truncateHtml can truncate a string up to a number of characters while preserving whole words and HTML tags
  *

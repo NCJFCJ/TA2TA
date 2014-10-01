@@ -34,10 +34,10 @@
 				type="text"
 				label="TMPL_TA2TA_LAYOUT_LATEST_NEWS_ROW_CLASS_LABEL"
 				description="TMPL_TA2TA_LAYOUT_LATEST_NEWS_ROW_CLASS_DESC" />
-			<field name="show_horizontal_dividers"
+			<field name="show_dividers"
 				type="list"
-				label="TMPL_TA2TA_LAYOUT_SHOW_HORIZONTAL_DIVIDERS_LABEL"
-				description="TMPL_TA2TA_LAYOUT_SHOW_HORIZONTAL_DIVIDERS_DESC">
+				label="TMPL_TA2TA_LAYOUT_SHOW_DIVIDERS_LABEL"
+				description="TMPL_TA2TA_LAYOUT_SHOW_DIVIDERS_DESC">
 				<option value="0">JHIDE</option>
 				<option value="1">JSHOW</option>
 			</field>

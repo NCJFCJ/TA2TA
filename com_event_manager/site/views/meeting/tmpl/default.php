@@ -12,6 +12,12 @@ JHtml::_('behavior.keepalive');
 //JHtml::_('behavior.tooltip');
 //JHtml::_('behavior.formvalidation');
 
+// https?
+$https = false;
+if(!empty($_SERVER["HTTPS"]) && $_SERVER["HTTPS"]!=="off"){
+  $https = true;
+}
+
 // Time quick pick options
 $quick_pick_times = array(
   '7:00am',
@@ -54,6 +60,7 @@ if(isset($this->userSettings->timezone)){
 
 <script type = "text/javascript">
 
+
 jQuery(function($){
   var currentStep = 1;
   changeStep(currentStep);
@@ -94,7 +101,7 @@ jQuery(function($){
     }
   }
 
-// Initialize TinyMCE for summary, assitance and comments fields
+ // Initialize TinyMCE for summary, assitance and comments fields
     tinyMCE.init({
       dialog_type: 'modal',
       doctype: '<!DOCTYPE html>',
@@ -345,7 +352,24 @@ jQuery(function($){
       }
     }
 
-        // on load, update the edit box timezone
+/**
+     * Checks the appropriate checkboxes for a given field with the given values
+     * 
+     * @params string The name of the checkbox (sans brackets)
+     * @params array The values corresponding to the checkboxes to be checked
+     */
+
+    function checkEditCheckboxes(name, values){
+      // uncheck all
+      $("#mtgForm input[name='" + name + "[]']").prop('checked', false);
+
+      // check selected
+      $.each(values, function(index,value){
+        $("#mtgForm input[name='" + name + "[]'][value='" + value + "']").prop('checked', true);
+      });
+    }
+
+ // on load, update the edit box timezone
     $('.timezoneLabel').text('<?php echo $timezoneAbbr; ?>');
 
   /** ----- Meeting Registration Form Live Validation ----- **/
@@ -384,16 +408,17 @@ jQuery(function($){
 
   // event_url
       $('#event_url').change(function(){
-      if($(this).val()){
-        ta2ta.validate.url($(this), 3);
-       }
+        if($(this).val()){
+          ta2ta.validate.url($(this), 3);
+        }
       });
 
   // Page 2
     
   // project
       $('#project').change(function(){
-        ta2ta.validate.hasValue($(this),3);
+        console.log('I m here!');
+       ta2ta.validate.hasValue($(this),3);
       });
 
   // grantPrograms
@@ -415,7 +440,7 @@ jQuery(function($){
       if($(this).val()){
         ta2ta.validate.url($(this), 3);
       }
-    
+  });  
   // open
 
   // assistance
@@ -427,7 +452,7 @@ jQuery(function($){
      */
 
     $('#project').change(function(){
-      // send the AJAX request
+     // send the AJAX request
       var request = $.ajax({
         data: {project: $(this).val()},
         dataType: 'json',
@@ -440,23 +465,22 @@ jQuery(function($){
         // check if this has an error
         if(response.status == 'success'){
           // check if any selections were made previously
-          if($("#editPopup input[name='grantPrograms[]']:checked").length){
+          if($("#mtgForm input[name='grantPrograms[]']:checked").length){
             pastGrantPrograms = true;
           }
 
           // check the appropriate boxes
           checkEditCheckboxes('grantPrograms',response.data);
         }else{
-          editAlert(response.message, response.status);
+          ta2ta.bootstrapHelper.showAlert(response.message, response.status);
         }
       });
 
       // catch if the AJAX call fails completelly
       request.fail(function(jqXHR, textStatus, errorThrown){
         // notify the user that an error occured
-        editAlert('Server error. AJAX connection failed.', 'error', true);
+        ta2ta.bootstrapHelper.showAlert('Server error. AJAX connection failed.', 'error', true);
       });
-    });
 
     });
 
@@ -466,15 +490,15 @@ jQuery(function($){
 <!-- START REG FORM _____________________________________________________ -->
 <h3>Meeting Request Form</h3>
 <p>To request a meeting, please provide the following information:</p> 
-<div class="row">
+<div class="row" id="mtgForm">
   <div class="col-sm-8 col-md-6">
-    <form role="form">   
+    <form role="form" >   
       <!-- Page 1 -->
       <div class="step-wrapper">
         <!-- Meeting Start Date and Time -->
         <div class="form-group">
           <label class="control-label" for="startdate">Start Date*</label>
-          <div class="input-group date col-xs-3" id="startPicker" data-date="" data-date-format="mm-dd-yyyy">
+          <div class="input-group date col-xs-4" id="startPicker" data-date="" data-date-format="mm-dd-yyyy">
             <input id="startdate" name="startdate" class="form-control" type="text" value="">
             <span class="input-group-addon icomoon-calendar" style="cursor:pointer;"></span>
           </div>
@@ -495,7 +519,7 @@ jQuery(function($){
         </div>
         <div class="form-group">
         <label class="control-label" for="enddate">End Date*</label>
-          <div class="input-group date col-xs-3" id="endPicker" data-date="" data-date-format="mm-dd-yyyy">
+          <div class="input-group date col-xs-4" id="endPicker" data-date="" data-date-format="mm-dd-yyyy">
             <input type="text" class="form-control" value="" id="enddate" name="enddate">
             <span class="input-group-addon icomoon-calendar" style="cursor:pointer;"></span>
           </div>

@@ -42,6 +42,7 @@ defined( '_JEXEC' ) or die;
 <div id="latestNews">
 	<?php
 	// articles
+	$firstPage = (filter_has_var(INPUT_GET, 'start') ? false : true);
 	$summary_length = $this->params->get('summary_length');
 	for($i = 0; $i < count($this->items); $i++):
 		// get the data for the next article
@@ -52,10 +53,10 @@ defined( '_JEXEC' ) or die;
 		$articleURL = '/ta-updates/' . $articleData->id . '-' . $articleData->alias . '.html';
 		
 		// draw the top side-by-side items
-		if($i < 2):
+		if($i < 2 && count($this->items) > 1 && $firstPage):
 			if($i == 0):
 				// start the row ?>
-				<div class="row top-articles <?php echo ($this->params->get('show_dividers') ? 'show-dividers ' : ''); ?><?php echo $this->params->get('row_class'); ?>">
+				<div class="row top-articles <?php echo ($this->params->get('show_dividers') && count($this->items) > 1 ? 'show-dividers ' : ''); ?><?php echo $this->params->get('row_class'); ?>">
 			<?php endif; 
 			// draw the article code for a top column
 			?>
@@ -106,15 +107,20 @@ defined( '_JEXEC' ) or die;
 				<hr class="clr divider">
 			<?php endif; ?>
 			<div class="row <?php echo $this->params->get('row_class'); ?>">
-				<div class="col-sm-3 intro-image">
+				<div class="col-sm-3 col-lg-2 intro-image">
 					<?php if($imgData && isset($imgData->image_intro)): ?>
 						<img src="<?php echo $imgData->image_intro; ?>" alt="<?php echo (isset($imgData->image_intro_alt) ? $imgData->image_intro_alt : ''); ?>">
 					<?php endif; ?>
 				</div>
-				<article class="col-sm-9">
+				<article class="col-sm-9 col-lg-10">
 					<header>
+						<div class="post-date">
+							Posted: <?php echo date('F j, Y',strtotime($articleData->publish_up)); ?>
+						</div>
 						<h3><a href="<?php echo $articleURL; ?>"><?php echo $articleData->title; ?></a></h3>
 					</header>
+					<div class="row">
+						<div class="col-xs-12">
 					<?php 
 					$article_text = $articleData->introtext;
 					if($summary_length > 0){
@@ -125,16 +131,15 @@ defined( '_JEXEC' ) or die;
 						// display the entire article
 						echo $article_text;
 					} ?>
+						</div>
+					</div>
 					<div class="row">
-						<div class="col-xs-6">
+						<div class="col-xs-12">
 							<?php if(strlen($article_text) < strlen($articleData->introtext)): ?>
 							<div class="more-btn">
 								<a href="<?php echo $articleURL; ?>" class="more"><span class="icomoon-arrow-right"></span> <?php echo $this->params->get('read_more_text'); ?></a>
 							</div>
 							<?php endif; ?>
-						</div>
-						<div class="col-xs-6 post-date">
-							Posted: <?php echo date('F j, Y',strtotime($articleData->publish_up)); ?>
 						</div>
 					</div>
 				</article>		
@@ -142,13 +147,13 @@ defined( '_JEXEC' ) or die;
 	<?php endif;
 	endfor;
 	if (($this->params->def('show_pagination', 1) == 1  || ($this->params->get('show_pagination') == 2)) && ($this->pagination->get('pages.total') > 1)) : ?>
-	<div class="pagination">
-		<?php  if ($this->params->def('show_pagination_results', 1)) : ?>
+		<?php if ($this->params->def('show_pagination_results', 1)) : ?>
 		<p class="counter pull-right"> <?php echo $this->pagination->getPagesCounter(); ?> </p>
 		<?php endif; ?>
-		<?php echo $this->pagination->getPagesLinks(); ?>
-	</div>
-	<?php  endif; ?>
+		<div class="text-center">
+			<?php echo $this->pagination->getPagesLinks(); ?>
+		</div>
+	<?php endif; ?>
 </div>
 <?php
 /**

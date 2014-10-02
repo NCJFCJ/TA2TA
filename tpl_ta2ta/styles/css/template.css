@@ -6628,8 +6628,7 @@ fieldset[disabled] .datepicker table tr td span.active.disabled:hover.active {
   cursor: default;
   background-color: transparent;
 }
-.input-append.date .add-on i,
-.input-prepend.date .add-on i {
+.input-group.date .input-group-addon i {
   display: block;
   cursor: pointer;
   width: 16px;
@@ -6644,7 +6643,7 @@ fieldset[disabled] .datepicker table tr td span.active.disabled:hover.active {
 .input-daterange input:last-child {
   border-radius: 0 3px 3px 0;
 }
-.input-daterange .add-on {
+.input-daterange .input-group-addon {
   display: inline-block;
   width: auto;
   min-width: 16px;
@@ -6694,9 +6693,8 @@ fieldset[disabled] .datepicker table tr td span.active.disabled:hover.active {
 #eventCalendar .conference.past.unapproved {
   background: #eccfec url(/media/com_ta_calendar/images/stripes.png);
 }
-#eventCalendar .input-date {
-  display: inline-block;
-  width: 179px;
+#eventCalendar .date .form-control-feedback {
+  right: 40px;
 }
 #eventCalendar .meeting {
   background: #82aaff;
@@ -7420,7 +7418,7 @@ a.jwDisqusArticleCounterLink:hover {
 
   -- -- -- -- -- -- -- -- --
   http://www.ta2ta.org - v2.0.0
-  last edit: September 30, 2014
+  last edit: October 1, 2014
   author:  Zachary Draper - NCJFCJ
   -- -- -- -- -- -- -- -- --
   
@@ -7428,33 +7426,50 @@ a.jwDisqusArticleCounterLink:hover {
 #latestNews h3 {
   font-size: 22px;
   line-height: 120%;
+  margin: 10px 0 5px 0;
 }
 #latestNews h3 a {
   color: #000;
 }
+#latestNews header {
+  padding-top: 0;
+}
 #latestNews .intro-image {
   overflow: hidden;
 }
+#latestNews .intro-image img {
+  width: 100%;
+}
 #latestNews .more-btn {
   padding: 15px 0;
+}
+#latestNews .more-btn a.more:focus {
+  color: #fff;
+  text-decoration: none;
 }
 #latestNews .post-date {
   color: #555555;
   font-size: 12px;
   font-style: italic;
-  margin-top: 20px;
+  margin-top: 0;
 }
 #latestNews .top-articles.show-dividers > .col-sm-6:first-child {
   border-right: 1px solid #999;
 }
+#latestNews .top-articles h3 {
+  margin: 20px 0 10px 0;
+}
+#latestNews .top-articles header {
+  padding-top: 10px;
+}
 #latestNews .top-articles .intro-image {
   max-height: 120px;
 }
-#latestNews .top-articles .intro-image img {
-  width: 100%;
-}
 #latestNews .top-articles .more-btn {
   float: right;
+}
+#latestNews .top-articles .post-date {
+  margin-top: 20px;
 }
 /* --- Printing --- */
 @media print {

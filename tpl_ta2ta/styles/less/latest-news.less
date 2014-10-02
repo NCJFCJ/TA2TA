@@ -2,7 +2,7 @@
 
   -- -- -- -- -- -- -- -- --
   http://www.ta2ta.org - v2.0.0
-  last edit: September 30, 2014
+  last edit: October 1, 2014
   author:  Zachary Draper - NCJFCJ
   -- -- -- -- -- -- -- -- --
   
@@ -12,34 +12,51 @@
   h3{
     font-size: 22px;
     line-height: 120%;
+    margin: 10px 0 5px 0;
     a{
       color: #000;
     }
   }
+  header{
+    padding-top: 0;
+  }
   .intro-image{
     overflow: hidden;
+    img{
+      width: 100%;
+    }
   }
   .more-btn{
     padding: 15px 0;
+    a.more:focus{
+      color: #fff;
+      text-decoration: none;
+    }
   }
   .post-date{
     color: @gray;
     font-size: @font-size-small;
     font-style: italic;
-    margin-top: 20px;
+    margin-top: 0;
   }
   .top-articles{
     &.show-dividers > .col-sm-6:first-child{
       border-right: 1px solid #999;
     }
+    h3{
+      margin: 20px 0 10px 0;
+    }
+    header{
+      padding-top: 10px;
+    }
     .intro-image{
       max-height: 120px;
-      img{
-        width: 100%;
-      }
     }
     .more-btn{
       float: right;
+    }
+    .post-date{
+      margin-top: 20px;
     }
   }
 }

@@ -1,0 +1,43 @@
+/*
+
+  -- -- -- -- -- -- -- -- --
+  http://www.ta2ta.org - v2.0.0
+  last edit: October 3, 2014
+  author:  Zachary Draper - NCJFCJ
+  -- -- -- -- -- -- -- -- --
+  
+*/
+
+#services{
+  h3{
+    margin-top: 0;
+  }
+  .divider{
+    background: transparent;
+    margin: 35px 0 25px 0;
+    text-align: center;
+    .divider-text{
+      background: @themeLighter;
+      color: #333;
+      display: inline-block;
+      font-size: @font-size-base * 1.7;
+      font-weight: bold;
+    }
+  }
+}
+
+@media screen and (min-width: 768px){
+  #services{
+    .divider{
+      background: transparent url(../../img/specialized-services-divider.png) repeat-x;
+      border: 0;
+      margin: 50px 0;
+      .divider-text{
+        font-size: @font-size-base * 2.2;
+        font-weight: normal;
+        margin-top: -15px;
+        padding: 0 35px;
+      }
+    }
+  }
+}

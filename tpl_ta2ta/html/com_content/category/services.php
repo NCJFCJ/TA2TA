@@ -39,45 +39,31 @@ defined( '_JEXEC' ) or die;
 	</div>
 	<?php endif; ?>
 </div>
-<div id="otherResources">
-	<p>Other resources for TA Providers include those TA projects that are designed for TA Providers, but may not necessarily be limited to TA Providers. Such projects include TA on developing curricula and distance learning programs, meeting and training accessibility, abuse in later life, and language access.</p>
-	<br>
+<div id="services">
 	<?php
 	// articles
-	$firstDrawn = false;
+	$count = 0;
 	foreach($this->items as $articleData):
-		// get the image and link data
-		$imgData = (isset($articleData->images) ? json_decode($articleData->images) : false);
-		$linkData = (isset($articleData->urls) ? json_decode($articleData->urls) : false);
+		// increment the count
+		$count++;
 
-		// see if we need a rule
-		if($firstDrawn){
-			echo '<hr>';
-		}else{
-			$firstDrawn = true;
+		// if this is the fourth article, add the specialized services divider first
+		if($count == 4){
+			echo '<div class="row divider"><div class="col-xs-12"><div class="divider-text">Specialized Services</div></div></div>';
 		}
 
+		// get the image data
+		$imgData = (isset($articleData->images) ? json_decode($articleData->images) : false);
 		?>
-		<div class="row">
-			<div class="col-sm-4 col-md-3">
-				<?php if(!empty($imgData->image_intro)):
-					if(!empty($linkData->urla)): ?>
-						<a href="<?php echo $linkData->urla; ?>" target="_blank"><img src="<?php echo $imgData->image_intro; ?>" alt="<?php echo $imgData->image_intro_alt; ?>"></a>
-					<?php else: ?>
-						<img src="<?php echo $imgData->image_intro; ?>" alt="<?php echo $imgData->image_intro_alt; ?>">
-					<?php endif;
-				endif; ?>
-			</div>
-			<div class="col-sm-8 col-md-9">
-				<?php if(!empty($linkData->urla)): ?>
-					<h4><a href="<?php echo $linkData->urla; ?>" target="_blank"><?php echo $articleData->title; ?></a></h4>
-				<?php else: ?>
-					<h4><?php echo $articleData->title; ?></h4>
-				<?php endif;
-				echo $articleData->introtext;
-				if(!empty($linkData->urla)): ?>
-					<a href="<?php echo $linkData->urla; ?>" target="_blank" class="btn btn-dark">Visit This Resource</a>
+		<div class="row well">
+			<div class="hidden-xs col-sm-1">
+				<?php if(!empty($imgData->image_intro)): ?>
+					<img src="<?php echo $imgData->image_intro; ?>" alt="<?php echo (isset($imgData->image_intro_alt) ? $imgData->image_intro_alt : ''); ?>">
 				<?php endif; ?>
+			</div>
+			<div class="col-xs-12 col-sm-11">
+				<h3><?php echo $articleData->title; ?></h3>
+				<?php echo $articleData->introtext; ?>
 			</div>
 		</div>
 	<?php endforeach;?>

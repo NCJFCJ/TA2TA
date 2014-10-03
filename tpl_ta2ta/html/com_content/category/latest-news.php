@@ -63,8 +63,8 @@ defined( '_JEXEC' ) or die;
 			<div class="col-sm-6">
 				<div class="row">
 					<div class="col-xs-12 intro-image">
-						<?php if($imgData && isset($imgData->image_intro)): ?>
-							<img src="<?php echo $imgData->image_intro; ?>" alt="<?php echo (isset($imgData->image_intro_alt) ? $imgData->image_intro_alt : ''); ?>">
+						<?php if(!empty($imgData->image_intro)): ?>
+							<img src="<?php echo $imgData->image_intro; ?>" alt="<?php echo $imgData->image_intro_alt; ?>">
 						<?php endif; ?>
 					</div>
 				</div>
@@ -108,8 +108,8 @@ defined( '_JEXEC' ) or die;
 			<?php endif; ?>
 			<div class="row <?php echo $this->params->get('row_class'); ?>">
 				<div class="col-sm-3 col-lg-2 intro-image">
-					<?php if($imgData && isset($imgData->image_intro)): ?>
-						<img src="<?php echo $imgData->image_intro; ?>" alt="<?php echo (isset($imgData->image_intro_alt) ? $imgData->image_intro_alt : ''); ?>">
+					<?php if(!empty($imgData->image_intro)): ?>
+						<img src="<?php echo $imgData->image_intro; ?>" alt="<?php echo $imgData->image_intro_alt; ?>">
 					<?php endif; ?>
 				</div>
 				<article class="col-sm-9 col-lg-10">

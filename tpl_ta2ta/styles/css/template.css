@@ -7809,6 +7809,43 @@ a.nivo-nextNav {
 
   -- -- -- -- -- -- -- -- --
   http://www.ta2ta.org - v2.0.0
+  last edit: October 3, 2014
+  author:  Zachary Draper - NCJFCJ
+  -- -- -- -- -- -- -- -- --
+  
+*/
+#services h3 {
+  margin-top: 0;
+}
+#services .divider {
+  background: transparent;
+  margin: 35px 0 25px 0;
+  text-align: center;
+}
+#services .divider .divider-text {
+  background: #f6f9f6;
+  color: #333;
+  display: inline-block;
+  font-size: 23.8px;
+  font-weight: bold;
+}
+@media screen and (min-width: 768px) {
+  #services .divider {
+    background: transparent url(../../img/specialized-services-divider.png) repeat-x;
+    border: 0;
+    margin: 50px 0;
+  }
+  #services .divider .divider-text {
+    font-size: 30.8px;
+    font-weight: normal;
+    margin-top: -15px;
+    padding: 0 35px;
+  }
+}
+/*
+
+  -- -- -- -- -- -- -- -- --
+  http://www.ta2ta.org - v2.0.0
   last edit: April 30, 2014
   author:  Zachary Draper - NCJFCJ
   -- -- -- -- -- -- -- -- --

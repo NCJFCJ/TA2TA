@@ -3,7 +3,7 @@
  * make it easier to work with Bootstrap. *
  *                                        *
  * IMPORTANT: Include only after jQuery   *
- *                                        *
+ *                                        
  * Dependencies:                          *
  * - jQuery                               *
  * - Bootstrap 3                          *
@@ -166,7 +166,7 @@ ta2ta.bootstrapHelper = ta2ta.bootstrapHelper || {
 			jQuery(parent).prepend(alrt);
 
 			// check if the parent scrolls, if not, scroll the document body
-			var element_to_scroll = parent;
+			var element_to_scroll = jQuery(parent);
 			var scroll_offset = this.parent_scroll_offset;
 
 			// HACK: Set element_to_scroll to have an overflow-y of auto (fixes collapsing divs)

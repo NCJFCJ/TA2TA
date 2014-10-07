@@ -7398,6 +7398,12 @@ a.jwDisqusArticleCounterLink:hover {
 .icomoon-edit:before {
   content: "\e00f";
 }
+.icomoon-interpretation:before {
+  content: "\e606";
+}
+.icomoon-fax:before {
+  content: "\e605";
+}
 /* -- SPECIAL CLASSES WITH SPACING -- */
 .icomoon-books.icomoon-spacing:before {
   content: "\e072\00a0";

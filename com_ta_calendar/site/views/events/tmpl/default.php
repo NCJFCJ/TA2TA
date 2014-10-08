@@ -557,6 +557,15 @@ if(!empty($_SERVER["HTTPS"]) && $_SERVER["HTTPS"]!=="off"){
 						// set the event type in the header
 						$('#viewEventType').html(response.data.type_name);
 
+						// show the eligible grant program notice if applicable
+						if(response.data.type == 1
+							|| response.data.type == 2
+							|| response.data.type == 4){
+							$('#eligibleGrantProgramNotice').show();
+						}else{
+							$('#eligibleGrantProgramNotice').hide();
+						}
+
 						// set the approved state in the header
 						if(response.data.approved_status == 1){
 							$('#viewEventApprovedState').html('<span style="color:green;font-size:12pt;">(<span class="icomoon-checkmark"></span> OVW Approved)</span>');
@@ -2446,7 +2455,7 @@ if(!empty($_SERVER["HTTPS"]) && $_SERVER["HTTPS"]!=="off"){
 									<td>
 										<strong>Eligible Grant Programs</strong>
 									</td>
-									<td id="viewEventPrograms"></td>
+									<td><div id="viewEventPrograms"></div><div class="clearfix"></div><div id="eligibleGrantProgramNotice" style="color: red; font-weight: bold; margin-top: 10px;"><span class="glyphicon glyphicon-info-sign"></span> Note: Please seek approval from your OVW program specialist if you are using or plan to use Cooperative Agreement funds to attend this event.</div></td>
 								</tr>
 								<tr id="viewEventButtonsWrapper">
 									<td>&nbsp;</td>

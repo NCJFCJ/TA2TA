@@ -73,7 +73,9 @@ if($_SERVER['REQUEST_METHOD'] == "POST"
 			$db->quoteName('e.deleted') . ',' .
 			$db->quoteName('ud.name', 'deleted_by') . ',' .
 			$db->quoteName('e.approved') . ',' .
-			$db->quoteName('a.name', 'approved_by')
+			$db->quoteName('a.name', 'approved_by') . ',' . 
+			$db->quoteName('e.city') . ',' .
+			$db->quoteName('e.territory')
 		);
 		$query->from($db->quoteName('#__ta_calendar_events', 'e'));
 		$query->join('LEFT', $db->quoteName('#__ta_providers', 'pr') . ' ON (' . $db->quoteName('pr.id') . ' = ' . $db->quoteName('e.org') . ')');

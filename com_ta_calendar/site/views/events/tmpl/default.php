@@ -562,8 +562,10 @@ if(!empty($_SERVER["HTTPS"]) && $_SERVER["HTTPS"]!=="off"){
 							|| response.data.type == 2
 							|| response.data.type == 4){
 							$('#eligibleGrantProgramNotice').show();
+							$('#viewEventLocationRow').show();
 						}else{
 							$('#eligibleGrantProgramNotice').hide();
+							$('#viewEventLocationRow').hide();
 						}
 
 						// set the approved state in the header
@@ -578,6 +580,7 @@ if(!empty($_SERVER["HTTPS"]) && $_SERVER["HTTPS"]!=="off"){
 						$('#viewEventOrg').html(response.data.org_name);
 						$('#viewEventProject').html(response.data.provider_project_name);
 						$('#viewEventDate').html(response.data.date_string);
+						$('#viewEventLocation').html(response.data.city + ', ' + response.data.territory);
 						$('#viewEventSummary').html(response.data.summary);
 
 						// process the current event, if any
@@ -801,6 +804,24 @@ if(!empty($_SERVER["HTTPS"]) && $_SERVER["HTTPS"]!=="off"){
 		$('#project').change(function(){
 			ta2ta.validate.hasValue($(this),3);
 		});
+
+		// city
+        $('#city').change(function(){
+        	if(!ta2ta.validate.hasValue($(this))
+        	|| !ta2ta.validate.maxLength($(this),30)
+        	|| !ta2ta.validate.name($(this))){
+                ta2ta.bootstrapHelper.showValidationState($(this), 'error', true);
+            }else{
+                ta2ta.bootstrapHelper.showValidationState($(this), 'success', true);
+            }
+        });
+
+		// territory
+		$('#territory').change(function(){
+			ta2ta.validate.hasValue($(this),3);
+		});
+
+		/* --- Page 3 --- */
 	
 		// event_url
 		$('#event_url').change(function(){
@@ -924,12 +945,44 @@ if(!empty($_SERVER["HTTPS"]) && $_SERVER["HTTPS"]!=="off"){
 			},
 			2: function(){
 				var rtn = true;
-				var insecure = false;
 	
 				// TA Project
 				if(!ta2ta.validate.hasValue($('#project'),1)){
 					errors.push('You must select a TA project.');
 					rtn = false;
+				}
+
+				// location
+				var eType = $('#type').val();
+				if(eType == 1
+					|| eType == 2
+					|| eType == 4){
+					// city
+					var cityError = false;
+					if(ta2ta.validate.hasValue($('#city'))){
+						if(!ta2ta.validate.maxLength($('#city'),30)){
+							errors.push('The city you entered is too long. Please reduce it to a maximum of 30 characters.');
+							cityError = true;
+						}
+
+						if(!ta2ta.validate.name($('#city'))){
+							errors.push('The city you entered is invalid.');
+							cityError = true;
+						}
+					}else{
+						errors.push('You must enter a city for your event.');
+						cityError = true;
+					}
+					if(cityError){
+						ta2ta.bootstrapHelper.showValidationState($('#city'), 'error', true);
+						rtn = false;
+					}
+
+					// territory
+					if(!ta2ta.validate.hasValue($('#territory'),1)){
+						errors.push('You must select a territory.');
+						rtn = false;
+					}
 				}
 				
 				// summary
@@ -944,6 +997,18 @@ if(!empty($_SERVER["HTTPS"]) && $_SERVER["HTTPS"]!=="off"){
 					errors.push('You summary is too verbose. Please cut it back to no more than 1500 characters.');
 					rtn = false;
 				}
+
+				// show error messages
+				if(!rtn){
+					editShowErrors();
+				}
+	
+				// return the result
+				return rtn;
+			},
+			3: function(){
+				var insecure = false;
+				var rtn = true;
 	
 				// event_url
 				if(($('#event_url').val()).length){
@@ -966,6 +1031,12 @@ if(!empty($_SERVER["HTTPS"]) && $_SERVER["HTTPS"]!=="off"){
 						rtn = false;
 					}
 				}
+				
+				// topicAreas
+				if(!ta2ta.validate.checkboxes($('#editPopup input[name="topicAreas[]"]:checked'), 1)){
+					errors.push('You must choose at least one topic area.');
+					rtn = false;
+				}
 	
 				// show error messages
 				if(!rtn){
@@ -974,23 +1045,6 @@ if(!empty($_SERVER["HTTPS"]) && $_SERVER["HTTPS"]!=="off"){
 					$('#editPopup').modal('hide');
 					$('#insecureURLPopup').modal('show');
 					rtn = false;
-				}
-	
-				// return the result
-				return rtn;
-			},
-			3: function(){
-				var rtn = true;
-				
-				// topicAreas
-				if(!ta2ta.validate.checkboxes($('#editPopup input[name="topicAreas[]"]:checked'), 1)){
-					errors.push('You must choose at least one topic area.');
-					rtn = false;
-				}
-				
-				// show error messages
-				if(!rtn){
-					editShowErrors();
 				}
 				
 				// return the result
@@ -1222,6 +1276,8 @@ if(!empty($_SERVER["HTTPS"]) && $_SERVER["HTTPS"]!=="off"){
 					$('#project').chosen({
 						disable_search_threshold: 10
 					});
+					$('#territory').chosen('destroy');
+					$('#territory').chosen();
 				}
 			}
 		}
@@ -1320,9 +1376,7 @@ if(!empty($_SERVER["HTTPS"]) && $_SERVER["HTTPS"]!=="off"){
 		}).change(function(){
 			// Update the time input field when a selection is made
 			$(this).prev().val($(this).val());
-			if($(this).prev().attr('id') == 'starttime'){
-				$('#starttime').change();
-			}
+			$('#' + $(this).prev().attr('id')).change();
 		}).click(function(event){
 			// Close the select on click
 			$(this).hide();					
@@ -1473,6 +1527,16 @@ if(!empty($_SERVER["HTTPS"]) && $_SERVER["HTTPS"]!=="off"){
 		 */
 		$('#type').change(function(){
 			$('#editHeadingEventType').text($(this).find(':selected').text());
+
+			// show or hide the location fields based on the vent type
+			var eType = $(this).val();
+			if(eType == 1
+				|| eType == 2
+				|| eType == 4){
+				$('#editLocationFields').show();
+			}else{
+				$('#editLocationFields').hide();
+			}
 		});
 		
 		/**
@@ -1481,7 +1545,6 @@ if(!empty($_SERVER["HTTPS"]) && $_SERVER["HTTPS"]!=="off"){
 		$('#nextBlock').click(function(){
 			// clear any old errors
 			editRemoveAlert();
-			ta2ta.bootstrapHelper.hideAllValidationStates();
 			
 			// validate this step
 			if(pageValidation[editStep]()){
@@ -1561,8 +1624,8 @@ if(!empty($_SERVER["HTTPS"]) && $_SERVER["HTTPS"]!=="off"){
 				$('#summary').val(tinyMCE.activeEditor.getContent());
 				var serialData = $('#editEventForm').serialize();
 
-				// I don't know why, but the event_url and registration_url are not being serialized, adding them back in manually
-				serialData += '&event_url=' + $('#event_url').val() + '&registration_url=' + $('#registration_url').val();
+				// BUG: I don't know why, but the city, event_url, and registration_url are not being serialized, adding them back in manually
+				serialData += '&city=' + $('#city').val() + '&event_url=' + $('#event_url').val() + '&registration_url=' + $('#registration_url').val();
 				
 				// disable all form elements to prevent double entry
 				inputs.prop('disabled', true);
@@ -1686,6 +1749,15 @@ if(!empty($_SERVER["HTTPS"]) && $_SERVER["HTTPS"]!=="off"){
 				disable_search_threshold: 10,
 				width: '150px'
 			});
+
+			// reset the approved button
+			$("label[for='approved0']").click();
+
+			// reset the registration type button
+			$("label[for='open0']").click();
+
+			// toggle the registration URL field
+			toggleRegistrationURLField();
 		});
 
 		/**
@@ -1702,7 +1774,7 @@ if(!empty($_SERVER["HTTPS"]) && $_SERVER["HTTPS"]!=="off"){
 		$('#insecureURLPopup #confirm').click(function(){
 			$('#insecureURLPopup').modal('hide');
 			$('#editPopup').modal('show');
-			editUpdateStep(3);
+			editUpdateStep(4);
 		});
 		
 		/**
@@ -1887,19 +1959,20 @@ if(!empty($_SERVER["HTTPS"]) && $_SERVER["HTTPS"]!=="off"){
 
 					// step 2
 					tinyMCE.activeEditor.setContent(response.data.summary);
-					$('#event_url').val(response.data.event_url);
 					$("label[for='open" + response.data.open + "']").click();
-					toggleRegistrationURLField();
-					$('#registration_url').val(response.data.registration_url);
 					$('#editPopup #project').val(response.data.provider_project);
+					$('#city').val(response.data.city);
+					$('#territory').val(response.data.territory);
 
 					// step 3
+					$('#event_url').val(response.data.event_url);
+					$('#registration_url').val(response.data.registration_url);
+					toggleRegistrationURLField();
 					var topicAreasArray = [];
 					$.each(response.data.topic_areas, function(index,value){
 						topicAreasArray.push(value.id);
 					});
 					checkEditCheckboxes('topicAreas', topicAreasArray);
-					console.log(response.data.approved_status);
 					$("label[for='approved" + response.data.approved_status + "']").click();
 					
 					// step 4
@@ -2262,12 +2335,89 @@ if(!empty($_SERVER["HTTPS"]) && $_SERVER["HTTPS"]!=="off"){
 										</select>
 									</div>
 								</div>
+								<div id="editLocationFields">
+									<div class="form-group">
+										<label class="control-label col-sm-4" for="city">City*</label>
+										<div class="col-sm-8">
+											<input type="url" class="form-control" id="city" placeholder="City" required>
+										</div>
+									</div>
+									<div class="form-group">
+										<label class="control-label col-sm-4" for="territory">Territory*</label>
+										<div class="col-sm-8">
+											<select class="form-control" id="territory" name="territory" required>
+												<option value=""></option>
+												<option value="AL">Alabama</option>               
+												<option value="AK">Alaska</option>
+												<option value="AS">American Samoa</option>               
+												<option value="AZ">Arizona</option>               
+												<option value="AR">Arkansas</option>               
+												<option value="CA">California</option>               
+												<option value="CO">Colorado</option>               
+												<option value="CT">Connecticut</option>               
+												<option value="DE">Delaware</option>               
+												<option value="DC">District Of Columbia</option>               
+												<option value="FL">Florida</option> 
+												<option value="FM">Micronesia</option>              
+												<option value="GA">Georgia</option>
+												<option value="GU">Guam</option>               
+												<option value="HI">Hawaii</option>               
+												<option value="ID">Idaho</option>               
+												<option value="IL">Illinois</option>               
+												<option value="IN">Indiana</option>               
+												<option value="IA">Iowa</option>               
+												<option value="KS">Kansas</option>               
+												<option value="KY">Kentucky</option>               
+												<option value="LA">Louisiana</option>              
+												<option value="ME">Maine</option>               
+												<option value="MD">Maryland</option>               
+												<option value="MA">Massachusetts</option>               
+												<option value="MH">Marshall Islands</option> 
+												<option value="MI">Michigan</option>   
+												<option value="MP">Northern Marianas</option>
+												<option value="MN">Minnesota</option>               
+												<option value="MS">Mississippi</option>               
+												<option value="MO">Missouri</option>               
+												<option value="MT">Montana</option>               
+												<option value="NE">Nebraska</option>              
+												<option value="NV">Nevada</option>               
+												<option value="NH">New Hampshire</option>               
+												<option value="NJ">New Jersey</option>               
+												<option value="NM">New Mexico</option>               
+												<option value="NY">New York</option>               
+												<option value="NC">North Carolina</option>               
+												<option value="ND">North Dakota</option>              
+												<option value="OH">Ohio</option>               
+												<option value="OK">Oklahoma</option>               
+												<option value="OR">Oregon</option>              
+												<option value="PA">Pennsylvania</option>
+												<option value="PR">Puerto Rico</option>
+												<option value="PW">Palau</option>               
+												<option value="RI">Rhode Island</option>               
+												<option value="SC">South Carolina</option>               
+												<option value="SD">South Dakota</option>               
+												<option value="TN">Tennessee</option>               
+												<option value="TX">Texas</option>               
+												<option value="UT">Utah</option>               
+												<option value="VT">Vermont</option>               
+												<option value="VA">Virginia</option>
+												<option value="VI">Virgin Islands</option>               
+												<option value="WA">Washington</option>               
+												<option value="WV">West Virginia</option>               
+												<option value="WI">Wisconsin</option>               
+												<option value="WY">Wyoming</option>
+											</select>
+										</div>
+									</div>
+								</div>
 								<div class="form-group">
 									<label class="control-label col-sm-4" for="summary">Summary*</label>
 									<div class="col-sm-8">
 										<textarea class="mce-editor form-control" id="summary" name="summary" rows="3" required></textarea>
 									</div>
 								</div>
+							</div>
+							<div class="modal-form-block">
 								<div class="form-group">
 									<label class="control-label col-sm-4" for="event_url">Event Webpage URL</label>
 									<div class="col-sm-8">
@@ -2291,8 +2441,6 @@ if(!empty($_SERVER["HTTPS"]) && $_SERVER["HTTPS"]!=="off"){
 										<input type="url" class="form-control" id="registration_url" placeholder="Registration Information URL">
 									</div>
 								</div>
-							</div>
-							<div class="modal-form-block">
 								<div class="form-group">
 									<label class="control-label col-sm-4">Topic Area*<br><small>(Check all that apply)</small></label>
 									<div class="col-sm-8">
@@ -2317,10 +2465,6 @@ if(!empty($_SERVER["HTTPS"]) && $_SERVER["HTTPS"]!=="off"){
 										</fieldset>
 									</div>
 								</div>
-								<br>
-								<br>
-								<br>
-								<br>
 							</div>
 							<div class="modal-form-block">
 								<p>Please select the grant programs that are eligible to attend your event:</p>
@@ -2444,6 +2588,12 @@ if(!empty($_SERVER["HTTPS"]) && $_SERVER["HTTPS"]!=="off"){
 										<strong>Date &amp; Time</strong>
 									</td>
 									<td id="viewEventDate"></td>
+								</tr>
+								<tr id="viewEventLocationRow">
+									<td>
+										<strong>Location</strong>
+									</td>
+									<td id="viewEventLocation"></td>
 								</tr>
 								<tr>
 									<td>

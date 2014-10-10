@@ -29,6 +29,22 @@ if(!empty($_SERVER["HTTPS"]) && $_SERVER["HTTPS"]!=="off"){
 
   js = jQuery.noConflict();
   js(document).ready(function($){
+  	// control visibility of location controls
+  	function toggleLocationFields(){
+  		var eType = $('#jform_type').val();
+		if(eType == 1
+			|| eType == 2
+			|| eType == 4){
+			$('#locationFields').show();
+		}else{
+			$('#locationFields').hide();
+		}
+  	}
+  	toggleLocationFields();
+  	$('#jform_type').change(function(){
+  		toggleLocationFields();
+  	});
+
 	$('input:hidden.type').each(function(){
 		var name = $(this).attr('name');
 		if(name.indexOf('typehidden')){
@@ -254,14 +270,24 @@ if(!empty($_SERVER["HTTPS"]) && $_SERVER["HTTPS"]!=="off"){
 					<div class="control-label"><?php echo $this->form->getLabel('type'); ?></div>
 					<div class="controls"><?php echo $this->form->getInput('type'); ?></div>
 				</div>
-	
+				<div id="locationFields">
+					<div class="control-group">
+						<div class="control-label"><?php echo $this->form->getLabel('city'); ?></div>
+						<div class="controls"><?php echo $this->form->getInput('city'); ?></div>
+					</div>
+					<div class="control-group">
+						<div class="control-label"><?php echo $this->form->getLabel('territory'); ?></div>
+						<div class="controls"><?php echo $this->form->getInput('territory'); ?></div>
+					</div>
+				</div>
 				<?php
 					foreach((array)$this->item->type as $value): 
 						if(!is_array($value)):
 							echo '<input type="hidden" class="type" name="jform[typehidden]['.$value.']" value="'.$value.'" />';
 						endif;
 					endforeach;
-				?>			<div class="control-group">
+				?>			
+				<div class="control-group">
 					<div class="control-label"><?php echo $this->form->getLabel('event_url'); ?></div>
 					<div class="controls"><?php echo $this->form->getInput('event_url'); ?></div>
 				</div>

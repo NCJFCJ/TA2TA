@@ -2343,7 +2343,7 @@ if(!empty($_SERVER["HTTPS"]) && $_SERVER["HTTPS"]!=="off"){
 										</div>
 									</div>
 									<div class="form-group">
-										<label class="control-label col-sm-4" for="territory">Territory*</label>
+										<label class="control-label col-sm-4" for="territory">State/Territory*</label>
 										<div class="col-sm-8">
 											<select class="form-control" id="territory" name="territory" required>
 												<option value=""></option>

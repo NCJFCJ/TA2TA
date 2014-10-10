@@ -58,15 +58,42 @@ if($permission_level > 0){
 		$grantPrograms = filter_var_array($_POST['grantPrograms'], FILTER_SANITIZE_NUMBER_INT);
 		$targetAudiences = filter_var_array($_POST['targetAudiences'], FILTER_SANITIZE_NUMBER_INT);
 		$timezone = filter_input(INPUT_POST, 'timezone', FILTER_SANITIZE_STRING);
+		$city = '';
+		$territory = '';
+
+		$locationRequired = false;
+		if($type == 1
+			|| $type == 2
+			|| $type == 4){
+			$locationRequired = true;
+		}
+
+		// retrieve and sanitize the location data
+		if($locationRequired){
+			$city = filter_input(INPUT_POST, 'city', FILTER_SANITIZE_STRING);
+			$territory = filter_input(INPUT_POST, 'territory', FILTER_SANITIZE_STRING);
+		}
 		
 		// validate
 		$warnings = array();
 		
 		// regular expressions
 		$dateRegEx = '/^((0?[1-9]|1[012])[-](0?[1-9]|[12][0-9]|3[01])[-](19|20)?[0-9]{2})*$/';
+		$nameRegEx = '/^[a-zA-Z-\' ]*$/';	
 		$timeRegEx = '/^(([1-9]|1[012])[:](0[0-9]|[12345][0-9])[ap][m])*$/';
 		$titleRegEx = '/^[a-zA-Z0-9-@ &,:\'()\[\]]*$/';
 		
+		// city
+		if($locationRequired){
+			if(empty($city)){
+				$warnings[] = 'You must select a city.';
+			}else{
+				if(!preg_match($nameRegEx, $city)){
+					$warnings[] = 'The city you entered is invalid.';
+				}		
+			}
+		}
+
 		// enddate
 		if(empty($enddate)){
 			$warnings[] = 'You must select an end date.';
@@ -94,6 +121,11 @@ if($permission_level > 0){
 			if(!filter_var($event_url, FILTER_VALIDATE_URL, FILTER_FLAG_SCHEME_REQUIRED)){
 				$warnings[] = 'The event URL you entered is not valid';
 			}
+		}
+
+		//grantPrograms
+		if(empty($grantPrograms)){
+			$warnings[] = 'You must choose at least one grant program.';
 		}
 		
 		// project
@@ -135,9 +167,11 @@ if($permission_level > 0){
 			$warnings[] = 'You must provide a summary.';
 		}
 
-		//grantPrograms
-		if(empty($grantPrograms)){
-			$warnings[] = 'You must choose at least one grant program.';
+		// territory
+		if($locationRequired){
+			if(empty($territory)){
+				$warnings[] = 'You must select a territory.';
+			}
 		}
 
 		//targetAudiences
@@ -216,7 +250,7 @@ if($permission_level > 0){
 					// save as new event
 					$query = $db->getQuery(true);
 					$query->insert($db->quoteName('#__ta_calendar_events'));
-					$query->columns($db->quoteName(array('state', 'org', 'start', 'end', 'title', 'summary', 'type', 'event_url', 'open', 'registration_url', 'provider_project', 'created', 'created_by', 'approved', 'approved_by')));
+					$query->columns($db->quoteName(array('state', 'org', 'start', 'end', 'title', 'summary', 'type', 'event_url', 'open', 'registration_url', 'provider_project', 'created', 'created_by', 'approved', 'approved_by', 'city', 'territory')));
 					$query->values(implode(',', array(
 						'1',
 						$org,
@@ -232,7 +266,9 @@ if($permission_level > 0){
 						$db->quote($created),
 						$db->quote($created_by),
 						$db->quote($approved),
-						$db->quote($approved_by)
+						$db->quote($approved_by),
+						$db->quote($city),
+						$db->quote($territory)
 					)));
 					$db->setQuery($query);
 					if($db->query()){
@@ -315,7 +351,7 @@ if($permission_level > 0){
 						}
 
 						$message .= "<tr><td><b>Date<b></td><td>$dateString PT</td></tr>";
-						$message .= '<tr style="background: #DDD;"><td><b>OVW Approved<b></td><td>' . ($approved == 1 ? 'Yes' : 'No') . '</td></tr>';
+						$message .= '<tr style="background: #DDD;"><td><b>OVW Approved<b></td><td>' . ($approved == 'NULL' ? 'No' : 'Yes') . '</td></tr>';
 						$message .= "<tr><td><b>Summary<b></td><td>$summary</td></tr>";
 
 						// get the project name
@@ -327,19 +363,26 @@ if($permission_level > 0){
 						$projectName = $db->loadResult();
 
 						$message .= "<tr style=\"background: #DDD;\"><td><b>Project<b></td><td>$projectName</td></tr>";
+						if($locationRequired){
+							$message .= "<tr><td><b>Location</b></td><td>$city, $territory</td></tr>";
+						}
 
 						if(!empty($event_url)){
-							$message .= "<tr><td><b>Event URL<b></td><td><a href=\"$event_url\" target=\"_blank\">Click Here</a></td></tr>";
+							$message .= "<tr" . ($locationRequired ? ' style="background: #DDD;"' : '') . "><td><b>Event URL<b></td><td><a href=\"$event_url\" target=\"_blank\">Click Here</a></td></tr>";
 						}
 						if($open && !empty($registration_url)){
-							$message .= "<tr><td" . (!empty($event_url) ? ' style="background: #DDD;"' : '') . "><b>Registration URL<b></td><td><a href=\"$registration_url\" target=\"_blank\">Click Here</a></td></tr>";
+							$darkRow = false;
+							if(!empty($event_url)){
+								if(!$locationRequired){
+									$darkRow = true;
+								}
+							}else{
+								if($locationRequired){
+									$darkRow = true;
+								}
+							}
+							$message .= "<tr><td" . ($darkRow ? ' style="background: #DDD;"' : '') . "><b>Registration URL<b></td><td><a href=\"$registration_url\" target=\"_blank\">Click Here</a></td></tr>";
 						}
-
-/*
-$topicAreas = filter_var_array($_POST['topicAreas'], FILTER_SANITIZE_NUMBER_INT);
-$grantPrograms = filter_var_array($_POST['grantPrograms'], FILTER_SANITIZE_NUMBER_INT);
-$targetAudiences = filter_var_array($_POST['targetAudiences'], FILTER_SANITIZE_NUMBER_INT);
-*/
 
 						$message .= '</table><br><br>';
 

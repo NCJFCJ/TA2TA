@@ -19,8 +19,8 @@ $path		= $base->tree;
 $showAll	= $params->get('showAllChildren');
 $class_sfx	= htmlspecialchars($params->get('class_sfx'));
 ?>
-<div class="row-fluid">
-	<div class="span12" style="border-right: 1px solid #E5E5E5;">
+<div class="row">
+	<div class="col-xs-12" style="border-right: 1px solid #E5E5E5;">
 		<div id="userMenuHead">
 			<span class="icomoon-user" style="font-size: 45pt; float: left; margin-right: 5px;"></span>
 			<div id="userInfo">
@@ -38,7 +38,7 @@ $class_sfx	= htmlspecialchars($params->get('class_sfx'));
 		</div>
 		<div>
 			<?php if( count( $list ) ): ?>
-			<ul class="nav nav-list menu<?php echo $class_sfx;?>"<?php 
+			<ul class="nav nav-stacked menu<?php echo $class_sfx;?>"<?php 
 				$tag = '';
 				if($params->get('tag_id') != null ) {
 					$tag = $params->get('tag_id') . '';

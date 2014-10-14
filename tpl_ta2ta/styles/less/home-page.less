@@ -2,7 +2,7 @@
 
   -- -- -- -- -- -- -- -- --
   http://www.ta2ta.org - v2.0.0
-  last edit: May 1, 2014
+  last edit: October 14, 2014
   author:  Zachary Draper - NCJFCJ
   -- -- -- -- -- -- -- -- --
   
@@ -22,7 +22,8 @@
   padding-top: 60px;
   img{
     float: left;
-    width: 50px;
+    height: 40px;
+    width: auto;
   }
   h3{
     float: left;
@@ -44,16 +45,53 @@
   padding-top: 0;
 }
 
-.fp-boxLarge{
+.fp-box-large{
   a{
     color: @gray-dark;
   }
   a:hover{
     color: @gray-darker;
   }
+  ul{
+    list-style: none;
+    padding: 0;
+    li{
+      font-size: 16px;
+    }
+    li:before{
+      content: '\2713';
+      margin-right: 10px;
+    }
+  }
+  #specialServices{
+    margin-top: 32px;
+    .well;
+    h3:before{
+      content: "\e607";
+      display: block;
+      float: left;
+      font-family: 'TA2TA';
+      font-size: 350%;
+      font-style: normal;
+      font-variant: normal;
+      font-weight: normal;
+      line-height: 1;
+      margin: -52px 0 0 -30px;
+      padding-right: 10px;
+      speak: none;
+      text-transform: none;
+      
+      /* Better Font Rendering =========== */
+      -webkit-font-smoothing: antialiased;
+      -moz-osx-font-smoothing: grayscale;
+    }
+    h3{
+      margin-top: 0;
+    }
+  }
 }
 
-.moreWrapper{
+.more-wrapper{
   background-color: transparent; 
   width: 100%;
   .more{
@@ -100,9 +138,6 @@
       font-size: 20px;
       margin: 5px 0px 10px 13px;
     }
-    img{
-      width: 50px;
-    }
     p{
       padding-right: 30px;
     }
@@ -116,8 +151,27 @@
   .fp-box:last-of-type p{
     padding-right: 0;
   }
+
+  .fp-box-large{
+    border-right: 1px solid @gray-light;
+    small{
+      bottom: 0;
+      left: 10px;
+      position: absolute;
+    }
+    .col-xs-8{
+      height: 56px; /* This was a quick fix, the col wouldn't expand to the height of the row, even with height: 100% */
+    }
+    .more-wrapper{
+      position: relative;
+    }
+  }
+
+  .fp-box-large:last-of-type{
+    border-right: 0;
+  }
   
-  .moreWrapper{
+  .more-wrapper{
     background-color: transparent; 
     bottom: 0;
     padding: 10px 15px 0 0;
@@ -131,7 +185,7 @@
     }
   }
   
-  .moreWrapper:last-of-type{
+  .more-wrapper:last-of-type{
     padding: 10px 0 0 0;
   }
 }
@@ -145,9 +199,6 @@
     h3{
       font-size: 23px;
       margin: 16px 0px 19px 15px;
-    }
-    img{
-      width: 60px;
     }
   }
 }
@@ -163,7 +214,8 @@
       margin: 16px 0px 19px 15px;
     }
     img{
-      width: 70px;
+      margin-top: 10px;
+      height: 40px;
     }
   }
 }

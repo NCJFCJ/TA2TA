@@ -60,9 +60,9 @@ defined( '_JEXEC' ) or die;
 			<?php
 			endif; 
 			// article text
-			echo $articleData->introtext;
-			if($linkData && isset($linkData->urla)): ?>
-			<div class="moreWrapper">
+			echo $articleData->text;
+			if($linkData && !empty($linkData->urla)): ?>
+			<div class="more-wrapper">
 				<a href="<?php echo $linkData->urla; ?>" class="more"><?php echo (empty($linkData->urlatext) ? 'Learn More' : $linkData->urlatext); ?></a>
 			</div>
 		<?php endif;
@@ -72,26 +72,29 @@ defined( '_JEXEC' ) or die;
 		$current_article_key++; 
 	endfor;?>
 </div>
+<?php if($this->params->get('show_horizontal_dividers')): ?>
+<hr class="clr divider">
+<?php endif; ?>
+<div class="row <?php echo $this->params->get('row_class'); ?>">
 	<?php
-	// content rows
-	if(array_key_exists($current_article_key, $this->items)):
-		if($this->params->get('show_horizontal_dividers')): ?>
-		<hr class="clr divider">
-		<?php endif; ?>
-		<div class="row <?php echo $this->params->get('row_class'); ?>">
+	// content half columns
+	for($i = $num_columns + 1; $i <= count($this->items); $i++):
+		if(array_key_exists($current_article_key, $this->items)): ?>
 			<?php 
 			$articleData = (isset($this->items[$current_article_key]) ? $this->items[$current_article_key] : false);
-			$imgData = (isset($articleData->images) ? json_decode($articleData->images) : false);
-			if($imgData): ?>
-			<div class="col-sm-3 hidden-xs">
-				<img src="<?php echo $imgData->image_intro; ?>" alt="<?php echo $imgData->image_intro_alt; ?>" class="col-on-top-article-img">
-			</div>
-			<section class="col-sm-9">
-			<?php else: ?>
-			<section class="col-xs-12">
-			<?php endif; ?>
+			$linkData = (isset($articleData->urls) ? json_decode($articleData->urls) : false);
+			?>
+			<section class="col-sm-6 fp-box-large">
 				<h2><a href="<?php echo $articleData->alias; ?>.html"><?php echo $articleData->title; ?></a></h2>
-				<?php echo $articleData->introtext; ?>
+				<?php echo $articleData->text; 
+				if($linkData && !empty($linkData->urla)): ?>
+				<div class="more-wrapper">
+					<a href="<?php echo $linkData->urla; ?>" class="more"><?php echo (empty($linkData->urlatext) ? 'Learn More' : $linkData->urlatext); ?></a>
+				</div>
+				<?php endif; ?>
 			</section>
-		</div>
-	<?php endif;?>
+		<?php 
+		$current_article_key++;
+		endif;
+	endfor; ?>	
+</div>

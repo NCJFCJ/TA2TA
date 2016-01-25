@@ -103,7 +103,7 @@ defined( '_JEXEC' ) or die;
 				</div>
 			<?php endif;
 		else: // draw the full-width articles
-			if(($i > 1 || ($i >= 1 && !$firstpage)) && $this->params->get('show_dividers')):?>
+			if($i > 1 && $this->params->get('show_dividers')):?>
 				<hr class="clr divider">
 			<?php endif; ?>
 			<div class="row <?php echo $this->params->get('row_class'); ?>">

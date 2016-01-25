@@ -580,11 +580,7 @@ if(!empty($_SERVER["HTTPS"]) && $_SERVER["HTTPS"]!=="off"){
 						$('#viewEventOrg').html(response.data.org_name);
 						$('#viewEventProject').html(response.data.provider_project_name);
 						$('#viewEventDate').html(response.data.date_string);
-						if(response.data.city != ''){
-							$('#viewEventLocation').html(response.data.city + ', ' + response.data.territory);
-						}else{
-							$('#viewEventLocation').html('');
-						}
+						$('#viewEventLocation').html(response.data.city + ', ' + response.data.territory);
 						$('#viewEventSummary').html(response.data.summary);
 
 						// process the current event, if any

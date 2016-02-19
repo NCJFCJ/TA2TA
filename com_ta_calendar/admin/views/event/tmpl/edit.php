@@ -252,7 +252,7 @@ if(!empty($_SERVER["HTTPS"]) && $_SERVER["HTTPS"]!=="off"){
 				</div>
 				<div class="control-group">
 					<div class="control-label"><?php echo $this->form->getLabel('start'); ?></div>
-					<div class="controls"><?php echo $this->form->getInput('start'); ?></div>
+					<div class="controls"><?php echo $this->form->getInput('start'); ?> <?php echo $this->form->getInput('timezone'); ?></div>
 				</div>
 				<div class="control-group">
 					<div class="control-label"><?php echo $this->form->getLabel('end'); ?></div>

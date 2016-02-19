@@ -145,28 +145,41 @@
 				<option value="WI">Wisconsin</option>               
 				<option value="WY">Wyoming</option>
 		</field>
-        <field
+
+		<field
+			class="inputbox"
+			description="COM_TA_CALENDAR_FORM_DESC_TIMEZONE"
+			key_field="abbr"
+			label="COM_TA_CALENDAR_FORM_LBL_TIMEZONE"
+			name="timezone"
+			required="true"
+			type="sql"
+			query="SELECT 0 AS `abbr`, '- Select Timezone -' AS `description` UNION SELECT `abbr`, `description` FROM `#__ta_calendar_timezones` ORDER BY `description` ASC;"
+			value_field="description" />
+
+    <field
 			class="btn-group"
 			default="1"
-            description="COM_TA_CALENDAR_FORM_DESC_EVENT_OPEN" 
-            filter="raw"
+      description="COM_TA_CALENDAR_FORM_DESC_EVENT_OPEN" 
+      filter="raw"
 			label="COM_TA_CALENDAR_FORM_LBL_EVENT_OPEN"
-            name="open"
+      name="open"
 			required="true" 
-            type="radio">
+      type="radio">
 				<option value="1">Open</option>
 				<option value="0">Invite Only</option>
         </field>  
+
 		<field
 			buttons="article,image,pagebreak,readmore"
 			cols="10"
-            description="COM_TA_CALENDAR_FORM_DESC_EVENT_SUMMARY" 
-            filter="raw"
+      description="COM_TA_CALENDAR_FORM_DESC_EVENT_SUMMARY" 
+      filter="raw"
 			label="COM_TA_CALENDAR_FORM_LBL_EVENT_SUMMARY"
-            name="summary"
+      name="summary"
 			required="true" 
-            rows="4"
-            type="editor" /> 
+      rows="4"
+      type="editor" /> 
 		<field
 			class="inputbox"
 			description="COM_TA_CALENDAR_FORM_DESC_EVENT_TYPE" 

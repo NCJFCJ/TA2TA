@@ -23,18 +23,18 @@ class Ta_calendarViewEvents extends JViewLegacy {
 	 * Display the view
 	 */
 	public function display($tpl = null){
-        $app               		= JFactory::getApplication();
-        $this->state			= $this->get('State');
-        $this->items			= $this->get('Items');
-        $this->pagination		= $this->get('Pagination');
-        
-        $this->params       	= $app->getParams('com_ta_calendar');
+    $app = JFactory::getApplication();
+    $this->state = $this->get('State');
+    $this->items = $this->get('Items');
+    $this->pagination = $this->get('Pagination');
+    
+    $this->params = $app->getParams('com_ta_calendar');
 		
-		$this->eventTypes 		= $this->get('EventTypes');
-		$this->grantPrograms	= $this->get('GrantPrograms');
+		$this->eventTypes = $this->get('EventTypes');
+		$this->grantPrograms = $this->get('GrantPrograms');
 		$this->targetAudiences 	= $this->get('TargetAudiences');
-		$this->timezones 		= $this->get('Timezones');
-		$this->topicAreas 		= $this->get('TopicAreas');
+		$this->timezones = $this->get('Timezones');
+		$this->topicAreas = $this->get('TopicAreas');
 		
 		$this->userSettings	= $this->get('UserSettings');
 

@@ -421,7 +421,10 @@ if(!empty($_SERVER["HTTPS"]) && $_SERVER["HTTPS"]!=="off"){
 		/**
 		 * Changes the current timezone
 		 */
-		$('.timezone').click(function(){
+		$('#timezone').change(function(){
+			$('.timezoneLabel').text($(this).val());
+		});
+		/*$('.timezone').click(function(){
 			// update the timezone
 			timezone = $(this).data('timezone');
 			
@@ -433,7 +436,7 @@ if(!empty($_SERVER["HTTPS"]) && $_SERVER["HTTPS"]!=="off"){
 
 			// reload the calendar
 			loadCalendar();
-		});
+		});*/
 		
 		/**
 		 * Run every time a filter is updated
@@ -555,7 +558,7 @@ if(!empty($_SERVER["HTTPS"]) && $_SERVER["HTTPS"]!=="off"){
 					// check if this has an error
 					if(response.status == 'success'){
 						// set the event type in the header
-						$('#viewEventType').html(response.data.type_name);
+						$('#viewEventType').html((response.data.approved_status == 1 ? '<span class="icomoon-approved"></span>' : '<span class="icomoon-unapproved"></span>') + ' ' + response.data.type_name);
 
 						// show the eligible grant program notice if applicable
 						if(response.data.type == 1
@@ -570,7 +573,7 @@ if(!empty($_SERVER["HTTPS"]) && $_SERVER["HTTPS"]!=="off"){
 
 						// set the approved state in the header
 						if(response.data.approved_status == 1){
-							$('#viewEventApprovedState').html('<span style="color:green;font-size:12pt;">(<span class="icomoon-checkmark"></span> OVW Approved)</span>');
+							$('#viewEventApprovedState').html('<span style="color:green;font-size:12pt;">(OVW Approved)</span>');
 						}else{
 							$('#viewEventApprovedState').html('<span style="color:red;font-size:12pt;">(Pending Approval)</span>');
 						}
@@ -767,36 +770,36 @@ if(!empty($_SERVER["HTTPS"]) && $_SERVER["HTTPS"]!=="off"){
 		});
 
 		// start date
-        $('#startdate').change(function(){
+    $('#startdate').change(function(){
 			ta2ta.validate.date($(this),3);
-        });
+    });
 
 		// start time
-        $('#starttime').change(function(){
-        	ta2ta.validate.time($(this),3);
-        });
+    $('#starttime').change(function(){
+    	ta2ta.validate.time($(this),3);
+    });
 
-        // end date
-        $('#enddate').change(function(){
-        	ta2ta.validate.date($(this),3);
-        });
+    // end date
+    $('#enddate').change(function(){
+    	ta2ta.validate.date($(this),3);
+    });
 
 		// end time
-        $('#endtime').change(function(){
-        	ta2ta.validate.time($(this),3);
-        });
+    $('#endtime').change(function(){
+    	ta2ta.validate.time($(this),3);
+    });
 
-        // title
-        $('#title').change(function(){
-        	if(!ta2ta.validate.hasValue($(this))
-        	|| !ta2ta.validate.minLength($(this),10)
-        	|| !ta2ta.validate.maxLength($(this),255)
-        	|| !ta2ta.validate.title($(this))){
-                ta2ta.bootstrapHelper.showValidationState($(this), 'error', true);
-            }else{
-                ta2ta.bootstrapHelper.showValidationState($(this), 'success', true);
-            }
-        });
+    // title
+    $('#title').change(function(){
+    	if(!ta2ta.validate.hasValue($(this))
+    	|| !ta2ta.validate.minLength($(this),10)
+    	|| !ta2ta.validate.maxLength($(this),255)
+    	|| !ta2ta.validate.title($(this))){
+        ta2ta.bootstrapHelper.showValidationState($(this), 'error', true);
+      }else{
+        ta2ta.bootstrapHelper.showValidationState($(this), 'success', true);
+      }
+    });
 
 		/* --- Page 2 --- */
 
@@ -806,15 +809,15 @@ if(!empty($_SERVER["HTTPS"]) && $_SERVER["HTTPS"]!=="off"){
 		});
 
 		// city
-        $('#city').change(function(){
-        	if(!ta2ta.validate.hasValue($(this))
-        	|| !ta2ta.validate.maxLength($(this),30)
-        	|| !ta2ta.validate.name($(this))){
-                ta2ta.bootstrapHelper.showValidationState($(this), 'error', true);
-            }else{
-                ta2ta.bootstrapHelper.showValidationState($(this), 'success', true);
-            }
-        });
+    $('#city').change(function(){
+    	if(!ta2ta.validate.hasValue($(this))
+    	|| !ta2ta.validate.maxLength($(this),30)
+    	|| !ta2ta.validate.name($(this))){
+        ta2ta.bootstrapHelper.showValidationState($(this), 'error', true);
+  	  }else{
+        ta2ta.bootstrapHelper.showValidationState($(this), 'success', true);
+      }
+    });
 
 		// territory
 		$('#territory').change(function(){
@@ -1595,6 +1598,7 @@ if(!empty($_SERVER["HTTPS"]) && $_SERVER["HTTPS"]!=="off"){
 
 					// check the appropriate boxes
 					checkEditCheckboxes('grantPrograms',response.data);
+					restrictGrantPrograms(response.data);
 				}else{
 					editAlert(response.message, response.status);
 				}
@@ -1708,7 +1712,6 @@ if(!empty($_SERVER["HTTPS"]) && $_SERVER["HTTPS"]!=="off"){
 		 * @params string The name of the checkbox (sans brackets)
 		 * @params array The values corresponding to the checkboxes to be checked
 		 */
-
 		function checkEditCheckboxes(name, values){
 			// uncheck all
 			$("#editPopup input[name='" + name + "[]']").prop('checked', false);
@@ -1716,6 +1719,21 @@ if(!empty($_SERVER["HTTPS"]) && $_SERVER["HTTPS"]!=="off"){
 			// check selected
 			$.each(values, function(index,value){
 				$("#editPopup input[name='" + name + "[]'][value='" + value + "']").prop('checked', true);
+			});
+		}
+
+		/**
+		 * Disables the appropriate grant programs
+		 *
+		 * @params array The values of the Grant Programs to disable
+		 */
+		function restrictGrantPrograms(grantPrograms){
+			// first, disable all grant programs to so we can start from scratch
+			$('#editPopup input[name="grantPrograms[]"]').prop('disabled', true).closest('label').addClass('disabled');
+
+			// enable only those that should be available
+			$.each(grantPrograms, function(index,value){
+				$('#editPopup input[name="grantPrograms[]"][value="' + value + '"]').prop('disabled', false).closest('label').removeClass('disabled');
 			});
 		}
 		
@@ -1749,6 +1767,13 @@ if(!empty($_SERVER["HTTPS"]) && $_SERVER["HTTPS"]!=="off"){
 				disable_search_threshold: 10,
 				width: '150px'
 			});
+			$('#timezone').chosen('destroy');
+			$('#timezone').chosen({
+				width: '100px'
+			});
+
+			// update the timezone label on the end date to match the start date label
+			$('.timezoneLabel').text($('#timezone').val());
 
 			// reset the approved button
 			$("label[for='approved0']").click();
@@ -1808,16 +1833,10 @@ if(!empty($_SERVER["HTTPS"]) && $_SERVER["HTTPS"]!=="off"){
 
 			// set the id to 0
 			$('#id').val(0);
-			
-			// set the timezone
-			$('#editPopup #timezone').val(timezone);
 
 			// popup the modal
 			$('#editPopup').modal('show');
 		});
-		
-		// on load, update the edit box timezone
-		$('#editPopup .timezoneLabel').text($('#currentTimezone').text());
 		
 		// save the value of all time options
 		$('#editPopup #endQuickPick option').each(function(){
@@ -1952,6 +1971,9 @@ if(!empty($_SERVER["HTTPS"]) && $_SERVER["HTTPS"]!=="off"){
 					$('#id').val(response.data.id);
 					$('#startdate').val(response.data.startdate);
 					$('#starttime').val(response.data.starttime);
+					if(response.data.timezone != ''){
+						$('#timezone').val(response.data.timezone);
+					}
 					$('#enddate').val(response.data.enddate);
 					$('#endtime').val(response.data.endtime);
 					$('#title').val(response.data.title);
@@ -1981,6 +2003,7 @@ if(!empty($_SERVER["HTTPS"]) && $_SERVER["HTTPS"]!=="off"){
 						grantProgramsArray.push(value.id);
 					});
 					checkEditCheckboxes('grantPrograms', grantProgramsArray);
+					restrictGrantPrograms(grantProgramsArray);
 
 					// step 5
 					var targetAudiencesArray = [];
@@ -2000,7 +2023,7 @@ if(!empty($_SERVER["HTTPS"]) && $_SERVER["HTTPS"]!=="off"){
 					pastGrantPrograms = false;				
 
 					// set the timezone
-					$('#editPopup #timezone').val(timezone);
+					//$('#editPopup #timezone').val(timezone);
 
 					// popup the modal
 					$('#editPopup').modal('show');
@@ -2035,6 +2058,33 @@ if(!empty($_SERVER["HTTPS"]) && $_SERVER["HTTPS"]!=="off"){
 				showEventDetails(eventId);
 			}
 		});
+		<?php if(filter_has_var(INPUT_GET, 'addNew') && $_GET['addNew']): ?>
+			// variables
+			var eventType = 'Conference';
+			editWasViewing = false;
+
+			// set the heading headings and other visual cues
+			$('#editHeadingAction').text('New');
+			$('#editHeadingEventType').text(eventType);
+
+			// set the step to 1
+			editUpdateStep(1);
+
+			// reset the past grant programs flag
+			pastGrantPrograms = false;
+
+			// set the event type
+			editSetEventType(eventType);
+
+			// set the id to 0
+			$('#id').val(0);
+			
+			// set the timezone
+			//$('#editPopup #timezone').val(timezone);
+
+			// open the new event modal
+			$('#editPopup').modal('show');
+		<?php endif; ?>
 	<?php endif; ?>
 	});
 </script>
@@ -2153,17 +2203,17 @@ if(!empty($_SERVER["HTTPS"]) && $_SERVER["HTTPS"]!=="off"){
 				<div class="panel panel-default">
 					<div class="panel-heading">
 						<h4 class="panel-title">
-							<a data-toggle="collapse" data-parent="#filterList" href="#collapseFive"><img src="<?php echo $media_images; ?>stripe-icon.png" alt="">Status</a>
+							<a data-toggle="collapse" data-parent="#filterList" href="#collapseFive"><span class="icomoon-approved"></span> Status</a>
 						</h4>
 					</div>
 					<div id="collapseFive" class="panel-collapse collapse">
 						<div class="panel-body">
 							<p><small>Select:  <a class="checkAll">All</a> / <a class="uncheckAll">None</a></small></p>
 							<label class="checkbox status-select">
-								<input type="checkbox" name="approved[]" value="1" checked="checked"><img src="<?php echo $media_images; ?>stripe-icon-empty.png" alt=""> Approved
+								<input type="checkbox" name="approved[]" value="1" checked="checked"><span class="icomoon-approved"></span> Approved
 							</label>
 							<label class="checkbox status-select">
-								<input type="checkbox" name="approved[]" value="0" checked="checked"><img src="<?php echo $media_images; ?>stripe-icon-small.png" alt=""> Requested
+								<input type="checkbox" name="approved[]" value="0" checked="checked"><span class="icomoon-unapproved"></span> Requested
 							</label>
 						</div>
 					</div>
@@ -2174,7 +2224,7 @@ if(!empty($_SERVER["HTTPS"]) && $_SERVER["HTTPS"]!=="off"){
 	<div class="col-sm-10">
 		<div class="row" id="toolbar">
 			<div class="col-sm-8">
-				<div class="btn-group">
+				<!--<div class="btn-group">
 					<button class="btn btn-default dropdown-toggle" data-toggle="dropdown">
 						<span id="currentTimezone"><?php echo $timezoneAbbr; ?></span>
 						<span class="icomoon-arrow-down"></span>
@@ -2184,7 +2234,7 @@ if(!empty($_SERVER["HTTPS"]) && $_SERVER["HTTPS"]!=="off"){
 						<li><a class="timezone" data-timezone-abbr="<?php echo $timezone->abbr; ?>" data-timezone="<?php echo $timezone->description; ?>"><?php echo $timezone->description . ' (' . $timezone->abbr; ?>)</a></li>	
 						<?php endforeach; ?>
 					</ul>
-				</div> &nbsp;
+				</div> &nbsp;-->
 				<button class="btn btn-default" id="calToday">Today</button> &nbsp;
 				<!--<button class="btn btn-default" id="calendar-button"><span class="icomoon-calendar"></span></button> &nbsp;-->
 				<div class="btn-group">
@@ -2246,7 +2296,6 @@ if(!empty($_SERVER["HTTPS"]) && $_SERVER["HTTPS"]!=="off"){
 					</div>
 					<div class="modal-body" style="height: 350px;">
 						<form class="form-horizontal" name="editEventForm" id="editEventForm" role="form">
-							<input type="hidden" name="timezone" id="timezone" value="">
 							<input type="hidden" name="id" id="id" value="0">
 							<div class="modal-form-block">
 								<div id="projectError">
@@ -2280,7 +2329,7 @@ if(!empty($_SERVER["HTTPS"]) && $_SERVER["HTTPS"]!=="off"){
 									</div>
 									<div class="form-group">
 										<label class="control-label col-sm-4" for="starttime">Start Time*</label>
-										<div class="col-sm-8 time-quick-pick" style="position: relative;">
+										<div class="col-sm-3 time-quick-pick" style="position: relative;">
 											<div class="short-field">
 												<input type="text" class="form-control" name="starttime" id="starttime">
 												<select name="startQuickPick" class="form-control" size="4">
@@ -2289,7 +2338,13 @@ if(!empty($_SERVER["HTTPS"]) && $_SERVER["HTTPS"]!=="off"){
 													<?php endforeach; ?>
 												</select>
 											</div>
-											<div class="timezoneLabel"></div>
+										</div>
+										<div class="col-sm-5">
+											<select id="timezone" name="timezone" class="form-control" size="3">
+											<?php foreach($this->timezones as $timezone): ?>
+												<option value="<?php echo $timezone->abbr; ?>"<?php echo ($timezone->abbr == $timezoneAbbr ? ' selected="selected"' : ''); ?>><?php echo $timezone->abbr; ?></option>
+											<?php endforeach; ?>
+											</select>
 										</div>
 									</div>
 									<div class="form-group">

@@ -22,7 +22,7 @@ if(!in_array(9, $user_groups)){
 
 ?>
 <?php if($logged_in): ?>
-<a class="btn <?php echo $params->get('btn_class', 'btn-primary btn-lg'); ?>" href="<?php echo JRoute::_('index.php?Itemid='.$params->get('menu_item')); ?>">
+<a class="btn <?php echo $params->get('btn_class', 'btn-orange btn-lg'); ?>" href="<?php echo JRoute::_('index.php?Itemid='.$params->get('menu_item')); ?>">
 	<?php 
 	$btn_icon = $params->get('btn_icon', '');
 	if(!empty($btn_icon)):

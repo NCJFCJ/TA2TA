@@ -21,37 +21,19 @@ class LibraryModeldirectory extends JModelItem{
 	protected $text_prefix = 'COM_LIBRARY';	
 	 
 	/**
-	 * Returns all active Target Audiences defined in the administrator section of this component
-	 * @return array of objects
-	 */
-	public function getTargetAudiences(){
-		// Create a new query object
-		$db = $this->getDbo();
-		$query = $db->getQuery(true);
-		
-		// Select the required columns
-        $query->select('id, name');
-		
-		// Identify the table from which to pull
-		$query->from('`#__target_audiences`');
-		
-		// Constrain results to only active event types
-		$query->where('state = 1');
-		
-		// Alphabatize
-		$query->order('name ASC');
-		
-		// Set the query
-		$db->setQuery($query);
-		
-		// Execute the query and return the result
-		return $db->loadObjectList();
-	}
-	 
-	/**
 	 * Retrieves all items from the database
 	 */ 
 	public function getItems(){
+		// require the helper file
+		require_once(JPATH_COMPONENT_ADMINISTRATOR . '/helpers/library.php');
+
+		/* Get the permission level
+		 * 0 = Public (view only)
+		 * 1 = TA Provider (restricted to adding and editing own)
+		 * 2 = Administrator (full access and ability to edit)
+		 */
+		$permission_level = LibraryHelper::getPermissionLevel();
+
 		// variables	
 		$db	= $this->getDbo();
 		$items = array();
@@ -60,6 +42,7 @@ class LibraryModeldirectory extends JModelItem{
 		$query = $db->getQuery(true);
 		$query->select(array(
 			$db->quoteName('lib.id'),
+			$db->quoteName('lib.state'),
 			$db->quoteName('lib.name'),
 			$db->quoteName('pro.name', 'org'),
 			$db->quoteName('pro.website', 'org_website'),
@@ -69,7 +52,12 @@ class LibraryModeldirectory extends JModelItem{
 		));
 		$query->from($db->quoteName('#__library', 'lib'));
 		$query->join('LEFT', $db->quoteName('#__ta_providers','pro') . ' ON ' . $db->quoteName('lib.org') . ' = ' . $db->quoteName('pro.id'));
-		$query->where($db->quoteName('lib.state') . ' = ' . $db->quote('1'));
+		if($permission_level == 2){
+			$query->where('(' . $db->quoteName('lib.state') . ' IN (' . $db->quote('1') . ',' . $db->quote('2') . ',' . $db->quote('-1') . '))');
+		}else{
+			$query->where($db->quoteName('lib.state') . ' = ' . $db->quote('1'));
+		}
+
 		$query->order($db->quoteName('lib.name') . ' ASC');
 		$db->setQuery($query);
 		try{
@@ -122,7 +110,7 @@ class LibraryModeldirectory extends JModelItem{
 			$item->document_path = '/media/com_library/resources/' . $item->id . '-' . $item->base_file_name . '.pdf';
 			if(!file_exists(JPATH_SITE . $item->document_path)){
 				unset($items[$key]);
-				return;
+				continue;
 			}			
 			
 			// cover file
@@ -136,6 +124,34 @@ class LibraryModeldirectory extends JModelItem{
 		usort($items, array('LibraryModeldirectory', 'orderByNewAndName'));
 
 		return $items;
+	}
+	 
+	/**
+	 * Returns all active Target Audiences defined in the administrator section of this component
+	 * @return array of objects
+	 */
+	public function getTargetAudiences(){
+		// Create a new query object
+		$db = $this->getDbo();
+		$query = $db->getQuery(true);
+		
+		// Select the required columns
+    $query->select('id, name');
+		
+		// Identify the table from which to pull
+		$query->from('`#__target_audiences`');
+		
+		// Constrain results to only active event types
+		$query->where('state = 1');
+		
+		// Alphabatize
+		$query->order('name ASC');
+		
+		// Set the query
+		$db->setQuery($query);
+		
+		// Execute the query and return the result
+		return $db->loadObjectList();
 	}
 
 	/**

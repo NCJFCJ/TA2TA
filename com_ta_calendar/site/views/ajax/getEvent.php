@@ -25,14 +25,14 @@ $return['message'] = '';
 $return['status'] = '';
 
 // get the timezone
-$calTimezone = 'America/New_York';
-if(filter_has_var(INPUT_POST, 'calTimezone')){
-	$tmpTimezone = filter_input(INPUT_POST, 'calTimezone', FILTER_SANITIZE_STRING);
+$userTimezone = 'America/New_York';
+if(filter_has_var(INPUT_POST, 'userTimezone')){
+	$tmpTimezone = filter_input(INPUT_POST, 'userTimezone', FILTER_SANITIZE_STRING);
 	if(in_array($tmpTimezone, DateTimeZone::listIdentifiers())){
-		$calTimezone = $tmpTimezone;
+		$userTimezone = $tmpTimezone;
 	}
 }
-$calTimezone = new DateTimeZone($calTimezone);
+$userTimezone = new DateTimeZone($userTimezone);
 
 // get the user organization
 $user = JFactory::getUser();
@@ -51,32 +51,33 @@ if($_SERVER['REQUEST_METHOD'] == "POST"
 	if($event > 0){
 		$db = JFactory::getDBO();
 		$query = $db->getQuery(true);
-		$query->select(
-			$db->quoteName('e.id') . ',' .
-			$db->quoteName('e.org') . ',' .
-			$db->quoteName('pr.name', 'org_name') . ',' .
-			$db->quoteName('e.start') . ',' .
-			$db->quoteName('e.end') . ',' .
-			$db->quoteName('e.title') . ',' .
-			$db->quoteName('e.summary') . ',' .
-			$db->quoteName('e.type') . ',' .
-			$db->quoteName('et.name', 'type_name') . ',' .
-			$db->quoteName('e.event_url') . ',' .
-			$db->quoteName('e.open') . ',' .
-			$db->quoteName('e.registration_url') . ',' .
-			$db->quoteName('e.provider_project') . ',' .
-			$db->quoteName('pj.title', 'provider_project_name') . ',' .
-			$db->quoteName('e.created') . ',' .
-			$db->quoteName('uc.name', 'created_by') . ',' .
-			$db->quoteName('e.modified') . ',' .
-			$db->quoteName('um.name', 'modified_by') . ',' .
-			$db->quoteName('e.deleted') . ',' .
-			$db->quoteName('ud.name', 'deleted_by') . ',' .
-			$db->quoteName('e.approved') . ',' .
-			$db->quoteName('a.name', 'approved_by') . ',' . 
-			$db->quoteName('e.city') . ',' .
-			$db->quoteName('e.territory')
-		);
+		$query->select(array(
+			$db->quoteName('e.id'),
+			$db->quoteName('e.org'),
+			$db->quoteName('pr.name', 'org_name'),
+			$db->quoteName('e.start'),
+			$db->quoteName('e.end'),
+			$db->quoteName('e.title'),
+			$db->quoteName('e.summary'),
+			$db->quoteName('e.type'),
+			$db->quoteName('et.name', 'type_name'),
+			$db->quoteName('e.event_url'),
+			$db->quoteName('e.open'),
+			$db->quoteName('e.registration_url'),
+			$db->quoteName('e.provider_project'),
+			$db->quoteName('pj.title', 'provider_project_name'),
+			$db->quoteName('e.created'),
+			$db->quoteName('uc.name', 'created_by'),
+			$db->quoteName('e.modified'),
+			$db->quoteName('um.name', 'modified_by'),
+			$db->quoteName('e.deleted'),
+			$db->quoteName('ud.name', 'deleted_by'),
+			$db->quoteName('e.approved'),
+			$db->quoteName('a.name', 'approved_by') ,
+			$db->quoteName('e.city'),
+			$db->quoteName('e.territory'),
+			$db->quoteName('e.timezone')
+		));
 		$query->from($db->quoteName('#__ta_calendar_events', 'e'));
 		$query->join('LEFT', $db->quoteName('#__ta_providers', 'pr') . ' ON (' . $db->quoteName('pr.id') . ' = ' . $db->quoteName('e.org') . ')');
 		$query->join('LEFT', $db->quoteName('#__ta_calendar_event_types', 'et') . ' ON (' . $db->quoteName('et.id') . ' =  ' . $db->quoteName('e.type') . ')');
@@ -145,23 +146,33 @@ if($_SERVER['REQUEST_METHOD'] == "POST"
 							// process the start and end dates
 							$eventStart = ($eventData->start == '0000-00-00 00:00:00' ? false : new DateTime($eventData->start, new DateTimeZone('UTC')));
 							$eventEnd = ($eventData->end == '0000-00-00 00:00:00' ? false : new DateTime($eventData->end, new DateTimeZone('UTC')));	
-							
-							// update each date time to the user's timezone
+
+							// determine which timezone to use
+							$event_timezone = timezone_name_from_abbr($eventData->timezone);
+							if(in_array($event_timezone, DateTimeZone::listIdentifiers())){
+								// use the event specific timezone (preferred)
+								$timezone = new DateTimeZone($event_timezone);
+							}else{
+								// use the user's timezone
+								$timezone = $userTimezone;
+							}
+
+							// update each date time to the proper timezone
 							if($eventStart){
-								$eventStart->setTimezone($calTimezone);
+								$eventStart->setTimezone($timezone);
 							}
 							if($eventEnd){
-								$eventEnd->setTimezone($calTimezone);
+								$eventEnd->setTimezone($timezone);
 							}
 
 							// configure the date string
 							$dateString = '';					
 							if($eventStart->format('Y-m-d') == $eventEnd->format('Y-m-d')){
 								// single day
-								$dateString = $eventStart->format('M j, Y g:ia') . ' - ' . $eventEnd->format('g:ia');
+								$dateString = $eventStart->format('M j, Y g:ia') . ' - ' . $eventEnd->format('g:ia') . ' ' . $eventData->timezone;
 							}else{
 								// multi-day
-								$dateString = $eventStart->format('M j, Y g:ia') . ' - ' . $eventEnd->format('M j, Y g:ia');
+								$dateString = $eventStart->format('M j, Y g:ia') . ' - ' . $eventEnd->format('M j, Y g:ia') . ' ' . $eventData->timezone;
 							}
 
 							// begin building the return object
@@ -186,19 +197,19 @@ if($_SERVER['REQUEST_METHOD'] == "POST"
 								
 								// update each date time to the user's timezone
 								if($eventCreated){
-									$eventCreated->setTimezone($calTimezone);
+									$eventCreated->setTimezone($timezone);
 									$return['data']->created = $eventCreated->format('M j, Y g:ia');
 								}
 								if($eventModified){
-									$eventModified->setTimezone($calTimezone);
+									$eventModified->setTimezone($timezone);
 									$return['data']->modified = $eventModified->format('M j, Y g:ia');
 								}
 								if($eventDeleted){
-									$eventDeleted->setTimezone($calTimezone);
+									$eventDeleted->setTimezone($timezone);
 									$return['data']->deleted = $eventDeleted->format('M j, Y g:ia');
 								}
 								if($eventApproved){
-									$eventApproved->setTimezone($calTimezone);	
+									$eventApproved->setTimezone($timezone);	
 									$return['data']->approved = $eventApproved->format('M j, Y g:ia');
 								}
 

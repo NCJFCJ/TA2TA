@@ -2,7 +2,7 @@
 
   -- -- -- -- -- -- -- -- --
   http://www.ta2ta.org - v2.0.0
-  last edit: October 14, 2014
+  last edit: January 25, 2016
   author:  Zachary Draper - NCJFCJ
   -- -- -- -- -- -- -- -- --
   
@@ -14,12 +14,12 @@
   background: transparent;
   border: 0;
   color: transparent;
-  padding-bottom: 20px;
+  margin: 40px 20px 20px 20px;
 }
 
 .fp-box{
   clear: both;
-  padding-top: 60px;
+  padding: 50px 0 0 0;
   img{
     float: left;
     height: 40px;
@@ -65,8 +65,10 @@
   }
   #specialServices{
     margin-top: 32px;
-    .well;
+    .alert;
+    .alert-warning;
     h3:before{
+      color: @black;
       content: "\e607";
       display: block;
       float: left;
@@ -95,9 +97,10 @@
   background-color: transparent; 
   width: 100%;
   .more{
-    background-color: @themeDark;
+    background-color: @brand-warning;
     border-radius: 5px;
     color: #fff;
+    display: block;
     float: left;
     font-size: 90%;
     font-weight: bold;
@@ -110,7 +113,7 @@
   }
   
   .more:hover{
-    background-color: @themeDarker;
+    background-color: darken(@brand-warning, 10%);
     color: #fff;
     text-decoration: none;
   }
@@ -121,31 +124,25 @@
 @media screen and (min-width: 768px){
   .divider{
     background: #000;
-    border-top: 1px solid @gray-light;
+    border-top: 1px solid #EEE;
     color: #000;
-    padding: 0;
   }
   
   .fp-box{
-    border-right: 1px solid @gray-light;
     .box-sizing(border-box);
     clear: none;
-    height: 357px;
+    height: 415px;
     overflow: hidden;
-    padding-top: 0;
+    padding: 0 30px;
     position: relative;
     h3{
       font-size: 20px;
-      margin: 5px 0px 10px 13px;
-    }
-    p{
-      padding-right: 30px;
+      margin: 10px 0 25px 15px;
     }
   }
   
   .fp-box:last-of-type{
     border-right: 0;
-    padding-right: 0;
   }
   
   .fp-box:last-of-type p{
@@ -153,7 +150,7 @@
   }
 
   .fp-box-large{
-    border-right: 1px solid @gray-light;
+    padding: 0 30px;
     small{
       bottom: 0;
       left: 10px;
@@ -163,25 +160,22 @@
       height: 56px; /* This was a quick fix, the col wouldn't expand to the height of the row, even with height: 100% */
     }
     .more-wrapper{
+      left: auto;
       position: relative;
+      right: auto;
     }
-  }
-
-  .fp-box-large:last-of-type{
-    border-right: 0;
   }
   
   .more-wrapper{
-    background-color: transparent; 
     bottom: 0;
+    left: 30px;
     padding: 10px 15px 0 0;
     position: absolute;
-    right: 10px;
-    width: 100%;
+    right: 30px;
+    width: auto;
     .more{
       float: right;
       padding: 14px 24px;
-      width: auto;
     }
   }
   
@@ -193,12 +187,10 @@
 /* --- Small Desktop Screens and Tablets (>=979px) --- */
 
 @media screen and (min-width: 979px){
- 
  .fp-box{
-    height: 318px;
+    height: 350px;
     h3{
       font-size: 23px;
-      margin: 16px 0px 19px 15px;
     }
   }
 }
@@ -206,9 +198,8 @@
 /* --- Large Desktop Screens (>= 1200px) --- */
 
 @media screen and (min-width: 1200px){
- 
   .fp-box{
-    height: 276px;
+    height: 315px;
     h3{
       font-size: 29px;
       margin: 16px 0px 19px 15px;

@@ -19,10 +19,10 @@ class Ta_calendarViewAjax extends JViewLegacy {
 	 */
 	public function display($tpl = null){
 		// Check for errors.
-	    if(count($errors = $this->get('Errors'))){
-	        throw new Exception(implode("\n", $errors));
-	    }
-		
+    if(count($errors = $this->get('Errors'))){
+      throw new Exception(implode("\n", $errors));
+    }
+	
 		$pre_micro_start = microtime();
 		
 		// Get the posted data

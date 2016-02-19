@@ -57,60 +57,56 @@ class Ta_calendarModelEvents extends JModelList {
      * @since	1.6
      */
     protected function getListQuery() {
-        // Create a new query object.
-        $db = $this->getDbo();
-        $query = $db->getQuery(true);
+      // Create a new query object.
+      $db = $this->getDbo();
+      $query = $db->getQuery(true);
 
-        // Select the required fields from the table.
-        $query->select(
-                $this->getState(
-                        'list.select', 'a.*'
-                )
-        );
+      // Select the required fields from the table.
+      $query->select(
+        $this->getState(
+          'list.select', 'a.*'
+        )
+      );
 
-        $query->from('`#__ta_calendar_events` AS a');
+      $query->from('`#__ta_calendar_events` AS a');
 
-	    // Join over the users for the checked out user.
-	    $query->select('uc.name AS editor');
-	    $query->join('LEFT', '#__users AS uc ON uc.id=a.checked_out');
+    // Join over the users for the checked out user.
+    $query->select('uc.name AS editor');
+    $query->join('LEFT', '#__users AS uc ON uc.id=a.checked_out');
     
 		// Join over the foreign key 'type'
 		$query->select('#__ta_calendar_event_types_717072.name AS typess_name_717072');
 		$query->join('LEFT', '#__ta_calendar_event_types AS #__ta_calendar_event_types_717072 ON #__ta_calendar_event_types_717072.id = a.type');
-		/*// Join over the foreign key 'grant_program'
-		$query->select('#__ta_calendar_event_types_717076.name AS typess_name_717076');
-		$query->join('LEFT', '#__ta_calendar_event_types AS #__ta_calendar_event_types_717076 ON #__ta_calendar_event_types_717076.id = a.grant_program');
-		*/
 
 		// Join over the created by field 'created_by'
 		$query->select('created_by.name AS created_by');
 		$query->join('LEFT', '#__users AS created_by ON created_by.id = a.created_by');
         
-        // Filter by search in title
-        $search = $this->getState('filter.search');
-        if (!empty($search)) {
-            if (stripos($search, 'id:') === 0) {
-                $query->where('a.id = ' . (int) substr($search, 3));
-            } else {
-                $search = $db->Quote('%' . $db->escape($search, true) . '%');
-                $query->where('( a.title LIKE '.$search.' )');
-            }
+    // Filter by search in title
+    $search = $this->getState('filter.search');
+    if(!empty($search)){
+      if(stripos($search, 'id:') === 0){
+        $query->where('a.id = ' . (int) substr($search, 3));
+      }else{
+        $search = $db->Quote('%' . $db->escape($search, true) . '%');
+        $query->where('( a.title LIKE '.$search.' )');
+      }
 		}
 
 		//Filtering approved
 		$filter_approved = $this->state->get("filter.approved");
-		if ($filter_approved) {
+		if($filter_approved){
 			$query->where("a.approved = '".$filter_approved."'");
 		}
 
 		//Filtering type
 		$filter_type = $this->state->get("filter.type");
-		if ($filter_type) {
+		if($filter_type){
 			$query->where("a.type = '".$filter_type."'");
 		}
 
-        return $query;
-    }
+      return $query;
+  }
 
 	/**
 	 * Method to get the timezones from the database
@@ -150,6 +146,9 @@ class Ta_calendarModelEvents extends JModelList {
 		// execute the query and return the result
 		if($result){
 			// check an enforce defaults
+			if(!isset($result->alerts)){
+				$result->alerts = 1;
+			}
 			if(empty($result->timezone)){
 				$result->timezone = 'America/New_York';
 			}
@@ -179,6 +178,7 @@ class Ta_calendarModelEvents extends JModelList {
 		}else{
 			// establish defaults
 			$result = new stdClass;
+			$result->alerts = 1;
 			$result->timezone = 'America/New_York';
 			$result->view = 'month';
 			$result->filters = new stdClass;

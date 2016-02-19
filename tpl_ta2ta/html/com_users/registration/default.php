@@ -13,6 +13,10 @@ JHtml::_('behavior.keepalive');
 ?>
 <script type="text/javascript">
 	jQuery(function($){
+		// configure chosen on selects
+    $('#jform_profile_org_chosen .chosen-default span').text('Select Your Organization');
+    $('#jform_profile_region_chosen .chosen-default span').text('Select Your State/Territory');
+
 		// remove required flags from everything so our javascript can run
 		$('input,select').removeAttr('aria-required required');
 

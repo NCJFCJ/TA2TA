@@ -102,18 +102,18 @@ if(empty($events)): ?>
 						</div>
 						<?php foreach($events as $event):
 							if($event->start->format('j') == $day): ?>
-							<div class="calendar-event <?php echo (array_key_exists($event->type, $eventTypes) ? strtolower($eventTypes[$event->type]['name']) : '') . ($event->end < $today ? ' past' : '') . ($event->approved ? '' : ' unapproved'); ?>" data-event-type="<?php echo (array_key_exists($event->type, $eventTypes) ? $eventTypes[$event->type]['name'] : ''); ?>" data-event-id="<?php echo $event->id; ?>" data-title="<?php echo (array_key_exists($event->type, $eventTypes) ? $eventTypes[$event->type]['name'] : ''); ?>">
-								<span class="time"><?php echo $event->start->format('g:ia'); ?></span><span class="hidden-xs hidden-sm"><?php echo (array_key_exists($event->type, $eventTypes) ? $eventTypes[$event->type]['name'] : ''); ?></span>
+							<div class="calendar-event <?php echo (array_key_exists($event->type, $eventTypes) ? strtolower($eventTypes[$event->type]['name']) : '') . ($event->end < $today ? ' past' : '') . ($event->approved ? ' approved' : ' unapproved'); ?>" data-event-type="<?php echo (array_key_exists($event->type, $eventTypes) ? $eventTypes[$event->type]['name'] : ''); ?>" data-event-id="<?php echo $event->id; ?>" data-title="<?php echo (array_key_exists($event->type, $eventTypes) ? $eventTypes[$event->type]['name'] : ''); ?>">
+								<span><?php echo (array_key_exists($event->type, $eventTypes) ? $eventTypes[$event->type]['name'] : ''); ?></span>
 							</div>
 						<?php
 								// configure the date string
 								$dateString = '';
 								if($event->start->format('Y-m-d') == $event->end->format('Y-m-d')){
 									// single day
-									$dateString = $event->start->format('M j, Y g:ia') . ' - ' . $event->end->format('g:ia');
+									$dateString = $event->start->format('M j, Y g:ia') . ' - ' . $event->end->format('g:ia') . ' ' . $event->timezone;
 								}else{
 									// multi-day
-									$dateString = $event->start->format('M j, Y g:ia') . ' - ' . $event->end->format('M j, Y g:ia');
+									$dateString = $event->start->format('M j, Y g:ia') . ' - ' . $event->end->format('M j, Y g:ia') . ' ' . $event->timezone;
 								}
 						
 								// create the popover content

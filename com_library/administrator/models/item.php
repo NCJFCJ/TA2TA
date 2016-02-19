@@ -8,13 +8,18 @@
 // No direct access.
 defined('_JEXEC') or die;
 
+jimport('joomla.application.component.helper');
 jimport('joomla.application.component.modeladmin');
 jimport('joomla.filesystem.file');
+
+// require the helper
+require_once(JPATH_COMPONENT_ADMINISTRATOR . '/helpers/library.php');
 
 /**
  * Library model.
  */
 class LibraryModelitem extends JModelAdmin{
+
 	/**
 	 * @var		string	The prefix to use with controller messages.
 	 * @since	1.6
@@ -293,7 +298,7 @@ class LibraryModelitem extends JModelAdmin{
 			$db = $this->getDBO();
 						
 			/* -- complete the file upload -- */
-			
+
 			if($fileUpload){
 				// construct the file path
 				$file_name = $table->id.'-'.$base_file_name;
@@ -322,7 +327,7 @@ class LibraryModelitem extends JModelAdmin{
 				$im->cropThumbnailImage(250,323);
 				$im->writeImage($imagePath);
 				$im->clear();
-				$im->destroy();				
+				$im->destroy();
 				
 				// TO DO: Actually after thinking about it maybe in your upload script instead of preventing them from uploading a file if there isn't enough space you send us an E-Mail notifying us when there is less that 25 GB of free space.  This way it can give us time to figure out what to do if the system gets close to being overloaded.
 				
@@ -384,6 +389,111 @@ class LibraryModelitem extends JModelAdmin{
 				$query->where($db->quoteName('library_item') . '=' . $db->quote($table->id));
 				$db->setQuery($query);
 				$db->query();
+			}
+
+			/* --- Send an approval email to the library moderators --- */
+
+			// only send if this was a new library item
+			if($data['id'] == 0){
+
+				// generate an access token for this item and save it to the database
+				$accessToken = LibraryHelper::generateAccessToken($table->id);
+
+				// get the recipients for the email
+				$recipients = JComponentHelper::getParams('com_library')->get('approval_emails');
+				
+				// only continue if there are email recipients
+				if($recipients){
+
+					// get all of the target audiences
+					$target_audience_map = array();
+					$query = $db->getQuery(true);
+			    $query->select($db->quoteName(array(
+			    	'id',
+			    	'name'
+			    )));
+					$query->from($db->quoteName('#__target_audiences'));
+					$query->where($db->quoteName('state') . ' = ' . $db->quote('1'));
+					$query->order('name ASC');
+					$db->setQuery($query);
+					$possible_target_audiences = $db->loadObjectList();
+
+					foreach($possible_target_audiences as $ptas){
+						$target_audience_map[$ptas->id] = $ptas->name;
+					}
+
+					// get the name of the project
+					$query = $db->getQuery(true);
+					$query->select($db->quoteName('title'));
+					$query->from($db->quoteName('#__tapd_provider_projects'));
+					$query->where($db->quoteName('id') . ' = ' . $db->quote($data['project']));
+					$db->setQuery($query, 0, 1);
+					$project_name = $db->loadResult();
+
+					// get the information for this user
+					$user = JFactory::getUser();
+
+					// get the organization of the user
+					$user_org = LibraryHelper::getUserOrg();
+
+					// get the organization of the document
+					$doc_org = LibraryHelper::getOrg($data['org']);
+
+					// create a mailer object	
+					$mailer = JFactory::getMailer();
+					
+					$mailer->isHTML(true);
+					$mailer->Encoding = 'base64';
+					
+					// set the sender to the site default
+					$config = JFactory::getConfig();
+					$sender = array( 
+			    $config->get('config.mailfrom'),
+			    $config->get('config.fromname'));
+
+					$mailer->setSender($sender);
+					
+					// set the recipients
+					if(strpos($recipients, ',') >= 0){
+						$recipients = explode(',', $recipients);
+					}
+					$mailer->addRecipient($recipients);
+
+					// set the message subject
+					$mailer->setSubject('[TA2TA] New Library Item Pending Approval');
+
+					// prepare the message content
+					$message = '<p style="margin-bottom: 20px;text-align:left;">The following resource was added to the TA2TA Resource Library by ' . $user->name . ' from ' . $user_org->name . '. Please review the details and choose whether to publish (available to the public) or archive (available only to NCJFCJ and OVW) the resource.</p>';
+					$message .= '<table style="border-bottom:1px solid #DDD;border-top:1px solid #DDD;padding:20px 0 30px 0;">';
+					$message .= '<tbody>';
+					$message .= '<tr>';
+					$message .= '<td valign="top"><a href="' . str_replace('administrator/', '', JURI::base()) . 'media/com_library/resources/' . $table->id . '-' . $data['base_file_name'] . '.pdf" target="_blank"><img src="' . str_replace('administrator/', '', JURI::base()) . 'media/com_library/covers/' . $table->id . '-' . $data['base_file_name'] . '.png" alt="' . $data['name'] . '" width="150" style="margin-right: 20px;"></a></td>';
+					$message .= '<td valign="top"><h3 style="margin: 0 0 5px 0;">' . $data['name'] . '</h3><h5 style="margin-bottom:15px;margin-top:0;"><strong><a href="' . $doc_org->website . '" style="text-decoration:none;" target="_blank">' . $doc_org->name . '</a></strong></h5><p><strong>Project:</strong> ' . $project_name . '</p><p>' . $data['description'] . '</p>';
+
+					if(isset($target_audiences)){
+						$message .= '<p style="margin-bottom:0;text-decoration:underline;">Target Audiences</p><table><tr><td><ul style="margin-top:0;padding-left:0;">';
+						for($i = 0; $i < count($target_audiences); $i++){
+							if($i == round(count($target_audiences) / 2)){
+								$message .= '</ul></td><td><ul style="margin-top:0;padding-left:0;">';
+							}
+							if(array_key_exists($target_audiences[$i], $target_audience_map)){
+								$message .= '<li>' . $target_audience_map[$target_audiences[$i]] . '</li>';
+							}
+						}
+						$message .= '</ul></td></tr></table>';
+					}
+
+					$message .= '<div style="float:left;margin-right:15px;padding-top:10px;"><a href="' . str_replace('administrator/', '', JURI::base()) . 'media/com_library/resources/' . $table->id . '-' . $data['base_file_name'] . '.pdf" style="background-color:#428BCA;border-radius:4px;color:#FFF;padding:12px 24px;text-align:center;text-decoration:none;" target="_blank">Download</a></div><div style="float:left;margin-right:15px;padding:10px 0 0 0;"><a href="' . str_replace('administrator/', '', JURI::base()) . 'my-account/library/approve.html?token=' . $accessToken . '&state=2" style="background-color:#DA4F49;border-radius:4px;color:#FFF;padding:12px 24px;text-align:center;text-decoration:none;" target="_blank">Archive</a></div><div style="float:left;margin-right:15px;padding:10px 0 0 0;"><a href="' . str_replace('administrator/', '', JURI::base()) . 'my-account/library/approve.html?token=' . $accessToken . '&state=1" style="background-color:#5BB75B;border-radius:4px;color:#FFF;padding:12px 24px;text-align:center;text-decoration:none;" target="_blank">Publish</a></div></td>';
+					$message .= '</tr>';
+					$message .= '</tbody>';
+					$message .= '</table>';
+					$message .= '<p style="margin-top:30px;">If you have any questions regarding this resource, please contact the NCJFCJ at <a href="mailto:info@ta2ta.org">info@ta2ta.org</a>.</p>';
+	
+					$mailer->setBody(LibraryHelper::buildEmail('New Library Resource', $message));
+
+					// send the message, if it errors out, just ignore it as we don't want the user affected
+					$mailer->Send();
+				}
 			}
 
 			// Clean the cache.

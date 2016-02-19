@@ -22,8 +22,8 @@ class LibraryViewItems extends JViewLegacy{
 	 * Display the view
 	 */
 	public function display($tpl = null){
-		$this->state		= $this->get('State');
-		$this->items		= $this->get('Items');
+		$this->state = $this->get('State');
+		$this->items = $this->get('Items');
 		$this->pagination	= $this->get('Pagination');
 
 		// Check for errors.
@@ -52,50 +52,46 @@ class LibraryViewItems extends JViewLegacy{
 
 		JToolBarHelper::title(JText::_('COM_LIBRARY_TITLE'), 'items.png');
 
-        //Check if the form exists before showing the add/edit buttons
-        $formPath = JPATH_COMPONENT_ADMINISTRATOR.'/views/item';
-        if(file_exists($formPath)){
+    //Check if the form exists before showing the add/edit buttons
+    $formPath = JPATH_COMPONENT_ADMINISTRATOR.'/views/item';
+    if(file_exists($formPath)){
+	  	if($canDo->get('core.create')){
+		    JToolBarHelper::addNew('item.add','JTOOLBAR_NEW');
+	    }
+	    if($canDo->get('core.edit') && isset($this->items[0])){
+		    JToolBarHelper::editList('item.edit','JTOOLBAR_EDIT');
+	    }
+    }
 
-            if($canDo->get('core.create')){
-			    JToolBarHelper::addNew('item.add','JTOOLBAR_NEW');
-		    }
+		if($canDo->get('core.edit.state')){
+			if(isset($this->items[0]->state)){
+		    JToolBarHelper::divider();
+		    JToolBarHelper::custom('items.publish', 'publish.png', 'publish_f2.png','JTOOLBAR_PUBLISH', true);
+		    JToolBarHelper::custom('items.unpublish', 'unpublish.png', 'unpublish_f2.png', 'JTOOLBAR_UNPUBLISH', true);
+      }else if(isset($this->items[0])){
+        //If this component does not use state then show a direct delete button as we can not trash
+        JToolBarHelper::deleteList('', 'items.delete','JTOOLBAR_DELETE');
+      }
 
-		    if($canDo->get('core.edit') && isset($this->items[0])){
-			    JToolBarHelper::editList('item.edit','JTOOLBAR_EDIT');
-		    }
-
-        }
-
-		if ($canDo->get('core.edit.state')) {
-
-            if (isset($this->items[0]->state)) {
-			    JToolBarHelper::divider();
-			    JToolBarHelper::custom('items.publish', 'publish.png', 'publish_f2.png','JTOOLBAR_PUBLISH', true);
-			    JToolBarHelper::custom('items.unpublish', 'unpublish.png', 'unpublish_f2.png', 'JTOOLBAR_UNPUBLISH', true);
-            } else if (isset($this->items[0])) {
-                //If this component does not use state then show a direct delete button as we can not trash
-                JToolBarHelper::deleteList('', 'items.delete','JTOOLBAR_DELETE');
-            }
-
-            if (isset($this->items[0]->state)) {
-			    JToolBarHelper::divider();
-			    JToolBarHelper::archiveList('items.archive','JTOOLBAR_ARCHIVE');
-            }
-            if (isset($this->items[0]->checked_out)) {
-            	JToolBarHelper::custom('items.checkin', 'checkin.png', 'checkin_f2.png', 'JTOOLBAR_CHECKIN', true);
-            }
+      if(isset($this->items[0]->state)){
+		    JToolBarHelper::divider();
+		    JToolBarHelper::archiveList('items.archive','JTOOLBAR_ARCHIVE');
+      }
+      if(isset($this->items[0]->checked_out)){
+      	JToolBarHelper::custom('items.checkin', 'checkin.png', 'checkin_f2.png', 'JTOOLBAR_CHECKIN', true);
+      }
 		}
         
-        //Show trash and delete for components that uses the state field
-        if (isset($this->items[0]->state)) {
-		    if ($state->get('filter.state') == -2 && $canDo->get('core.delete')) {
-			    JToolBarHelper::deleteList('', 'items.delete','JTOOLBAR_EMPTY_TRASH');
-			    JToolBarHelper::divider();
-		    } else if ($canDo->get('core.edit.state')) {
-			    JToolBarHelper::trash('items.trash','JTOOLBAR_TRASH');
-			    JToolBarHelper::divider();
-		    }
-        }
+    //Show trash and delete for components that uses the state field
+    if(isset($this->items[0]->state)){
+	    if($state->get('filter.state') == -2 && $canDo->get('core.delete')){
+		    JToolBarHelper::deleteList('', 'items.delete','JTOOLBAR_EMPTY_TRASH');
+		    JToolBarHelper::divider();
+	    }else if($canDo->get('core.edit.state')){
+		    JToolBarHelper::trash('items.trash','JTOOLBAR_TRASH');
+		    JToolBarHelper::divider();
+	    }
+    }
         
         //Set sidebar action - New in 3.0
 		JHtmlSidebar::setAction('index.php?option=com_library&view=items');
@@ -127,7 +123,5 @@ class LibraryViewItems extends JViewLegacy{
 			'a.name' => JText::_('COM_LIBRARY_NAME'),
 			'a.created_by' => JText::_('COM_LIBRARY_CREATED_BY'),
 		);
-	}
-
-    
+	}   
 }

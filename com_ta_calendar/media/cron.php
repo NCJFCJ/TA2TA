@@ -14,6 +14,9 @@ define('JPATH_BASE', dirname(__FILE__).DS.'..'.DS.'..');
 require_once(JPATH_BASE.DS.'includes'.DS.'defines.php');
 require_once(JPATH_BASE.DS.'includes'.DS.'framework.php');
 
+// include the component helper
+require_once(JPATH_BASE.DS.'components'.DS.'com_ta_calendar'.DS.'helpers'.DS.'ta_calendar.php');
+
 // initialize Joomla!
 $app = JFactory::getApplication('site');
 $app->initialise();
@@ -104,7 +107,7 @@ foreach($events as $event){
 		$message .= "<b>$event->title</b> ($event->id)<br><br>"; 
 		$message .= 'If OVW has already approved this event, please login to the TA2TA website, edit your event, and indicate that it has been approved. If the event will not be approved by OVW, please delete it from the website.<br><br>';
 		$message .= 'Thank you for your attention and for helping us to keep the TA2TA Event Calendar up-to-date. Have a great day!';
-		$mailer->setBody($message);
+		$mailer->setBody(Ta_calendarHelper::buildEmail('TA2TA Event Requires Approval', $message));
 
 		// send the message
 		$mailer->Send();

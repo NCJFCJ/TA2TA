@@ -10,33 +10,36 @@ defined('_JEXEC') or die;
 
 jimport('joomla.application.component.view');
 
+// require the helper
+require_once(JPATH_COMPONENT_ADMINISTRATOR . '/helpers/library.php');
+
 /**
  * View to edit
  */
-class LibraryViewSettings extends JViewLegacy {
-    protected $state;
-    protected $form;
+class LibraryViewSettings extends JViewLegacy{
+  protected $state;
+  protected $form;
 	protected $listing;
-    protected $params;
+  protected $params;
 
-    /**
-     * Display the view
-     */
-    public function display($tpl = null){
-		$app 				= JFactory::getApplication();
-        $this->state 		= $this->get('State');
-		$this->org			= $this->get('Org');
-		$this->resources 	= $this->get('Resources');
+  /**
+   * Display the view
+   */
+  public function display($tpl = null){
+		$app = JFactory::getApplication();
+	  $this->state = $this->get('State');
+		$this->org = LibraryHelper::getUserOrg();
+		$this->resources	= $this->get('Resources');
 				
-        // Check for errors.
-		if (count($errors = $this->get('Errors'))) {
-            throw new Exception(implode("\n", $errors));
-        }
-        
-        $this->_prepareDocument();
-
-        parent::display($tpl);
+	  // Check for errors.
+		if(count($errors = $this->get('Errors'))){
+	    throw new Exception(implode("\n", $errors));
     }
+      
+    $this->_prepareDocument();
+
+    parent::display($tpl);
+  }
 
 	/**
 	 * Prepares the document

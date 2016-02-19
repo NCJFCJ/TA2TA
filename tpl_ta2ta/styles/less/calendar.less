@@ -2,7 +2,7 @@
 
   -- -- -- -- -- -- -- -- --
   http://www.ta2ta.org - v1.1
-  last edit: May 30, 2014
+  last edit: February 11, 2016
   author:  Zachary Draper - NCJFCJ
   -- -- -- -- -- -- -- -- --
   
@@ -17,9 +17,38 @@
 @webinar:        #71FF71;
 @lightenPast:    15%;
 
+/* --- Mixings --- */
+
+.EventType(@color){
+  &:before{
+    background: @color;
+  }
+  &.color-key{
+    background-color: @color;
+  }
+  &.past:before{
+    background: lighten(@color, @lightenPast);
+  }
+}
+
 /* --- Mobile Phones --- */
 
 #eventCalendar{
+  .calendar-event{
+    cursor: pointer;
+    position: relative;
+    &:before{
+      content: '';
+      display: block;
+      height: 100%;
+      left: 0;
+      position: absolute;
+      width: 7px;
+    }
+    &:hover{
+      background-color: #F5F5F5;
+    }
+  }
   .calendar-view{
     position: relative;
   }
@@ -31,36 +60,21 @@
     width: 12px;
   }
   .conference{
-    background: @conference;
-  }
-  .conference.past{
-    background: lighten(@conference, @lightenPast);
-  }
-  .conference.unapproved{
-    background: @conference url(/media/com_ta_calendar/images/stripes.png);
-    border: 2px dashed darken(@conference, (@lightenPast * 2)); 
-  }
-  .conference.past.unapproved{
-    background: lighten(@conference, @lightenPast) url(/media/com_ta_calendar/images/stripes.png);
+    .EventType(@conference);
   }
   .date{
     .form-control-feedback{
       right: 40px;
     }
   }
+  .icomoon-approved{
+    color: green;
+  }
+  .icomoon-unapproved{
+    color: red;
+  }
   .meeting{
-    background: @meeting;
-  }
-  .meeting.past{
-    background: lighten(@meeting, @lightenPast);
-  }
-  .meeting.unapproved{
-    background: @meeting url(/media/com_ta_calendar/images/stripes.png);
-    border: 2px dashed darken(@meeting, (@lightenPast * 2));
-    padding: 1px 3px 1px 3px;
-  }
-  .meeting.past.unapproved{
-    background: lighten(@meeting, @lightenPast) url(/media/com_ta_calendar/images/stripes.png);
+    .EventType(@meeting);
   }
   .modal-body{
     max-height: 415px;
@@ -84,48 +98,45 @@
     margin-top: -3px;
   }
   .teleconf{
-    background: @teleconf;
-  }
-  .teleconf.past{
-    background: lighten(@teleconf, @lightenPast);
-  }
-  .teleconf.unapproved{
-    background: @teleconf url(/media/com_ta_calendar/images/stripes.png);
-    border: 2px dashed darken(@teleconf, (@lightenPast * 2));
-    padding: 1px 3px 1px 3px;
-  }
-  .teleconf.past.unapproved{
-    background: lighten(@teleconf, @lightenPast) url(/media/com_ta_calendar/images/stripes.png);
+    .EventType(@teleconf);
   }
   .today{
     background-color: #EAEAEA;
+    .calendar-event{
+      &:hover{
+        background-color: #E1E1E1;
+      }
+    }
   }
   .training{
-    background: @training;
-  }
-  .training.past{
-    background: lighten(@training, @lightenPast);
-  }
-  .training.unapproved{
-    background: @training url(/media/com_ta_calendar/images/stripes.png);
-    border: 2px dashed darken(@training, (@lightenPast * 2));
-    padding: 1px 3px 1px 3px;
+    .EventType(@training);
   }
   .webinar{
-    background: @webinar;
-  }
-  .webinar.past{
-    background: lighten(@webinar, @lightenPast);
-  }
-  .webinar.unapproved{
-    background: @webinar url(/media/com_ta_calendar/images/stripes.png);
-    border: 2px dashed darken(@webinar, (@lightenPast * 2));
-    padding: 1px 3px 1px 3px;
-  }
-  .webinar.past.unapproved{
-    background: lighten(@webinar, @lightenPast) url(/media/com_ta_calendar/images/stripes.png);
+    .EventType(@webinar);
   }
   #cvMonth{
+    .calendar-event{
+      border-bottom: 1px solid #DDD;
+      font-size: 80%;
+      line-height: 20px;
+      overflow: hidden;
+      margin-bottom: 3px;
+      padding-left: 10px;
+      &.approved{
+        span:after{
+          color: green;
+          content: "\00a0\e900";
+          display: inline-block;
+          font-family: 'TA2TA';
+          font-style: normal;
+          font-weight: normal;
+          font-variant: normal;
+          margin-right: -3px;
+          speak: none;
+          text-transform: none;
+        }
+      }
+    }
     .cal-day{
       border-bottom: 1px solid #AAA;
       border-right: 1px solid #AAA;
@@ -149,24 +160,11 @@
       display: table;
       table-layout: fixed;
       width: 100%;
-      .calendar-event.conference.unapproved,
-      .calendar-event.meeting.unapproved,
-      .calendar-event.teleconf.unapproved,
-      .calendar-event.webinar.unapproved,
-      .calendar-event.training.unapproved{
-        padding: 1px 3px 1px 3px;
-      }
     }
     .cal-week{
       display: table-row;
       height: 50px;
       width: 100%;
-    }
-    .calendar-event{
-      font-size: 80%;
-      font-weight: bold;
-      overflow: hidden;
-      padding: 3px;
     }
     .day-num{
       font-size: 150%;
@@ -180,13 +178,23 @@
     }
     .time{
       font-size: 110%;
-      font-weight: bold;
-      padding-right: 7px;
     }
   }
   #viewPopupContent{
     ul{
       padding: 0;
+    }
+  }
+}
+
+#editPopup{
+  label{
+    line-height: 115%;
+  }
+  .checkbox{
+    margin-bottom: 4px;
+    &.disabled{
+      color: #CCC;
     }
   }
 }

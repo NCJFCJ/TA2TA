@@ -250,7 +250,7 @@ if($permission_level > 0){
 					// save as new event
 					$query = $db->getQuery(true);
 					$query->insert($db->quoteName('#__ta_calendar_events'));
-					$query->columns($db->quoteName(array('state', 'org', 'start', 'end', 'title', 'summary', 'type', 'event_url', 'open', 'registration_url', 'provider_project', 'created', 'created_by', 'approved', 'approved_by', 'city', 'territory')));
+					$query->columns($db->quoteName(array('state', 'org', 'start', 'end', 'title', 'summary', 'type', 'event_url', 'open', 'registration_url', 'provider_project', 'created', 'created_by', 'approved', 'approved_by', 'city', 'territory', 'timezone')));
 					$query->values(implode(',', array(
 						'1',
 						$org,
@@ -268,7 +268,8 @@ if($permission_level > 0){
 						$db->quote($approved),
 						$db->quote($approved_by),
 						$db->quote($city),
-						$db->quote($territory)
+						$db->quote($territory),
+						$db->quote($timezone)
 					)));
 					$db->setQuery($query);
 					if($db->query()){
@@ -390,7 +391,7 @@ if($permission_level > 0){
 						$message .= "<div style=\"background:#428BCA;display:inline-block;padding:10px;\"><a href=\"http://{$_SERVER['HTTP_HOST']}/calendar.html?event=$newId\" style=\"color:#fff;font-weight:bold;text-decoration:none;\" target=\"_blank\">View on Website</a></div>";
 
 						// set the body
-						$mailer->setBody($message);
+						$mailer->setBody(Ta_calendarHelper::buildEmail('New Calendar Event Added', $message));
 
 						// send the message
 						$mailer->Send();

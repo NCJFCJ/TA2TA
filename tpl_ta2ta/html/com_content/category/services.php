@@ -40,19 +40,33 @@ defined( '_JEXEC' ) or die;
 	<?php endif; ?>
 </div>
 <div id="services">
+	<div class="row">
 	<?php
-	// articles
-	$count = 0;
-	foreach($this->items as $articleData):
-		// increment the count
-		$count++;
-
-		// if this is the fourth article, add the specialized services divider first
-		if($count == 4){
-			echo '<div class="row divider"><div class="col-xs-12"><div class="divider-text">Specialized Services</div></div></div>';
+	// first four articles
+	for($i = 0; $i < count($this->items) && $i < 4; $i++):
+		$articleData = $this->items[$i];
+		$imgData = (isset($articleData->images) ? json_decode($articleData->images) : false);
+		if($i == 2){
+			echo '<div class="spacer"></div>';
 		}
-
-		// get the image data
+	?>
+	  <div class="col-xs-12 col-sm-6 col-md-3 featured">
+	  	<div class="well">
+		  	<div>
+		  		<?php if(!empty($imgData->image_intro)): ?>
+						<img src="<?php echo $imgData->image_intro; ?>" alt="<?php echo (isset($imgData->image_intro_alt) ? $imgData->image_intro_alt : ''); ?>">
+					<?php endif; ?>
+					<h3><?php echo $articleData->title; ?></h3>
+				</div>
+				<?php echo $articleData->introtext; ?>
+			</div>
+	  </div>
+  <?php endfor; ?>
+	</div>
+	<div class="row divider" id="specializedServices"><div class="col-xs-12"><div class="divider-text">Specialized Services</div></div></div>
+	<?php 
+	for($i = 4; $i < count($this->items); $i++):
+		$articleData = $this->items[$i];
 		$imgData = (isset($articleData->images) ? json_decode($articleData->images) : false);
 		?>
 		<div class="row well">
@@ -66,5 +80,5 @@ defined( '_JEXEC' ) or die;
 				<?php echo $articleData->introtext; ?>
 			</div>
 		</div>
-	<?php endforeach;?>
+	<?php endfor;?>
 </div>

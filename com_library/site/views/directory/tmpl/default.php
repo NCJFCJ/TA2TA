@@ -8,23 +8,21 @@
 // no direct access
 defined('_JEXEC') or die;
 
-// before continuing, we need to handle quotes in the PHP data
-foreach($this->items as &$item){
-	$item->name = xmlentities($item->name);
-	$item->org = xmlentities($item->org);
-	$item->description = xmlentities($item->description);
-	$item->base_file_name = xmlentities($item->base_file_name);
-	$item->document_path = xmlentities($item->document_path);
-	$item->cover_path = xmlentities($item->cover_path);
-	$item->org_website = xmlentities($item->org_website);
-}
-// htmlentities is insufficient as it doesn't handle apostrophes
-function xmlentities($string){
-    return str_replace (array('&','"','’',"'",'<','>'),array('&amp;','&quot;','&apos;','&#039;','&lt;','&gt;'),$string);
+// before continuing, we need to handle special characters in the PHP data
+if($this->items){
+	foreach($this->items as &$item){
+		$item->name = htmlentities($item->name, ENT_QUOTES);
+		$item->org = htmlentities($item->org, ENT_QUOTES);
+		$item->description = htmlentities($item->description, ENT_QUOTES);
+		$item->base_file_name = htmlentities($item->base_file_name, ENT_QUOTES);
+		$item->document_path = $item->document_path;
+		$item->cover_path = $item->cover_path;
+		$item->org_website = $item->org_website;
+	}
 }
 
 // require the helper file
-require_once(JPATH_COMPONENT . '/helpers/library.php');
+require_once(JPATH_COMPONENT_ADMINISTRATOR . '/helpers/library.php');
 
 /* Get the permission level
  * 0 = Public (view only)
@@ -34,7 +32,7 @@ require_once(JPATH_COMPONENT . '/helpers/library.php');
 $permission_level = LibraryHelper::getPermissionLevel();
 ?>
 <script type="text/javascript">
-	var items = $.parseJSON('<?php echo str_replace('\n','',json_encode($this->items)); ?>');
+	var items = $.parseJSON('<?php echo str_replace(array('\n','\r','\t'),'',json_encode($this->items)); ?>');
 	
 	// document ready	
 	$(function(){
@@ -70,13 +68,29 @@ $permission_level = LibraryHelper::getPermissionLevel();
 		var targetAudiences = new Array;
 		
 		var searchString = $('#search').val();
-		$('#filters input:checked').each(function() {
-            targetAudiences.push($(this).val());
-        });
+
+		<?php if($permission_level == 2): ?>
+		var states = new Array;
+		$('input:checkbox[name="states[]"]:checked').each(function(){
+			states.push($(this).val());
+		});
+		<?php endif; ?>
+
+		$('input:checkbox[name="targetAudiences[]"]:checked').each(function(){
+      targetAudiences.push($(this).val());
+    });
 				
-		// Perform target audience filtering first
+		// Perform filtering first
 		for(var i = 0; i < temporaryDisplayItems.length; i++){
 			var matched = false;
+
+			// check the archive status
+			<?php if($permission_level == 2): ?>
+			if($.inArray(temporaryDisplayItems[i].state, states) == -1){
+				continue;
+			}
+			<?php endif; ?>
+
 			// Loop through all target audiences, checking them first
 			for(var j = 0; j < (temporaryDisplayItems[i].targetAudiences).length; j++){
 				// See if there is a match, if not, skip this record
@@ -155,6 +169,14 @@ $permission_level = LibraryHelper::getPermissionLevel();
 			if(displayItems[i].new){
 				htmlOutput += '<a href="' + displayItems[i].document_path + '" target="_blank" class="new-ribbon"><img src="/media/com_library/new-ribbon.png" alt="Newly Uploaded"></a>';
 			}
+			<?php if($permission_level == 2): ?>
+			if(displayItems[i].state == -1){
+				htmlOutput += '<a href="' + displayItems[i].document_path + '" target="_blank" title="Resource is Pending Approval" class="pending-approval"><span class="icomoon-key"></span></a>';
+			}
+			if(displayItems[i].state == 2){
+				htmlOutput += '<a href="' + displayItems[i].document_path + '" target="_blank" title="Resource is Archived" class="archived"><span class="icomoon-folder"></span></a>';
+			}
+			<?php endif; ?>
 			htmlOutput += '</div><div class="col-sm-9">'
 			htmlOutput += '<h3>' + displayItems[i].name + '</h3>';
 			if(displayItems[i].org_website == ''){
@@ -163,7 +185,13 @@ $permission_level = LibraryHelper::getPermissionLevel();
 				htmlOutput += '<h5><strong><a href="' + displayItems[i].org_website + '" target="_blank"><span class="icomoon-earth"></span> ' + displayItems[i].org + '</a></strong></h5>';
 			}
 			htmlOutput += '<p>' + displayItems[i].description + '</p>';
-			htmlOutput += '<p><a class="btn btn-primary" href="' + displayItems[i].document_path + '" target="_blank"><span class="icomoon-disk"></span> &nbsp;Download</a></p>';
+			htmlOutput += '<p><a class="btn btn-primary" href="' + displayItems[i].document_path + '" style="float:left;margin-right:15px;" target="_blank"><span class="icomoon-disk"></span> &nbsp;Download</a>';
+			<?php if($permission_level == 2): ?>
+				if(displayItems[i].state == -1){
+					htmlOutput +=  '<a class="btn btn-danger" href="/my-account/library/approve.html?state=2&amp;id=' + displayItems[i].id + '" style="float:left;margin-right:15px;"><span class="icomoon-folder"></span> &nbsp;Archive</a><a class="btn btn-danger" href="/my-account/library/approve.html?state=1&amp;id=' + displayItems[i].id + '" style="float:left;margin-right:15px;"><span class="icomoon-checkmark"></span> &nbsp;Publish</a>';
+				}
+			<?php endif; ?>
+			htmlOutput += '</p>';
 			htmlOutput += '</div></div>';
 		}
 		
@@ -217,12 +245,33 @@ $permission_level = LibraryHelper::getPermissionLevel();
 				<?php endif; ?>	
 				<br>
 				<br>	
-				<div class="panel-group filter-list">
+				<div class="panel-group filter-list" id="filterList">
+					<?php if($permission_level == 2): ?>
+					<div class="panel panel-default">		
+						<div class="panel-heading">
+							<a data-toggle="collapse" data-parent="#filterList" href="#collapseStatus">Status</a>
+						</div>
+						<div class="panel-collapse collapse" id="collapseStatus">
+							<div class="panel-body">
+								<p><small>Select:  <a class="checkAll">All</a> / <a class="uncheckAll">None</a></small></p>
+								<label class="checkbox">
+									<input type="checkbox" name="states[]" value="2"> Archived
+								</label>
+								<label class="checkbox">
+									<input type="checkbox" name="states[]" value="1" checked> Published
+								</label>
+								<label class="checkbox">
+									<input type="checkbox" name="states[]" value="-1"> Pending Approval
+								</label>
+							</div>
+						</div>
+					</div>
+					<?php endif; ?>
 					<div class="panel panel-default">			
 						<div class="panel-heading">
-							<h4 class="panel-title">Target Audiences</h4>
+							<a data-toggle="collapse" data-parent="#filterList" href="#collapseTargetAudiences">Target Audiences</a>
 						</div>
-						<div class="panel-collapse expanding collapse in">
+						<div class="panel-collapse expanding collapse in" id="collapseTargetAudiences">
 							<div class="panel-body">
 								<p><small>Select:  <a class="checkAll">All</a> / <a class="uncheckAll">None</a></small></p>
 								<div class="row">

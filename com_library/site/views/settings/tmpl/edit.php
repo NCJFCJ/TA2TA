@@ -21,9 +21,10 @@ foreach($this->resources as &$resource){
 	$resource->cover_path = xmlentities($resource->cover_path);
 	$resource->created_by = xmlentities($resource->created_by);
 }
+
 // htmlentities is insufficient as it doesn't handle apostrophes
 function xmlentities($string){
-    return str_replace (array('&','"','’',"'",'<','>'),array('&amp;','&quot;','&apos;','&#039;','&lt;','&gt;'),$string);
+  return str_replace (array('&','"','’',"'",'<','>'),array('&amp;','&quot;','&apos;','&#039;','&lt;','&gt;'),$string);
 }
 ?>
 <div id="resourceForm">

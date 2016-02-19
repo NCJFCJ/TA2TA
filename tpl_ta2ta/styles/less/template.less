@@ -2,7 +2,7 @@
 
 	-- -- -- -- -- -- -- -- --
 	http://www.ta2ta.org - v2.0.0
-	last edit: August 29, 2014
+	last edit: February 3, 2016
 	author:  Zachary Draper - NCJFCJ
 	-- -- -- -- -- -- -- -- --
 
@@ -10,12 +10,14 @@
 
 /* --- Variables --- */
 
+@black:           #000;
+@font-size-mini:  ceil((@font-size-base * 0.75)); // ~11px
 @themeDarker:     #191919;
 @themeDark:       #434343;
 @themeMid:        #807C7C;
 @themeLight:      #D5E3D5;
 @themeLighter:    #F6F9F6;
-@font-size-mini:  ceil((@font-size-base * 0.75)); // ~11px
+@white:           #FFF;
 
 /* --- Bootstrap Imports --- */
 
@@ -24,6 +26,7 @@
 @import "../../plugins/bootstrap/plugins/datepicker/less/datepicker.less";
 @import "../../plugins/jquery/chosen/chosen.css";
 @import "../../plugins/jquery/imgareaselect/imgareaselect-default.css";
+@import "about.less";
 @import "calendar.less";
 @import "disqus.less";
 @import "featured-columns-3.less";
@@ -39,6 +42,7 @@
 @import "registration-complete.less";
 @import "services.less";
 @import "ta-directory.less";
+@import "ta-provider-dashboard.less";
 @import "ta-providers.less";
 
 // Mimicing Joomla! toggle fields
@@ -94,6 +98,16 @@ a:focus, a:hover{
   color: #444;
 }
 
+.alert{
+  line-height: 120%;
+}
+
+.btn-orange{
+  .button-variant(@btn-warning-color; @btn-warning-bg; @btn-warning-border);
+  font-weight: bold;
+  padding: 14px 12px;
+}
+
 .page-header{
   a{
     color: #333;
@@ -102,6 +116,9 @@ a:focus, a:hover{
 
 body{
 	background: @themeMid;
+  font-family: "Helvetica Neue", Helvetica, sans-serif;
+  font-size: 15px;
+  line-height: 170%;
 	padding: 0;
 }
 
@@ -124,7 +141,14 @@ img{
 }
 
 input[type="checkbox"]{
-  margin-top: 3px;
+  margin-top: 2px;
+}
+
+p{
+  text-align: left;
+  & + p{
+    margin-top: 20px;
+  }
 }
 
 #member-registration #interpreter_detail, #member-registration #accessiblity_other{
@@ -290,9 +314,9 @@ input[type="checkbox"]{
 }
 
 .more{
-  background-color: @themeDark;
+  background-color: @brand-warning;
   border-radius: 5px;
-  color: #fff;
+  color: @white;
   font-size: 90%;
   font-weight: bold;
   margin-bottom: 0;  
@@ -304,8 +328,8 @@ input[type="checkbox"]{
 }
 
 .more:hover{
-  background-color: @themeDarker;
-  color: #fff;
+  background-color: @brand-warning;
+  color: @white;
   text-decoration: none;
 }
 
@@ -398,7 +422,7 @@ input[type="checkbox"]{
     .nav > li.active > a{
       background: transparent;
       .box-shadow(none);
-      color: @gray-dark;
+      color: @gray;
       padding: 15px;
     }
     .nav > li > a{
@@ -476,7 +500,7 @@ input[type="checkbox"]{
 }
 
 #bodyBar{
-  background: @themeLighter;
+  background-color: @white;
   border-bottom: 11px solid @themeDark;
   margin-top: 66px;
   padding: 0 20px 25px 20px;
@@ -516,11 +540,13 @@ input[type="checkbox"]{
     z-index: 1060 !important;
 }
 
-.filter-list {
+.filter-list{
+  line-height: 110%;
   .panel-title{
     font-size: 14px;
   }
   .checkbox{
+    margin-bottom: 15px;
     padding-left: 15px;
   }
   input[type="checkbox"]{
@@ -744,26 +770,26 @@ input[type="checkbox"]{
           padding: 8px 13px;
         }
         a:hover{
-          background: @themeLight;
+          background-color: @themeLight;
         }
       }
       .active{
         a{
-          background: @brand-warning;
+          background-color: @brand-warning;
           .box-shadow(none);
           color: #fff;
         }
         a:hover{
-          background: @brand-warning;
+          background-color: darken(@brand-warning, 10%);
         }
       }
       .current{
         a{
-          background: @brand-warning;
+          background-color: @brand-warning;
           color: #fff;
         }
         a:hover{
-          background: @brand-warning;
+          background-color: darken(@brand-warning, 10%);
         }
       }
       .nav{
@@ -784,6 +810,7 @@ input[type="checkbox"]{
   #bottomBar{
     .row{
       #disclaimer{
+        line-height: 100%;
         margin-bottom: 0;
       }
     }
@@ -880,7 +907,7 @@ input[type="checkbox"]{
       }
     }
   }
-  .filter-list {
+  .filter-list{
     .checkbox input[type="checkbox"]{
       margin-left: -20px;
     }

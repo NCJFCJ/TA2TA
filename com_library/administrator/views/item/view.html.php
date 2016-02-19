@@ -22,9 +22,9 @@ class LibraryViewItem extends JViewLegacy{
 	 * Display the view
 	 */
 	public function display($tpl = null){		
-		$this->state	= $this->get('State');
-		$this->item		= $this->get('Item');
 		$this->form		= $this->get('Form');
+		$this->item		= $this->get('Item');
+		$this->state	= $this->get('State');
 
 		// Check for errors.
 		if(count($errors = $this->get('Errors'))){

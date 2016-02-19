@@ -8,6 +8,56 @@
 defined('_JEXEC') or die;
 
 abstract class Ta_calendarHelper{
+	/**
+	 * Builds a nicely formatted HTML email
+	 */
+	public static function buildEmail($heading, $content){
+		// build the message
+		$message = '<html><body>';
+		$message .= '<div style="width:100%!important;padding:0;margin:0;background-color:#807C7C">';
+		$message .= '<table style="font-family:Helvetica;font-size:12px" border="0" cellpadding="0" cellspacing="0" width="100%">';
+		$message .= '<tbody>';
+		$message .= '<tr>';
+		$message .= '<td style="padding:40px 0px" align="center">';
+		$message .= '<table style="font-family:Helvetica;font-size:12px" align="center" border="0" cellpadding="0" cellspacing="0" width="640">';
+		$message .= '<tbody>';
+		$message .= '<tr>';
+		$message .= '<td valign="top">';
+		$message .= '<table style="background-color:#FFF;font-family:Helvetica;font-size:12px" border="0" cellpadding="0" cellspacing="0" width="650">';
+		$message .= '<tbody>';
+		$message .= '<tr>';
+		$message .= '<td style="padding-bottom:10px" valign="top">';
+		$message .= '<table border="0" cellpadding="0" cellspacing="0" width="650">';
+		$message .= '<tbody>';
+		$message .= '<tr>';
+		$message .= '<td align="center"><a href="' . JURI::base() . '" target="_blank"><img alt="TA2TA" style="margin: 30px 0;" src="' . JURI::base() . 'templates/ta2ta/img/logo.png"></a></td>';
+		$message .= '</tr>';
+		$message .= '<tr style="background-color:#F19244;color:#FFF;font-size:30px;font-weight:bold;">';
+		$message .= '<td align="center" style="padding:15px 0;">' . $heading . '</td>';
+		$message .= '</tr>';
+		$message .= '<tr>';
+		$message .= '<td align="center" style="padding:30px;">' . $content . '</td>';
+		$message .= '</tr>';
+		$message .= '</tbody>';
+		$message .= '</table>';
+		$message .= '</td>';
+		$message .= '</tr>';
+		$message .= '</tbody>';
+		$message .= '</table>';
+		$message .= '</td>';
+		$message .= '</tr>';
+		$message .= '</tbody>';
+		$message .= '</table>';
+		$message .= '</td>';
+		$message .= '</tr>';
+		$message .= '</tbody>';
+		$message .= '</table>';
+		$message .= '</div>';
+		$message .= '</body></html>';
+
+		// return the message
+		return $message;
+	}
 	
 	/**
 	 * Retrieves calendar events from the database
@@ -18,7 +68,7 @@ abstract class Ta_calendarHelper{
 	 * @param DateTimeZone A PHP DateTimeZone object corresponding to the user's selected timezone
 	 * @return array List of objects containing event information, empty array on fail
 	 */
-	public static function getEvents($permission_level = 0, $filters, $firstDaySQL, $lastDaySQL, $calTimezone){
+	public static function getEvents($permission_level = 0, $filters, $firstDaySQL, $lastDaySQL, $userTimezone){
 		// the return variable	
 		$return = array();
 		
@@ -85,7 +135,8 @@ abstract class Ta_calendarHelper{
 				$db->quoteName('umb.name', 'modified_by_name'),
 				$db->quoteName('eve.approved'),
 				$db->quoteName('eve.approved_by'),
-				$db->quoteName('uab.name', 'approved_by_name')
+				$db->quoteName('uab.name', 'approved_by_name'),
+				$db->quoteName('eve.timezone')
 			));
 			// $query->union was not working, doing this for now
 			$query->from($db->quoteName('#__ta_calendar_events', 'eve'));
@@ -102,7 +153,7 @@ abstract class Ta_calendarHelper{
 				$events = $db->loadObjectList();
 
 				// process events before displaying
-				foreach($events as $event){
+				foreach($events as &$event){
 					// create date time objects for all date times
 					$event->start = (empty($event->start) ? false : new DateTime($event->start, new DateTimeZone('UTC')));
 					$event->end = (empty($event->end) ? false : new DateTime($event->end, new DateTimeZone('UTC')));
@@ -110,25 +161,35 @@ abstract class Ta_calendarHelper{
 					$event->modified = (empty($event->modified) ? false : new DateTime($event->modified, new DateTimeZone('UTC')));
 					$event->checked_out_time = (empty($event->checked_out_time) ? false : new DateTime($event->checked_out_time, new DateTimeZone('UTC')));
 					$event->approved = ($event->approved == '0000-00-00 00:00:00' ? false : new DateTime($event->approved, new DateTimeZone('UTC')));
+
+					// determine which timezone to use
+					$event_timezone = timezone_name_from_abbr($event->timezone);
+					if(in_array($event_timezone, DateTimeZone::listIdentifiers())){
+						// use the event specific timezone (preferred)
+						$timezone = new DateTimeZone($event_timezone);
+					}else{
+						// use the user's timezone
+						$timezone = $userTimezone;
+					}
 					
-					// update each date time to the user's timezone
+					// update each date time to the proper timezone
 					if($event->start){
-						$event->start->setTimezone($calTimezone);
+						$event->start->setTimezone($timezone);
 					}
 					if($event->end){
-						$event->end->setTimezone($calTimezone);
+						$event->end->setTimezone($timezone);
 					}
 					if($event->created){
-						$event->created->setTimezone($calTimezone);
+						$event->created->setTimezone($userTimezone);
 					}
 					if($event->modified){
-						$event->modified->setTimezone($calTimezone);
+						$event->modified->setTimezone($userTimezone);
 					}
 					if($event->checked_out_time){
-						$event->checked_out_time->setTimezone($calTimezone);
+						$event->checked_out_time->setTimezone($userTimezone);
 					}
 					if($event->approved){
-						$event->approved->setTimezone($calTimezone);
+						$event->approved->setTimezone($userTimezone);
 					}
 				}
 				return $events;

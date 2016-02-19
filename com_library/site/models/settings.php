@@ -14,6 +14,9 @@ jimport('joomla.event.dispatcher');
 // include the admin model
 require_once(JPATH_COMPONENT_ADMINISTRATOR . '/models/item.php');
 
+// require the helper
+require_once(JPATH_COMPONENT_ADMINISTRATOR . '/helpers/library.php');
+
 /**
  * Library model.
  */
@@ -51,59 +54,6 @@ class LibraryModelsettings extends JModelForm{
 		$this->setState('params', $params);
 
 	}
-	
-	/**
-	 * Gets the organization of this user
-	 * @return int The ID of the user's organization, 0 on fail
-	 */
-	public function getUserOrg(){
-		// get the user's organization
-		$db = JFactory::getDBO();
-		$query = $db->getQuery(true);
-		$query->select($db->quoteName('profile_value'));
-		$query->from($db->quoteName('#__user_profiles'));
-		$query->where($db->quoteName('user_id') . '=' . $db->quote($this->getUserId()) . ' AND ' . $db->quoteName('profile_key') . ' = ' . $db->quote('profile.org'));
-		$db->setQuery($query, 0, 1);
-		
-		// check that the query was successful
-		if(!($org = $db->loadResult())){
-			JError::raiseWarning(100, 'Unable to determine user\'s organization.');
-			return 0;
-		}
-		
-		// remove quotes
-		$org = substr($org, 1, -1);
-		
-		// return the result
-		return (int)$org;
-	}
-	
-	/**
-	 * Gets the organization information the current user's organization.
-	 * 
-	 * @return object An object containing the organization information
-	 */ 
-	public function getOrg(){
-		// get the user's organization
-		$org = $this->getUserOrg();
-		
-		// get the item information
-		$db = JFactory::getDbo();
-		$query = $db->getQuery(true);
-		$query->select($db->quoteName(array('id', 'name')));
-		$query->from($db->quoteName('#__ta_providers'));
-		$query->where($db->quoteName('id') . '=' . $org);
-		$db->setQuery($query, 0, 1);
-		
-		// check that the query was successful
-		if(!($organization = $db->loadObject())){
-			JError::raiseWarning(100, 'Unable to retrieve organization details.');
-			return false;
-		}
-		
-		// return the organization information
-		return $organization;
-	}
 
 	/**
 	 * Method to get the profile form.
@@ -123,16 +73,6 @@ class LibraryModelsettings extends JModelForm{
 		}
 
 		return $form;
-	}
-	
-	/**
-	 * Returns the ID of the current user
-	 */
-	protected function getUserId(){
-		// get the user object	
-		$user = $this->getUserObj();
-		
-		return $user->id;
 	}
 	
 	/**
@@ -160,7 +100,7 @@ class LibraryModelsettings extends JModelForm{
 		));
 		$query->from($db->quoteName('#__library', 'l'));
 		$query->join('LEFT', $db->quoteName('#__users', 'u') . ' ON (' . $db->quoteName('l.created_by') . '=' . $db->quoteName('u.id') . ')');
-		$query->where($db->quoteName('l.org') . ' = ' . $db->quote($this->getUserOrg()));
+		$query->where($db->quoteName('l.org') . ' = ' . $db->quote(LibraryHelper::getUserOrgId()));
 		$query->order($db->quoteName('l.name') . ' ASC');
 		$db->setQuery($query);
 		try{
@@ -172,28 +112,6 @@ class LibraryModelsettings extends JModelForm{
 		
 		$this->resources = $items;
 		return $items;
-	}
-	
-	/**
-	 * Returns the user object
-	 */
-	protected function getUserObj(){
-		// check if we already have the user object, return it if we do
-		if($this->user){
-			return $this->user;
-		}
-		return JFactory::getUser();
-	}
-	
-	/**
-	 * Returns the username of the current user
-	 */
-	public function getUserName(){
-		// get the user object	
-		$user = $this->getUserObj();
-		
-		// return the username
-		return $user->username;
 	}
 
 	/**

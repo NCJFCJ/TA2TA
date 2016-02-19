@@ -13,7 +13,7 @@
         	
         <field
 	        class="inputbox"
-	        default="1"
+	        default="-1"
 	        description="JFIELD_PUBLISHED_DESC"
 	        label="JSTATUS"
 	        name="state"
@@ -22,6 +22,7 @@
                 <option value="1">JPUBLISHED</option>
 		        <option value="0">JTRASHED</option>
     	        <option value="-1">Pending Approval</option>
+                <option value="2">JARCHIVED</option>
         </field> 	
     	
     	<field
@@ -38,6 +39,17 @@
         	name="org"
         	type="SQLdisabled"
         	query="SELECT `id` as value, `name` as org, `state` FROM #__ta_providers ORDER BY `name`;" />
+            
+        <field
+            class="inputbox"
+            default="0"
+            description="COM_LIBRARY_FORM_PROJECT_DESC"
+            label="COM_LIBRARY_FORM_PROJECT_LBL"
+            name="project"
+            size="1"
+            type="list">
+                <option value="0">-- Select One --</option>
+        </field> 
         	       	
         <field 
             cols="3"

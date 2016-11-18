@@ -1,0 +1,238 @@
+<?xml version="1.0" encoding="utf-8"?>
+<form>
+	<fieldset>
+    
+    <!-- alias -->
+    <field
+      description="COM_SERVICES_FORM_ALIAS_DESC"
+      label="COM_SERVICES_FORM_ALIAS_LBL"
+      maxlength="50"
+      name="alias"
+      type="text" />
+
+		<!-- checked_out -->
+		<field
+			filter="unset"
+			name="checked_out"
+			type="hidden" />
+
+		<!-- checked_out_time -->
+    <field
+    	filter="unset"
+    	name="checked_out_time"
+    	type="hidden" />
+        	
+    <!-- comments -->
+    <field 
+      cols="3"
+      description="COM_SERVICES_FORM_COMMENTS_DESC" 
+      filter="safehtml"
+      label="COM_SERVICES_FORM_COMMENTS_LBL"
+      name="comments"
+      rows="3"
+      type="textarea" />
+	  
+	  <!-- created -->
+    <field
+			name="created"
+			type="hidden" />
+		
+		<!-- created_by -->
+   	<field
+   		default="" 
+      description="COM_SERVICES_FORM_CREATED_BY_DESC"
+      label="COM_SERVICES_FORM_CREATED_BY_LBL"
+      name="created_by"
+   		type="user" />
+
+    <!-- description -->
+    <field 
+      cols="3"
+      description="COM_SERVICES_FORM_MEETING_DESCRIPTION_DESC" 
+      filter="safehtml"
+      label="COM_SERVICES_FORM_MEETING_DESCRIPTION_LBL"
+      maxlength="500"
+      name="description"
+      rows="3"
+      type="textarea" />
+    
+    <!-- file -->
+   	<field
+   		accept="application/pdf"
+   		description="COM_SERVICES_FORM_FILE_DESC"
+   		label="COM_SERVICES_FORM_FILE_LBL"
+   		name="file"
+   		type="file" />
+		
+		<!-- ID -->
+		<field
+			class="readonly"
+      default="0"
+			description="JGLOBAL_FIELD_ID_DESC"
+			label="COM_SERVICES_FORM_MEETING_ID_LBL"
+      name="id"
+			readonly="true"
+			type="hidden" /> 
+		
+		<!-- modified_by -->
+		<field
+			name="modified_by"
+			type="hidden" />
+			
+		<!-- modified -->
+		<field
+			name="modified"
+			type="hidden" />
+    
+    <!-- org -->
+    <field
+    	description="COM_SERVICES_FORM_ORG_DESC"
+    	disabled_message="COM_SERVICES_FORM_ORG_DISABLED"
+    	label="COM_SERVICES_FORM_ORG_LBL"
+    	name="org"
+    	type="SQLdisabled"
+    	query="SELECT `id` as value, `name` as org, `state` FROM #__ta_providers ORDER BY `name`;" />
+       
+    <!-- project -->
+    <field
+      class="inputbox"
+      default="0"
+      description="COM_SERVICES_FORM_PROJECT_DESC"
+      label="COM_SERVICES_FORM_PROJECT_LBL"
+      name="project"
+      size="1"
+      type="list">
+        <option value="0">-- Select One --</option>
+    </field> 
+    
+    <!-- registration -->
+    <field
+      class="btn-group"
+      default="0"
+      description="COM_SERVICES_FORM_REGISTRATION_DESC" 
+      filter="raw"
+      label="COM_SERVICES_FORM_REGISTRATION_LBL"
+      name="registration"
+      required="true" 
+      type="radio">
+        <option value="1">Enabled</option>
+        <option value="0">Disabled</option>
+    </field>
+    
+    <!-- registration_adv_accessibility -->
+    <field
+      class="btn-group"
+      default="0"
+      description="COM_SERVICES_FORM_REGISTRATION_ADV_ACCESSIBILITY_DESC" 
+      filter="raw"
+      label="COM_SERVICES_FORM_REGISTRATION_ADV_ACCESSIBILITY_LBL"
+      name="registration_adv_accessibility"
+      type="radio">
+        <option value="1">Enabled</option>
+        <option value="0">Disabled</option>
+    </field> 
+    
+    <!-- registration_cutoff -->
+    <field
+      description="COM_SERVICES_FORM_MEETING_REGISTRATION_CUTOFF_DESC"
+      filter="none"
+      label="COM_SERVICES_FORM_MEETING_REGISTRATION_CUTOFF_LBL"
+      name="registration_cutoff"
+      type="calendar" />
+
+    <!-- registration_q1-->
+    <field
+      description="COM_SERVICES_FORM_REGISTRATION_Q_DESC"
+      label="COM_SERVICES_FORM_REGISTRATION_Q_LBL"
+      maxlength="255"
+      name="registration_q1"
+      type="text" />
+
+    <!-- registration_q1_type-->
+    <field
+      default="0"
+      description="COM_SERVICES_FORM_REGISTRATION_Q_TYPE_DESC" 
+      filter="raw"
+      label="COM_SERVICES_FORM_REGISTRATION_Q_TYPE_LBL"
+      name="registration_q1_type"
+      type="list">
+        <option value="0">COM_SERVICES_FORM_REGISTRATION_Q_TYPE_FILL_IN</option>
+        <option value="1">COM_SERVICES_FORM_REGISTRATION_Q_TYPE_BOOLEAN</option>
+    </field> 
+    
+    <!-- registration_q2-->
+    <field
+      description="COM_SERVICES_FORM_REGISTRATION_Q_DESC"
+      label="COM_SERVICES_FORM_REGISTRATION_Q_LBL"
+      maxlength="255"
+      name="registration_q2"
+      type="text" />
+
+    <!-- registration_q2_type-->
+    <field
+      default="0"
+      description="COM_SERVICES_FORM_REGISTRATION_Q_TYPE_DESC" 
+      filter="raw"
+      label="COM_SERVICES_FORM_REGISTRATION_Q_TYPE_LBL"
+      name="registration_q2_type"
+      type="list">
+        <option value="0">COM_SERVICES_FORM_REGISTRATION_Q_TYPE_FILL_IN</option>
+        <option value="1">COM_SERVICES_FORM_REGISTRATION_Q_TYPE_BOOLEAN</option>
+    </field> 
+
+    <!-- registration_q3-->
+    <field
+      description="COM_SERVICES_FORM_REGISTRATION_Q_DESC"
+      label="COM_SERVICES_FORM_REGISTRATION_Q_LBL"
+      maxlength="255"
+      name="registration_q3"
+      type="text" />
+
+    <!-- registration_q3_type-->
+    <field
+      default="0"
+      description="COM_SERVICES_FORM_REGISTRATION_Q_TYPE_DESC" 
+      filter="raw"
+      label="COM_SERVICES_FORM_REGISTRATION_Q_TYPE_LBL"
+      name="registration_q3_type"
+      type="list">
+        <option value="0">COM_SERVICES_FORM_REGISTRATION_Q_TYPE_FILL_IN</option>
+        <option value="1">COM_SERVICES_FORM_REGISTRATION_Q_TYPE_BOOLEAN</option>
+    </field> 
+
+   	<!-- state -->
+   	<field
+      class="inputbox"
+      default="-1"
+      description="JFIELD_PUBLISHED_DESC"
+      label="JSTATUS"
+      name="state"
+      size="1"
+      type="list">
+        <option value="1">COM_SERVICES_STATUS_COMPLETE</option>
+        <option value="0">COM_SERVICES_STATUS_SCHEDULED</option>
+        <option value="-1">COM_SERVICES_STATUS_PENDING</option>
+      	<option value="-2">COM_SERVICES_STATUS_DENIED</option>
+    </field>
+    
+    <!-- suggested_dates -->
+  	<field
+    	description="COM_SERVICES_FORM_SUGGESTED_DATES_DESC"
+    	label="COM_SERVICES_FORM_SUGGESTED_DATES_LBL"
+    	maxlength="255"
+    	name="suggested_dates"
+    	type="text" />
+
+    <!--support_options-->
+    <field
+      cols="2"
+      description="COM_SERVICES_FORM_MEETING_SUPPORT_OPTIONS_DESC"
+      key_field="id"
+      label="COM_SERVICES_FORM_MEETING_SUPPORT_OPTIONS_LBL"
+      name="support_options"
+      type="SQLcheckboxes"
+      query="SELECT `id`, `state`, `name` FROM `#__services_meeting_support_options` ORDER BY `name`;"
+      value_field="name" />
+
+	</fieldset>
+</form>

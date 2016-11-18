@@ -12,7 +12,7 @@ jimport('joomla.application.component.modellist');
 /**
  * Methods supporting a list of Ta_calendar records.
  */
-class Ta_calendarModelEvents extends JModelList {
+class Ta_calendarModelEvents extends JModelList{
 
 	protected $user = null;
 	
@@ -68,42 +68,46 @@ class Ta_calendarModelEvents extends JModelList {
         )
       );
 
-      $query->from('`#__ta_calendar_events` AS a');
+	    $query->from('`#__ta_calendar_events` AS a');
 
-    // Join over the users for the checked out user.
-    $query->select('uc.name AS editor');
-    $query->join('LEFT', '#__users AS uc ON uc.id=a.checked_out');
-    
-		// Join over the foreign key 'type'
-		$query->select('#__ta_calendar_event_types_717072.name AS typess_name_717072');
-		$query->join('LEFT', '#__ta_calendar_event_types AS #__ta_calendar_event_types_717072 ON #__ta_calendar_event_types_717072.id = a.type');
+	    // Join over the users for the checked out user.
+	    $query->select($db->quoteName('uc.name', 'editor'));
+	    $query->join('LEFT', '#__users AS uc ON uc.id=a.checked_out');
+	    
+			// Join over the foreign key 'type'
+			$query->select('#__ta_calendar_event_types_717072.name AS typess_name_717072');
+			$query->join('LEFT', '#__ta_calendar_event_types AS #__ta_calendar_event_types_717072 ON #__ta_calendar_event_types_717072.id = a.type');
 
-		// Join over the created by field 'created_by'
-		$query->select('created_by.name AS created_by');
-		$query->join('LEFT', '#__users AS created_by ON created_by.id = a.created_by');
-        
-    // Filter by search in title
-    $search = $this->getState('filter.search');
-    if(!empty($search)){
-      if(stripos($search, 'id:') === 0){
-        $query->where('a.id = ' . (int) substr($search, 3));
-      }else{
-        $search = $db->Quote('%' . $db->escape($search, true) . '%');
-        $query->where('( a.title LIKE '.$search.' )');
-      }
-		}
+			// Join over the created by field 'created_by'
+			$query->select($db->quoteName('created_by.name', 'created_by'));
+			$query->join('LEFT', '#__users AS created_by ON created_by.id = a.created_by');
 
-		//Filtering approved
-		$filter_approved = $this->state->get("filter.approved");
-		if($filter_approved){
-			$query->where("a.approved = '".$filter_approved."'");
-		}
+			// Join over the timezone abbr
+			$query->select($db->quoteName('tz.abbr', 'timezone_abbr'));
+			$query->join('LEFT', $db->quoteName('#__ta_calendar_timezones', 'tz') . ' ON (' . $db->quoteName('tz.description') . ' = ' . $db->quoteName('a.timezone') . ')');
+		
+	    // Filter by search in title
+	    $search = $this->getState('filter.search');
+	    if(!empty($search)){
+	      if(stripos($search, 'id:') === 0){
+	        $query->where('a.id = ' . (int) substr($search, 3));
+	      }else{
+	        $search = $db->Quote('%' . $db->escape($search, true) . '%');
+	        $query->where('( a.title LIKE '.$search.' )');
+	      }
+			}
 
-		//Filtering type
-		$filter_type = $this->state->get("filter.type");
-		if($filter_type){
-			$query->where("a.type = '".$filter_type."'");
-		}
+			// Filtering approved
+			$filter_approved = $this->state->get('filter.approved');
+			if($filter_approved){
+				$query->where("a.approved = '".$filter_approved."'");
+			}
+
+			// Filtering type
+			$filter_type = $this->state->get('filter.type');
+			if($filter_type){
+				$query->where("a.type = '".$filter_type."'");
+			}
 
       return $query;
   }
@@ -190,9 +194,9 @@ class Ta_calendarModelEvents extends JModelList {
 		}
 	}
 
-    public function getItems(){
-        return parent::getItems();
-    }
+  public function getItems(){
+    return parent::getItems();
+  }
 	
 	/**
 	 * Returns all active Event Types defined in the database
@@ -205,7 +209,7 @@ class Ta_calendarModelEvents extends JModelList {
 		$query = $db->getQuery(true);
 		
 		// Select the required columns
-        $query->select('id, name');
+    $query->select('id, name');
 		
 		// Identify the table from which to pull
 		$query->from('`#__ta_calendar_event_types`');
@@ -321,7 +325,7 @@ class Ta_calendarModelEvents extends JModelList {
 		$query = $db->getQuery(true);
 		
 		// Select the required columns
-        $query->select('id, name');
+    $query->select('id, name');
 		
 		// Identify the table from which to pull
 		$query->from('`#__target_audiences`');

@@ -1,0 +1,1 @@
+# Dummy SQL file to set schema version to 2.3.1 so next update will work

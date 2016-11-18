@@ -47,15 +47,19 @@ if($_SERVER['REQUEST_METHOD'] == 'POST'
 			case 1:
 				$return['message'] = JText::_('COM_TA_PROVIDERS_FILE_TOO_LARGE');
 				$return['status'] = 'error';
-	        case 2:
+				break;
+      case 2:
 				$return['message'] = JText::_('COM_TA_PROVIDERS_FILE_TOO_LARGE');
 				$return['status'] = 'error';
-	        case 3:
+				break;
+      case 3:
 				$return['message'] = JText::_('COM_TA_PROVIDERS_FILE_UPLOAD_FAILED');
 				$return['status'] = 'error';
-	        case 4:
+				break;
+      case 4:
 				$return['message'] = JText::_('COM_TA_PROVIDERS_NO_FILE');
 				$return['status'] = 'error';
+				break;
 		}
 		echo json_encode($return);
 		die();

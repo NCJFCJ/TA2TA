@@ -22,7 +22,7 @@ class Ta_providersModelAjax extends JModelList{
      * @see        JController
      * @since    1.6
      */
-    public function __construct($config = array()) {
+    public function __construct($config = array()){
         parent::__construct($config);
 	}
 }

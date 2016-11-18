@@ -40,7 +40,7 @@ defined( '_JEXEC' ) or die;
 	<?php endif; ?>
 </div>
 <div id="otherResources">
-	<p>Other resources for TA Providers include those TA projects that are designed for TA Providers, but may not necessarily be limited to TA Providers. Such projects include TA on developing curricula and distance learning programs, meeting and training accessibility, abuse in later life, and language access.</p>
+	<p>Other resources for TA Providers include those TA projects that are designed for TA Providers, but may not necessarily be limited to TA Providers. Such projects include TA on developing curricula and distance learning programs, meeting and training accessibility, abuse in later life, language access, and progress reports.</p>
 	<br>
 	<?php
 	// articles

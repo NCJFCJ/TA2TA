@@ -144,7 +144,7 @@ JHtml::_('behavior.keepalive');
 	<button class="btn btn-danger">I Have Approval</button>
 </div>
 <div id="resourceForm">
-	<form action="<?php echo JRoute::_('/my-account/library/edit.html?id=' . (isset($this->resource->id) ? (int) $this->resource->id : 0)); ?>" method="post" enctype="multipart/form-data" class="form-validate big-inputs" id="libraryForm" novalidate>  
+	<form action="<?php echo JRoute::_($_SERVER['REQUEST_URI'] . '?id=' . (isset($this->resource->id) ? (int) $this->resource->id : 0)); ?>" method="post" enctype="multipart/form-data" class="form-validate big-inputs" id="libraryForm" novalidate>  
 		<?php echo $this->form->getInput('id'); ?>
 		<div class="col-xs-12">
 			<fieldset>
@@ -205,6 +205,7 @@ JHtml::_('behavior.keepalive');
 								<label class="btn btn-default" class="form-control" for="ovw_approved0">No</label>
 							</fieldset>
 						</div>
+						<p>Remember: The TA2TA website is not a venue for obtaining OVW approval. To obtain approval, items must be submitted directly to OVW with a GAN.</p>
 					</div>
 				</div>
 				<?php endif; ?>

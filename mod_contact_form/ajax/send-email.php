@@ -23,14 +23,14 @@ $return = array();
 $return['error'] = 'An unspecified error occurred.';
 
 // check if this form was submitted
-if ($_SERVER['REQUEST_METHOD'] == "POST" && filter_has_var(INPUT_POST, 'inputEmail')){		
+if($_SERVER['REQUEST_METHOD'] == "POST" && filter_has_var(INPUT_POST, 'inputEmail')){		
 	// grab and sanitize all data
 	$inputName = filter_input(INPUT_POST, 'inputName', FILTER_SANITIZE_STRING);
 	$inputEmail = filter_input(INPUT_POST, 'inputEmail', FILTER_SANITIZE_EMAIL);
 	$inputMessage = filter_input(INPUT_POST, 'inputMessage', FILTER_SANITIZE_STRING);
 	
 	// make sure we have what we need
-	if($inputName && $inputEmail && $inputMessage){
+	if($inputName && $inputEmail && $inputMessage && empty($_POST['firstName'])){
 		// get the module parameters for email
 		// get the article to display
 		$db = JFactory::getDbo();
@@ -53,8 +53,8 @@ if ($_SERVER['REQUEST_METHOD'] == "POST" && filter_has_var(INPUT_POST, 'inputEma
 			// set the sender to the site default
 			$config = JFactory::getConfig();
 			$sender = array( 
-			    $config->get( 'config.mailfrom' ),
-			    $config->get( 'config.fromname' ) );
+			    $config->get('mailfrom'),
+			    $config->get('fromname'));
 			$mailer->setSender($sender);
 			
 			// set the recipient

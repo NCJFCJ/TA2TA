@@ -140,7 +140,7 @@ if(!empty($_SERVER["HTTPS"]) && $_SERVER["HTTPS"]!=="off"){
 			$('#calendarPane .loading').show();
 				
 			// grab the filters, format them as a jSON blob
-			var approved = $("#filterList input[name='approved[]']:checked").map(function(){
+			var approved = $("#filterList input[name='fapproved']:checked").map(function(){
 				return $(this).val();
 			}).get();
 			var eventTypes = $("#filterList input[name='eventTypes[]']:checked").map(function(){
@@ -251,11 +251,10 @@ if(!empty($_SERVER["HTTPS"]) && $_SERVER["HTTPS"]!=="off"){
 			
 			// change the date display based on the current view
 			switch(currentView){
-				case 'month' :
+				case 'month':
 					dateString = monthNamesLong[date.getMonth()] + ' ' + date.getFullYear();
 					break;
-				case 'week' :
-				case 'list' :
+				case 'week':
 					// figure out the start date for this week
 					var startDate = new Date(date.setDate(date.getDate() - date.getDay()));
 					var endDate = new Date(date.setDate(date.getDate() + 6));
@@ -267,6 +266,10 @@ if(!empty($_SERVER["HTTPS"]) && $_SERVER["HTTPS"]!=="off"){
 						dateString += ', ' + startDate.getFullYear();
 					}
 					dateString += ' - ' + monthNamesShort[endDate.getMonth()] + ' ' + endDate.getDate() + ', ' + endDate.getFullYear();
+					break;
+				case 'list':
+					dateString = monthNamesLong[date.getMonth()] + ' ' + date.getFullYear();
+					break;
 				default :
 					break;
 			}
@@ -341,14 +344,16 @@ if(!empty($_SERVER["HTTPS"]) && $_SERVER["HTTPS"]!=="off"){
 			
 			// change the date based on the current view
 			switch(currentView){
-				case 'month' :
+				case 'month':
 					// add one month
 					date = new Date(date.getFullYear(), date.getMonth() + 1, 1);
 					break;
-				case 'week' :
-				case 'list' :
+				case 'week':
 					// add seven days
 					date = new Date(date.getFullYear(), date.getMonth(), date.getDate() + 7);
+				case 'list':
+					// add one month
+					date = new Date(date.getFullYear(), date.getMonth() + 1, 1);
 					break;				
 				default :
 					break;
@@ -370,14 +375,16 @@ if(!empty($_SERVER["HTTPS"]) && $_SERVER["HTTPS"]!=="off"){
 			
 			// change the date based on the current view
 			switch(currentView){
-				case 'month' :
+				case 'month':
 					// subtract one month
 					date = new Date(date.getFullYear(), date.getMonth()-1, 1);
 					break;
-				case 'week' :
-				case 'list' :
+				case 'week':
 					// subtract seven days
 					date = new Date(date.getFullYear(), date.getMonth(), date.getDate() - 7);
+				case 'list':
+					// subtract one month
+					date = new Date(date.getFullYear(), date.getMonth()-1, 1);
 				default :
 					break;
 			}
@@ -422,21 +429,8 @@ if(!empty($_SERVER["HTTPS"]) && $_SERVER["HTTPS"]!=="off"){
 		 * Changes the current timezone
 		 */
 		$('#timezone').change(function(){
-			$('.timezoneLabel').text($(this).val());
+			$('.timezoneLabel').text($('#timezone option:selected').text());
 		});
-		/*$('.timezone').click(function(){
-			// update the timezone
-			timezone = $(this).data('timezone');
-			
-			// show the newly selected timezone as the default
-			$('#currentTimezone').text($(this).data('timezone-abbr'));
-			
-			// show the new timezone in the edit form
-			$('.timezoneLabel').text($(this).data('timezone-abbr'));
-
-			// reload the calendar
-			loadCalendar();
-		});*/
 		
 		/**
 		 * Run every time a filter is updated
@@ -492,7 +486,8 @@ if(!empty($_SERVER["HTTPS"]) && $_SERVER["HTTPS"]!=="off"){
 		
 		/* --- Detail View --- */
 		$(document.body).on('click', '.view-event', function(){
-			showEventDetails($(this).data('event-id'));	
+			showEventDetails($(this).data('event-id'));
+			removePopover();
 		});
 		
 		/**
@@ -549,8 +544,6 @@ if(!empty($_SERVER["HTTPS"]) && $_SERVER["HTTPS"]!=="off"){
 
 					// show the content pane
 					$('#viewPopupContent').show();
-
-					
 				});
 
 				// fires when the AJAX call completes
@@ -597,19 +590,24 @@ if(!empty($_SERVER["HTTPS"]) && $_SERVER["HTTPS"]!=="off"){
 						}
 
 						// grant programs
-						if((response.data.grant_programs).length > 1){
-							var gpHTML = '<div><div style="float:left;width:48%"><ul style="margin:0 0 0 15px;">';
-							var colSplit = Math.ceil((response.data.grant_programs).length / 2);
-							$.each(response.data.grant_programs, function(index,value){
-								if(index == colSplit){
-									gpHTML += '</ul></div><div style="float:left;margin-left:15px;width:48%"><ul style="margin-left:15px;">';
-								}
-								gpHTML += '<li>' + value.name + '</li>';
-							});
-							gpHTML += '</ul></div></div>';
-							$('#viewEventPrograms').html(gpHTML);
+						if(response.data.open == '1'){
+							if((response.data.grant_programs).length > 1){
+								var gpHTML = '<div><div style="float:left;width:48%"><ul style="margin:0 0 0 15px;">';
+								var colSplit = Math.ceil((response.data.grant_programs).length / 2);
+								$.each(response.data.grant_programs, function(index,value){
+									if(index == colSplit){
+										gpHTML += '</ul></div><div style="float:left;margin-left:15px;width:48%"><ul style="margin-left:15px;">';
+									}
+									gpHTML += '<li>' + value.name + '</li>';
+								});
+								gpHTML += '</ul></div></div>';
+								$('#viewEventPrograms').html(gpHTML);
+								$('#viewEventProgramsWrapper').show();
+							}else{
+								$('#viewEventPrograms').html(response.data.grant_programs[0].name);
+							}
 						}else{
-							$('#viewEventPrograms').html(response.data.grant_programs[0].name);
+							$('#viewEventProgramsWrapper').hide();
 						}
 
 						// buttons
@@ -772,6 +770,13 @@ if(!empty($_SERVER["HTTPS"]) && $_SERVER["HTTPS"]!=="off"){
 		// start date
     $('#startdate').change(function(){
 			ta2ta.validate.date($(this),3);
+
+			// populate the end date if webinar or teleconference (simply checking if the field is hidden is not reliable)
+			var eType = $('#type').val();
+			if(eType == 3
+				|| eType == 5){
+				$('#enddate').val($(this).val());
+			}
     });
 
 		// start time
@@ -909,6 +914,12 @@ if(!empty($_SERVER["HTTPS"]) && $_SERVER["HTTPS"]!=="off"){
 					errors.push('You must enter an end date and time that is after your start date and time.');
 					ta2ta.bootstrapHelper.showValidationState($('#enddate'), 'error', true);
 					ta2ta.bootstrapHelper.showValidationState($('#endtime'), 'error', true);
+					rtn = false;
+				}
+
+				// timezone
+				if(!$('#timezone').val()){
+					errors.push('You must select a timezone');
 					rtn = false;
 				}
 				
@@ -1201,9 +1212,26 @@ if(!empty($_SERVER["HTTPS"]) && $_SERVER["HTTPS"]!=="off"){
 		/**
 		 * Sets the current edit step and adjusts the edit dialog display accordingly
 		 */
-		function editUpdateStep(step){	
+		function editUpdateStep(step){
+			var backwards = false;
+
+			// we are going backwards
+			if(step == -1){
+				step = editStep - 1;
+				backwards = true;
+			}
+
 			// set the step
 			editStep = step;
+
+			// if we are calling for step 4 and this is an invite only item, skip step 4
+			if(step == 4 && $("input[name='open']:checked").val() == 0){
+				if(backwards){
+					editStep--;
+				}else{
+					editStep++;
+				}
+			}
 			
 			// update the heading
 			$('#editHeadingDescription').text(stepDescription[editStep - 1]);
@@ -1213,7 +1241,11 @@ if(!empty($_SERVER["HTTPS"]) && $_SERVER["HTTPS"]!=="off"){
 				$('#editPopup .modal-status-text').hide();
 			}else{
 				$('#editPopup .modal-status-text').show();
-				$('#editPopup #currentStep').text(editStep);
+				if(editStep == 5 && $("input[name='open']:checked").val() == 0){
+					$('#editPopup #currentStep').text(editStep - 1);
+				}else{
+					$('#editPopup #currentStep').text(editStep);
+				}
 			}
 			
 			// determine whether to show the previous button in the footer
@@ -1240,7 +1272,6 @@ if(!empty($_SERVER["HTTPS"]) && $_SERVER["HTTPS"]!=="off"){
 			}else{
 				$('#closeButton').html('Cancel');
 			}
-
 
 			// check if we need to display the project error
 			if(editStep == 1 
@@ -1531,14 +1562,16 @@ if(!empty($_SERVER["HTTPS"]) && $_SERVER["HTTPS"]!=="off"){
 		$('#type').change(function(){
 			$('#editHeadingEventType').text($(this).find(':selected').text());
 
-			// show or hide the location fields based on the vent type
+			// show or hide the location and end date fields based on the event type
 			var eType = $(this).val();
 			if(eType == 1
 				|| eType == 2
 				|| eType == 4){
 				$('#editLocationFields').show();
+				$('#endPicker').parent().parent().show();
 			}else{
 				$('#editLocationFields').hide();
+				$('#endPicker').parent().parent().hide();
 			}
 		});
 		
@@ -1561,10 +1594,19 @@ if(!empty($_SERVER["HTTPS"]) && $_SERVER["HTTPS"]!=="off"){
 		 */
 
 		function toggleRegistrationURLField(){
+			// change the view of the registration URL field
 			if($("input[name='open']:checked").val() == 1){
+				// Open
 				$('#registrationURLControlGroup').show();
+					
+				// The maximum number of steps is 5
+				$('#maxStep').text('5');
 			}else{
+				// Invite Only (no elligible grant programs)
 				$('#registrationURLControlGroup').hide().val('');
+					
+				// The maximum number of steps is 4
+				$('#maxStep').text('4');
 			}
 		}
 
@@ -1579,6 +1621,8 @@ if(!empty($_SERVER["HTTPS"]) && $_SERVER["HTTPS"]!=="off"){
 		 */
 
 		$('#project').change(function(){
+			editRemoveAlert();
+			
 			// send the AJAX request
 			var request = $.ajax({
 				data: {project: $(this).val()},
@@ -1630,7 +1674,7 @@ if(!empty($_SERVER["HTTPS"]) && $_SERVER["HTTPS"]!=="off"){
 
 				// BUG: I don't know why, but the city, event_url, and registration_url are not being serialized, adding them back in manually
 				serialData += '&city=' + $('#city').val() + '&event_url=' + $('#event_url').val() + '&registration_url=' + $('#registration_url').val();
-				
+
 				// disable all form elements to prevent double entry
 				inputs.prop('disabled', true);
 				$('.closePopup').addClass('disabled');
@@ -1745,7 +1789,7 @@ if(!empty($_SERVER["HTTPS"]) && $_SERVER["HTTPS"]!=="off"){
 			editRemoveAlert();
 			
 			// update the step
-			editUpdateStep(editStep - 1);
+			editUpdateStep(-1);
 		});
 
 		/**
@@ -1759,7 +1803,7 @@ if(!empty($_SERVER["HTTPS"]) && $_SERVER["HTTPS"]!=="off"){
 		/**
 		 * Run when the edit popup opens
 		 */
-		$('#editPopup').on('shown.bs.modal', function(e){
+		$('#editPopup').on('show.bs.modal', function(e){
 			pastGrantPrograms = false;
 			// work around for chosen bug where hidden selects have a 0 width
 			$('#type').chosen('destroy');
@@ -1773,13 +1817,10 @@ if(!empty($_SERVER["HTTPS"]) && $_SERVER["HTTPS"]!=="off"){
 			});
 
 			// update the timezone label on the end date to match the start date label
-			$('.timezoneLabel').text($('#timezone').val());
-
-			// reset the approved button
-			$("label[for='approved0']").click();
-
-			// reset the registration type button
-			$("label[for='open0']").click();
+			var tz = $('#timezone').val();
+			if(tz != null){
+				$('.timezoneLabel').text($('#timezone option:selected').text());
+			}
 
 			// toggle the registration URL field
 			toggleRegistrationURLField();
@@ -1949,6 +1990,8 @@ if(!empty($_SERVER["HTTPS"]) && $_SERVER["HTTPS"]!=="off"){
 
 			// hide the view popup
 			$('#viewPopup').modal('hide');
+
+			removePopover();
 			
 			// make AJAX request
 			var request = $.ajax({
@@ -1989,21 +2032,21 @@ if(!empty($_SERVER["HTTPS"]) && $_SERVER["HTTPS"]!=="off"){
 					// step 3
 					$('#event_url').val(response.data.event_url);
 					$('#registration_url').val(response.data.registration_url);
-					toggleRegistrationURLField();
 					var topicAreasArray = [];
 					$.each(response.data.topic_areas, function(index,value){
 						topicAreasArray.push(value.id);
 					});
 					checkEditCheckboxes('topicAreas', topicAreasArray);
-					$("label[for='approved" + response.data.approved_status + "']").click();
-					
+
 					// step 4
+					if(typeof response.data.grant_programs !== 'undefined'){
 					var grantProgramsArray = [];
-					$.each(response.data.grant_programs, function(index,value){
-						grantProgramsArray.push(value.id);
-					});
-					checkEditCheckboxes('grantPrograms', grantProgramsArray);
-					restrictGrantPrograms(grantProgramsArray);
+						$.each(response.data.grant_programs, function(index,value){
+							grantProgramsArray.push(value.id);
+						});
+						checkEditCheckboxes('grantPrograms', grantProgramsArray);
+						restrictGrantPrograms(grantProgramsArray);
+					}
 
 					// step 5
 					var targetAudiencesArray = [];
@@ -2027,6 +2070,26 @@ if(!empty($_SERVER["HTTPS"]) && $_SERVER["HTTPS"]!=="off"){
 
 					// popup the modal
 					$('#editPopup').modal('show');
+
+					// adjust the toggle fields
+
+					// set the open button
+					// TO DO: DETERMINE IF THIS IS DUPLICATIVE
+					if(response.data.open == 1){
+						$("label[for='open1']").click();
+					}else{
+						$("label[for='open0']").click();
+					}
+					toggleRegistrationURLField();
+
+					// set the approved button
+					if(response.data.approved_status == 1){
+						$("label[for='approved1']").click();
+					}else{
+						$("label[for='approved0']").click();
+					}
+					//$("label[for='approved" + response.data.approved_status + "']").trigger('click');
+
 				}else{
 					calendarAlert(response.message, 'error', false, true);
 				}
@@ -2092,7 +2155,7 @@ if(!empty($_SERVER["HTTPS"]) && $_SERVER["HTTPS"]!=="off"){
 	<div class="col-sm-2" style="position: relative; z-index: 9;">
 		<div class="btn-group" style="width: 100%;">
 			<?php if($permission_level > 0): ?>
-			<button class="btn dropdown-toggle btn-primary" data-toggle="dropdown" style="width: 100%; padding-left: 0; padding-right: 0">
+			<button aria-expanded="false" aria-haspopup="true" class="btn dropdown-toggle btn-primary" data-toggle="dropdown" style="width: 100%; padding-left: 0; padding-right: 0" type="button">
 				<span class="icomoon-plus-circle"></span>&nbsp; <b>Add<span class="hidden-sm"> Event</span></b>
 				<span class="icomoon-arrow-down"></span>
 			</button>
@@ -2210,10 +2273,10 @@ if(!empty($_SERVER["HTTPS"]) && $_SERVER["HTTPS"]!=="off"){
 						<div class="panel-body">
 							<p><small>Select:  <a class="checkAll">All</a> / <a class="uncheckAll">None</a></small></p>
 							<label class="checkbox status-select">
-								<input type="checkbox" name="approved[]" value="1" checked="checked"><span class="icomoon-approved"></span> Approved
+								<input type="checkbox" name="fapproved" value="1" checked="checked"><span class="icomoon-approved"></span> Approved
 							</label>
 							<label class="checkbox status-select">
-								<input type="checkbox" name="approved[]" value="0" checked="checked"><span class="icomoon-unapproved"></span> Requested
+								<input type="checkbox" name="fapproved" value="0" checked="checked"><span class="icomoon-unapproved"></span> Requested
 							</label>
 						</div>
 					</div>
@@ -2245,22 +2308,22 @@ if(!empty($_SERVER["HTTPS"]) && $_SERVER["HTTPS"]!=="off"){
 			</div>
 			<div class="col-sm-4">
 				<div class="pull-right">
-					<!--<div class="btn-group hidden-md hidden-lg">
+					<div class="btn-group hidden-md hidden-lg">
 						<button class="btn btn-default dropdown-toggle" data-toggle="dropdown">
 							View
 							<span class="icomoon-arrow-down"></span>
 						</button>
 						<ul class="dropdown-menu">
 							<li><a class="calendar-view-button" data-view="month">Month</a></li>
-							<li><a class="calendar-view-button" data-view="week">Week</a></li>
+							<!--<li><a class="calendar-view-button" data-view="week">Week</a></li>-->
 							<li><a class="calendar-view-button" data-view="list">List</a></li>
 						</ul>
 					</div>
 					<div class="btn-group visible-md visible-lg">
 						<button class="btn btn-default calendar-view-button" data-view="month">Month</button>
-						<button class="btn btn-default calendar-view-button" data-view="week">Week</button>
+						<!--<button class="btn btn-default calendar-view-button" data-view="week">Week</button>-->
 						<button class="btn btn-default calendar-view-button" data-view="list">List</button>
-					</div> &nbsp; -->
+					</div> &nbsp; 
 					<div class="btn-group">
 						<button class="btn btn-default dropdown-toggle" data-toggle="dropdown">
 							More
@@ -2342,7 +2405,7 @@ if(!empty($_SERVER["HTTPS"]) && $_SERVER["HTTPS"]!=="off"){
 										<div class="col-sm-5">
 											<select id="timezone" name="timezone" class="form-control" size="3">
 											<?php foreach($this->timezones as $timezone): ?>
-												<option value="<?php echo $timezone->abbr; ?>"<?php echo ($timezone->abbr == $timezoneAbbr ? ' selected="selected"' : ''); ?>><?php echo $timezone->abbr; ?></option>
+												<option value="<?php echo $timezone->description; ?>"<?php echo ($timezone->abbr == $timezoneAbbr ? ' selected="selected"' : ''); ?>><?php echo $timezone->abbr; ?></option>
 											<?php endforeach; ?>
 											</select>
 										</div>
@@ -2483,7 +2546,7 @@ if(!empty($_SERVER["HTTPS"]) && $_SERVER["HTTPS"]!=="off"){
 									<label class="control-label col-sm-4">Registration Type*</label>
 									<div class="col-sm-8">
 										<fieldset id="open" class="radio btn-group" style="padding: 0;">
-											<input id="open0" type="radio" value="0" name="open" checked />
+											<input id="open0" type="radio" value="0" name="open" />
 											<label class="btn btn-default" class="form-control" for="open0">Invite Only</label>
 											<input id="open1" type="radio" value="1" name="open" />
 											<label class="btn btn-default" class="form-control" for="open1">Open</label>
@@ -2513,7 +2576,7 @@ if(!empty($_SERVER["HTTPS"]) && $_SERVER["HTTPS"]!=="off"){
 									<label class="control-label col-sm-4">OVW Approved*</label>
 									<div class="col-sm-8">
 										<fieldset id="approved" class="radio btn-group" style="padding: 0;">
-											<input id="approved0" type="radio" value="0" name="approved" checked />
+											<input id="approved0" type="radio" value="0" name="approved" />
 											<label class="btn btn-default" class="form-control" for="approved0">No</label>
 											<input id="approved1" type="radio" value="1" name="approved" />
 											<label class="btn btn-default" class="form-control" for="approved1">Yes</label>
@@ -2569,7 +2632,7 @@ if(!empty($_SERVER["HTTPS"]) && $_SERVER["HTTPS"]!=="off"){
 						</form>
 					</div>
 					<div class="modal-footer">
-						<div class="pull-left modal-status-text">Step <span id="currentStep">1</span> of 5</div>
+						<div class="pull-left modal-status-text">Step <span id="currentStep">1</span> of <span id="maxStep">5</span></div>
 						<a class="btn btn-default closePopup" id="closeButton">Cancel</a>&nbsp;
 						<a class="btn btn-success" id="previousBlock"><span class="icomoon-arrow-left"></span> Prev</a>
 						<a class="btn btn-success" id="nextBlock">Next <span class="icomoon-arrow-right"></span></a>
@@ -2615,7 +2678,7 @@ if(!empty($_SERVER["HTTPS"]) && $_SERVER["HTTPS"]!=="off"){
 		<?php endif; ?>
 		<div class="modal fade" id="viewPopup" data-backdrop="static">
 			<div class="modal-dialog">
-        		<div class="modal-content">
+       	<div class="modal-content">
 					<div class="modal-header">
 						<button type="button" class="close closePopup" aria-hidden="true">&times;</button>
 						<h4 class="modal-title"><span id="viewEventType">Event</span> Details <span id="viewEventApprovedState"></span></h4>
@@ -2631,6 +2694,12 @@ if(!empty($_SERVER["HTTPS"]) && $_SERVER["HTTPS"]!=="off"){
 										<strong>Title</strong>
 									</td>
 									<td id="viewEventTitle"></td>
+								</tr>
+								<tr>
+									<td>
+										<strong>Organization</strong>
+									</td>
+									<td id="viewEventOrg"></td>
 								</tr>
 								<tr>
 									<td>
@@ -2656,11 +2725,11 @@ if(!empty($_SERVER["HTTPS"]) && $_SERVER["HTTPS"]!=="off"){
 									</td>
 									<td id="viewEventSummary"></td>
 								</tr>
-								<tr>
+								<tr id="viewEventProgramsWrapper">
 									<td>
 										<strong>Eligible Grant Programs</strong>
 									</td>
-									<td><div id="viewEventPrograms"></div><div class="clearfix"></div><div id="eligibleGrantProgramNotice" style="color: red; font-weight: bold; margin-top: 10px;"><span class="glyphicon glyphicon-info-sign"></span> Note: Please seek approval from your OVW program specialist if you are using or plan to use Cooperative Agreement funds to attend this event.</div></td>
+									<td><div id="viewEventPrograms"></div><div class="clearfix"></div><div id="eligibleGrantProgramNotice" style="color: red; font-weight: bold; margin-top: 10px;"><span class="glyphicon glyphicon-info-sign"></span> Note: Please seek approval from your OVW program specialist if you are using or plan to use OVW award funds to attend this event.</div></td>
 								</tr>
 								<tr id="viewEventButtonsWrapper">
 									<td>&nbsp;</td>
@@ -2677,12 +2746,6 @@ if(!empty($_SERVER["HTTPS"]) && $_SERVER["HTTPS"]!=="off"){
 										<strong>Target Audiences</strong>
 									</td>
 									<td id="viewEventTargetAudiences"></td>
-								</tr>
-								<tr>
-									<td>
-										<strong>Organization</strong>
-									</td>
-									<td id="viewEventOrg"></td>
 								</tr>
 							</table>
 							<div id="viewEventHistory">

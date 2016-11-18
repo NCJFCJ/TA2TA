@@ -48,7 +48,7 @@ abstract class LibraryHelper{
 		$message .= '<table border="0" cellpadding="0" cellspacing="0" width="650">';
 		$message .= '<tbody>';
 		$message .= '<tr>';
-		$message .= '<td align="center"><a href="' . JURI::base() . '" target="_blank"><img alt="TA2TA" style="margin: 30px 0;" src="' . JURI::base() . 'templates/ta2ta/img/logo.png"></a></td>';
+		$message .= '<td align="center"><a href="' . JURI::root() . '" target="_blank"><img alt="TA2TA" style="margin: 30px 0;" src="' . JURI::root() . 'templates/ta2ta/img/logo.png"></a></td>';
 		$message .= '</tr>';
 		$message .= '<tr style="background-color:#F19244;color:#FFF;font-size:30px;font-weight:bold;">';
 		$message .= '<td align="center" style="padding:15px 0;">' . $heading . '</td>';

@@ -55,9 +55,9 @@ ta2ta.validate = ta2ta.validate || {
 	 * @param object A jQuery object for a single form element.
 	 * @param int Determines when to show the validation state:
 	 *	   3 = success and failure
-     *     2 = success only
-     *     1 = failure only
-     *     0 = don't show (default)
+   *     2 = success only
+   *     1 = failure only
+   *     0 = don't show (default)
 	 * @return boolean True if valid, false otherwise.
 	 */
 	date: function(obj, showState){
@@ -79,9 +79,9 @@ ta2ta.validate = ta2ta.validate || {
 	 * @param object A jQuery object for a single form element.
 	 * @param int Determines when to show the validation state:
 	 *	   3 = success and failure
-     *     2 = success only
-     *     1 = failure only
-     *     0 = don't show (default)
+   *     2 = success only
+   *     1 = failure only
+   *     0 = don't show (default)
 	 * @return boolean True if valid, false otherwise.
 	 */
 	email: function(obj, showState){
@@ -103,9 +103,9 @@ ta2ta.validate = ta2ta.validate || {
 	 * @param object A jQuery object for a single form element.
 	 * @param int Determines when to show the validation state:
 	 *	   3 = success and failure
-     *     2 = success only
-     *     1 = failure only
-     *     0 = don't show (default)
+   *     2 = success only
+   *     1 = failure only
+   *     0 = don't show (default)
 	 * @return boolean True if valid, false otherwise.
 	 */
 	hasValue: function(obj, showState){
@@ -128,9 +128,9 @@ ta2ta.validate = ta2ta.validate || {
 	 * @param object A jQuery object for a single form element.
 	 * @param int Determines when to show the validation state:
 	 *	   3 = success and failure
-     *     2 = success only
-     *     1 = failure only
-     *     0 = don't show (default)
+   *     2 = success only
+   *     1 = failure only
+   *     0 = don't show (default)
 	 * @return boolean True if valid, false otherwise.
 	 */
 	match: function(obj1, obj2, showState){
@@ -153,9 +153,9 @@ ta2ta.validate = ta2ta.validate || {
 	 * @param int The maximum length
 	 * @param int Determines when to show the validation state:
 	 *	   3 = success and failure
-     *     2 = success only
-     *     1 = failure only
-     *     0 = don't show (default)
+   *     2 = success only
+   *     1 = failure only
+   *     0 = don't show (default)
 	 * @return boolean True if valid, false otherwise.
 	 */
 	maxLength: function(obj, length, showState){
@@ -184,9 +184,9 @@ ta2ta.validate = ta2ta.validate || {
 	 * @param int The minimum length
 	 * @param int Determines when to show the validation state:
 	 *	   3 = success and failure
-     *     2 = success only
-     *     1 = failure only
-     *     0 = don't show (default)
+   *     2 = success only
+   *     1 = failure only
+   *     0 = don't show (default)
 	 * @return boolean True if valid, false otherwise.
 	 */
 	minLength: function(obj, length, showState){
@@ -214,9 +214,9 @@ ta2ta.validate = ta2ta.validate || {
 	 * @param object A jQuery object for a single form element.
 	 * @param int Determines when to show the validation state:
 	 *	   3 = success and failure
-     *     2 = success only
-     *     1 = failure only
-     *     0 = don't show (default)
+   *     2 = success only
+   *     1 = failure only
+   *     0 = don't show (default)
 	 * @return boolean True if valid, false otherwise.
 	 */
 	name: function(obj, showState){
@@ -238,9 +238,9 @@ ta2ta.validate = ta2ta.validate || {
 	 * @param object A jQuery object for a single form element.
 	 * @param int Determines when to show the validation state:
 	 *	   3 = success and failure
-     *     2 = success only
-     *     1 = failure only
-     *     0 = don't show (default)
+   *     2 = success only
+   *     1 = failure only
+   *     0 = don't show (default)
 	 * @return boolean True if valid, false otherwise.
 	 */
 	password: function(obj, showState){
@@ -262,9 +262,9 @@ ta2ta.validate = ta2ta.validate || {
 	 * @param object A jQuery object for a single form element.
 	 * @param int Determines when to show the validation state:
 	 *	   3 = success and failure
-     *     2 = success only
-     *     1 = failure only
-     *     0 = don't show (default)
+   *     2 = success only
+   *     1 = failure only
+   *     0 = don't show (default)
 	 * @return boolean True if valid, false otherwise.
 	 */
 	phone: function(obj, showState){
@@ -287,9 +287,9 @@ ta2ta.validate = ta2ta.validate || {
 	 * @param RegExp A regular expression object to test against
 	 * @param int Determines when to show the validation state:
 	 *	   3 = success and failure
-     *     2 = success only
-     *     1 = failure only
-     *     0 = don't show (default)
+   *     2 = success only
+   *     1 = failure only
+   *     0 = don't show (default)
 	 * @return boolean True if valid, false otherwise.
  	 */
 	regex: function(obj, regEx, showState){
@@ -311,10 +311,10 @@ ta2ta.validate = ta2ta.validate || {
 	 * @param object A jQuery object for a single form element.
 	 * @param int Determines when to show the validation state:
 	 *	   3 = success and failure
-     *     2 = success only
-     *     1 = failure only
-     *     0 = don't show (default)
-	 * @return boolean True if valid, false otherwise.
+   *     2 = success only
+   *     1 = failure only
+   *     0 = don't show (default)
+ 	* @return boolean True if valid, false otherwise.
 	 */
 	time: function(obj, showState){
 		// make sure the input exists, and if not return false
@@ -335,9 +335,9 @@ ta2ta.validate = ta2ta.validate || {
 	 * @param object A jQuery object for a single form element.
 	 * @param int Determines when to show the validation state:
 	 *	   3 = success and failure
-     *     2 = success only
-     *     1 = failure only
-     *     0 = don't show (default)
+   *     2 = success only
+   *     1 = failure only
+   *     0 = don't show (default)
 	 * @return boolean True if valid, false otherwise.
 	 */
 	title: function(obj, showState){
@@ -359,9 +359,9 @@ ta2ta.validate = ta2ta.validate || {
 	 * @param object A jQuery object for a single form element.
 	 * @param int Determines when to show the validation state:
 	 *	   3 = success and failure
-     *     2 = success only
-     *     1 = failure only
-     *     0 = don't show (default)
+   *     2 = success only
+   *     1 = failure only
+   *     0 = don't show (default)
 	 * @return boolean True if valid, false otherwise.
 	 */
 	 unsigned: function(obj, showState){
@@ -383,9 +383,9 @@ ta2ta.validate = ta2ta.validate || {
 	 * @param object A jQuery object for a single form element.
 	 * @param int Determines when to show the validation state:
 	 *	   3 = success and failure
-     *     2 = success only
-     *     1 = failure only
-     *     0 = don't show (default)
+   *     2 = success only
+   *     1 = failure only
+   *     0 = don't show (default)
 	 * @return boolean True if valid, false otherwise.
 	 */
 	 url: function(obj, showState){
@@ -437,12 +437,16 @@ ta2ta.validate = ta2ta.validate || {
 	  * @param obj The jQuery object being tested
 	  * @param int Determines when to show the validation state:
 	  *	   3 = success and failure
-      *    2 = success only
-      *    1 = failure only
-      *    0 = don't show (default)
-      * @return
+    *    2 = success only
+    *    1 = failure only
+    *    0 = don't show (default)
+    * @return
 	  */ 
 	 validationResult: function(result, obj, showState){
+	 	// hide any old validation states
+	 	ta2ta.bootstrapHelper.hideValidationState(obj);
+
+	 	// show the proper validation state	
 		if(result){
 			// valid
 			if(showState > 1){

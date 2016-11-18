@@ -1,0 +1,1 @@
+ALTER TABLE `#__ta_calendar_events` MODIFY COLUMN `timezone` varchar(20) NOT NULL;

@@ -24,8 +24,8 @@ $app->initialise();
 // get the from email defaults
 $config = JFactory::getConfig();
 $sender = array( 
-	$config->get('config.mailfrom'),
-	$config->get('config.fromname'));
+	$config->get('mailfrom'),
+	$config->get('fromname'));
 
 // get all events that require a notification
 $db = JFactory::getDbo();

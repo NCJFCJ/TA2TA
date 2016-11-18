@@ -18,6 +18,9 @@ if($this->items){
 		$item->document_path = $item->document_path;
 		$item->cover_path = $item->cover_path;
 		$item->org_website = $item->org_website;
+		foreach($item->tags as &$tag){
+			$tag = htmlentities($tag, ENT_QUOTES);
+		}
 	}
 }
 
@@ -79,6 +82,13 @@ $permission_level = LibraryHelper::getPermissionLevel();
 		$('input:checkbox[name="targetAudiences[]"]:checked').each(function(){
       targetAudiences.push($(this).val());
     });
+
+    // Clear all past bold text from filter
+		for(var h = 0; h < temporaryDisplayItems.length; h++){
+			temporaryDisplayItems[h].name = (temporaryDisplayItems[h].name).replace(/<\/?b>/g, '');
+			temporaryDisplayItems[h].description = (temporaryDisplayItems[h].description).replace(/<\/?b>/g, '');
+			temporaryDisplayItems[h].org = (temporaryDisplayItems[h].org).replace(/<\/?b>/g, '');
+		}
 				
 		// Perform filtering first
 		for(var i = 0; i < temporaryDisplayItems.length; i++){
@@ -119,6 +129,12 @@ $permission_level = LibraryHelper::getPermissionLevel();
 							temporaryDisplayItems[i].org = (temporaryDisplayItems[i].org).replace(searchExp, '<b>$&</b>');
 							matched = true;
 						}
+						// item tags
+						$.each(temporaryDisplayItems[i].tags, function(index,value){
+							if(value.match(searchExp)){
+								matched = true;
+							}
+						});
 					}
 				}
 			}
@@ -171,10 +187,13 @@ $permission_level = LibraryHelper::getPermissionLevel();
 			}
 			<?php if($permission_level == 2): ?>
 			if(displayItems[i].state == -1){
-				htmlOutput += '<a href="' + displayItems[i].document_path + '" target="_blank" title="Resource is Pending Approval" class="pending-approval"><span class="icomoon-key"></span></a>';
+				htmlOutput += '<a href="' + displayItems[i].document_path + '" target="_blank" title="Resource is Pending Approval" class="indicator-icon pending-approval"><span class="icomoon-key"></span></a>';
 			}
 			if(displayItems[i].state == 2){
-				htmlOutput += '<a href="' + displayItems[i].document_path + '" target="_blank" title="Resource is Archived" class="archived"><span class="icomoon-folder"></span></a>';
+				htmlOutput += '<a href="' + displayItems[i].document_path + '" target="_blank" title="Resource is Outdated" class="indicator-icon outdated"><span class="icomoon-calendar"></span></a>';
+			}
+			if(displayItems[i].state == 3){
+				htmlOutput += '<a href="' + displayItems[i].document_path + '" target="_blank" title="Resource is for OVW Only" class="indicator-icon ovw-only"><span class="icomoon-folder"></span></a>';
 			}
 			<?php endif; ?>
 			htmlOutput += '</div><div class="col-sm-9">'
@@ -188,7 +207,13 @@ $permission_level = LibraryHelper::getPermissionLevel();
 			htmlOutput += '<p><a class="btn btn-primary" href="' + displayItems[i].document_path + '" style="float:left;margin-right:15px;" target="_blank"><span class="icomoon-disk"></span> &nbsp;Download</a>';
 			<?php if($permission_level == 2): ?>
 				if(displayItems[i].state == -1){
-					htmlOutput +=  '<a class="btn btn-danger" href="/my-account/library/approve.html?state=2&amp;id=' + displayItems[i].id + '" style="float:left;margin-right:15px;"><span class="icomoon-folder"></span> &nbsp;Archive</a><a class="btn btn-danger" href="/my-account/library/approve.html?state=1&amp;id=' + displayItems[i].id + '" style="float:left;margin-right:15px;"><span class="icomoon-checkmark"></span> &nbsp;Publish</a>';
+					htmlOutput +=  '<a class="btn btn-success" href="/my-account/library/approve.html?state=1&amp;id=' + displayItems[i].id + '" style="float:left;margin-right:15px;" title="Publishing this resource will make it available to the public to view and download from the TA Library."><span class="icomoon-checkmark"></span> &nbsp;Publish</a><a class="btn btn-danger" href="/my-account/library/approve.html?state=2&amp;id=' + displayItems[i].id + '" style="float:left;margin-right:15px;" title="Marks this resource as outdated, removing it from public view. Outdated publications are only visible to NCJFCJ, OVW, and the organization that uploaded the document."><span class="icomoon-calendar"></span> &nbsp;Mark as Outdated</a><a class="btn btn-warning" href="/my-account/library/approve.html?state=3&amp;id=' + displayItems[i].id + '" style="float:left;margin-right:15px;" title="Marks this resource as being for OVW only, removing it from public view. OVW only publications are only visible to NCJFCJ, OVW, and the organization that uploaded the document."><span class="icomoon-folder"></span> &nbsp;Move to OVW Only</a>';
+				}else if(displayItems[i].state == 1){
+					htmlOutput +=  '<a class="btn btn-danger" href="/my-account/library/approve.html?state=2&amp;id=' + displayItems[i].id + '" style="float:left;margin-right:15px;" title="Marks this resource as outdated, removing it from public view. Outdated publications are only visible to NCJFCJ, OVW, and the organization that uploaded the document."><span class="icomoon-calendar"></span> &nbsp;Mark as Outdated</a><a class="btn btn-warning" href="/my-account/library/approve.html?state=3&amp;id=' + displayItems[i].id + '" style="float:left;margin-right:15px;" title="Marks this resource as being for OVW only, removing it from public view. OVW only publications are only visible to NCJFCJ, OVW, and the organization that uploaded the document."><span class="icomoon-folder"></span> &nbsp;Move to OVW Only</a>';
+				}else if(displayItems[i].state == 2){
+					htmlOutput +=  '<a class="btn btn-success" href="/my-account/library/approve.html?state=1&amp;id=' + displayItems[i].id + '" style="float:left;margin-right:15px;" title="Publishing this resource will make it available to the public to view and download from the TA Library."><span class="icomoon-checkmark"></span> &nbsp;Publish</a><a class="btn btn-warning" href="/my-account/library/approve.html?state=3&amp;id=' + displayItems[i].id + '" style="float:left;margin-right:15px;" title="Marks this resource as being for OVW only, removing it from public view. OVW only publications are only visible to NCJFCJ, OVW, and the organization that uploaded the document."><span class="icomoon-folder"></span> &nbsp;Move to OVW Only</a>';
+				}else if(displayItems[i].state == 3){
+					htmlOutput +=  '<a class="btn btn-success" href="/my-account/library/approve.html?state=1&amp;id=' + displayItems[i].id + '" style="float:left;margin-right:15px;" title="Publishing this resource will make it available to the public to view and download from the TA Library."><span class="icomoon-checkmark"></span> &nbsp;Publish</a><a class="btn btn-danger" href="/my-account/library/approve.html?state=2&amp;id=' + displayItems[i].id + '" style="float:left;margin-right:15px;" title="Marks this resource as outdated, removing it from public view. Outdated publications are only visible to NCJFCJ, OVW, and the organization that uploaded the document."><span class="icomoon-calendar"></span> &nbsp;Mark as Outdated</a>';
 				}
 			<?php endif; ?>
 			htmlOutput += '</p>';
@@ -224,9 +249,7 @@ $permission_level = LibraryHelper::getPermissionLevel();
 	}
 </script>
 <div class="item-page">
-	<div class="page-header">
-		<h2><a href="<?php echo $_SERVER['REQUEST_URI']; ?>">Technical Assistance Resource Library</a></h2>
-	</div>
+
 	<div class="alert alert-info alert-dismissible" role="alert">
 		<button type="button" class="close" data-dismiss="alert"><span aria-hidden="true">&times;</span><span class="sr-only">Close</span></button>
 		<strong>Note:</strong> Products and resources are posted on this page pursuant to the special conditions of the Cooperative Agreements between OVW and the individual TA Providers. Please contact the individual TA Provider for permission to use or reprint these products and resources.
@@ -255,7 +278,10 @@ $permission_level = LibraryHelper::getPermissionLevel();
 							<div class="panel-body">
 								<p><small>Select:  <a class="checkAll">All</a> / <a class="uncheckAll">None</a></small></p>
 								<label class="checkbox">
-									<input type="checkbox" name="states[]" value="2"> Archived
+									<input type="checkbox" name="states[]" value="3"> OVW Only
+								</label>
+								<label class="checkbox">
+									<input type="checkbox" name="states[]" value="2"> Outdated
 								</label>
 								<label class="checkbox">
 									<input type="checkbox" name="states[]" value="1" checked> Published

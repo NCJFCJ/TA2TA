@@ -1,0 +1,71 @@
+<?xml version="1.0" encoding="utf-8"?>
+<form>
+	<fieldset>
+    
+    <!--comments-->
+    <field
+      class="form-control"
+      cols="3"
+      description="COM_SERVICES_MEETING_FORM_COMMENTS_DESC" 
+      filter="safehtml"
+      label="COM_SERVICES_MEETING_FORM_COMMENTS_LBL"
+      name="comments"
+      rows="3"
+      type="textarea" />
+
+    <!--id-->
+    <field
+      default="0" 
+      description="COM_SERVICES_MEETING_FORM_ID_DESC"
+      label="COM_SERVICES_MEETING_FORM_ID_LBL"
+      name="id" 
+      readonly="true" 
+      type="hidden" /> 
+
+  	<!--materials-->
+    <field
+      accept="application/pdf"
+      description="COM_SERVICES_MEETING_FORM_MATERIALS_DESC"
+      label="COM_SERVICES_MEETING_FORM_MATERIALS_LBL"
+      name="materials"
+      type="file" />
+
+    <!--project-->
+    <field
+      class="form-control"
+      description="COM_SERVICES_MEETING_FORM_PROJECT_DESC"
+      label="COM_SERVICES_MEETING_FORM_PROJECT_LBL"
+      name="project"
+      type="TAProjects" />
+
+    <!--suggested_dates-->
+    <field
+      class="form-control"
+      description="COM_SERVICES_MEETING_FORM_SUGGESTED_DATES_DESC"
+      label="COM_SERVICES_MEETING_FORM_SUGGESTED_DATES_LBL"
+      maxlength="255"
+      name="suggested_dates"
+      type="text" />
+
+    <!--title-->
+    <field
+      class="form-control"
+      description="COM_SERVICES_MEETING_FORM_TITLE_DESC"
+      label="COM_SERVICES_MEETING_FORM_TITLE_LBL"
+      maxlength="255"
+      name="title"
+      type="text" />
+
+    <!--types_of_support-->
+    <field
+      cols="1"
+      description="COM_SERVICES_MEETING_FORM_TYPES_OF_SUPPORT_DESC"
+      key_field="id"
+      label="COM_SERVICES_MEETING_FORM_TYPES_OF_SUPPORT_LBL"
+      name="types_of_support"
+      type="SQLcheckboxes"
+      query="SELECT * FROM (SELECT `id`, `name`, `state` FROM `#__services_meeting_support_options` WHERE `name` != 'other' ORDER BY `name`) AS `a` UNION SELECT `id`, `name`, `state` FROM `#__services_meeting_support_options` WHERE `name` = 'other';"
+      value_field="name" /> 
+
+	</fieldset>
+</form>

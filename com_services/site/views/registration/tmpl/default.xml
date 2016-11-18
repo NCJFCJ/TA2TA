@@ -1,0 +1,6 @@
+<?xml version="1.0" encoding="utf-8"?>
+<metadata>
+    <layout title="COM_SERVICES_REGISTRATION" option="View">
+        <message><![CDATA[COM_SERVICES_REGISTRATION_DESC]]></message>
+    </layout>
+</metadata>

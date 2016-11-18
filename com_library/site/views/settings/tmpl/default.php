@@ -52,7 +52,7 @@ if(!empty($_SERVER["HTTPS"]) && $_SERVER["HTTPS"]!=="off"){
     	var classInt = 0;
     	var firstDrawn = false;
     	var table = jQuery('#resourceList');
-    	var rows = '<tr><td colspan="4" class="center no-records">There are no resources entered for <?php echo $this->org->name; ?>. <a onclick="newResource();">Try adding one.</a></td></tr>';
+    	var rows = '<tr><td colspan="4" class="center no-records">There are no resources entered for <?php echo xmlentities($this->org->name); ?>. <a onclick="newResource();">Try adding one.</a></td></tr>';
     	
     	// check if we have resources to display
     	jQuery.each(resources, function(index,resource){
@@ -149,31 +149,31 @@ if(!empty($_SERVER["HTTPS"]) && $_SERVER["HTTPS"]!=="off"){
      */
     function trashResources(){
     	ta2ta.bootstrapHelper.removeAlert(jQuery('#resourceTableForm'));
-		var ids = getSelectedIds('resourceList', false);
-    	if(ids.length){
-			// send an AJAX request to the server
-			var request = jQuery.ajax({
-				data: {
-					ids: ids
-				},
-				dataType: 'html',
-				type: 'POST',
-				url: '<?php echo 'http' . ($https ? 's' : '') . '://'. $_SERVER['HTTP_HOST'] . '/index.php?option=com_library&task=trash';?>',
-			});
-			
-			// process the returned ajax
-			request.done(function(response, textStatus, jqXHR){
-				if(response.status == 'success'){
-					ta2ta.bootstrapHelper.showAlert(jQuery('#resourceTableForm'), 'The items you selected have been trashed.', 'success', true, true);
-				}else{
-					ta2ta.bootstrapHelper.showAlert(jQuery('#resourceTableForm'), 'There was an error discarding the library items you selected. Please try again later and contact us if this issue persists.', 'error', true, true);
-				}
-			});
+			var ids = getSelectedIds('resourceList', false);
+	    	if(ids.length){
+				// send an AJAX request to the server
+				var request = jQuery.ajax({
+					data: {
+						ids: ids
+					},
+					dataType: 'html',
+					type: 'POST',
+					url: '<?php echo 'http' . ($https ? 's' : '') . '://'. $_SERVER['HTTP_HOST'] . '/index.php?option=com_library&task=trash';?>',
+				});
+				
+				// process the returned ajax
+				request.done(function(response, textStatus, jqXHR){
+					if(response.status == 'success'){
+						ta2ta.bootstrapHelper.showAlert(jQuery('#resourceTableForm'), 'The items you selected have been trashed.', 'success', true, true);
+					}else{
+						ta2ta.bootstrapHelper.showAlert(jQuery('#resourceTableForm'), 'There was an error discarding the library items you selected. Please try again later and contact us if this issue persists.', 'error', true, true);
+					}
+				});
 
-			// fire if the ajax request fails
-			request.fail(function(jqXHR, textStatus){
-				ta2ta.bootstrapHelper.showAlert(jQuery('#resourceTableForm'), 'There was an error discarding the library items you selected. Please try again later and contact us if this issue persists.', 'error', true, true);
-			});
+				// fire if the ajax request fails
+				request.fail(function(jqXHR, textStatus){
+					ta2ta.bootstrapHelper.showAlert(jQuery('#resourceTableForm'), 'There was an error discarding the library items you selected. Please try again later and contact us if this issue persists.', 'error', true, true);
+				});
     	}else{
     		// the user did not select anything
     		ta2ta.bootstrapHelper.showAlert(jQuery('#resourceTableForm'), 'Please select at least one resource.', 'warning');

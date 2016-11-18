@@ -7,7 +7,7 @@
  */
 
 // No direct access
-defined( '_JEXEC' ) or die;
+defined('_JEXEC') or die;
 
 // get rid of the stupid generator line
 $this->setGenerator('');
@@ -16,8 +16,18 @@ $this->setGenerator('');
 $template_dir = 'templates/' . $this->template . '/';
 
 // positions
-$showContentBottom	= $this->countModules( 'content-bottom' );
-$showLeftMenu		= $this->countModules( 'left-menu' );
+$showContentBottom = $this->countModules('content-bottom');
+$showContentTop = $this->countModules('content-top');
+$showLeftMenu	= $this->countModules('left-menu');
+
+// determine if this is the home page
+$isHome = false;
+$app = JFactory::getApplication();
+$menu = $app->getMenu();
+$activeMenu = $menu->getActive();
+if($activeMenu == $menu->getDefault()){
+	$isHome = true;
+}
 
 // stop Bootstrap from loading (we include it manually in our main js file)
 unset($this->_scripts[JURI::root(true).'/media/jui/js/bootstrap.min.js']);
@@ -27,8 +37,29 @@ unset($this->_scripts[JURI::root(true).'/media/jui/js/jquery-noconflict.js']);
 <!DOCTYPE html>
 <html lang="<?php echo $this->language; ?>" dir="<?php echo $this->direction; ?>">
 	<head>
+		<meta charset="<?php echo $this->getCharset(); ?>" />
 		<meta http-equiv="X-UA-Compatible" content="IE=EDGE" />
 		<meta name="viewport" content="initial-scale=1.0, width=device-width">
+		<script type="text/javascript" src="<?php echo $template_dir; ?>js/min/main.min.js"></script>
+		<?php /* <jdoc:include type="head" /> */ ?>
+		<base href="<?php $this->getBase(); ?>" />
+		<?php
+		// Generate META tags (needs to happen as early as possible in the head)
+		foreach($this->_metaTags as $type => $tag){
+			foreach($tag as $name => $content){
+				if($type == 'standard' && !empty($content)){
+					echo '<meta name="' . $name . '" content="' . htmlspecialchars($content) . '" />';
+				}
+			}
+		}
+
+		// Don't add empty descriptions
+		$documentDescription = $this->getDescription();
+		if($documentDescription){
+			echo '<meta name="description" content="' . htmlspecialchars($documentDescription) . '" />';
+		}
+		?>
+		<title><?php echo htmlspecialchars($this->getTitle(), ENT_COMPAT, 'UTF-8'); ?></title>
 		<!--[if lt IE 9]>
 			<script src="http://html5shim.googlecode.com/svn/trunk/html5.js"></script>
 		<![endif]-->
@@ -42,9 +73,7 @@ unset($this->_scripts[JURI::root(true).'/media/jui/js/jquery-noconflict.js']);
 		<link rel="apple-touch-icon" sizes="114x114" type="image/png" href="<?php echo $template_dir; ?>img/icons/114x114icon.png">
 		<link rel="icon" sizes="128x128" type="image/png" href="<?php echo $template_dir; ?>img/icons/128x128icon.png">
 		<link rel="icon" sizes="195x195" type="image/png" href="<?php echo $template_dir; ?>img/icons/195x195icon.png">
-		<script type="text/javascript" src="<?php echo $template_dir; ?>js/min/main.min.js"></script>
-		<jdoc:include type="head" />
-	</head>
+		</head>
 	<body>
 		<div id="topBar" class="navbar-fixed-top">
 			<div class="container">
@@ -76,50 +105,81 @@ unset($this->_scripts[JURI::root(true).'/media/jui/js/jquery-noconflict.js']);
 			</div>
 		</div>
 		<div id="bodyBar">
-			<div class="container">
-				<header class="row hidden-xs">
-					<div class="col-xs-12">
-						<div class="row" id="headerTop">
-							<div class="col-xs-12">								
-								<nav id="topNav" class="navbar" role="navigation">
-									<div class="navbar-inner" id="topNavInner">
-										<a href="/" id="logo" class="brand">
-											<img src="<?php echo $template_dir; ?>img/logo.png" alt="TA2TA">
-										</a>
-										<jdoc:include type="modules" name="main-nav" style="none" />
-									</div>
-								</nav>
-							</div>
+			<div id="headerTop">
+				<div class="container">
+					<header class="row hidden-xs">
+						<div class="col-xs-12">
+							<nav id="topNav" class="navbar" role="navigation">
+								<div class="navbar-inner" id="topNavInner">
+									<a href="/" id="logo" class="brand">
+										<img src="<?php echo $template_dir; ?>img/logo-inverse.png" alt="TA2TA">
+									</a>
+									<jdoc:include type="modules" name="main-nav" style="none" />
+								</div>
+							</nav>
+						</div>
+					</header>
+				</div>
+			</div>
+			<?php if(!$isHome): ?>
+			<div class="hidden-xs" id="orangeBar">
+				<div class="container">
+					<div class="row">
+						<div class="col-sm-7 col-md-6">
+							<?php 
+							$title = '';
+							if(is_object($activeMenu)){
+								if(!empty($activeMenu->params['page_title'])){
+									$title = $activeMenu->params['page_title'];
+								}else{
+									$title = $activeMenu->title;
+								}
+							}else{
+								if(strpos($_SERVER['REQUEST_URI'], 'component/search') !== false){
+									$title = 'Search Results';
+								}
+							}
+							?>
+							<?php
+							if(!empty($title)){
+								echo '<h1>' . $title . '</h1>';
+							} ?>
+						</div>
+						<div class="col-sm-5 col-md-6 text-right">
+							<jdoc:include type="modules" name="breadcrumbs" />
 						</div>
 					</div>
-				</header>
+				</div>
+			</div>
+			<?php endif; ?>
+			<div class="container">
 				<div class="row hidden-xs">
 					<div class="col-xs-12">
-						<?php
-							// load the banner module on homepage only, show replacement on others
-							$app = JFactory::getApplication();
-							$menu = $app->getMenu();
-							if($menu->getActive() == $menu->getDefault()):
-						?>
 						<jdoc:include type="modules" name="banner" />
-						<?php else: ?>
-						<img src="<?php echo $template_dir; ?>/img/top-banner.jpg" alt="" />
-						<?php endif; ?>
 					</div>
 				</div>
 				<div id="content">
+					<?php if($showContentTop): ?>
 					<div class="row">
-						<?php if ( $showLeftMenu ) : ?>
-						<div class="col-sm-2">
+						<div class="col-xs-12">
+							<jdoc:include type="modules" name="content-top" />
+						</div>
+					</div>
+					<?php endif; ?>
+					<div class="row">
+						<?php if($showLeftMenu): ?>
+						<div class="col-sm-3" id="leftMenu">
 							<jdoc:include type="modules" name="left-menu" />
 						</div>
+						<div class="col-sm-9">
+						<?php else: ?>
+						<div class="col-xs-12">
 						<?php endif; ?>
-						<div class="col-sm-<?php echo ( $showLeftMenu ? '10' : '12'); ?>">
 							<jdoc:include type="message" />
 							<jdoc:include type="component" />
 						</div>
 					</div>
-					<?php if ( $showContentBottom ) : ?>
+					<?php if($showContentBottom): ?>
 					<div class="row">
 						<div class="col-xs-12">
 							<jdoc:include type="modules" name="content-bottom" />

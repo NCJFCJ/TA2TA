@@ -1,0 +1,188 @@
+<?xml version="1.0" encoding="utf-8"?>
+<form>
+	<fieldset>
+
+    <!-- accessibility -->
+    <field
+      class="form-control"
+      description="COM_SERVICES_REGISTRATION_FORM_ACCESSIBILITY_DESC"
+      label="COM_SERVICES_REGISTRATION_FORM_ACCESSIBILITY_LBL"
+      name="accessibility"
+      type="textarea" />
+
+    <!-- accessibility_braille -->
+    <field
+      class="btn-group"
+      default="0"
+      description="COM_SERVICES_REGISTRATION_FORM_ACCESSIBILITY_BRAILLE_DESC" 
+      filter="raw"
+      label="COM_SERVICES_REGISTRATION_FORM_ACCESSIBILITY_BRAILLE_LBL"
+      name="accessibility_braille"
+      required="true" 
+      type="radio">
+      <option value="0">No</option>
+      <option value="1">Yes</option>
+    </field>
+
+    <!-- accessibility_interpreter -->
+    <field
+      class="btn-group"
+      default="0"
+      description="COM_SERVICES_REGISTRATION_FORM_ACCESSIBILITY_INTERPRETER_DESC" 
+      filter="raw"
+      label="COM_SERVICES_REGISTRATION_FORM_ACCESSIBILITY_INTERPRETER_LBL"
+      name="accessibility_interpreter"
+      required="true" 
+      type="radio">
+      <option value="0">No</option>
+      <option value="1">Yes</option>
+    </field>
+
+    <!-- accessibility_interpreter_lang -->
+    <field
+      class="form-control"
+      description="COM_SERVICES_REGISTRATION_FORM_ACCESSIBILITY_INTERPRETER_LANG_DESC"
+      label="COM_SERVICES_REGISTRATION_FORM_ACCESSIBILITY_INTERPRETER_LANG_LBL"
+      maxlength="30"
+      name="accessibility_interpreter_lang"
+      required="true"
+      type="text" />
+
+    <!-- accessibility_large_print -->
+    <field
+      class="btn-group"
+      default="0"
+      description="COM_SERVICES_REGISTRATION_FORM_ACCESSIBILITY_LARGE_PRINT_DESC" 
+      filter="raw"
+      label="COM_SERVICES_REGISTRATION_FORM_ACCESSIBILITY_LARGE_PRINT_LBL"
+      name="accessibility_large_print"
+      required="true" 
+      type="radio">
+      <option value="0">No</option>
+      <option value="1">Yes</option>
+    </field>
+
+    <!-- accessibility_simultaneous_interpretation -->
+    <field
+      class="form-control"
+      description="COM_SERVICES_REGISTRATION_FORM_ACCESSIBILITY_SIMULTANEOUS_INTERPRETATION_DESC"
+      label="COM_SERVICES_REGISTRATION_FORM_ACCESSIBILITY_SIMULTANEOUS_INTERPRETATION_LBL"
+      maxlength="30"
+      name="accessibility_simultaneous_interpretation"
+      required="true"
+      type="text" />
+
+    <!-- address -->
+    <field
+      class="form-control"
+      description="COM_SERVICES_REGISTRATION_FORM_ADDRESS_DESC"
+      label="COM_SERVICES_REGISTRATION_FORM_ADDRESS_LBL"
+      maxlength="255"
+      name="address"
+      type="text" />
+
+    <!-- address2 -->
+    <field
+      class="form-control"
+      description="COM_SERVICES_REGISTRATION_FORM_ADDRESS2_DESC"
+      label="COM_SERVICES_REGISTRATION_FORM_ADDRESS2_LBL"
+      maxlength="255"
+      name="address2"
+      type="text" />
+
+    <!-- email -->
+    <field
+      class="form-control"
+      description="COM_SERVICES_REGISTRATION_FORM_EMAIL_DESC"
+      label="COM_SERVICES_REGISTRATION_FORM_EMAIL_LBL"
+      maxlength="100"
+      name="email"
+      required="true"
+      type="text" />
+
+    <!-- fax -->
+    <field
+      class="form-control"
+      description="COM_SERVICES_REGISTRATION_FORM_FAX_DESC"
+      label="COM_SERVICES_REGISTRATION_FORM_FAX_LBL"
+      maxlength="20"
+      name="fax"
+      type="text" />
+
+    <!-- fname -->
+    <field
+      class="form-control"
+      description="COM_SERVICES_REGISTRATION_FORM_FNAME_DESC"
+      label="COM_SERVICES_REGISTRATION_FORM_FNAME_LBL"
+      maxlength="30"
+      name="fname"
+      required="true"
+      type="text" />
+
+    <!-- id -->
+    <field
+      name="id"
+      type="hidden" />
+
+    <!-- lname -->
+    <field
+      class="form-control"
+      description="COM_SERVICES_REGISTRATION_FORM_LNAME_DESC"
+      label="COM_SERVICES_REGISTRATION_FORM_LNAME_LBL"
+      maxlength="30"
+      name="lname"
+      required="true"
+      type="text" />
+
+    <!-- organization -->
+    <field
+      class="form-control"
+      description="COM_SERVICES_REGISTRATION_FORM_ORGANIZATION_DESC"
+      label="COM_SERVICES_REGISTRATION_FORM_ORGANIZATION_LBL"
+      maxlength="100"
+      name="organization"
+      required="true"
+      type="text" />
+
+    <!-- occupation -->
+    <field
+      class="form-control"
+      description="COM_SERVICES_REGISTRATION_FORM_OCCUPATION_DESC"
+      key_field="id"
+      label="COM_SERVICES_REGISTRATION_FORM_OCCUPATION_LBL"
+      name="occupation"
+      type="sql"
+      query="SELECT 0 AS `id`, '- Select Occupation -' AS `name` UNION SELECT `id`, `name` FROM `#__services_occupations`;"
+      value_field="name" />
+
+    <!-- phone -->
+    <field
+      class="form-control"
+      description="COM_SERVICES_REGISTRATION_FORM_PHONE_DESC"
+      label="COM_SERVICES_REGISTRATION_FORM_PHONE_LBL"
+      maxlength="20"
+      name="phone"
+      type="text" />
+
+    <!-- position -->
+    <field
+      class="form-control"
+      description="COM_SERVICES_REGISTRATION_FORM_POSITION_DESC"
+      label="COM_SERVICES_REGISTRATION_FORM_POSITION_LBL"
+      maxlength="100"
+      name="position"
+      required="true"
+      type="text" />
+
+    <!-- zip -->
+    <field
+      class="form-control"
+      description="COM_SERVICES_REGISTRATION_FORM_ZIP_DESC"
+      label="COM_SERVICES_REGISTRATION_FORM_ZIP_LBL"
+      maxlength="5"
+      name="zip"
+      required="true"
+      type="text" />
+
+	</fieldset>
+</form>

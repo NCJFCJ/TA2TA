@@ -39,7 +39,7 @@ if(!empty($beforeFormText)){
 			event.preventDefault();
 			
 			// disable all form elements to prevent double entry
-	     	inputs.prop('disabled', true);
+	    inputs.prop('disabled', true);
 
 			// remove old errors
 			ta2ta.bootstrapHelper.removeAlert(parent);
@@ -131,6 +131,15 @@ if(!empty($beforeFormText)){
 								data-placement="top"
 								data-toggle="tooltip">
 							</span>
+							<input
+								aria-invalid="false"
+								class="form-control"
+								id="firstName"
+								name="firstName"
+								style="display: none;"
+								type="hidden"
+								value=""
+							/>	
 							<input 
 								type="text" 
 								name="inputName"

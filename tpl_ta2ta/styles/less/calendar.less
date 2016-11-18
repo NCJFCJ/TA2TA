@@ -2,7 +2,7 @@
 
   -- -- -- -- -- -- -- -- --
   http://www.ta2ta.org - v1.1
-  last edit: February 11, 2016
+  last edit: April 14, 2016
   author:  Zachary Draper - NCJFCJ
   -- -- -- -- -- -- -- -- --
   
@@ -114,6 +114,34 @@
   .webinar{
     .EventType(@webinar);
   }
+  #cvList{
+    .list-event{
+      margin-top: 20px;
+      &:first-of-type{
+        margin-top: 0;
+      }
+      .list-date-tab{
+        background-color: @btn-warning-bg;
+        color: @white;
+        padding: 10px 0;
+        text-align: center;
+        .cv-date-day,
+        .cv-date-month,
+        .cv-date-week-day,
+        .cv-date-year{
+          display: inline-block;
+        }
+      }
+      .list-event-detail{
+        h3{
+          margin-bottom: 0;
+        }
+        p+p{
+          margin-top: 0;
+        }
+      }
+    }
+  }
   #cvMonth{
     .calendar-event{
       border-bottom: 1px solid #DDD;
@@ -193,6 +221,7 @@
   }
   .checkbox{
     margin-bottom: 4px;
+    padding-left: 20px;
     &.disabled{
       color: #CCC;
     }
@@ -205,6 +234,46 @@
   #eventCalendar{ 
     .loading{
       margin-top: 150px;
+    }
+    #cvList{
+      .list-event{
+        border-bottom: 1px solid #999;
+        padding-bottom: 20px;
+        .list-date-tab{
+          background-color: transparent;
+          color: @black;
+          padding: 0;
+          .cv-date-day{
+            display: block;
+            font-size: 275%;
+            font-weight: bold;
+            margin-bottom: 3px;
+          }
+          .cv-date-month{
+            display: block;
+            font-size: 175%;
+            font-weight: bold;
+            margin: -5px 0 5px 0;
+          }
+          .cv-date-week-day,
+          .cv-date-year{
+            display: block;
+            font-size: 90%;
+          }
+          .cv-start-time{
+            font-size: 90%;
+            margin-top: -8px;
+          }
+        }
+        .list-event-detail{
+          h3{
+            margin-top: 0;
+          }
+        }
+        .time-range{
+          margin-bottom: 0;
+        }
+      }
     }
     #cvMonth{
       .cal-week{

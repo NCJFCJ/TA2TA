@@ -1,0 +1,100 @@
+/*
+
+  -- -- -- -- -- -- -- -- --
+  http://www.ta2ta.org - v2.0.0
+  last edit: November 17, 2016
+  author:  Zachary Draper - NCJFCJ
+  -- -- -- -- -- -- -- -- --
+  
+*/
+
+#com_servicesPortal{
+	form{
+		position: relative;
+	}
+  .portal-overlay{
+    background-color: rgba(255,255,255,0.90);
+    display: table-cell;
+    height: 100%;
+    left: 0;
+    padding: 30px;
+    position: absolute;
+    text-align: center;
+    top: 0;
+    vertical-align: middle;
+    width: 100%;
+    z-index: 2;
+    p{
+      text-align: center;
+    }
+    table{
+    	text-align: left;
+    }
+    .overlay-content{
+      position: relative;
+      top: 10%;
+      transform: translateY(-50%);
+      .alert{
+      	box-shadow: 2px 2px 5px #AAA;
+      	p{
+      		margin-bottom: 20px;
+      	}
+      	.table-striped > tbody > tr:nth-of-type(2n+1){
+      		background-color: #BCE8F1;
+      	}
+      }
+    }
+  }
+}
+
+#com_servicesServiceForm{
+  .form-control-feedback{
+    margin-top: 26px;
+  }
+}
+
+#webinarRegSeries{
+  border-radius: 20px;
+  font-size: 14px;
+  line-height: 110%;
+  margin-top: 10px;
+  width: 100%;
+  tr{
+    cursor: pointer;
+    &:nth-child(even){
+      background: #EDEDED;
+      &:hover{
+        background: darken(#EDEDED, 4%);
+      }
+    }
+    &:nth-child(odd){
+      background: #F7F7F7;
+      &:hover{
+        background: darken(#F7F7F7, 4%);
+      }
+    }
+    &.past{
+      background: #98D6C9;
+      cursor: not-allowed;
+      &:hover{
+        background: #98D6C9;
+      }
+      td{
+        text-decoration: line-through;
+      }
+    }
+  }
+  td{
+    padding: 10px 5px;
+    vertical-align: top;
+    &:first-child{
+      width: 20px;
+    }
+    &:nth-child(2){
+      width: 140px;
+    }
+    &:nth-child(3){
+      width: 95px;
+    }
+  }
+}

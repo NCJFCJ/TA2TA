@@ -25,8 +25,7 @@ $listOrder	= $this->state->get('list.ordering');
 $listDirn	= $this->state->get('list.direction');
 $canOrder	= $user->authorise('core.edit.state', 'com_ta_provider_directory');
 $saveOrder	= $listOrder == 'a.ordering';
-if ($saveOrder)
-{
+if($saveOrder){
 	$saveOrderingUrl = 'index.php?option=com_ta_provider_directory&task=providers.saveOrderAjax&tmpl=component';
 	JHtml::_('sortablelist.sortable', 'providerList', 'adminForm', strtolower($listDirn), $saveOrderingUrl);
 }
@@ -37,9 +36,9 @@ $sortFields = $this->getSortFields();
 		table = document.getElementById("sortTable");
 		direction = document.getElementById("directionTable");
 		order = table.options[table.selectedIndex].value;
-		if (order != '<?php echo $listOrder; ?>') {
+		if(order != '<?php echo $listOrder; ?>'){
 			dirn = 'asc';
-		} else {
+		}else{
 			dirn = direction.options[direction.selectedIndex].value;
 		}
 		Joomla.tableOrdering(order, dirn, '');
@@ -48,8 +47,8 @@ $sortFields = $this->getSortFields();
 
 <?php
 //Joomla Component Creator code to allow adding non select list filters
-if (!empty($this->extra_sidebar)) {
-    $this->sidebar .= $this->extra_sidebar;
+if(!empty($this->extra_sidebar)){
+  $this->sidebar .= $this->extra_sidebar;
 }
 ?>
 
@@ -80,8 +79,8 @@ if (!empty($this->extra_sidebar)) {
 				<label for="directionTable" class="element-invisible"><?php echo JText::_('JFIELD_ORDERING_DESC');?></label>
 				<select name="directionTable" id="directionTable" class="input-medium" onchange="Joomla.orderTable()">
 					<option value=""><?php echo JText::_('JFIELD_ORDERING_DESC');?></option>
-					<option value="asc" <?php if ($listDirn == 'asc') echo 'selected="selected"'; ?>><?php echo JText::_('JGLOBAL_ORDER_ASCENDING');?></option>
-					<option value="desc" <?php if ($listDirn == 'desc') echo 'selected="selected"'; ?>><?php echo JText::_('JGLOBAL_ORDER_DESCENDING');?></option>
+					<option value="asc" <?php if($listDirn == 'asc') echo 'selected="selected"'; ?>><?php echo JText::_('JGLOBAL_ORDER_ASCENDING');?></option>
+					<option value="desc" <?php if($listDirn == 'desc') echo 'selected="selected"'; ?>><?php echo JText::_('JGLOBAL_ORDER_DESCENDING');?></option>
 				</select>
 			</div>
 			<div class="btn-group pull-right">
@@ -96,44 +95,42 @@ if (!empty($this->extra_sidebar)) {
 		<table class="table table-striped" id="providerList">
 			<thead>
 				<tr>
-                <?php if (isset($this->items[0]->ordering)): ?>
+          <?php if(isset($this->items[0]->ordering)): ?>
 					<th width="1%" class="nowrap center hidden-phone">
 						<?php echo JHtml::_('grid.sort', '<i class="icon-menu-2"></i>', 'a.ordering', $listDirn, $listOrder, null, 'asc', 'JGRID_HEADING_ORDERING'); ?>
 					</th>
-                <?php endif; ?>
+          <?php endif; ?>
 					<th width="1%" class="hidden-phone">
 						<input type="checkbox" name="checkall-toggle" value="" title="<?php echo JText::_('JGLOBAL_CHECK_ALL'); ?>" onclick="Joomla.checkAll(this)" />
 					</th>
-                <?php if (isset($this->items[0]->state)): ?>
+          <?php if(isset($this->items[0]->state)): ?>
 					<th width="1%" class="nowrap center">
 						<?php echo JHtml::_('grid.sort', 'JSTATUS', 'a.state', $listDirn, $listOrder); ?>
 					</th>
-                <?php endif; ?>
+          <?php endif; ?>
                     
-				<th class="left">
-				<?php echo JHtml::_('grid.sort',  'COM_TA_PROVIDER_DIRECTORY_PROVIDERS_NAME', 'a.name', $listDirn, $listOrder); ?>
-				</th>
-				<th width="12%" class="left">
-				<?php echo JHtml::_('grid.sort',  'COM_TA_PROVIDER_DIRECTORY_PROVIDERS_CREATED_BY', 'a.created_by', $listDirn, $listOrder); ?>
-				</th>
-                    
-                    
-                <?php if (isset($this->items[0]->id)): ?>
+					<th class="left">
+					<?php echo JHtml::_('grid.sort',  'COM_TA_PROVIDER_DIRECTORY_PROVIDERS_NAME', 'a.name', $listDirn, $listOrder); ?>
+					</th>
+					<th width="12%" class="left">
+					<?php echo JHtml::_('grid.sort',  'COM_TA_PROVIDER_DIRECTORY_PROVIDERS_CREATED_BY', 'a.created_by', $listDirn, $listOrder); ?>
+					</th>
+                 
+          <?php if(isset($this->items[0]->id)): ?>
 					<th width="1%" class="nowrap center hidden-phone">
 						<?php echo JHtml::_('grid.sort', 'JGRID_HEADING_ID', 'a.id', $listDirn, $listOrder); ?>
 					</th>
-                <?php endif; ?>
+          <?php endif; ?>
 				</tr>
 			</thead>
 			<tfoot>
-                <?php 
-                if(isset($this->items[0])){
-                    $colspan = count(get_object_vars($this->items[0]));
-                }
-                else{
-                    $colspan = 10;
-                }
-            ?>
+        <?php 
+          if(isset($this->items[0])){
+            $colspan = count(get_object_vars($this->items[0]));
+          }else{
+            $colspan = 10;
+          }
+        ?>
 			<tr>
 				<td colspan="<?php echo $colspan ?>">
 					<?php echo $this->pagination->getListFooter(); ?>
@@ -150,10 +147,10 @@ if (!empty($this->extra_sidebar)) {
 			<?php else:
 			foreach ($this->items as $i => $item) :
 				$ordering   = ($listOrder == 'a.ordering');
-                $canCreate	= $user->authorise('core.create',		'com_ta_provider_directory');
-                $canEdit	= $user->authorise('core.edit',			'com_ta_provider_directory');
-                $canCheckin	= $user->authorise('core.manage',		'com_ta_provider_directory');
-                $canChange	= $user->authorise('core.edit.state',	'com_ta_provider_directory');
+        $canCreate	= $user->authorise('core.create',		'com_ta_provider_directory');
+        $canEdit	= $user->authorise('core.edit',			'com_ta_provider_directory');
+        $canCheckin	= $user->authorise('core.manage',		'com_ta_provider_directory');
+        $canChange	= $user->authorise('core.edit.state',	'com_ta_provider_directory');
 				?>
 				<tr class="row<?php echo $i % 2; ?>">
                     

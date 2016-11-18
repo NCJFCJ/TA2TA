@@ -1,0 +1,26 @@
+<?xml version="1.0" encoding="utf-8"?>
+<extension type="module" version="2.5" client="site" method="upgrade">
+	<name>MOD_STATS</name>
+	<creationDate>May 2016</creationDate>
+	<author>Zachary Draper - Zadra Design</author>
+	<authorEmail>zachary@zadradesign.com</authorEmail>
+	<authorUrl>http://www.ncjfcj.org</authorUrl>
+	<copyright>Copyright 2016 NCJFCJ. All rigths reserved.</copyright>
+	<version>1.0.0</version>
+	<description>MOD_STATS_DESCRIPTION</description>
+	 
+	<files>
+		<folder>ajax</folder>
+		<folder>helpers</folder>
+		<folder>inc</folder>
+		<folder>language</folder>
+		<filename>index.html</filename>
+		<filename module="mod_stats">mod_stats.php</filename>
+		<filename>mod_stats.xml</filename>
+	</files>
+	
+	<languages folder="language">
+  	<language tag="en-GB">en-GB/en-GB.mod_stats.ini</language>
+  	<language tag="en-GB">en-GB/en-GB.mod_stats.sys.ini</language>
+	</languages>
+</extension>

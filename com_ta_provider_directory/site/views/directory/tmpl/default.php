@@ -24,7 +24,7 @@ foreach($this->providers as &$provider){
 }
 // htmlentities is insufficient as it doesn't handle apostrophes
 function xmlentities($string){
-    return str_replace (array('&','"','’',"'",'<','>'),array('&amp;','&quot;','&apos;','&#039;','&lt;','&gt;'),$string);
+    return str_replace (array('"','’',"'",'<','>'),array('&quot;','&apos;','&#039;','&lt;','&gt;'),$string);
 }
 
 // require the helper file
@@ -364,9 +364,6 @@ $permission_level = Ta_provider_directoryHelper::getPermissionLevel();
 	}
 </script>
 <div class="item-page">
-	<div class="page-header">
-		<h2><a href="<?php echo $_SERVER['REQUEST_URI']; ?>">Technical Assistance Provider Directory</a></h2>
-	</div>
 	<div class="row">
 		<form id="filters" method="post" action="<?php echo $_SERVER['REQUEST_URI']; ?>">
 			<div class="col-sm-2 filters">

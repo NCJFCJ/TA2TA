@@ -12,135 +12,88 @@ JHtml::_('behavior.keepalive');
 
 // https?
 $https = false;
-if(!empty($_SERVER["HTTPS"]) && $_SERVER["HTTPS"]!=="off"){
-    $https = true;
+if(!empty($_SERVER['HTTPS']) && $_SERVER['HTTPS'] !== 'off'){
+  $https = true;
 }
 ?>
 <script type="text/javascript">
 	// document ready
 	jQuery(function($){
 		var orgName = '<?php echo $this->item->name; ?>';
-		var uploadImageHeight = 0;
-		var uploadImageWidth = 0;
 
 		/**
 		 * Listen for changes to the logo and upload right away
 		 */
 		$('#jform_logoFile').fileupload({
-            dataType: 'json',
-            url: '<?php echo "http" . ($https ? "s" : "") . "://{$_SERVER['HTTP_HOST']}/index.php?option=com_ta_providers&task=fileUpload";?>',
-            add: function(e,data){
-                // reset all alerts
-                ta2ta.bootstrapHelper.removeAlert($('#orgLogoForm'));
+      dataType: 'json',
+      url: '<?php echo "http" . ($https ? "s" : "") . "://{$_SERVER['HTTP_HOST']}/index.php?option=com_ta_providers&task=fileUpload";?>',
+      add: function(e,data){
+        // reset all alerts
+        ta2ta.bootstrapHelper.removeAlert($('#orgLogoForm'));
 
-                // show the loading image
-                var loadingImage = new Image();
-                $('#tmpLogoWrapper').html(loadingImage);
-                $('#tmpLogoWrapper img').css({
-                	'margin': ' 50px 0 0 134px',
-                	'width': '80px'
-                });
+        // show the loading image
+        var loadingImage = new Image();
+        $('#tmpLogoWrapper').html(loadingImage);
+        $('#tmpLogoWrapper img').css({
+        	'margin': ' 50px 0 0 134px',
+        	'width': '80px'
+        });
 
-                loadingImage.src = '<?php echo "http" . ($https ? "s" : "") . "://{$_SERVER['HTTP_HOST']}"; ?>/templates/ta2ta/img/loading.gif';
+        loadingImage.src = '<?php echo "http" . ($https ? "s" : "") . "://{$_SERVER['HTTP_HOST']}"; ?>/templates/ta2ta/img/loading.gif';
     
 				// show the image edit popup
 				$('#imageEditPopup').modal('show');	
 
-                //show loading graphic
-                data.submit();
-            },
-            done: function(e,data){
-                if(data._response.result.status == 'success'){
-                    // show the image
-                    var tmpLogo = new Image();
-                    tmpLogo.src = '<?php echo "http" . ($https ? "s" : "") . "://{$_SERVER['HTTP_HOST']}"; ?>/media/com_ta_providers/tmp/' + data._response.result.message;
+        //show loading graphic
+        data.submit();
+      },
+
+      done: function(e,data){
+        if(data._response.result.status == 'success'){
+          // show the image
+          var tmpLogo = new Image();
+          tmpLogo.src = '<?php echo "http" . ($https ? "s" : "") . "://{$_SERVER['HTTP_HOST']}"; ?>/media/com_ta_providers/tmp/' + data._response.result.message;
      
-                    $(tmpLogo).on('load', function(){
-               			$('#tmpLogoWrapper').html(tmpLogo);
+          $(tmpLogo).on('load', function(){
+	     			$('#tmpLogoWrapper').html(tmpLogo);
 
-               			// start the editor
-	                    $('#tmpLogoWrapper img').imgAreaSelect({
-	                    	aspectRatio: '45:28',
-	                    	handles: true,
-	                    	persistent: true,
-	                    	x1: 0,
-	                    	x2: 225,
-	                    	y1: 0,
-	                    	y2: 140,
-	                    	onInit: function(img, selection){
-	                    		var thumbnailScale =  uploadImageWidth / $('#tmpLogoWrapper img').height();
-	                    		
-	                    		// load the coordinates and dimmensions into the form to be sent to PHP
-	                    		$('#jform_logox1').val(selection.x1 * thumbnailScale);
-	                    		$('#jform_logox2').val(selection.x2 * thumbnailScale);
-	                    		$('#jform_logoy1').val(selection.y1 * thumbnailScale);
-	                    		$('#jform_logoy2').val(selection.y2 * thumbnailScale);
-	                    		$('#jform_logoh').val(selection.height * thumbnailScale);
-	                    		$('#jform_logow').val(selection.width * thumbnailScale);
-	                    	},
-	                    	onSelectChange: function(img, selection){
-	                    		var thumbnailScale =  uploadImageWidth / $('#tmpLogoWrapper img').height();
-	                    		
-	                    		// load the coordinates and dimmensions into the form to be sent to PHP
-	                    		$('#jform_logox1').val(selection.x1 * thumbnailScale);
-	                    		$('#jform_logox2').val(selection.x2 * thumbnailScale);
-	                    		$('#jform_logoy1').val(selection.y1 * thumbnailScale);
-	                    		$('#jform_logoy2').val(selection.y2 * thumbnailScale);
-	                    		$('#jform_logoh').val(selection.height * thumbnailScale);
-	                    		$('#jform_logow').val(selection.width * thumbnailScale);
-	                    	}
-	                    });
-                    });
-
-	                // store the data that was returned for later use
-	                uploadImageHeight = data._response.result.height;
-	                uploadImageWidth = data._response.result.width;
-
-                    // update the logo field
-                    $('#jform_logo').val(data._response.result.message);
-                }else{
-                    // an error occured
-                    ta2ta.bootstrapHelper.showAlert($('#orgLogoForm'), data._response.result.message);
+	     			// start the editor
+	     			$('#tmpLogoWrapper img').cropper({
+	     				aspectRatio: 45 / 29,
+	     				crop: function(e){
+	          		// load the coordinates and dimmensions into the form to be sent to PHP
+	          		$('#jform_logoX').val(e.x);
+						    $('#jform_logoY').val(e.y);
+						    $('#jform_logoWidth').val(e.width);
+						    $('#jform_logoHeight').val(e.height);
+	     				},
+	     				data: {
+	     					height: 280,
+	     					width: 450,
+	     					x: 0,
+	     					y: 0
+	     				},
+	     				preview: '#logoImg',
+	     				rotatable: false,
+	     				scalable: false,
+	     				zoomable: false
+	     			});
+	     		});
+        }else{
+          // an error occured
+          ta2ta.bootstrapHelper.showAlert($('#orgLogoForm'), data._response.result.message);
             	
-	            	// hide the image edit popup
+        	// hide the image edit popup
 					$('#imageEditPopup').modal('hide');	
-                }
-            },
-            fail: function(e,data){
-            	ta2ta.bootstrapHelper.showAlert($('#orgLogoForm'), 'An AJAX error occured. Please try again.', 'error');
-            	
-            	// hide the image edit popup
+        }
+      },
+      fail: function(e,data){
+      	ta2ta.bootstrapHelper.showAlert($('#orgLogoForm'), 'An AJAX error occured. Please try again.', 'error');
+        	
+      	// hide the image edit popup
 				$('#imageEditPopup').modal('hide');	
-
-            }
-        });
-
-		/**
-		 * Close the edit logo popup
-		 */
-		$('#imageEditPopup .closePopup').click(function(){
-			// hide the select area
-			$('#tmpLogoWrapper img').imgAreaSelect({
-				remove: true
-			});
-
-			// update the logo image to show the new image
-			$('#logoImg').attr('src', $('#tmpLogoWrapper img').attr('src'));
-
-    		// figure the scaling
-    		var scaleX = 450 / $('#jform_logow').val();  
-			var scaleY = 280 / $('#jform_logoh').val();
-
-			$('#logoImg').css({
-		        width: Math.round(scaleX * uploadImageWidth) + 'px',
-		        height: Math.round(scaleY * uploadImageHeight) + 'px',
-		        marginLeft: '-' + Math.round(scaleX * $('#jform_logox1').val()) + 'px',
-		        marginTop: '-' + Math.round(scaleY * $('#jform_logoy1').val()) + 'px'
-		    });
-
-			// hide the modal
-			$('#imageEditPopup').modal('hide');
-		});
+      }
+    });
 
 		/**
 		 * Listen for the user to change the organization name, prompt for confirmation
@@ -268,17 +221,17 @@ if(!empty($_SERVER["HTTPS"]) && $_SERVER["HTTPS"]!=="off"){
 						<?php
 						$logoSrc = "/media/com_ta_providers/logos/no-logo.jpg";
 						if(!empty($this->item->logo)){
-		                    $imgPath = '/media/com_ta_providers/logos/' . $this->item->logo;
-		                    if(file_exists(JPATH_SITE . $imgPath)){
-		                        // show the image
-		                        $logoSrc =  $imgPath;
-		                    }
-		                }
-		                ?>
-		                <div style="overflow:hidden; width: 450px; height: 280px;">
-							<img onclick="chooseFile();" id="logoImg" src="<?php echo $logoSrc; ?>" alt="<?php echo $this->item->name; ?> Logo" style="height: 280px; width: 450px;">
+              $imgPath = '/media/com_ta_providers/logos/' . $this->item->logo;
+              if(file_exists(JPATH_SITE . $imgPath)){
+                // show the image
+                $logoSrc =  $imgPath;
+              }
+            }
+            ?>
+            <div id="logoImg" style="height: 140px; overflow: hidden; width: 225px;">
+							<img onclick="chooseFile();" src="<?php echo $logoSrc; ?>" alt="<?php echo $this->item->name; ?> Logo" style="max-height: 100%; max-width: 100%;">
 						</div>
-						<br><small><?php echo JText::_('COM_TA_PROVIDERS_SETTINGS_CHANGE_IMAGE'); ?></small>
+						<small><?php echo JText::_('COM_TA_PROVIDERS_SETTINGS_CHANGE_IMAGE'); ?></small>
 					</div>
 				</div>
 			</div>
@@ -297,38 +250,26 @@ if(!empty($_SERVER["HTTPS"]) && $_SERVER["HTTPS"]!=="off"){
 							/>
 						<input 
 							type="hidden"
-							name="jform[logox1]"
-							id="jform_logox1"
+							name="jform[logoX]"
+							id="jform_logoX"
 							value=""
 							/>
 						<input 
 							type="hidden"
-							name="jform[logox2]"
-							id="jform_logox2"
+							name="jform[logoY]"
+							id="jform_logoY"
 							value=""
 							/>
 						<input 
 							type="hidden"
-							name="jform[logoy1]"
-							id="jform_logoy1"
+							name="jform[logoWidth]"
+							id="jform_logoWidth"
 							value=""
 							/>
 						<input 
 							type="hidden"
-							name="jform[logoy2]"
-							id="jform_logoy2"
-							value=""
-							/>
-						<input 
-							type="hidden"
-							name="jform[logoh]"
-							id="jform_logoh"
-							value=""
-							/>
-						<input 
-							type="hidden"
-							name="jform[logow]"
-							id="jform_logow"
+							name="jform[logoHeight]"
+							id="jform_logoHeight"
 							value=""
 							/>
 						<span 
@@ -387,7 +328,7 @@ if(!empty($_SERVER["HTTPS"]) && $_SERVER["HTTPS"]!=="off"){
 	<div class="modal-dialog">
 		<div class="modal-content">
 			<div class="modal-header">
-				<button type="button" class="close closePopup" aria-hidden="true">&times;</button>
+				<button type="button" class="close" data-dismiss="modal" aria-hidden="true" aria-label="Close">&times;</button>
 				<h4 class="modal-title"><?php echo JText::_('COM_TA_PROVIDERS_SETTINGS_NAME_CHANGE_CONFIRMATION_HEADING'); ?></h4>
 			</div>
 			<div class="modal-body">
@@ -395,7 +336,7 @@ if(!empty($_SERVER["HTTPS"]) && $_SERVER["HTTPS"]!=="off"){
 			</div>
 			<div class="modal-footer">
 				<a class="btn btn-primary"><span class="icomoon-checkmark"></span> <?php echo JText::_('COM_TA_PROVIDERS_HAVE_APPROVAL'); ?></a>&nbsp;
-				<a class="btn btn-default closePopup"><span class="icomoon-close"></span> <?php echo JText::_('COM_TA_PROVIDERS_NO'); ?></a>
+				<a class="btn btn-default" data-dismiss="modal"><span class="icomoon-close"></span> <?php echo JText::_('COM_TA_PROVIDERS_NO'); ?></a>
 			</div>
 		</div>
 	</div>
@@ -404,7 +345,7 @@ if(!empty($_SERVER["HTTPS"]) && $_SERVER["HTTPS"]!=="off"){
 	<div class="modal-dialog" style="width: 390px;"><!-- TO DO: Fix this, not responsive!!! 320 max on mobile -->
 		<div class="modal-content">
 			<div class="modal-header">
-				<button type="button" class="close closePopup" aria-hidden="true">&times;</button>
+				<button type="button" class="close" data-dismiss="modal" aria-label="Close" aria-hidden="true">&times;</button>
 				<h4 class="modal-title"><?php echo JText::_('COM_TA_PROVIDERS_EDIT_LOGO_HEADING'); ?></h4>
 			</div>
 			<div class="modal-body">
@@ -414,7 +355,7 @@ if(!empty($_SERVER["HTTPS"]) && $_SERVER["HTTPS"]!=="off"){
 				</div>
 			</div>
 			<div class="modal-footer">
-				<a class="btn btn-primary closePopup"><span class="icomoon-checkmark"></span> <?php echo JText::_('COM_TA_PROVIDERS_DONE'); ?></a>
+				<a class="btn btn-primary" data-dismiss="modal"><span class="icomoon-checkmark"></span> <?php echo JText::_('COM_TA_PROVIDERS_DONE'); ?></a>
 			</div>
 		</div>
 	</div>

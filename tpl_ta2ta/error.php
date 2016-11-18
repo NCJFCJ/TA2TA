@@ -47,22 +47,26 @@ $template_dir = '/templates/' . $this->template . '/';
 			</div>
 		</div>
 		<div id="bodyBar">
-			<div class="container">
-				<header class="row hidden-xs">
-					<div class="col-xs-12">
-						<div class="row" id="headerTop">
-							<div class="col-xs-12">								
-								<nav id="topNav" class="navbar">
-									<div class="navbar-inner" id="topNavInner">
-										<a href="/" id="logo" class="brand">
-											<img src="<?php echo $template_dir; ?>img/logo.png" alt="TA 2 TA">
-										</a>
-									</div>
-								</nav>
+			<div id="headerTop">
+				<div class="container">
+					<header class="row hidden-xs">
+						<div class="col-xs-12">
+							<div class="row" id="headerTop">
+								<div class="col-xs-12">								
+									<nav id="topNav" class="navbar">
+										<div class="navbar-inner" id="topNavInner">
+											<a href="/" id="logo" class="brand">
+												<img src="<?php echo $template_dir; ?>img/logo-inverse.png" alt="TA 2 TA">
+											</a>
+										</div>
+									</nav>
+								</div>
 							</div>
 						</div>
-					</div>
-				</header>
+					</header>
+				</div>
+			</div>
+			<div class="container">
 				<div id="content">
 					<div class="row">
 						<div class="col-xs-12" style="text-align: center">

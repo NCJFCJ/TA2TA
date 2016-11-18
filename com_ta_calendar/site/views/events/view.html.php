@@ -17,7 +17,7 @@ class Ta_calendarViewEvents extends JViewLegacy {
 	protected $items;
 	protected $pagination;
 	protected $state;
-    protected $params;
+  protected $params;
 
 	/**
 	 * Display the view
@@ -45,13 +45,13 @@ class Ta_calendarViewEvents extends JViewLegacy {
 			$this->providerProjects = $this->get('ProviderProjects');
 		}
         
-        // Check for errors.
-        if(count($errors = $this->get('Errors'))){
-            throw new Exception(implode("\n", $errors));
-        }
-        
-        $this->_prepareDocument();
-        parent::display($tpl);
+    // Check for errors.
+    if(count($errors = $this->get('Errors'))){
+        throw new Exception(implode("\n", $errors));
+    }
+    
+    $this->_prepareDocument();
+    parent::display($tpl);
 	}
 
 	/**

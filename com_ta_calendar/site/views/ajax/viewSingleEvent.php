@@ -35,7 +35,7 @@ if(filter_has_var(INPUT_POST, 'calTimezone')){
 $calTimezone = new DateTimeZone($calTimezone);
 
 // Check that data was submitted via post and that the proper variables were received
-if ($_SERVER['REQUEST_METHOD'] == "POST"
+if($_SERVER['REQUEST_METHOD'] == 'POST'
 	&& filter_has_var(INPUT_POST, 'event')
 ){
 	// retrieve and sanitize the data
@@ -49,31 +49,33 @@ if ($_SERVER['REQUEST_METHOD'] == "POST"
 		// mark this event as deleted, if its organization matches
 		$db = JFactory::getDBO();
 		$query = $db->getQuery(true);
-		$query->select(
-			$db->quoteName('e.org') . ',' .
-			$db->quoteName('p.name', 'org_name') . ',' .
-			$db->quoteName('e.start') . ',' .
-			$db->quoteName('e.end') . ',' .
-			$db->quoteName('e.title') . ',' .
-			$db->quoteName('e.summary') . ',' .
-			$db->quoteName('t.name','type') . ',' .
-			$db->quoteName('e.event_url') . ',' .
-			$db->quoteName('e.open') . ',' .
-			$db->quoteName('e.registration_url') . ',' .
-			$db->quoteName('pp.title', 'project') . ',' .
-			$db->quoteName('e.created') . ',' .
-			$db->quoteName('uc.name', 'created_by') . ',' .
-			$db->quoteName('e.modified') . ',' .
-			$db->quoteName('um.name', 'modified_by') . ',' .
-			$db->quoteName('e.deleted') . ',' .
-			$db->quoteName('ud.name', 'deleted_by') . ',' .
-			$db->quoteName('e.approved') . ',' .
-			$db->quoteName('a.name', 'approved_by')
-		);
+		$query->select(implode(',', array(
+			$db->quoteName('e.org'),
+			$db->quoteName('p.name', 'org_name'),
+			$db->quoteName('e.start'),
+			$db->quoteName('e.end'),
+			$db->quoteName('e.title'),
+			$db->quoteName('e.summary'),
+			$db->quoteName('t.name','type'),
+			$db->quoteName('e.event_url'),
+			$db->quoteName('e.open'),
+			$db->quoteName('e.registration_url'),
+			$db->quoteName('pp.title', 'project'),
+			$db->quoteName('e.created'),
+			$db->quoteName('uc.name', 'created_by'),
+			$db->quoteName('e.modified'),
+			$db->quoteName('um.name', 'modified_by'),
+			$db->quoteName('e.deleted'),
+			$db->quoteName('ud.name', 'deleted_by'),
+			$db->quoteName('e.approved'),
+			$db->quoteName('a.name', 'approved_by'),
+			$db->quoteName('tz.abbr', 'timezone_abbr')
+		)));
 		$query->from($db->quoteName('#__ta_calendar_events', 'e'));
 		$query->join('LEFT', $db->quoteName('#__ta_providers', 'p') . ' ON (' . $db->quoteName('p.id') . ' = ' . $db->quoteName('e.org') . ')');
 		$query->join('LEFT', $db->quoteName('#__ta_calendar_event_types', 't') . ' ON (' . $db->quoteName('t.id') . ' = ' . $db->quoteName('e.type') . ')');
 		$query->join('LEFT', $db->quoteName('#__tapd_provider_projects', 'pp') . ' ON (' . $db->quoteName('pp.id') . ' = ' . $db->quoteName('e.provider_project') . ')');
+		$query->join('LEFT', $db->quoteName('#__ta_calendar_timezones', 'tz') . ' ON (' . $db->quoteName('tz.description') . ' = ' . $db->quoteName('e.timezone') . ')');
 		$query->join('LEFT', $db->quoteName('#__users', 'uc') . ' ON (' . $db->quoteName('uc.id') . ' = ' . $db->quoteName('e.created_by') . ')');
 		$query->join('LEFT', $db->quoteName('#__users', 'um') . ' ON (' . $db->quoteName('um.id') . ' = ' . $db->quoteName('e.modified_by') . ')');
 		$query->join('LEFT', $db->quoteName('#__users', 'ud') . ' ON (' . $db->quoteName('ud.id') . ' = ' . $db->quoteName('e.deleted_by') . ')');

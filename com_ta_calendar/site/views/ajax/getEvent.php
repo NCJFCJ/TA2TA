@@ -39,7 +39,7 @@ $user = JFactory::getUser();
 $userOrg = Ta_calendarHelper::getUserOrg();
 
 // Check that data was submitted via post, that the proper variable was received, and that we have a user
-if($_SERVER['REQUEST_METHOD'] == "POST"
+if($_SERVER['REQUEST_METHOD'] == 'POST'
 	&& filter_has_var(INPUT_POST, 'event')
 	&& filter_has_var(INPUT_POST, 'edit')
 ){
@@ -76,12 +76,14 @@ if($_SERVER['REQUEST_METHOD'] == "POST"
 			$db->quoteName('a.name', 'approved_by') ,
 			$db->quoteName('e.city'),
 			$db->quoteName('e.territory'),
-			$db->quoteName('e.timezone')
+			$db->quoteName('e.timezone'),
+			$db->quoteName('tz.abbr', 'timezone_abbr')
 		));
 		$query->from($db->quoteName('#__ta_calendar_events', 'e'));
 		$query->join('LEFT', $db->quoteName('#__ta_providers', 'pr') . ' ON (' . $db->quoteName('pr.id') . ' = ' . $db->quoteName('e.org') . ')');
 		$query->join('LEFT', $db->quoteName('#__ta_calendar_event_types', 'et') . ' ON (' . $db->quoteName('et.id') . ' =  ' . $db->quoteName('e.type') . ')');
 		$query->join('LEFT', $db->quoteName('#__tapd_provider_projects', 'pj') . ' ON (' . $db->quoteName('pj.id') . ' =  ' . $db->quoteName('e.provider_project') . ')');
+		$query->join('LEFT', $db->quoteName('#__ta_calendar_timezones', 'tz') . ' ON (' . $db->quoteName('tz.description') . ' = ' . $db->quoteName('e.timezone') . ')');
 		$query->join('LEFT', $db->quoteName('#__users', 'uc') . ' ON (' . $db->quoteName('uc.id') . ' = ' . $db->quoteName('e.created_by') . ')');
 		$query->join('LEFT', $db->quoteName('#__users', 'um') . ' ON (' . $db->quoteName('um.id') . ' = ' . $db->quoteName('e.modified_by') . ')');
 		$query->join('LEFT', $db->quoteName('#__users', 'ud') . ' ON (' . $db->quoteName('ud.id') . ' = ' . $db->quoteName('e.deleted_by') . ')');
@@ -125,30 +127,36 @@ if($_SERVER['REQUEST_METHOD'] == "POST"
 					)));
 					$query->from($db->quoteName('#__target_audiences', 'ta'));
 					$query->where($db->quoteName('ta.id') . " IN (" . $subquery . ")");
-					$query->order($db->quoteName('ta.name') . " ASC");
+					$query->order($db->quoteName('ta.name') . ' ASC');
 					$db->setQuery($query);
 					if($target_audiences = $db->loadObjectList()){
-						// grab grant programs
-						$subquery = $db->getQuery(true);
-						$subquery->select($db->quoteName('ep.program'));
-						$subquery->from($db->quoteName('#__ta_calendar_event_programs', 'ep'));
-						$subquery->where($db->quoteName('ep.event') . " = " . $db->quote($event));
-						$query = $db->getQuery(true);
-						$query->select($db->quoteName(array(
-							'gp.id',
-							'gp.name'
-						)));
-						$query->from($db->quoteName('#__grant_programs', 'gp'));
-						$query->where($db->quoteName('gp.id') . " IN (" . $subquery . ")");
-						$query->order($db->quoteName('gp.name') . " ASC");
-						$db->setQuery($query);
-						if($grant_programs = $db->loadObjectList()){
+						if($eventData->open){
+							// grab grant programs
+							$subquery = $db->getQuery(true);
+							$subquery->select($db->quoteName('ep.program'));
+							$subquery->from($db->quoteName('#__ta_calendar_event_programs', 'ep'));
+							$subquery->where($db->quoteName('ep.event') . ' = ' . $db->quote($event));
+							$query = $db->getQuery(true);
+							$query->select($db->quoteName(array(
+								'gp.id',
+								'gp.name'
+							)));
+							$query->from($db->quoteName('#__grant_programs', 'gp'));
+							$query->where($db->quoteName('gp.id') . ' IN (' . $subquery . ')');
+							$query->order($db->quoteName('gp.name') . ' ASC');
+							$db->setQuery($query);
+							$grant_programs = $db->loadObjectList();
+						}
+						if(!$eventData->open || isset($grant_programs)){
 							// process the start and end dates
 							$eventStart = ($eventData->start == '0000-00-00 00:00:00' ? false : new DateTime($eventData->start, new DateTimeZone('UTC')));
 							$eventEnd = ($eventData->end == '0000-00-00 00:00:00' ? false : new DateTime($eventData->end, new DateTimeZone('UTC')));	
 
 							// determine which timezone to use
-							$event_timezone = timezone_name_from_abbr($eventData->timezone);
+							if(strlen($eventData->timezone) <= 5){
+								$eventData->timezone = timezone_name_from_abbr($eventData->timezone);
+							}
+							$event_timezone = $eventData->timezone;
 							if(in_array($event_timezone, DateTimeZone::listIdentifiers())){
 								// use the event specific timezone (preferred)
 								$timezone = new DateTimeZone($event_timezone);
@@ -169,10 +177,10 @@ if($_SERVER['REQUEST_METHOD'] == "POST"
 							$dateString = '';					
 							if($eventStart->format('Y-m-d') == $eventEnd->format('Y-m-d')){
 								// single day
-								$dateString = $eventStart->format('M j, Y g:ia') . ' - ' . $eventEnd->format('g:ia') . ' ' . $eventData->timezone;
+								$dateString = $eventStart->format('M j, Y g:ia') . ' - ' . $eventEnd->format('g:ia') . ' ' . $eventData->timezone_abbr;
 							}else{
 								// multi-day
-								$dateString = $eventStart->format('M j, Y g:ia') . ' - ' . $eventEnd->format('M j, Y g:ia') . ' ' . $eventData->timezone;
+								$dateString = $eventStart->format('M j, Y g:ia') . ' - ' . $eventEnd->format('M j, Y g:ia') . ' ' . $eventData->timezone_abbr;
 							}
 
 							// begin building the return object
@@ -183,7 +191,9 @@ if($_SERVER['REQUEST_METHOD'] == "POST"
 							$return['data']->enddate = $eventEnd->format('m-d-Y');
 							$return['data']->endtime = $eventEnd->format('g:ia');
 							$return['data']->date_string = $dateString;
-							$return['data']->grant_programs = $grant_programs;
+							if($eventData->open){
+								$return['data']->grant_programs = $grant_programs;
+							}
 							$return['data']->target_audiences = $target_audiences;
 							$return['data']->topic_areas = $topic_areas;
 

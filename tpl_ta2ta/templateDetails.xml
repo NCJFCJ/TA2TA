@@ -32,6 +32,7 @@
 		<position>banner</position>
 		<position>breadcrumbs</position>
 		<position>content-bottom</position>
+		<position>content-top</position>
 		<position>copyright</position>
 		<position>disclaimer</position>
 		<position>left-menu</position>

@@ -21,10 +21,14 @@ switch($this->state){
 		$description = 'The following library resource has been immediatelly made available on the TA2TA webiste.';
 		break;
 	case 2:
-		$action = 'Archived';
+		$action = 'Outdated';
 		$color = 'red';
-		$description = 'The following library resource has been added to the library archive. Only NCJFCJ, OVW, and the posting organization will have access to it.';
+		$description = 'The following library resource has been marked as outdated. Only NCJFCJ, OVW, and the posting organization will have access to it.';
 		break;
+	case 3:
+		$action = 'Moved';
+		$color = 'orange';
+		$description = 'The following library resource has been moved to OVW only. Only NCJFCJ, OVW, and the posting organization will have access to it.';
 	default:
 		break;
 }
@@ -53,7 +57,9 @@ $this->item->document_path = '/media/com_library/resources/' . $this->item->id .
 				<div class="col-sm-3 hidden-xs">
 					<a href="/media/com_library/resources/<?php echo $this->item->id; ?>-<?php echo $this->item->base_file_name; ?>.pdf" target="_blank" class="cover"><img class="img-polaroid" src="/media/com_library/covers/<?php echo $this->item->id; ?>-<?php echo $this->item->base_file_name; ?>.png" alt="<?php echo $this->item->name; ?> Cover"></a>
 					<?php if($this->state == 2): ?>
-						<a href="/media/com_library/resources/<?php echo $this->item->id; ?>-<?php echo $this->item->base_file_name; ?>.pdf" target="_blank" title="Resource is Archived" class="archived"><span class="icomoon-folder"></span></a>
+						<a href="/media/com_library/resources/<?php echo $this->item->id; ?>-<?php echo $this->item->base_file_name; ?>.pdf" target="_blank" title="Resource is Outdated" class="indicator-icon outdated"><span class="icomoon-calendar"></span></a>
+					<?php elseif($this->state == 3): ?>
+						<a href="/media/com_library/resources/<?php echo $this->item->id; ?>-<?php echo $this->item->base_file_name; ?>.pdf" target="_blank" title="Resource is for OVW Only" class="indicator-icon ovw-only"><span class="icomoon-folder"></span></a>
 					<?php endif; ?>
 				</div>
 				<div class="col-sm-9">

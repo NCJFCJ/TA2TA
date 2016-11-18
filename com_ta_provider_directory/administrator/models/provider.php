@@ -106,7 +106,7 @@ class Ta_provider_directoryModelprovider extends JModelAdmin{
 			// get all grant programs
 			$db = JFactory::getDbo();
 			$query = $db->getQuery(true);
-			$query->select('p.id, p.state, u.name as created_by, p.title, p.summary');
+			$query->select('p.id, p.state, p.award_number, u.name as created_by, p.title, p.summary');
 			$query->from('#__tapd_provider_projects as p');
 			$query->join('LEFT', '#__users as u ON (p.created_by = u.id)');
 			$query->where('provider = ' . $item->id . ' AND state >= 0');

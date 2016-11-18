@@ -9,7 +9,7 @@
 $micro_start = microtime();
 
 // no direct access
-defined('_JEXEC') or die; 
+defined('_JEXEC') or die;
 
 // require the helper file
 require_once(JPATH_COMPONENT . '/helpers/ta_calendar.php');
@@ -24,16 +24,26 @@ $popovers = array();
  */
 $permission_level = Ta_calendarHelper::getPermissionLevel();
 
+// get the timezone
+$userTimezone = 'America/New_York';
+if(filter_has_var(INPUT_POST, 'userTimezone')){
+	$tmpTimezone = filter_input(INPUT_POST, 'userTimezone', FILTER_SANITIZE_STRING);
+	if(in_array($tmpTimezone, DateTimeZone::listIdentifiers())){
+		$userTimezone = $tmpTimezone;
+	}
+}
+$userTimezone = new DateTimeZone($userTimezone);
+
 // get the event types
 $eventTypes = Ta_calendarHelper::getEventTypes();
 $grantPrograms = Ta_calendarHelper::getGrantPrograms();
 
 // get the current date as of midnight
-$today = new DateTime('now', $calTimezone);
+$today = new DateTime('now', $userTimezone);
 $today->setTime(0,0,0);
 
 // figure out some basic facts about the month to display
-$tmpDate = new DateTime($calDate, $calTimezone);
+$tmpDate = new DateTime($calDate, $userTimezone);
 $curDay = $tmpDate->format('j');
 $curMonth = $tmpDate->format('n');
 $tmpDate->modify('first day of this month');
@@ -53,7 +63,7 @@ $tmpDate->modify('last day of this month');
 $lastDaySQL = $tmpDate->format('Y-m-d 23:59:59');
 
 // get the calendar events from the database
-$events = Ta_calendarHelper::getEvents($permission_level, $filters, $firstDaySQL, $lastDaySQL, $calTimezone);
+$events = Ta_calendarHelper::getEvents($permission_level, $filters, $firstDaySQL, $lastDaySQL, $userTimezone);
 
 // get the user's organization
 $user_org = Ta_calendarHelper::getUserOrg();
@@ -103,17 +113,17 @@ if(empty($events)): ?>
 						<?php foreach($events as $event):
 							if($event->start->format('j') == $day): ?>
 							<div class="calendar-event <?php echo (array_key_exists($event->type, $eventTypes) ? strtolower($eventTypes[$event->type]['name']) : '') . ($event->end < $today ? ' past' : '') . ($event->approved ? ' approved' : ' unapproved'); ?>" data-event-type="<?php echo (array_key_exists($event->type, $eventTypes) ? $eventTypes[$event->type]['name'] : ''); ?>" data-event-id="<?php echo $event->id; ?>" data-title="<?php echo (array_key_exists($event->type, $eventTypes) ? $eventTypes[$event->type]['name'] : ''); ?>">
-								<span><?php echo (array_key_exists($event->type, $eventTypes) ? $eventTypes[$event->type]['name'] : ''); ?></span>
+								<span><?php echo (array_key_exists($event->type, $eventTypes) ? $eventTypes[$event->type]['name'] : '') . ($event->num_days > 1 ? ' (' . $event->num_days . ' days)' : ''); ?></span>
 							</div>
 						<?php
 								// configure the date string
 								$dateString = '';
 								if($event->start->format('Y-m-d') == $event->end->format('Y-m-d')){
 									// single day
-									$dateString = $event->start->format('M j, Y g:ia') . ' - ' . $event->end->format('g:ia') . ' ' . $event->timezone;
+									$dateString = $event->start->format('M j, Y g:ia') . ' - ' . $event->end->format('g:ia') . ' ' . $event->timezone_abbr;
 								}else{
 									// multi-day
-									$dateString = $event->start->format('M j, Y g:ia') . ' - ' . $event->end->format('M j, Y g:ia') . ' ' . $event->timezone;
+									$dateString = $event->start->format('M j, Y g:ia') . ' - ' . $event->end->format('M j, Y g:ia') . ' ' . $event->timezone_abbr;
 								}
 						
 								// create the popover content

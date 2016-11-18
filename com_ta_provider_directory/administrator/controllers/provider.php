@@ -42,7 +42,7 @@ class Ta_provider_directoryControllerProvider extends JControllerForm{
 		$userID = $user->get('id');
 			
 		// grab the id of the saved record
-        $provider_id = $item->get('id'); 
+    $provider_id = $item->get('id'); 
 		
 		/* Process Projects */
 		
@@ -52,7 +52,7 @@ class Ta_provider_directoryControllerProvider extends JControllerForm{
 		// process each project individually
 		$insert_projects = array();
 		$update_projects = array();
-		foreach($projects as $project){
+		foreach($projects as &$project){
 			// validate the data, if there is an error, state as much
 			// id
 			if(!isset($project->id)
@@ -68,20 +68,33 @@ class Ta_provider_directoryControllerProvider extends JControllerForm{
 				break;
 			}
 			// title
-			$project->title = mysql_real_escape_string($project->title);
+			$project->title = str_replace(array('&#39;','&#039;','&apos;'), "'", $project->title);
+			$project->title = str_replace(array('&#34;','&#034;','&quot;'), '"', $project->title);
 			if(empty($project->title) 
 			|| strlen($project->title) < 2 
 			|| strlen($project->title) > 255 
 			|| !preg_match('/^[a-zA-Z0-9():,\-\.\'\"\/\\\ ]*$/', $project->title)){
-				JError::raiseWarning(100, 'Unable to save project, previous entries were retained (' . __LINE__ . '). Please contact Zachary at 41966.');
+				JError::raiseWarning(100, 'Unable to save project. A valid Title is required for every project. (' . __LINE__ . ')');
 				break;
+			}else{
+				// sanitize field
+				$project->title = htmlentities($project->title, ENT_QUOTES, 'UTF-8', false);
 			}
 			// summary
-			$project->summary = mysql_real_escape_string($project->summary);
 			if(empty($project->summary) 
 			|| strlen($project->summary) < 10 
 			|| strlen($project->summary) > 1500){
-				JError::raiseWarning(100, 'Unable to save project, previous entries were retained (' . __LINE__ . '). Please contact Zachary at 41966.');
+				JError::raiseWarning(100, 'Unable to save project. A valid Summary is required for every project. (' . __LINE__ . ')');
+				break;
+			}else{
+				// sanitize field
+				$project->summary = htmlentities($project->summary, ENT_QUOTES, 'UTF-8', false);
+			}
+			// award number
+			if(empty($project->award_number) 
+			|| strlen($project->award_number) < 10 
+			|| strlen($project->award_number) > 15){
+				JError::raiseWarning(100, 'Unable to save project. A valid Award Number is required for every project. (' . __LINE__ . ')');
 				break;
 			}
 			// grant programs
@@ -111,7 +124,6 @@ class Ta_provider_directoryControllerProvider extends JControllerForm{
 						break;
 					}
 					// first_name
-					$contact->first_name = mysql_real_escape_string($contact->first_name);
 					if(empty($contact->first_name) 
 					|| strlen($contact->first_name) < 2 
 					|| strlen($contact->first_name) > 30 
@@ -119,25 +131,30 @@ class Ta_provider_directoryControllerProvider extends JControllerForm{
 						JError::raiseWarning(100, 'Unable to save contact, previous entries were retained (' . __LINE__ . '). Please contact Zachary at 41966.');
 						break;
 					}
+
 					// last_name
-					$contact->last_name = mysql_real_escape_string($contact->last_name);
+					$contact->last_name = str_replace(array('&#39;','&#039;','&apos;'), "'", $contact->last_name);
 					if(empty($contact->last_name) 
 					|| strlen($contact->last_name) < 2 
 					|| strlen($contact->last_name) > 30 
 					|| !preg_match('/^[a-zA-Z-\' \\\]*$/', $contact->last_name)){
 						JError::raiseWarning(100, 'Unable to save contact, previous entries were retained (' . __LINE__ . '). Please contact Zachary at 41966.');
 						break;
+					}else{
+						// sanitize field
+						$contact->last_name = htmlentities($contact->last_name, ENT_QUOTES, 'UTF-8', false);
 					}
+
 					// title
-					$contact->title = mysql_real_escape_string($contact->title);
 					if(isset($contact->title) 
 					&& !empty($contact->title)
 					&& (strlen($contact->title) < 2
 					|| strlen($contact->title) > 255 
-					|| !preg_match('/^[a-zA-Z()0-9 \\\]*$/', $contact->title))){
+					|| !preg_match('/^[a-zA-Z()0-9- \\\]*$/', $contact->title))){
 						JError::raiseWarning(100, 'Unable to save contact, previous entries were retained (' . __LINE__ . '). Please contact Zachary at 41966.');
 						break;
 					}
+
 					// email
 					if(isset($contact->email) 
 					&& !empty($contact->email)
@@ -167,7 +184,7 @@ class Ta_provider_directoryControllerProvider extends JControllerForm{
 			if($first_id_char == 'n'){
 				// this is a new program
 				$insert_projects[] = array(
-					'queryString' => "'" . $project->state . "',NOW(),'" . $userID . "','" . $project->title . "','" . $project->summary . "','" . $providerID . "'",
+					'queryString' => "'" . $project->state . "',NOW(),'" . $userID . "','" . $project->title . "','" . $project->summary . "','" . $providerID . "','" . $project->award_number . "'",
 					'grantPrograms' => $project->grantPrograms,
 					'contacts' => $project->contacts
 				);
@@ -176,7 +193,7 @@ class Ta_provider_directoryControllerProvider extends JControllerForm{
 				if($project->id > 0){
 					$update_projects[] = array(
 						'id' => $project->id,
-						'queryString' => "state = '" . $project->state . "', modified = NOW(), modified_by = '" . $userID . "', title = '" . $project->title . "', summary = '" . $project->summary . "'",
+						'queryString' => "state = '" . $project->state . "', modified = NOW(), modified_by = '" . $userID . "', title = '" . $project->title . "', summary = '" . $project->summary . "', award_number = '" . $project->award_number . "'",
 						'grantPrograms' => $project->grantPrograms,
 						'contacts' => $project->contacts
 					);
@@ -192,7 +209,7 @@ class Ta_provider_directoryControllerProvider extends JControllerForm{
 			// insert a single project
 			$query = $db->getQuery(true);
 			$query->insert($db->quoteName('#__tapd_provider_projects'));
-			$query->columns('state, created, created_by, title, summary, provider');
+			$query->columns('state, created, created_by, title, summary, provider, award_number');
 			$query->values($insert_project['queryString']);
 			$db->setQuery($query);
 			try{

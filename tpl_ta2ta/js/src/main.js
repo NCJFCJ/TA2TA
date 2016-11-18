@@ -4,7 +4,7 @@ var ta2ta = {}
 
 /* ----- Frameworks and Plugins ----- */
 
-//@codekit-prepend "../../plugins/jquery/jquery-1.11.1.js"
+//@codekit-prepend "../../plugins/jquery/jquery-1.12.2.js"
 //@codekit-append "../../plugins/modernizr/modernizr.js"
 //@codekit-append "../../plugins/bootstrap/js/transition.js"
 //@codekit-append "../../plugins/bootstrap/js/alert.js"
@@ -13,7 +13,7 @@ var ta2ta = {}
 //@codekit-append "../../plugins/bootstrap/js/modal.js"
 //@codekit-append "../../plugins/bootstrap/js/tooltip.js"
 //@codekit-append "../../plugins/bootstrap/js/popover.js"
-//@codekit-append "../../plugins/jquery/imgareaselect/jquery.imgareaselect.js"
+//@codekit-append "../../plugins/jquery/cropper/dist/cropper.js"
 //@codekit-append "../../plugins/jquery/jqueryfileupload/vendor/jquery.ui.widget.js"
 //@codekit-append "../../plugins/jquery/jqueryfileupload/jquery.fileupload.js"
 //@codekit-append "../../plugins/jquery/jqueryfileupload/jquery.iframe-transport.js"
@@ -120,7 +120,7 @@ jQuery(function($){
 	});
 
 	// use Chosen for all selects
-	$('select').chosen({
+	$('select:not(.no-chosen)').chosen({
 		disable_search_threshold: 10
 	});
 	
@@ -164,19 +164,23 @@ jQuery(function($){
 		// remove all classes
 		$(this).parent().children('label').removeClass('btn-danger btn-success');
 		
-		// apply a class to the clicked button
+		// apply a class to the clicked label
 		var id = $(this).attr('for');
 		if($('#' + id).val() == '0'){
-			$(this).addClass('btn-danger');
+			$(this).addClass('btn btn-danger');
 		}else if($('#' + id).val() == '1'){
-			$(this).addClass('btn-success');
+			$(this).addClass('btn btn-success');
 		}else{
-			$(this).addClass('btn-primary');
+			$(this).addClass('btn btn-primary');
 		}
 	});
 	
 	// set the default toggle
 	$('.radio.btn-group').each(function(index){
+		// set the default class for all elements
+		$(this).find('label').addClass('btn btn-default');
+
+		// hightlight the selected toggle
 		var input = $(this).children(':checked');
 		var id = input.attr('id');
 		if(input.val() == '0'){
@@ -261,7 +265,31 @@ jQuery(function($){
 			jwplayer('video').setup(options);
 		}
 	});
+
+	// row clicks check checkboxes on webinarRegSeries table
+	$('#webinarRegSeries tr td:nth-child(even), #webinarRegSeries tr td:nth-child(3)').click(function(){
+		var checkbox = $(this).parent().find(':checkbox');
+		checkbox.prop('checked', !checkbox.prop('checked'));
+	});
 });
+
+function setToggleState(id){
+	// remove all classes
+	jQuery('label[for="' + id + '"]').parent().children('label').removeClass('btn-danger btn-success');
+
+	var value = jQuery('#' + id).val();
+	alert(id);
+	alert(value);
+
+	// apply a class to the correct button
+	if(value == '0'){
+		jQuery('label[for="' + id + '"]').addClass('btn-danger');
+	}else if(value == '1'){
+		jQuery('label[for="' + id + '"]').addClass('btn-success');
+	}else{
+		jQuery('label[for="' + id + '"]').addClass('btn-primary');
+	}
+}
 
 /**
  * Function to remove formatting from a phone number

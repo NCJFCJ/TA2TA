@@ -78,11 +78,11 @@ class Ta_providersControllerSettings extends Ta_providersController{
 			return false;
 		}
 
-        // Redirect to the list screen.
-        $this->setMessage(JText::_('COM_TA_PROVIDERS_ITEM_SAVED_SUCCESSFULLY'));
-        $menu = JFactory::getApplication()->getMenu();
-        $item = $menu->getActive();
-        $this->setRedirect(JRoute::_($item->link, false));
+    // Redirect to the list screen.
+    $this->setMessage(JText::_('COM_TA_PROVIDERS_ITEM_SAVED_SUCCESSFULLY'));
+    $menu = JFactory::getApplication()->getMenu();
+    $item = $menu->getActive();
+    $this->setRedirect(JRoute::_($item->link, false));
 
 		// Flush the data from the session.
 		$app->setUserState('com_ta_providers.edit.settings.data', null);
@@ -99,16 +99,13 @@ class Ta_providersControllerSettings extends Ta_providersController{
 				// process the logo image
 
 				// grab variables
-				$x1 = filter_var($data['logox1'], FILTER_SANITIZE_NUMBER_FLOAT, FILTER_FLAG_ALLOW_FRACTION);
-				$x2 = filter_var($data['logox2'], FILTER_SANITIZE_NUMBER_FLOAT, FILTER_FLAG_ALLOW_FRACTION);
-				$y1 = filter_var($data['logoy1'], FILTER_SANITIZE_NUMBER_FLOAT, FILTER_FLAG_ALLOW_FRACTION);
-				$y2 = filter_var($data['logoy2'], FILTER_SANITIZE_NUMBER_FLOAT, FILTER_FLAG_ALLOW_FRACTION);
-				$h = filter_var($data['logoh'], FILTER_SANITIZE_NUMBER_FLOAT, FILTER_FLAG_ALLOW_FRACTION);
-				$w = filter_var($data['logow'], FILTER_SANITIZE_NUMBER_FLOAT, FILTER_FLAG_ALLOW_FRACTION);
-
+				$height = filter_var($data['logoHeight'], FILTER_SANITIZE_NUMBER_FLOAT, FILTER_FLAG_ALLOW_FRACTION);
+				$width = filter_var($data['logoWidth'], FILTER_SANITIZE_NUMBER_FLOAT, FILTER_FLAG_ALLOW_FRACTION);
+				$x = filter_var($data['logoX'], FILTER_SANITIZE_NUMBER_FLOAT, FILTER_FLAG_ALLOW_FRACTION);
+				$y = filter_var($data['logoY'], FILTER_SANITIZE_NUMBER_FLOAT, FILTER_FLAG_ALLOW_FRACTION);
+				
 				// crop and resize
-				$scale = 450 / $w;
-				$this->cropAndResizeImage($tmpPath, $tmpPath, $w, $h, $x1, $y1, $scale);
+				$this->cropAndResizeImage($tmpPath, $tmpPath, $width, $height, $x, $y);
 
 				// move the tmp file into its permenant home
 				rename($tmpPath, JPATH_SITE . '/media/com_ta_providers/logos/' . $data['logo']);
@@ -120,42 +117,41 @@ class Ta_providersControllerSettings extends Ta_providersController{
 	/**
 	 * Crops an image uploaded by the user and resizes it.
 	 */
-	protected function cropAndResizeImage($thumb_image_name, $image, $width, $height, $start_width, $start_height, $scale){
+	protected function cropAndResizeImage($thumb_image_name, $image, $width, $height, $x, $y){
 		list($imagewidth, $imageheight, $imageType) = getimagesize($image);
 		$imageType = image_type_to_mime_type($imageType);
 		
-		$newImageWidth = ceil($width * $scale);
-		$newImageHeight = ceil($height * $scale);
-		$newImage = imagecreatetruecolor($newImageWidth,$newImageHeight);
+		$newImage = imagecreatetruecolor(450,280);
 		switch($imageType){
-			case "image/gif":
+			case 'image/gif':
 				$source=imagecreatefromgif($image); 
 				break;
-		    case "image/pjpeg":
-			case "image/jpeg":
-			case "image/jpg":
+	    case 'image/pjpeg':
+			case 'image/jpeg':
+			case 'image/jpg':
 				$source=imagecreatefromjpeg($image); 
 				break;
-		    case "image/png":
-			case "image/x-png":
+	    case 'image/png':
+			case 'image/x-png':
 				$source=imagecreatefrompng($image); 
 				break;
 	  	}
-	  	imagecolortransparent($newImage, imagecolorallocatealpha($newImage, 0, 0, 0, 127));
+  	imagecolortransparent($newImage, imagecolorallocatealpha($newImage, 0, 0, 0, 127));
 		imagealphablending($newImage, false);
 		imagesavealpha($newImage, true);
-		imagecopyresampled($newImage,$source,0,0,$start_width,$start_height,$newImageWidth,$newImageHeight,$width,$height);
+
+		imagecopyresampled($newImage,$source,0,0,$x,$y,450,280,$width,$height);
 		switch($imageType){
-			case "image/gif":
-		  		imagegif($newImage,$thumb_image_name); 
+			case 'image/gif':
+	  		imagegif($newImage,$thumb_image_name); 
 				break;
-	      	case "image/pjpeg":
-			case "image/jpeg":
-			case "image/jpg":
-		  		imagejpeg($newImage,$thumb_image_name,90); 
+    	case 'image/pjpeg':
+			case 'image/jpeg':
+			case 'image/jpg':
+	  		imagejpeg($newImage,$thumb_image_name,90); 
 				break;
-			case "image/png":
-			case "image/x-png":
+			case 'image/png':
+			case 'image/x-png':
 				imagepng($newImage,$thumb_image_name);  
 				break;
 	    }

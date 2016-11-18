@@ -16,6 +16,9 @@ jimport('joomla.event.dispatcher');
 // include the admin model
 require_once(JPATH_COMPONENT_ADMINISTRATOR . '/models/provider.php');
 
+// require the helper file
+require_once(JPATH_COMPONENT . '/helpers/ta_provider_directory.php');
+
 /**
  * Ta_provider_directory model.
  */
@@ -32,23 +35,23 @@ class Ta_provider_directoryModelsettings extends JModelForm{
 	 * @since	1.6
 	 */
 	protected function populateState(){
-		$app = JFactory::getApplication('com_ta_calendar');
+		$app = JFactory::getApplication('com_ta_provider_directory');
 
 		// Load state from the request userState on edit or from the passed variable on default
-        if (JFactory::getApplication()->input->get('layout') == 'edit') {
-            $id = JFactory::getApplication()->getUserState('com_ta_calendar.edit.event.id');
-        } else {
-            $id = JFactory::getApplication()->input->get('id');
-            JFactory::getApplication()->setUserState('com_ta_calendar.edit.event.id', $id);
-        }
+    if(JFactory::getApplication()->input->get('layout') == 'edit'){
+      $id = JFactory::getApplication()->getUserState('com_ta_provider_directory.edit.event.id');
+    }else{
+      $id = JFactory::getApplication()->input->get('id');
+      JFactory::getApplication()->setUserState('com_ta_provider_directory.edit.event.id', $id);
+    }
 		$this->setState('event.id', $id);
 
 		// Load the parameters.
-        $params = $app->getParams();
-        $params_array = $params->toArray();
-        if(isset($params_array['item_id'])){
-            $this->setState('event.id', $params_array['item_id']);
-        }
+    $params = $app->getParams();
+    $params_array = $params->toArray();
+    if(isset($params_array['item_id'])){
+        $this->setState('event.id', $params_array['item_id']);
+    }
 		$this->setState('params', $params);
 
 	}
@@ -231,6 +234,7 @@ class Ta_provider_directoryModelsettings extends JModelForm{
 	 * @param org int ID of the organization
 	 */
 	protected function saveProjects($data, $org){
+		$permission_level = Ta_provider_directoryHelper::getPermissionLevel();
 		if(is_int($org) && !empty($data)){
 			// decode the project data	
 			$projects = json_decode($data);
@@ -241,12 +245,14 @@ class Ta_provider_directoryModelsettings extends JModelForm{
 			
 			foreach($projects as $project){
 				// validate the data, if there is an error, state as much
+
 				// id
 				if(!isset($project->id)
 				|| !preg_match('/^n?\d+$/', $project->id)){
 					JError::raiseWarning(100, 'Unable to save project, previous entries were retained (' . __LINE__ . ').');
 					break;
 				}
+
 				// state
 				if(!isset($project->state)
 				|| $project->state < -1 
@@ -254,27 +260,53 @@ class Ta_provider_directoryModelsettings extends JModelForm{
 					JError::raiseWarning(100, 'Unable to save project, previous entries were retained (' . __LINE__ . ').');
 					break;
 				}
-				// title
+				
+				// title			
+				$project->title = str_replace(array('&#39;','&#039;','&apos;'), "'", $project->title);
+				$project->title = str_replace(array('&#34;','&#034;','&quot;'), '"', $project->title);
 				if(empty($project->title) 
 				|| strlen($project->title) < 2 
 				|| strlen($project->title) > 255 
 				|| !preg_match('/^[a-zA-Z0-9():,\-\.\'\"\/\\\ ]*$/', $project->title)){
 					JError::raiseWarning(100, 'Unable to save project, previous entries were retained (' . __LINE__ . ').');
 					break;
+				}else{
+					// sanitize field
+					$project->title = htmlentities($project->title, ENT_QUOTES, 'UTF-8', false);
 				}
+
 				// summary
 				if(empty($project->summary) 
 				|| strlen($project->summary) < 10 
 				|| strlen($project->summary) > 1500){
 					JError::raiseWarning(100, 'Unable to save project, previous entries were retained (' . __LINE__ . ').');
 					break;
-				}
-				// grant programs
-				if(empty($project->grantPrograms)){
-					$project->grantPrograms = array();
 				}else{
-					$project->grantPrograms = array_filter($project->grantPrograms, 'ctype_digit');
+					// sanitize field
+					$project->summary = htmlentities($project->summary, ENT_QUOTES, 'UTF-8', false);
 				}
+
+				if($permission_level == 2){
+					// award number
+					if(empty($project->award_number) 
+					|| strlen($project->award_number) < 15
+					|| strlen($project->award_number) > 15 
+					|| !preg_match('/^20[0-9]{2}-[A-Z]{2}-[A-Z]{2}-[A-Z][0-9]{3}$/', $project->award_number)){
+						JError::raiseWarning(100, 'Unable to save project, award number invalid, previous entries were retained (' . __LINE__ . ').');
+						break;
+					}
+
+					// grant programs
+					if(empty($project->grantPrograms)){
+						$project->grantPrograms = array();
+					}else{
+						$project->grantPrograms = array_filter($project->grantPrograms, 'ctype_digit');
+					}
+				}else{
+					unset($project->award_number);
+					unset($project->grantPrograms);
+				}
+
 				// contacts
 				if(empty($project->contacts)){
 					$project->contacts = array();
@@ -304,12 +336,16 @@ class Ta_provider_directoryModelsettings extends JModelForm{
 							break;
 						}
 						// last_name
+						$contact->last_name = str_replace(array('&#39;','&#039;','&apos;'), "'", $contact->last_name);
 						if(empty($contact->last_name) 
 						|| strlen($contact->last_name) < 2 
 						|| strlen($contact->last_name) > 30 
 						|| !preg_match('/^[a-zA-Z-\' \\\]*$/', $contact->last_name)){
 							JError::raiseWarning(100, 'Unable to save contact, previous entries were retained (' . __LINE__ . ').');
 							break;
+						}else{
+							// sanitize field
+							$contact->last_name = htmlentities($contact->last_name, ENT_QUOTES, 'UTF-8', false);
 						}
 						// title
 						//$contact->title = mysql_real_escape_string($contact->title);
@@ -380,7 +416,6 @@ class Ta_provider_directoryModelsettings extends JModelForm{
 						$update_projects[] = array(
 							'contacts' => $project->contacts,
 							'id' => $project->id,
-							'grantPrograms' => $project->grantPrograms,
 							'queryFields' => array(
 								$db->quoteName('state') . '=' . $db->quote($project->state),
 								$db->quoteName('modified') . '=NOW()',
@@ -389,6 +424,10 @@ class Ta_provider_directoryModelsettings extends JModelForm{
 								$db->quoteName('summary') . '=' . $db->quote($project->summary)
 							)
 						);
+						if($permission_level == 2){
+							$update_projects['grantPrograms'] = $project->grantPrograms;
+							$update_projects['queryFields'][] = $db->quoteName('award_number') . '=' . $db->quote($project->award_number);
+						}
 					}
 				}
 				
@@ -446,8 +485,10 @@ class Ta_provider_directoryModelsettings extends JModelForm{
 					}
 					
 					// store grant programs
-					$this->storeGrantPrograms($update_project['id'], $update_project['grantPrograms']);
-					
+					if($permission_level == 2){
+						$this->storeGrantPrograms($update_project['id'], $update_project['grantPrograms']);
+					}
+
 					// store contacts
 					$this->storeContacts($update_project['id'], $update_project['contacts']);
 				}

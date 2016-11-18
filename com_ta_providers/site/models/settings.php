@@ -15,9 +15,9 @@ jimport('joomla.event.dispatcher');
  * TA Provider Settings model
  */
 class Ta_providersModelSettings extends JModelForm{
-    
-    var $_item = null;
-    var $user = null;
+  
+  var $_item = null;
+  var $user = null;
     
 	/**
 	 * Method to auto-populate the model state.
@@ -30,8 +30,8 @@ class Ta_providersModelSettings extends JModelForm{
 		$app = JFactory::getApplication('com_ta_providers');
 
 		// Load the parameters.
-        $params = $app->getParams();
-        $params_array = $params->toArray();
+    $params = $app->getParams();
+    $params_array = $params->toArray();
 		$this->setState('params', $params);
 	}
         
@@ -149,11 +149,11 @@ class Ta_providersModelSettings extends JModelForm{
 	 */
 	protected function loadFormData(){
 		$data = JFactory::getApplication()->getUserState('com_ta_providers.edit.settings.data', array());
-        if (empty($data)) {
-            $data = $this->getData();
-        }
+    if(empty($data)){
+      $data = $this->getData();
+    }
         
-        return $data;
+    return $data;
 	}
 
 	/**
@@ -171,9 +171,9 @@ class Ta_providersModelSettings extends JModelForm{
 
 		// check if the organization name changed by first grabbing the current name
 		$db = $this->getDbo();
-        $query = $db->getQuery(true);
-        $query->select($db->quoteName('name'));
-        $query->from($db->quoteName('#__ta_providers'));
+    $query = $db->getQuery(true);
+    $query->select($db->quoteName('name'));
+    $query->from($db->quoteName('#__ta_providers'));
 		$query->where($db->quoteName('id') . '=' . $org);
 		$db->setQuery($query);
 		$oldOrgName = $db->loadResult();
@@ -187,8 +187,8 @@ class Ta_providersModelSettings extends JModelForm{
 			// set the sender to the site default
 			$config = JFactory::getConfig();
 			$sender = array(
-				$config->get('config.mailfrom'),
-				$config->get('config.fromname')
+				$config->get('mailfrom'),
+				$config->get('fromname')
 			);
 			$mailer->setSender($sender);
 
@@ -199,19 +199,17 @@ class Ta_providersModelSettings extends JModelForm{
 			$mailer->Send();
 		}
 
-
-
 		// grab the database object and begin the query
-        $query = $db->getQuery(true);
+    $query = $db->getQuery(true);
 
-        // fields to update
-        $fields = array(
-        	$db->quoteName('name') . '=' . $db->quote($data['name']),
-        	$db->quoteName('website') . '=' . $db->quote($data['website']),
-        	$db->quoteName('logo') . '=' . $db->quote($data['logo']),
-        	$db->quoteName('modified') . '=' . $db->quote(gmdate('Y-m-d H:i:s')),
-        	$db->quoteName('modified_by') . '=' . $db->quote($this->getUserId())
-        );
+    // fields to update
+    $fields = array(
+    	$db->quoteName('name') . '=' . $db->quote($data['name']),
+    	$db->quoteName('website') . '=' . $db->quote($data['website']),
+    	$db->quoteName('logo') . '=' . $db->quote($data['logo']),
+    	$db->quoteName('modified') . '=' . $db->quote(gmdate('Y-m-d H:i:s')),
+    	$db->quoteName('modified_by') . '=' . $db->quote($this->getUserId())
+    );
 
 		// construct the query
 		$query->update($db->quoteName('#__ta_providers'));

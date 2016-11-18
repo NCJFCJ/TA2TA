@@ -10,9 +10,276 @@
 // no direct access
 defined('_JEXEC') or die;
 
+// require the helper file
+require_once(JPATH_COMPONENT . '/helpers/ta_provider_directory.php');
+
+/* Get the permission level
+ * 0 = Public (view only)
+ * 1 = TA Provider (restricted to adding and editing own)
+ * 2 = Administrator (full access and ability to edit)
+ */
+$permission_level = Ta_provider_directoryHelper::getPermissionLevel();
+
+// before continuing, we need to handle quotes in the PHP data
+foreach($this->listing->projects as &$project){
+    $project->title = htmlentities($project->title, ENT_QUOTES, 'UTF-8', false);
+    $project->title = str_replace('&', '&amp;', $project->title); // I have no idea why this is necessary or why it works.
+    $project->summary = htmlentities($project->summary, ENT_QUOTES, 'UTF-8', false);
+    $project->summary = str_replace('&', '&amp;', $project->summary); // I have no idea why this is necessary or why it works.
+    foreach($project->contacts as &$contact){
+        $contact->first_name = htmlentities($contact->first_name, ENT_QUOTES, 'UTF-8', false);
+        $contact->first_name = str_replace('&', '&amp;', $contact->first_name); // I have no idea why this is necessary or why it works.
+        $contact->last_name = htmlentities($contact->last_name, ENT_QUOTES, 'UTF-8', false);
+        $contact->last_name = str_replace('&', '&amp;', $contact->last_name); // I have no idea why this is necessary or why it works.
+        $contact->title = htmlentities($contact->title, ENT_QUOTES, 'UTF-8', false);
+        $contact->title = str_replace('&', '&amp;', $contact->title); // I have no idea why this is necessary or why it works.
+    }
+}
+
 JHtml::_('behavior.keepalive');
 ?>
-<script type="text/javascript">
+<script type="text/javascript">/**
+ * A Javascript object to encode and/or decode html characters using HTML or Numeric entities that handles double or partial encoding
+ * Author: R Reid
+ * source: http://www.strictly-software.com/htmlencode
+ * Licences: GPL, The MIT License (MIT)
+ * Copyright: (c) 2011 Robert Reid - Strictly-Software.com
+ *
+ * Permission is hereby granted, free of charge, to any person obtaining a copy of this software and associated documentation files (the "Software"), to deal in the Software without restriction, including without limitation the rights to use, copy, modify, merge, publish, distribute, sublicense, and/or sell copies of the Software, and to permit persons to whom the Software is furnished to do so, subject to the following conditions:
+ * The above copyright notice and this permission notice shall be included in all copies or substantial portions of the Software.
+ * THE SOFTWARE IS PROVIDED "AS IS", WITHOUT WARRANTY OF ANY KIND, EXPRESS OR IMPLIED, INCLUDING BUT NOT LIMITED TO THE WARRANTIES OF MERCHANTABILITY, FITNESS FOR A PARTICULAR PURPOSE AND NONINFRINGEMENT. IN NO EVENT SHALL THE AUTHORS OR COPYRIGHT HOLDERS BE LIABLE FOR ANY CLAIM, DAMAGES OR OTHER LIABILITY, WHETHER IN AN ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING FROM, OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE SOFTWARE.
+ * 
+ * Revision:
+ *  2011-07-14, Jacques-Yves Bleau: 
+ *       - fixed conversion error with capitalized accentuated characters
+ *       + converted arr1 and arr2 to object property to remove redundancy
+ *
+ * Revision:
+ *  2011-11-10, Ce-Yi Hio: 
+ *       - fixed conversion error with a number of capitalized entity characters
+ *
+ * Revision:
+ *  2011-11-10, Rob Reid: 
+ *       - changed array format
+ *
+ * Revision:
+ *  2012-09-23, Alex Oss: 
+ *       - replaced string concatonation in numEncode with string builder, push and join for peformance with ammendments by Rob Reid
+ */
+Encoder = {
+
+    // When encoding do we convert characters into html or numerical entities
+    EncodeType : "entity",  // entity OR numerical
+
+    isEmpty : function(val){
+        if(val){
+            return ((val===null) || val.length==0 || /^\s+$/.test(val));
+        }else{
+            return true;
+        }
+    },
+    
+    // arrays for conversion from HTML Entities to Numerical values
+    arr1: ['&nbsp;','&iexcl;','&cent;','&pound;','&curren;','&yen;','&brvbar;','&sect;','&uml;','&copy;','&ordf;','&laquo;','&not;','&shy;','&reg;','&macr;','&deg;','&plusmn;','&sup2;','&sup3;','&acute;','&micro;','&para;','&middot;','&cedil;','&sup1;','&ordm;','&raquo;','&frac14;','&frac12;','&frac34;','&iquest;','&Agrave;','&Aacute;','&Acirc;','&Atilde;','&Auml;','&Aring;','&AElig;','&Ccedil;','&Egrave;','&Eacute;','&Ecirc;','&Euml;','&Igrave;','&Iacute;','&Icirc;','&Iuml;','&ETH;','&Ntilde;','&Ograve;','&Oacute;','&Ocirc;','&Otilde;','&Ouml;','&times;','&Oslash;','&Ugrave;','&Uacute;','&Ucirc;','&Uuml;','&Yacute;','&THORN;','&szlig;','&agrave;','&aacute;','&acirc;','&atilde;','&auml;','&aring;','&aelig;','&ccedil;','&egrave;','&eacute;','&ecirc;','&euml;','&igrave;','&iacute;','&icirc;','&iuml;','&eth;','&ntilde;','&ograve;','&oacute;','&ocirc;','&otilde;','&ouml;','&divide;','&oslash;','&ugrave;','&uacute;','&ucirc;','&uuml;','&yacute;','&thorn;','&yuml;','&quot;','&amp;','&lt;','&gt;','&OElig;','&oelig;','&Scaron;','&scaron;','&Yuml;','&circ;','&tilde;','&ensp;','&emsp;','&thinsp;','&zwnj;','&zwj;','&lrm;','&rlm;','&ndash;','&mdash;','&lsquo;','&rsquo;','&sbquo;','&ldquo;','&rdquo;','&bdquo;','&dagger;','&Dagger;','&permil;','&lsaquo;','&rsaquo;','&euro;','&fnof;','&Alpha;','&Beta;','&Gamma;','&Delta;','&Epsilon;','&Zeta;','&Eta;','&Theta;','&Iota;','&Kappa;','&Lambda;','&Mu;','&Nu;','&Xi;','&Omicron;','&Pi;','&Rho;','&Sigma;','&Tau;','&Upsilon;','&Phi;','&Chi;','&Psi;','&Omega;','&alpha;','&beta;','&gamma;','&delta;','&epsilon;','&zeta;','&eta;','&theta;','&iota;','&kappa;','&lambda;','&mu;','&nu;','&xi;','&omicron;','&pi;','&rho;','&sigmaf;','&sigma;','&tau;','&upsilon;','&phi;','&chi;','&psi;','&omega;','&thetasym;','&upsih;','&piv;','&bull;','&hellip;','&prime;','&Prime;','&oline;','&frasl;','&weierp;','&image;','&real;','&trade;','&alefsym;','&larr;','&uarr;','&rarr;','&darr;','&harr;','&crarr;','&lArr;','&uArr;','&rArr;','&dArr;','&hArr;','&forall;','&part;','&exist;','&empty;','&nabla;','&isin;','&notin;','&ni;','&prod;','&sum;','&minus;','&lowast;','&radic;','&prop;','&infin;','&ang;','&and;','&or;','&cap;','&cup;','&int;','&there4;','&sim;','&cong;','&asymp;','&ne;','&equiv;','&le;','&ge;','&sub;','&sup;','&nsub;','&sube;','&supe;','&oplus;','&otimes;','&perp;','&sdot;','&lceil;','&rceil;','&lfloor;','&rfloor;','&lang;','&rang;','&loz;','&spades;','&clubs;','&hearts;','&diams;'],
+    arr2: ['&#160;','&#161;','&#162;','&#163;','&#164;','&#165;','&#166;','&#167;','&#168;','&#169;','&#170;','&#171;','&#172;','&#173;','&#174;','&#175;','&#176;','&#177;','&#178;','&#179;','&#180;','&#181;','&#182;','&#183;','&#184;','&#185;','&#186;','&#187;','&#188;','&#189;','&#190;','&#191;','&#192;','&#193;','&#194;','&#195;','&#196;','&#197;','&#198;','&#199;','&#200;','&#201;','&#202;','&#203;','&#204;','&#205;','&#206;','&#207;','&#208;','&#209;','&#210;','&#211;','&#212;','&#213;','&#214;','&#215;','&#216;','&#217;','&#218;','&#219;','&#220;','&#221;','&#222;','&#223;','&#224;','&#225;','&#226;','&#227;','&#228;','&#229;','&#230;','&#231;','&#232;','&#233;','&#234;','&#235;','&#236;','&#237;','&#238;','&#239;','&#240;','&#241;','&#242;','&#243;','&#244;','&#245;','&#246;','&#247;','&#248;','&#249;','&#250;','&#251;','&#252;','&#253;','&#254;','&#255;','&#34;','&#38;','&#60;','&#62;','&#338;','&#339;','&#352;','&#353;','&#376;','&#710;','&#732;','&#8194;','&#8195;','&#8201;','&#8204;','&#8205;','&#8206;','&#8207;','&#8211;','&#8212;','&#8216;','&#8217;','&#8218;','&#8220;','&#8221;','&#8222;','&#8224;','&#8225;','&#8240;','&#8249;','&#8250;','&#8364;','&#402;','&#913;','&#914;','&#915;','&#916;','&#917;','&#918;','&#919;','&#920;','&#921;','&#922;','&#923;','&#924;','&#925;','&#926;','&#927;','&#928;','&#929;','&#931;','&#932;','&#933;','&#934;','&#935;','&#936;','&#937;','&#945;','&#946;','&#947;','&#948;','&#949;','&#950;','&#951;','&#952;','&#953;','&#954;','&#955;','&#956;','&#957;','&#958;','&#959;','&#960;','&#961;','&#962;','&#963;','&#964;','&#965;','&#966;','&#967;','&#968;','&#969;','&#977;','&#978;','&#982;','&#8226;','&#8230;','&#8242;','&#8243;','&#8254;','&#8260;','&#8472;','&#8465;','&#8476;','&#8482;','&#8501;','&#8592;','&#8593;','&#8594;','&#8595;','&#8596;','&#8629;','&#8656;','&#8657;','&#8658;','&#8659;','&#8660;','&#8704;','&#8706;','&#8707;','&#8709;','&#8711;','&#8712;','&#8713;','&#8715;','&#8719;','&#8721;','&#8722;','&#8727;','&#8730;','&#8733;','&#8734;','&#8736;','&#8743;','&#8744;','&#8745;','&#8746;','&#8747;','&#8756;','&#8764;','&#8773;','&#8776;','&#8800;','&#8801;','&#8804;','&#8805;','&#8834;','&#8835;','&#8836;','&#8838;','&#8839;','&#8853;','&#8855;','&#8869;','&#8901;','&#8968;','&#8969;','&#8970;','&#8971;','&#9001;','&#9002;','&#9674;','&#9824;','&#9827;','&#9829;','&#9830;'],
+        
+    // Convert HTML entities into numerical entities
+    HTML2Numerical : function(s){
+        return this.swapArrayVals(s,this.arr1,this.arr2);
+    },  
+
+    // Convert Numerical entities into HTML entities
+    NumericalToHTML : function(s){
+        return this.swapArrayVals(s,this.arr2,this.arr1);
+    },
+
+
+    // Numerically encodes all unicode characters
+    numEncode : function(s){ 
+        if(this.isEmpty(s)) return ""; 
+
+        var a = [],
+            l = s.length; 
+        
+        for (var i=0;i<l;i++){ 
+            var c = s.charAt(i); 
+            if (c < " " || c > "~"){ 
+                a.push("&#"); 
+                a.push(c.charCodeAt()); //numeric value of code point 
+                a.push(";"); 
+            }else{ 
+                a.push(c); 
+            } 
+        } 
+        
+        return a.join("");  
+    }, 
+    
+    // HTML Decode numerical and HTML entities back to original values
+    htmlDecode : function(s){
+
+        var c,m,d = s;
+        
+        if(this.isEmpty(d)) return "";
+
+        // convert HTML entites back to numerical entites first
+        d = this.HTML2Numerical(d);
+        
+        // look for numerical entities &#34;
+        arr=d.match(/&#[0-9]{1,5};/g);
+        
+        // if no matches found in string then skip
+        if(arr!=null){
+            for(var x=0;x<arr.length;x++){
+                m = arr[x];
+                c = m.substring(2,m.length-1); //get numeric part which is refernce to unicode character
+                // if its a valid number we can decode
+                if(c >= -32768 && c <= 65535){
+                    // decode every single match within string
+                    d = d.replace(m, String.fromCharCode(c));
+                }else{
+                    d = d.replace(m, ""); //invalid so replace with nada
+                }
+            }           
+        }
+
+        return d;
+    },      
+
+    // encode an input string into either numerical or HTML entities
+    htmlEncode : function(s,dbl){
+            
+        if(this.isEmpty(s)) return "";
+
+        // do we allow double encoding? E.g will &amp; be turned into &amp;amp;
+        dbl = dbl || false; //default to prevent double encoding
+        
+        // if allowing double encoding we do ampersands first
+        if(dbl){
+            if(this.EncodeType=="numerical"){
+                s = s.replace(/&/g, "&#38;");
+            }else{
+                s = s.replace(/&/g, "&amp;");
+            }
+        }
+
+        // convert the xss chars to numerical entities ' " < >
+        s = this.XSSEncode(s,false);
+        
+        if(this.EncodeType=="numerical" || !dbl){
+            // Now call function that will convert any HTML entities to numerical codes
+            s = this.HTML2Numerical(s);
+        }
+
+        // Now encode all chars above 127 e.g unicode
+        s = this.numEncode(s);
+
+        // now we know anything that needs to be encoded has been converted to numerical entities we
+        // can encode any ampersands & that are not part of encoded entities
+        // to handle the fact that I need to do a negative check and handle multiple ampersands &&&
+        // I am going to use a placeholder
+
+        // if we don't want double encoded entities we ignore the & in existing entities
+        if(!dbl){
+            s = s.replace(/&#/g,"##AMPHASH##");
+        
+            if(this.EncodeType=="numerical"){
+                s = s.replace(/&/g, "&#38;");
+            }else{
+                s = s.replace(/&/g, "&amp;");
+            }
+
+            s = s.replace(/##AMPHASH##/g,"&#");
+        }
+        
+        // replace any malformed entities
+        s = s.replace(/&#\d*([^\d;]|$)/g, "$1");
+
+        if(!dbl){
+            // safety check to correct any double encoded &amp;
+            s = this.correctEncoding(s);
+        }
+
+        // now do we need to convert our numerical encoded string into entities
+        if(this.EncodeType=="entity"){
+            s = this.NumericalToHTML(s);
+        }
+
+        return s;                   
+    },
+
+    // Encodes the basic 4 characters used to malform HTML in XSS hacks
+    XSSEncode : function(s,en){
+        if(!this.isEmpty(s)){
+            en = en || true;
+            // do we convert to numerical or html entity?
+            if(en){
+                s = s.replace(/\'/g,"&#39;"); //no HTML equivalent as &apos is not cross browser supported
+                s = s.replace(/\"/g,"&quot;");
+                s = s.replace(/</g,"&lt;");
+                s = s.replace(/>/g,"&gt;");
+            }else{
+                s = s.replace(/\'/g,"&#39;"); //no HTML equivalent as &apos is not cross browser supported
+                s = s.replace(/\"/g,"&#34;");
+                s = s.replace(/</g,"&#60;");
+                s = s.replace(/>/g,"&#62;");
+            }
+            return s;
+        }else{
+            return "";
+        }
+    },
+
+    // returns true if a string contains html or numerical encoded entities
+    hasEncoded : function(s){
+        if(/&#[0-9]{1,5};/g.test(s)){
+            return true;
+        }else if(/&[A-Z]{2,6};/gi.test(s)){
+            return true;
+        }else{
+            return false;
+        }
+    },
+
+    // will remove any unicode characters
+    stripUnicode : function(s){
+        return s.replace(/[^\x20-\x7E]/g,"");
+        
+    },
+
+    // corrects any double encoded &amp; entities e.g &amp;amp;
+    correctEncoding : function(s){
+        return s.replace(/(&amp;)(amp;)+/,"$1");
+    },
+
+
+    // Function to loop through an array swaping each item with the value from another array e.g swap HTML entities with Numericals
+    swapArrayVals : function(s,arr1,arr2){
+        if(this.isEmpty(s)) return "";
+        var re;
+        if(arr1 && arr2){
+            //ShowDebug("in swapArrayVals arr1.length = " + arr1.length + " arr2.length = " + arr2.length)
+            // array lengths must match
+            if(arr1.length == arr2.length){
+                for(var x=0,i=arr1.length;x<i;x++){
+                    re = new RegExp(arr1[x], 'g');
+                    s = s.replace(re,arr2[x]); //swap arr1 item with matching item from arr2    
+                }
+            }
+        }
+        return s;
+    },
+
+    inArray : function( item, arr ) {
+        for ( var i = 0, x = arr.length; i < x; i++ ){
+            if ( arr[i] === item ){
+                return i;
+            }
+        }
+        return -1;
+    }
+
+}
     jQuery(function($){
     	// draw the table 
     	reloadProjectTable();	
@@ -53,6 +320,19 @@ JHtml::_('behavior.keepalive');
             if(!ta2ta.validate.hasValue($(this))
             || !ta2ta.validate.minLength($(this),20)
             || !ta2ta.validate.maxLength($(this),1500)){
+                ta2ta.bootstrapHelper.showValidationState($(this), 'error', true);
+            }else{
+                ta2ta.bootstrapHelper.showValidationState($(this), 'success', true);
+            }
+        });
+
+        // award_number
+        var award_number_regex = /^20[0-9]{2}-[A-Z]{2}-[A-Z]{2}-[A-Z][0-9]{3}$/;
+        $('#jform_project_award_number').change(function(){
+            if(!ta2ta.validate.hasValue($(this))
+            || !ta2ta.validate.minLength($(this),15)
+            || !ta2ta.validate.maxLength($(this),15)
+            || !ta2ta.validate.regex($(this), award_number_regex)){
                 ta2ta.bootstrapHelper.showValidationState($(this), 'error', true);
             }else{
                 ta2ta.bootstrapHelper.showValidationState($(this), 'success', true);
@@ -152,7 +432,7 @@ JHtml::_('behavior.keepalive');
     	// clear old data
     	jQuery('#jform_project_state').val('1');
     	jQuery('#jform_project_state').trigger('liszt:updated');
-    	jQuery('#jform_project_title, #jform_project_summary, #jform_project_contacts').val('');
+    	jQuery('#jform_project_title, #jform_project_summary, #jform_project_award_number, #jform_project_contacts').val('');
     	jQuery('#projectGrants input:checked').removeAttr('checked');
     	
     	// clear any old alerts
@@ -273,9 +553,9 @@ JHtml::_('behavior.keepalive');
     			if(contact.id == id){
     				jQuery('#jform_contact_state').val(contact.state);
     				jQuery('#jform_contact_state').trigger('liszt:updated');
-    				jQuery('#jform_contact_first_name').val(contact.first_name);
-					jQuery('#jform_contact_last_name').val(contact.last_name);
-					jQuery('#jform_contact_title').val(contact.title);
+    				jQuery('#jform_contact_first_name').val(Encoder.htmlDecode(contact.first_name));
+					jQuery('#jform_contact_last_name').val(Encoder.htmlDecode(contact.last_name));
+					jQuery('#jform_contact_title').val(Encoder.htmlDecode(contact.title));
     				jQuery('#jform_contact_phone').val(formatPhoneNumber(contact.phone));
 					jQuery('#jform_contact_email').val(contact.email);
 	    			
@@ -317,18 +597,27 @@ JHtml::_('behavior.keepalive');
     			if(project.id == id){
     				jQuery('#jform_project_state').val(project.state);
     				jQuery('#jform_project_state').trigger('liszt:updated');
-    				jQuery('#jform_project_title').val(project.title);
-    				jQuery('#jform_project_summary').val(project.summary);
-    				jQuery('#jform_project_contacts').val(JSON.stringify(project.contacts));
-    				if(project.grantPrograms instanceof Array){
-	    				jQuery('#projectGrants input').each(function(){
-	    					// check the appropriate grant programs
-							if(jQuery.inArray(jQuery(this).val(), project.grantPrograms) >= 0){
-	    						jQuery(this).attr('checked', true);
-	    					}
-	    				});
-	    			}
-	    			// update the contact table
+    				jQuery('#jform_project_title').val(Encoder.htmlDecode(project.title));
+    				jQuery('#jform_project_summary').val(Encoder.htmlDecode(project.summary));
+                    <?php if($permission_level == 2): ?>
+                    jQuery('#jform_project_award_number').val(project.award_number);
+                    if(project.grantPrograms instanceof Array){
+                        jQuery('#projectGrants input').each(function(){
+                            // check the appropriate grant programs
+                            if(jQuery.inArray(jQuery(this).val(), project.grantPrograms) >= 0){
+                                jQuery(this).attr('checked', true);
+                            }
+                        });
+                    }
+    				<?php endif; ?>
+                    jQuery('#jform_project_contacts').val(JSON.stringify(project.contacts));
+    				
+                    <?php if($permission_level < 2): ?>
+                    jQuery("#jform_project_award_number").closest('.form-group').hide();
+                    jQuery("#projectGrants").closest('.panel').hide();
+                    <?php endif; ?>
+	    			
+                    // update the contact table
 	    			if(project.contacts == ''){
 	    				jQuery('#contactsList thead').hide();
 	    			}else{
@@ -343,6 +632,8 @@ JHtml::_('behavior.keepalive');
     	}else{
     		jQuery('#projectFormModal .modal-header h3').text('Add Project');
     		jQuery('#projectSaveBtn').text('Save');
+            jQuery("#jform_project_award_number").closest('.form-group').show();
+            jQuery("#projectGrants").closest('.panel').show();
     		var contacts = new Array();
     		jQuery('#jform_project_contacts').val(JSON.stringify(contacts));    				
     		reloadContactTable(contacts);
@@ -375,7 +666,7 @@ JHtml::_('behavior.keepalive');
     			rows = '';
     			firstDrawn = true;
     		}
-    		rows += '<tr class="row' + classInt + '"><td><input id="cb' + contact.id + '" type="checkbox" value="1" name="cid[]"></input></td><td>' + (contact.state == 1 ? '' : '<span class="icomoon-remove"></span> ') + '<a onclick="openContactModal(\'' + contact.id + '\');" href="#">' + contact.first_name + ' ' + contact.last_name + '</a></td><td>' + contact.id + '</td></tr>';
+    		rows += '<tr class="row' + classInt + '"><td><input id="cb' + contact.id + '" type="checkbox" value="1" name="cid[]"></input></td><td>' + (contact.state == 1 ? '' : '<span class="icomoon-remove"></span> ') + '<a onclick="openContactModal(\'' + contact.id + '\');" href="javascript:void(0);">' + contact.first_name + ' ' + contact.last_name + '</a></td><td>' + contact.id + '</td></tr>';
     		classInt = (classInt ? 0 : 1);
 		});
 		
@@ -412,7 +703,7 @@ JHtml::_('behavior.keepalive');
     	var classInt = 0;
     	var firstDrawn = false;
     	var table = jQuery('#projectsList');
-    	var rows = '<tr><td colspan="5" class="center no-records">There are no projects associated with this TA Provider. <a onclick="openProjectModal(0);">Try adding one.</a></td></tr>';
+    	var rows = '<tr><td colspan="5" class="center no-records">There are no projects associated with this TA Provider. <a href="javascript:void(0);" onclick="openProjectModal(0);">Try adding one.</a></td></tr>';
     	
     	// check if projects has a value, and if not grab it from the form
     	if(!projects){
@@ -425,7 +716,7 @@ JHtml::_('behavior.keepalive');
     			rows = '';
     			firstDrawn = true;
     		}
-    		rows += '<tr class="row' + classInt + '"><td><input id="cb' + project.id + '" type="checkbox" value="1" name="cid[]"></input></td><td>' + (project.state == 1 ? '' : '<span class="icomoon-remove"></span> ') + '<a onclick="openProjectModal(\'' + project.id + '\');" href="#">' + project.title + '</a></td><td>' + project.created_by + '</td><td>' + project.id + '</td></tr>';
+    		rows += '<tr class="row' + classInt + '"><td><input id="cb' + project.id + '" type="checkbox" value="1" name="cid[]"></input></td><td>' + (project.state == 1 ? '' : '<span class="icomoon-remove"></span> ') + '<a href="javascript:void(0);" onclick="openProjectModal(\'' + project.id + '\');">' + project.title + '</a></td><td>' + project.created_by + '</td><td>' + project.id + '</td></tr>';
     		classInt = (classInt ? 0 : 1);
 		});
 		
@@ -663,20 +954,20 @@ JHtml::_('behavior.keepalive');
         if(ta2ta.validate.hasValue(jQuery('#jform_project_title'), 1)){
             // min length
             if(!ta2ta.validate.minLength(jQuery('#jform_project_title'),2,1)){
-                errors.push('<?php echo JText::sprintf('COM_TA_PROVIDER_DIRECTORY_FORM_MIN_LENGTH', JText::_('COM_TA_PROVIDER_DIRECTORY_FORM_PROJECT_TITLE')); ?>');
+                errors.push('<?php echo JText::sprintf('COM_TA_PROVIDER_DIRECTORY_FORM_MIN_LENGTH', JText::_('COM_TA_PROVIDER_DIRECTORY_FORM_PROJECT_TITLE_LBL')); ?>');
             }
 
             // max length
             if(!ta2ta.validate.maxLength(jQuery('#jform_project_title'),255,1)){
-                errors.push('<?php echo JText::sprintf('COM_TA_PROVIDER_DIRECTORY_FORM_MIN_LENGTH', JText::_('COM_TA_PROVIDER_DIRECTORY_FORM_PROJECT_TITLE')); ?>');
+                errors.push('<?php echo JText::sprintf('COM_TA_PROVIDER_DIRECTORY_FORM_MIN_LENGTH', JText::_('COM_TA_PROVIDER_DIRECTORY_FORM_PROJECT_TITLE_LBL')); ?>');
             }
 
             // is title
             if(!ta2ta.validate.title(jQuery('#jform_project_title'),1)){
-                errors.push('<?php echo JText::sprintf('COM_TA_PROVIDER_DIRECTORY_FORM_INVALID', JText::_('COM_TA_PROVIDER_DIRECTORY_FORM_PROJECT_TITLE')); ?>');
+                errors.push('<?php echo JText::sprintf('COM_TA_PROVIDER_DIRECTORY_FORM_INVALID', JText::_('COM_TA_PROVIDER_DIRECTORY_FORM_PROJECT_TITLE_LBL')); ?>');
             }
         }else{
-            errors.push('<?php echo JText::sprintf('COM_TA_PROVIDER_DIRECTORY_FORM_REQUIRED', JText::_('COM_TA_PROVIDER_DIRECTORY_FORM_PROJECT_TITLE')); ?>');
+            errors.push('<?php echo JText::sprintf('COM_TA_PROVIDER_DIRECTORY_FORM_REQUIRED', JText::_('COM_TA_PROVIDER_DIRECTORY_FORM_PROJECT_TITLE_LBL')); ?>');
         }
 
         // summary
@@ -684,15 +975,15 @@ JHtml::_('behavior.keepalive');
         if(ta2ta.validate.hasValue(jQuery('#jform_project_summary'), 1)){
             // min length
             if(!ta2ta.validate.minLength(jQuery('#jform_project_summary'),20,1)){
-                errors.push('<?php echo JText::sprintf('COM_TA_PROVIDER_DIRECTORY_FORM_MIN_LENGTH', JText::_('COM_TA_PROVIDER_DIRECTORY_FORM_PROJECT_SUMMARY')); ?>');
+                errors.push('<?php echo JText::sprintf('COM_TA_PROVIDER_DIRECTORY_FORM_MIN_LENGTH', JText::_('COM_TA_PROVIDER_DIRECTORY_FORM_PROJECT_SUMMARY_LBL')); ?>');
             }
 
             // max length
             if(!ta2ta.validate.maxLength(jQuery('#jform_project_summary'),1500,1)){
-                errors.push('<?php echo JText::sprintf('COM_TA_PROVIDER_DIRECTORY_FORM_MIN_LENGTH', JText::_('COM_TA_PROVIDER_DIRECTORY_FORM_PROJECT_SUMMARY')); ?>');
+                errors.push('<?php echo JText::sprintf('COM_TA_PROVIDER_DIRECTORY_FORM_MIN_LENGTH', JText::_('COM_TA_PROVIDER_DIRECTORY_FORM_PROJECT_SUMMARY_LBL')); ?>');
             }
         }else{
-            errors.push('<?php echo JText::sprintf('COM_TA_PROVIDER_DIRECTORY_FORM_REQUIRED', JText::_('COM_TA_PROVIDER_DIRECTORY_FORM_PROJECT_SUMMARY')); ?>');
+            errors.push('<?php echo JText::sprintf('COM_TA_PROVIDER_DIRECTORY_FORM_REQUIRED', JText::_('COM_TA_PROVIDER_DIRECTORY_FORM_PROJECT_SUMMARY_LBL')); ?>');
         }
     	
     	// grant programs
@@ -701,9 +992,9 @@ JHtml::_('behavior.keepalive');
     		data.grantPrograms.push(jQuery(this).val());
     	});
     	
-    	if(data.grantPrograms.length == 0){
+    	/*if(data.grantPrograms.length == 0){
             errors.push('<?php echo JText::_('COM_TA_PROVIDER_DIRECTORY_GRANT_PROGRAM_REQUIRED'); ?>');
-    	}
+    	}*/
     	
     	// contacts
     	data.contacts = jQuery.parseJSON(jQuery('#jform_project_contacts').val());
@@ -725,7 +1016,10 @@ JHtml::_('behavior.keepalive');
      					projects[index].state = data.state;
      					projects[index].title = data.title;
      					projects[index].summary = data.summary;
-     					projects[index].grantPrograms = data.grantPrograms;
+                        <?php if($permission_level == 2): ?>
+                        projects[index].award_number = data.award_number;
+                        projects[index].grantPrograms = data.grantPrograms;
+                        <?php endif; ?>
      					projects[index].contacts = data.contacts;
      				}
      			});
@@ -888,7 +1182,7 @@ JHtml::_('behavior.keepalive');
 	<?php endif; ?>
 	<p>This page allows you to manage how your organization displays in the TA Provider Directory. Each website user associated with your organization has the ability to modify this information. The information you enter here will be instantly displayed on the website, exactly as you enter it.</p>
 	<form autocomplete="off" id="form-settings" action="<?php echo JRoute::_('index.php?option=com_ta_provider_directory&task=settings.save'); ?>" method="post" class="form-validate big-inputs" enctype="multipart/form-data">
-		<input type="hidden" id="jform_projects" name="jform[projects]" value='<?php echo json_encode($this->listing->projects, JSON_HEX_APOS | JSON_HEX_QUOT); ?>' />
+		<input type="hidden" id="jform_projects" name="jform[projects]" value='<?php echo json_encode($this->listing->projects); ?>' />
 		<input type="hidden" name="option" value="com_ta_provider_directory" />
 		<input type="hidden" name="task" value="settings.save" />
 		<?php echo JHtml::_('form.token'); ?>
@@ -971,17 +1265,23 @@ JHtml::_('behavior.keepalive');
         							<div class="panel-body">
         								<fieldset class="project">	
         									<div class="form-group">
-        										<label id="jform_project_title-lbl" class="col-sm-3 control-label required" title="" for="jform_project_title"><?php echo JText::_('COM_TA_PROVIDER_DIRECTORY_FORM_PROJECT_TITLE'); ?></label>
+        										<label id="jform_project_title-lbl" class="col-sm-3 control-label required" title="" for="jform_project_title"><?php echo JText::_('COM_TA_PROVIDER_DIRECTORY_FORM_PROJECT_TITLE_LBL'); ?></label>
         										<div class="col-sm-9">
                                                     <?php echo $this->form->getInput('project_title'); ?>
                                                 </div>
         									</div>
         									<div class="form-group">
-        										<label id="jform_project_summary-lbl" class="col-sm-3 control-label required" title="" for="jform_project_summary"><?php echo JText::_('COM_TA_PROVIDER_DIRECTORY_FORM_PROJECT_SUMMARY'); ?></label>
+        										<label id="jform_project_summary-lbl" class="col-sm-3 control-label required" title="" for="jform_project_summary"><?php echo JText::_('COM_TA_PROVIDER_DIRECTORY_FORM_PROJECT_SUMMARY_LBL'); ?></label>
         										<div class="col-sm-9">
                                                     <?php echo $this->form->getInput('project_summary'); ?>
                                                 </div>
         									</div>
+                                            <div class="form-group">
+                                                <label id="jform_project_award_number-lbl" class="col-sm-3 control-label required" title="" for="jform_project_award_number"><?php echo JText::_('COM_TA_PROVIDER_DIRECTORY_FORM_PROJECT_AWARD_NUMBER_LBL'); ?></label>
+                                                <div class="col-sm-9">
+                                                    <?php echo $this->form->getInput('project_award_number'); ?>
+                                                </div>
+                                            </div>
         									<input type="hidden" id="jform_projectID" name="jform[projectID]" value="" />
         								</fieldset>
         							</div>

@@ -112,15 +112,11 @@ if(!empty($_SERVER["HTTPS"]) && $_SERVER["HTTPS"]!=="off"){
     </div>
   </div>
   <div class="row-fluid">
-	  <div class="span10 form-horizontal">
-	    <fieldset class="adminform">
+	  <div class="span9">
+	    <fieldset class="adminform form-horizontal">
 	    	<div class="control-group">
 					<div class="control-label"><?php echo $this->form->getLabel('id'); ?></div>
 					<div class="controls"><?php echo $this->form->getInput('id'); ?></div>
-				</div>
-	    	<div class="control-group">
-					<div class="control-label"><?php echo $this->form->getLabel('state'); ?></div>
-					<div class="controls"><?php echo $this->form->getInput('state'); ?></div>
 				</div>
 	    	<div class="control-group">
 					<div class="control-label"><?php echo $this->form->getLabel('org'); ?></div>
@@ -165,6 +161,20 @@ if(!empty($_SERVER["HTTPS"]) && $_SERVER["HTTPS"]!=="off"){
 				<input type="hidden" name="MAX_FILE_SIZE" value="26210000" /> 
 				<input type="hidden" name="task" value="" />
 				<?php echo JHtml::_('form.token'); ?>
+			</fieldset>
+		</div>
+		<div class="span3">
+			<fieldset class="form-vertical">
+	    	<div class="control-group">
+					<div class="control-label"><?php echo $this->form->getLabel('state'); ?></div>
+					<div class="controls"><?php echo $this->form->getInput('state'); ?></div>
+				</div>
+	    	<div class="control-group">
+					<div class="control-label"><?php echo $this->form->getLabel('tags'); ?></div>
+					<div class="controls">
+						<?php echo $this->form->getInput('tags'); ?>
+					</div>
+				</div>
 			</fieldset>
 		</div>
 	</div>

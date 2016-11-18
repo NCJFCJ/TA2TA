@@ -38,20 +38,20 @@ class LibraryModeledit extends JModelForm{
 		$app = JFactory::getApplication('com_library');
 
 		// Load state from the request userState on edit or from the passed variable on default
-        if (JFactory::getApplication()->input->get('layout') == 'edit') {
-            $id = JFactory::getApplication()->getUserState('com_library.edit.resource.id');
-        } else {
-            $id = JFactory::getApplication()->input->get('id');
-            JFactory::getApplication()->setUserState('com_library.edit.resource.id', $id);
-        }
+    if(JFactory::getApplication()->input->get('layout') == 'edit'){
+        $id = JFactory::getApplication()->getUserState('com_library.edit.resource.id');
+    }else{
+        $id = JFactory::getApplication()->input->get('id');
+        JFactory::getApplication()->setUserState('com_library.edit.resource.id', $id);
+    }
 		$this->setState('resource.id', $id);
 
 		// Load the parameters.
-        $params = $app->getParams();
-        $params_array = $params->toArray();
-        if(isset($params_array['item_id'])){
-            $this->setState('resource.id', $params_array['item_id']);
-        }
+    $params = $app->getParams();
+    $params_array = $params->toArray();
+    if(isset($params_array['item_id'])){
+      $this->setState('resource.id', $params_array['item_id']);
+    }
 		$this->setState('params', $params);
 
 	}
@@ -69,7 +69,7 @@ class LibraryModeledit extends JModelForm{
 	public function getForm($data = array(), $loadData = true){
 		// Get the form.
 		$form = $this->loadForm('com_library.edit.settings.data', 'edit', array('control' => 'jform', 'load_data' => $loadData));
-		if (empty($form)) {
+		if(empty($form)){
 			return false;
 		}
 

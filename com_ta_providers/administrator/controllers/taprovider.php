@@ -20,7 +20,7 @@ class Ta_providersControllerTaprovider extends JControllerForm{
         parent::__construct();
     }
 
-    /**
+  /**
 	 * Method to save a record.
 	 *
 	 * @param   string  $key     The name of the primary key of the URL variable.

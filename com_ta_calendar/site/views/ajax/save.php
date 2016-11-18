@@ -13,6 +13,8 @@ $return = array();
 $return['message'] = '';
 $return['status'] = '';
 
+$return['debug'] = array();
+
 /* Get the permission level
  * 0 = Public (view only)
  * 1 = TA Provider (restricted to adding and editing own)
@@ -20,7 +22,7 @@ $return['status'] = '';
  */
 require_once(JPATH_COMPONENT_SITE . '/helpers/ta_calendar.php');
 $permission_level = Ta_calendarHelper::getPermissionLevel();
- 
+
 if($permission_level > 0){
 	// Check that data was submitted via post and that the proper variables were received
 	if ($_SERVER['REQUEST_METHOD'] == "POST"
@@ -36,7 +38,7 @@ if($permission_level > 0){
 		&& filter_has_var(INPUT_POST, 'project')
 		&& filter_has_var(INPUT_POST, 'topicAreas')
 		&& filter_has_var(INPUT_POST, 'approved')
-		&& filter_has_var(INPUT_POST, 'grantPrograms')
+		&& ($_POST['open'] == 0 || filter_has_var(INPUT_POST, 'grantPrograms'))
 		&& filter_has_var(INPUT_POST, 'targetAudiences')
 		&& filter_has_var(INPUT_POST, 'timezone')
 		){
@@ -55,7 +57,9 @@ if($permission_level > 0){
 		$project = filter_input(INPUT_POST, 'project', FILTER_SANITIZE_NUMBER_INT);
 		$topicAreas = filter_var_array($_POST['topicAreas'], FILTER_SANITIZE_NUMBER_INT);
 		$approved = ($_POST['approved'] == 1 ? 1 : 0);
-		$grantPrograms = filter_var_array($_POST['grantPrograms'], FILTER_SANITIZE_NUMBER_INT);
+		if($open){
+			$grantPrograms = filter_var_array($_POST['grantPrograms'], FILTER_SANITIZE_NUMBER_INT);
+		}
 		$targetAudiences = filter_var_array($_POST['targetAudiences'], FILTER_SANITIZE_NUMBER_INT);
 		$timezone = filter_input(INPUT_POST, 'timezone', FILTER_SANITIZE_STRING);
 		$city = '';
@@ -81,7 +85,7 @@ if($permission_level > 0){
 		$dateRegEx = '/^((0?[1-9]|1[012])[-](0?[1-9]|[12][0-9]|3[01])[-](19|20)?[0-9]{2})*$/';
 		$nameRegEx = '/^[a-zA-Z-\' ]*$/';	
 		$timeRegEx = '/^(([1-9]|1[012])[:](0[0-9]|[12345][0-9])[ap][m])*$/';
-		$titleRegEx = '/^[a-zA-Z0-9-@ &,:\'()\[\]]*$/';
+		$titleRegEx = '/^[a-zA-Z0-9-@ &,:\'()\[\]\.\/]*$/';
 		
 		// city
 		if($locationRequired){
@@ -124,8 +128,10 @@ if($permission_level > 0){
 		}
 
 		//grantPrograms
-		if(empty($grantPrograms)){
-			$warnings[] = 'You must choose at least one grant program.';
+		if($open){
+			if(empty($grantPrograms)){
+				$warnings[] = 'You must choose at least one grant program.';
+			}
 		}
 		
 		// project
@@ -199,10 +205,13 @@ if($permission_level > 0){
 		}
 
 		// combine the dates and times provided by the user
+		$return['debug']['userTimeZone'] = $timezone;
 		$userTimeZone = new DateTimeZone($timezone);
 		$startDateTime = DateTime::createFromFormat('m-d-Y g:ia', $startdate . ' ' . $starttime, $userTimeZone);
+		$return['debug']['startDateTimeTimezone'] = $startDateTime->format('Y-m-d g:ia e');
 		$endDateTime = DateTime::createFromFormat('m-d-Y g:ia', $enddate . ' ' . $endtime, $userTimeZone);
-		
+		$return['debug']['endDateTimeTimezone'] = $endDateTime->format('Y-m-d g:ia e');
+
 		// check that the end date is after the start date
 		if($startDateTime >= $endDateTime){
 			$warnings[] = 'You must enter an end date and time that is after your start date and time.';
@@ -215,10 +224,12 @@ if($permission_level > 0){
 			$curDateTime = gmdate('Y-m-d H:i:s');
 			$user = JFactory::getUser();
 			
-			// conver the datetimes to UTC
+			// convert the datetimes to UTC
 			$utcTimeZone = new DateTimeZone('UTC');
 			$startDateTime->setTimezone($utcTimeZone);
+			$return['debug']['startDateTimeUTC'] = $startDateTime->format('Y-m-d g:ia e');
 			$endDateTime->setTimezone($utcTimeZone);
+			$return['debug']['endDateTimeUTC'] = $endDateTime->format('Y-m-d g:ia e');
 			
 			// render the date in a way that is compatible with MYSQL
 			$start = $startDateTime->format('Y-m-d H:i:s');
@@ -285,8 +296,8 @@ if($permission_level > 0){
 						// set the sender to the site default
 						$config = JFactory::getConfig();
 						$sender = array( 
-						    $config->get('config.mailfrom'),
-						    $config->get('config.fromname')
+					    $config->get('mailfrom'),
+					    $config->get('fromname')
 						);
 						$mailer->setSender($sender);
 
@@ -329,8 +340,8 @@ if($permission_level > 0){
 						$message .= "<tr style=\"background: #DDD;\"><td><b>Title<b></td><td>$title</td></tr>";
 
 						// process the start and end dates
-						$startDateTime->setTimezone($utcTimeZone);
-						$endDateTime->setTimezone($utcTimeZone);
+						//$startDateTime->setTimezone($utcTimeZone);
+						//$endDateTime->setTimezone($utcTimeZone);
 
 						// update each date time to the user's timezone
 						$tz = new DateTimeZone('America/Los_Angeles');
@@ -447,7 +458,8 @@ if($permission_level > 0){
 							$db->quoteName('open') . '=' . $db->quote($open),
 							$db->quoteName('provider_project') . '=' . $db->quote($project),
 							$db->quoteName('modified') . '=' . $db->quote($modified),
-							$db->quoteName('modified_by') . '=' . $db->quote($modified_by)
+							$db->quoteName('modified_by') . '=' . $db->quote($modified_by),
+							$db->quoteName('timezone') . '=' . $db->quote($timezone)
 						);
 						if($updateApproved){
 							$fields[] = $db->quoteName('approved') . '=' . $db->quote($approved);
@@ -529,14 +541,16 @@ if($permission_level > 0){
 					$db->query();
 
 					// grant programs
-					$query = $db->getQuery(true);
-					$query->insert($db->quoteName('#__ta_calendar_event_programs'));
-					$query->columns($db->quoteName(array('event', 'program')));
-					foreach($grantPrograms as $grantProgram){
-						$query->values($db->quote($newId) . ',' . $db->quote($grantProgram));
+					if($open){
+						$query = $db->getQuery(true);
+						$query->insert($db->quoteName('#__ta_calendar_event_programs'));
+						$query->columns($db->quoteName(array('event', 'program')));
+						foreach($grantPrograms as $grantProgram){
+							$query->values($db->quote($newId) . ',' . $db->quote($grantProgram));
+						}
+						$db->setQuery($query);
+						$db->query();
 					}
-					$db->setQuery($query);
-					$db->query();
 
 					// post a successful save =)
 					$return['message'] = 'Event saved!';

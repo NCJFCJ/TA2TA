@@ -39,13 +39,30 @@ class LibraryModelitem extends JModelAdmin{
 		$app	= JFactory::getApplication();
 
 		// Get the form.
-		$form = $this->loadForm('com_library.item', 'item', array('control' => 'jform', 'load_data' => $loadData));
+		$form = $this->loadForm('com_library.resource', 'item', array('control' => 'jform', 'load_data' => $loadData));
 		if(empty($form)){
 			return false;
 		}
 
 		return $form;
-	}
+	}    
+
+	/**
+	 * Method to get a single record.
+	 *
+	 * @param	integer	The id of the primary key.
+	 *
+	 * @return	mixed	Object on success, false on failure.
+	 * @since	1.6
+	 */
+	public function getItem($pk = null){
+		if($item = parent::getItem($pk)){
+			$item->tags = new JHelperTags;
+  		$item->tags->getTagIds($item->id, 'com_library.resource');
+		}
+    
+    return $item;
+  }
 
 	/**
 	 * Returns a reference to the a Table object, always creating it.
@@ -315,7 +332,7 @@ class LibraryModelitem extends JModelAdmin{
 					$db->setQuery($query,0,1);
 					$db->query();
 					
-				    return false;
+				  return false;
 				}
 				
 				/* -- create the document image -- */
@@ -448,8 +465,9 @@ class LibraryModelitem extends JModelAdmin{
 					// set the sender to the site default
 					$config = JFactory::getConfig();
 					$sender = array( 
-			    $config->get('config.mailfrom'),
-			    $config->get('config.fromname'));
+			    	$config->get('mailfrom'),
+			    	$config->get('fromname')
+			    );
 
 					$mailer->setSender($sender);
 					
@@ -483,7 +501,7 @@ class LibraryModelitem extends JModelAdmin{
 						$message .= '</ul></td></tr></table>';
 					}
 
-					$message .= '<div style="float:left;margin-right:15px;padding-top:10px;"><a href="' . str_replace('administrator/', '', JURI::base()) . 'media/com_library/resources/' . $table->id . '-' . $data['base_file_name'] . '.pdf" style="background-color:#428BCA;border-radius:4px;color:#FFF;padding:12px 24px;text-align:center;text-decoration:none;" target="_blank">Download</a></div><div style="float:left;margin-right:15px;padding:10px 0 0 0;"><a href="' . str_replace('administrator/', '', JURI::base()) . 'my-account/library/approve.html?token=' . $accessToken . '&state=2" style="background-color:#DA4F49;border-radius:4px;color:#FFF;padding:12px 24px;text-align:center;text-decoration:none;" target="_blank">Archive</a></div><div style="float:left;margin-right:15px;padding:10px 0 0 0;"><a href="' . str_replace('administrator/', '', JURI::base()) . 'my-account/library/approve.html?token=' . $accessToken . '&state=1" style="background-color:#5BB75B;border-radius:4px;color:#FFF;padding:12px 24px;text-align:center;text-decoration:none;" target="_blank">Publish</a></div></td>';
+					$message .= '<div style="float:left;margin-bottom:25px;margin-right:15px;padding-top:10px;"><a href="' . str_replace('administrator/', '', JURI::base()) . 'media/com_library/resources/' . $table->id . '-' . $data['base_file_name'] . '.pdf" style="background-color:#428BCA;border-radius:4px;color:#FFF;padding:12px 24px;text-align:center;text-decoration:none;" target="_blank">Download</a></div><div style="float:left;margin-bottom:25px;margin-right:15px;padding:10px 0 0 0;"><a href="' . str_replace('administrator/', '', JURI::base()) . 'my-account/library/approve.html?token=' . $accessToken . '&state=2" style="background-color:#DA4F49;border-radius:4px;color:#FFF;padding:12px 24px;text-align:center;text-decoration:none;" target="_blank">Mark as Outdated</a></div><div style="float:left;margin-bottom:25px;margin-right:15px;padding:10px 0 0 0;"><a href="' . str_replace('administrator/', '', JURI::base()) . 'my-account/library/approve.html?token=' . $accessToken . '&state=3" style="background-color:#f0ad4e;border-radius:4px;color:#FFF;padding:12px 24px;text-align:center;text-decoration:none;" target="_blank">Move to OVW Only</a></div><div style="float:left;margin-bottom:25px;margin-right:15px;padding:10px 0 0 0;"><a href="' . str_replace('administrator/', '', JURI::base()) . 'my-account/library/approve.html?token=' . $accessToken . '&state=1" style="background-color:#5BB75B;border-radius:4px;color:#FFF;padding:12px 24px;text-align:center;text-decoration:none;" target="_blank">Publish</a></div></td>';
 					$message .= '</tr>';
 					$message .= '</tbody>';
 					$message .= '</table>';

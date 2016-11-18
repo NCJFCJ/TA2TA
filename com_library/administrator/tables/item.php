@@ -19,7 +19,8 @@ class LibraryTableitem extends JTable{
      * @param JDatabase A database connector object
      */
     public function __construct(&$db){
-        parent::__construct('#__library', 'id', $db);
+      parent::__construct('#__library', 'id', $db);
+      JTableObserverTags::createObserver($this, array('typeAlias' => 'com_library.resource'));
     }
 
     /**
@@ -46,9 +47,9 @@ class LibraryTableitem extends JTable{
           $registry->loadArray($array['metadata']);
           $array['metadata'] = (string) $registry;
       }
-      if(!JFactory::getUser()->authorise('core.admin', 'com_library.item.'.$array['id'])){
+      if(!JFactory::getUser()->authorise('core.admin', 'com_library.resource.'.$array['id'])){
           $actions = JFactory::getACL()->getActions('com_library','item');
-          $default_actions = JFactory::getACL()->getAssetRules('com_library.item.'.$array['id'])->getData();
+          $default_actions = JFactory::getACL()->getAssetRules('com_library.resource.'.$array['id'])->getData();
           $array_jaccess = array();
           foreach($actions as $action){
               $array_jaccess[$action->name] = $default_actions[$action->name];
@@ -174,7 +175,7 @@ class LibraryTableitem extends JTable{
     */
     protected function _getAssetName(){
       $k = $this->_tbl_key;
-      return 'com_library.item.' . (int) $this->$k;
+      return 'com_library.resource.' . (int) $this->$k;
     }
  
     /**

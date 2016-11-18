@@ -84,14 +84,41 @@ abstract class Ta_calendarHelper{
 			
 			// get the database object
 			$db = JFactory::getDbo();
-			
+
+			// check if all grantPrograms were selected, and if so, don't filter on that at all
+			$allGrantProgramsSelected = false;
+			$query = $db->getQuery(true);
+			$query->select(array(
+				$db->quoteName('id'),
+				$db->quoteName('name'),
+				$db->quoteName('fund')
+			));
+			$query->from($db->quoteName('#__grant_programs'));
+			$query->where($db->quoteName('state') . '=1');
+			$query->order($db->quoteName('name') . ' ASC');
+			$db->setQuery($query);
+			$allGrantPrograms = $db->loadObjectList();
+			if(count($allGrantPrograms) == count($filters->grantPrograms)){
+				$allGrantProgramsSelected = true;
+			}
+
+			// construct the where clause for the filter query
+			$filter_query_where = array();
+			$filter_query_where[] = $db->quoteName('tar.target_audience') . ' IN (' . implode(',', $filters->targetAudiences) . ')';
+			$filter_query_where[] = $db->quoteName('top.topic_area') . ' IN (' . implode(',', $filters->topicAreas) . ')';
+			if(!$allGrantProgramsSelected){
+				$filter_query_where[] = $db->quoteName('gra.program') . ' IN (' . implode(',', $filters->grantPrograms) . ')';
+			}
+
 			// construct the filter query
 			$filter_query = $db->getQuery(true);
 			$filter_query->select('DISTINCT ' . $db->quoteName('tar.event'));
 			$filter_query->from($db->quoteName('#__ta_calendar_event_target_audiences','tar'));
-			$filter_query->join('INNER', $db->quoteName('#__ta_calendar_event_programs','gra') . ' ON ' . $db->quoteName('gra.event') . '=' . $db->quotename('tar.event'));
+			if(!$allGrantProgramsSelected){
+				$filter_query->join('INNER', $db->quoteName('#__ta_calendar_event_programs','gra') . ' ON ' . $db->quoteName('gra.event') . '=' . $db->quotename('tar.event'));
+			}
 			$filter_query->join('INNER', $db->quoteName('#__ta_calendar_event_topic_areas','top') . ' ON ' . $db->quoteName('top.event') . '=' . $db->quotename('tar.event'));
-			$filter_query->where($db->quoteName('tar.target_audience') . ' IN (' . implode(',', $filters->targetAudiences) . ') AND ' . $db->quoteName('gra.program') . ' IN (' . implode(',', $filters->grantPrograms) . ') AND ' . $db->quoteName('top.topic_area') . ' IN (' . implode(',', $filters->topicAreas) . ')');
+			$filter_query->where(join(' AND ', $filter_query_where));
 
 			// build the where clause for the main join
 			$join_where = array();
@@ -136,12 +163,14 @@ abstract class Ta_calendarHelper{
 				$db->quoteName('eve.approved'),
 				$db->quoteName('eve.approved_by'),
 				$db->quoteName('uab.name', 'approved_by_name'),
-				$db->quoteName('eve.timezone')
+				$db->quoteName('eve.timezone'),
+				$db->quoteName('tz.abbr', 'timezone_abbr')
 			));
 			// $query->union was not working, doing this for now
 			$query->from($db->quoteName('#__ta_calendar_events', 'eve'));
 			$query->join('LEFT', $db->quoteName('#__ta_providers', 'pro') . ' ON ' . $db->quoteName('eve.org') . ' = ' . $db->quoteName('pro.id'));
 			$query->join('LEFT', $db->quoteName('#__users', 'ucb') . ' ON ' . $db->quoteName('eve.created_by') . ' = ' . $db->quoteName('ucb.id'));
+			$query->join('LEFT', $db->quoteName('#__ta_calendar_timezones', 'tz') . ' ON (' . $db->quoteName('tz.description') . ' = ' . $db->quoteName('eve.timezone') . ')');
 			$query->join('LEFT', $db->quoteName('#__users', 'umb') . ' ON ' . $db->quoteName('eve.modified_by') . ' = ' . $db->quoteName('umb.id'));
 			$query->join('LEFT', $db->quoteName('#__users', 'uab') . ' ON ' . $db->quoteName('eve.approved_by') . ' = ' . $db->quoteName('uab.id'));
 			$query->where(implode(' AND ', $join_where));
@@ -163,7 +192,8 @@ abstract class Ta_calendarHelper{
 					$event->approved = ($event->approved == '0000-00-00 00:00:00' ? false : new DateTime($event->approved, new DateTimeZone('UTC')));
 
 					// determine which timezone to use
-					$event_timezone = timezone_name_from_abbr($event->timezone);
+					//$event_timezone = timezone_name_from_abbr($event->timezone);
+					$event_timezone = $event->timezone;
 					if(in_array($event_timezone, DateTimeZone::listIdentifiers())){
 						// use the event specific timezone (preferred)
 						$timezone = new DateTimeZone($event_timezone);
@@ -171,6 +201,9 @@ abstract class Ta_calendarHelper{
 						// use the user's timezone
 						$timezone = $userTimezone;
 					}
+
+					// determine the number of days in this event
+					$event->num_days = ceil(($event->end->getTimestamp() - $event->start->getTimestamp()) / (86400));
 					
 					// update each date time to the proper timezone
 					if($event->start){
@@ -193,9 +226,9 @@ abstract class Ta_calendarHelper{
 					}
 				}
 				return $events;
-			} catch (Exception $e) {
+			}catch(Exception $e){
 				// TO DO: Fix this. Error handling is not working in this function.
-			   JError::raiseWarning(100, 'Unable to retrieve events. Please contact us.');
+			  JError::raiseWarning(100, 'Unable to retrieve events. Please contact us.');
 			}
 			return $return;
 		}

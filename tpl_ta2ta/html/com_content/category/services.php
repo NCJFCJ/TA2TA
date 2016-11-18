@@ -40,6 +40,7 @@ defined( '_JEXEC' ) or die;
 	<?php endif; ?>
 </div>
 <div id="services">
+	<div class="row divider" id="generalServices"><div class="col-xs-12"><div class="divider-text">General Services</div></div></div>
 	<div class="row">
 	<?php
 	// first four articles
@@ -63,7 +64,7 @@ defined( '_JEXEC' ) or die;
 	  </div>
   <?php endfor; ?>
 	</div>
-	<div class="row divider" id="specializedServices"><div class="col-xs-12"><div class="divider-text">Specialized Services</div></div></div>
+	<div class="row divider" id="specializedServices"><div class="col-xs-12"><div class="divider-text">Specialized Services for TA Providers</div></div></div>
 	<?php 
 	for($i = 4; $i < count($this->items); $i++):
 		$articleData = $this->items[$i];

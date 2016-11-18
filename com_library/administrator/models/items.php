@@ -15,25 +15,24 @@ jimport('joomla.application.component.modellist');
 class LibraryModelitems extends JModelList{
 
     /**
-     * Constructor.
+     * Constructor
      *
-     * @param    array    An optional associative array of configuration settings.
-     * @see        JController
-     * @since    1.6
+     * @param array An optional associative array of configuration settings.
+     * @see JController
+     * @since 1.6
      */
     public function __construct($config = array()){
-        if(empty($config['filter_fields'])){
-            $config['filter_fields'] = array(
-                'id', 'a.id',
-                'state', 'a.state',
-                'org', 'a.org',
-                'name', 'a.name',
-                'description', 'a.description',
-                'created_by', 'a.created_by',
-            );
-        }
+      if(empty($config['filter_fields'])){
+        $config['filter_fields'] = array(
+          'id', 'a.id',
+          'state', 'a.state',
+          'name', 'a.name',
+          'created', 'a.created',
+          'created_by', 'a.created_by',
+        );
+      }
 
-        parent::__construct($config);
+      parent::__construct($config);
     }
 
 
@@ -100,21 +99,21 @@ class LibraryModelitems extends JModelList{
 		);
 		$query->from('`#__library` AS a');
 
-	    // Join over the users for the checked out user.
-	    $query->select('uc.name AS editor');
-	    $query->join('LEFT', '#__users AS uc ON uc.id=a.checked_out');
+    // Join over the users for the checked out user.
+    $query->select('uc.name AS editor');
+    $query->join('LEFT', '#__users AS uc ON uc.id=a.checked_out');
     
 		// Join over the user field 'created_by'
 		$query->select('created_by.name AS created_by');
 		$query->join('LEFT', '#__users AS created_by ON created_by.id = a.created_by');
 
-	    // Filter by published state
-	    $published = $this->getState('filter.state');
-	    if(is_numeric($published)){
-	        $query->where('a.state = '.(int) $published);
-	    }else if ($published === ''){
-	        $query->where('(a.state IN (0, 1))');
-	    }
+    // Filter by published state
+    $published = $this->getState('filter.state');
+    if(is_numeric($published)){
+      $query->where('a.state = '.(int) $published);
+    }else if ($published === ''){
+      $query->where('(a.state IN (0, 1))');
+    }
     
 		// Filter by search in title
 		$search = $this->getState('filter.search');
@@ -123,7 +122,7 @@ class LibraryModelitems extends JModelList{
 				$query->where('a.id = '.(int) substr($search, 3));
 			}else{
 				$search = $db->Quote('%'.$db->escape($search, true).'%');
-                $query->where('( a.name LIKE '.$search.' )');
+        $query->where('( a.name LIKE '.$search.' )');
 			}
 		}
         
@@ -131,7 +130,7 @@ class LibraryModelitems extends JModelList{
     $orderCol	= $this->state->get('list.ordering');
     $orderDirn	= $this->state->get('list.direction');
     if($orderCol && $orderDirn){
-        $query->order($db->escape($orderCol.' '.$orderDirn));
+      $query->order($db->escape($orderCol.' '.$orderDirn));
     }
 
 		return $query;

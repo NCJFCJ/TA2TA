@@ -2,7 +2,7 @@
 
 	-- -- -- -- -- -- -- -- --
 	http://www.ta2ta.org - v2.0.0
-	last edit: February 3, 2016
+	last edit: September 27, 2016
 	author:  Zachary Draper - NCJFCJ
 	-- -- -- -- -- -- -- -- --
 
@@ -24,10 +24,11 @@
 @import "../../plugins/bootstrap/less/bootstrap.less";
 @import "../../plugins/bootstrap/plugins/expanding-accordion.less";
 @import "../../plugins/bootstrap/plugins/datepicker/less/datepicker.less";
-@import "../../plugins/jquery/chosen/chosen.css";
-@import "../../plugins/jquery/imgareaselect/imgareaselect-default.css";
+@import "../../plugins/jquery/chosen/chosen.less";
+@import "../../plugins/jquery/cropper/dist/cropper.less";
 @import "about.less";
 @import "calendar.less";
+@import "com_services.less";
 @import "disqus.less";
 @import "featured-columns-3.less";
 @import "help-videos.less";
@@ -38,9 +39,12 @@
 @import "login.less";
 @import "nivo-slider.less";
 @import "other-resources.less";
+@import "ovw-corner.less";
+@import "recorded-webinars.less";
 @import "registration.less";
 @import "registration-complete.less";
 @import "services.less";
+@import "stats.less";
 @import "ta-directory.less";
 @import "ta-provider-dashboard.less";
 @import "ta-providers.less";
@@ -57,19 +61,19 @@
 }
 
 // Mixing for Joomla! alerts using old bootstrap
-.alert-error{
-  .alert-dismissable;
-  .alert-danger;
-}
-
-.alert-message{
-  .alert-dismissable;
-  .alert-info;
-}
-
-.alert-notice{
-  .alert-danger;
-  .alert-dismissable;
+.alert{
+  &.alert-error{
+    .alert-dismissable;
+    .alert-danger;
+  }
+  &.alert-message{
+    .alert-dismissable;
+    .alert-info;
+  }
+  &.alert-notice{
+    .alert-danger;
+    .alert-dismissable;
+  }
 }
 
 // datepicker fix
@@ -77,15 +81,14 @@
   z-index: 1000000000 !important;
 }
 
-// Correct non-scrollable bootstrap modals
+// correct non-scrollable bootstrap modals
 .modal-body{
     overflow-y: auto;
 }
 
-// Adding support for required fields
-label.required:after{
-  color: @brand-danger;
-  content: '\00a0*';
+// correct oversized Chosen select boxes
+.chosen-container{
+  max-width: 100%;
 }
 
 /* --- Mobile Phones --- */
@@ -98,6 +101,13 @@ a:focus, a:hover{
   color: #444;
 }
 
+fieldset{
+  ul{
+    list-style: none;
+    padding-left: 0;
+  }
+}
+
 .alert{
   line-height: 120%;
 }
@@ -108,6 +118,22 @@ a:focus, a:hover{
   padding: 14px 12px;
 }
 
+.faqs{
+  h5{
+    font-size: 18px;
+    margin-top: 30px;
+    &:before{
+      content: 'Q: ';
+    }
+    &:first-child{
+      margin-top: 0;
+    }
+  }
+  p{
+    margin-left: 25px;
+  }
+}
+
 .page-header{
   a{
     color: #333;
@@ -115,11 +141,14 @@ a:focus, a:hover{
 }
 
 body{
-	background: @themeMid;
+	background: @white;
   font-family: "Helvetica Neue", Helvetica, sans-serif;
   font-size: 15px;
   line-height: 170%;
-	padding: 0;
+	min-height: 100%;
+  padding: 0;
+  position: absolute;
+  width: 100%;
 }
 
 header{
@@ -134,6 +163,10 @@ hr.divider{
   background: transparent;
   border-top: 1px solid #999;
   height: 1px;
+}
+
+html{
+  min-height: 100%;
 }
 
 img{
@@ -283,7 +316,7 @@ p{
 
 .form-actions{
   a, button{
-    margin-top: 10px;
+    margin: 10px 0 0 10px;
     width: 100%;
   }
 }
@@ -347,9 +380,22 @@ p{
   background: transparent;
 }
 
-.service-form textarea{
-  height: 145px;
-  width: 95%;
+.service-form{
+  padding-top: 40px;
+  textarea{
+    height: 145px;
+  }
+}
+
+.service-form-introduction{
+  line-height: 150%;
+  &:after{
+    clear: both;
+    content: '';
+  }
+  img{
+    width: 100%;
+  }
 }
 
 .short-field{
@@ -372,14 +418,30 @@ p{
   display: none;
 }
 
+#leftMenu{
+  .alert{
+    text-align: center;
+    p{
+      line-height: 150%;
+      text-align: center;
+    }
+    .btn{
+      margin-top: 10px;
+    }
+  }
+}
+
+#headerTop{
+  background-color: #323232;
+}
+
 #topNav, #scrolledNav, #smallTopNav{
   text-transform: uppercase;
 }
 
 #topBar{
   background: @themeDarker;
-  border-bottom: 11px solid @themeDark;
-  height: 65px;
+  height: 57px;
   margin-left: 0;
   padding: 10px 0 6px 0;
   width: 100%;
@@ -396,6 +458,7 @@ p{
     border: 0;
     margin-bottom: 0;
     float: right;
+    min-height: 30px;
     .btn{
       margin-top: 1px;
     }
@@ -501,9 +564,8 @@ p{
 
 #bodyBar{
   background-color: @white;
-  border-bottom: 11px solid @themeDark;
-  margin-top: 66px;
-  padding: 0 20px 25px 20px;
+  margin-top: 56px;
+  padding: 0 20px 180px 20px;
   #content{
     padding-top: 30px;
   }
@@ -514,7 +576,11 @@ p{
 
 #bottomBar{
   background: @themeMid;
+  border-top: 11px solid @themeDark;
+  bottom: 0; 
   padding: 20px 0;
+  position: absolute;
+  width: 100%;
   .row{
     #copyright{
       font-size: @font-size-mini;
@@ -524,6 +590,75 @@ p{
     #disclaimer{
       font-size: @font-size-mini;
       margin-bottom: 20px;
+    }
+  }
+}
+
+#orangeBar{
+  background-color: #F19244;
+  color: @white;
+  h1{
+    font-weight: normal;
+    margin: 0;
+    padding: 30px 0;
+  }
+  .breadcrumb{
+    background: transparent;
+    display: inline-block;
+    height: 20px;
+    margin: 0;
+    overflow: hidden;
+    padding: 38px 0 28px 0;
+    text-align: left;
+    li{
+      float: left;
+      &.active{
+        color: #D7D7D7;
+      }
+      &:before{
+        margin-left: 5px;
+      }
+      a{
+        color: @white;
+        margin-left: -5px;
+      }
+    }
+    .divider{
+      background: transparent;
+      border: 0;
+      display: none;
+      &.icon-location{
+        display: inline;
+      }
+    }
+    .icon-location{
+      -moz-osx-font-smoothing: grayscale;
+      -webkit-font-smoothing: antialiased;
+      color: @white;
+      font-family: 'TA2TA' !important;
+      font-style: normal;
+      font-variant: normal;
+      font-weight: normal;
+      line-height: 1;
+      margin: 0;
+      speak: none;
+      text-transform: none;
+      &:before{
+        content: "\e902";
+      }
+    }
+  }
+}
+
+#recordedWebinars{
+  h3{
+    margin-top: 0;
+  }
+  .col-sm-4{
+    .btn{
+      margin-top: 5px;
+      padding: 8px 12px;
+      width: 100%;
     }
   }
 }
@@ -608,6 +743,23 @@ p{
   }
 }
 
+.video-container{
+  height: 0;
+  overflow: hidden;
+  padding-bottom: 56.25%;
+  padding-top: 30px;
+  position: relative;
+  iframe,
+  object,
+  embed{
+    height: 100%;
+    left: 0;
+    position: absolute;
+    top: 0;
+    width: 100%;
+  }
+}
+
 .video-wrapper{
   height: 187px;
   width: 250px;
@@ -635,6 +787,10 @@ p{
     select{
       .input-lg;
     }
+  }
+
+  .slider-outer-wrapper{
+    margin-top: 40px;
   }
 
   #controlsRight{
@@ -665,8 +821,88 @@ p{
       margin-top: 0;
       width: auto;
     }
-  }     	
-	#topBar{
+  }
+
+  .video-wrapper{
+    height: 450px;
+    width: 600px;
+  }
+
+  #bodyBar{
+    padding: 0 0 180px 0;
+    #topNav{
+      display: block;
+      font-size: @font-size-small;
+      margin-bottom: 2px;
+      .nav > li > a.top-only{
+        display: none;
+      }
+      li{
+        a{
+          background-color: transparent;
+          color: @white;
+          padding: 8px 13px;
+          &:hover{
+            color: #DDD;
+          }
+          &.no-right-padding{
+            padding-right: 0 !important;
+          }
+        }
+      }
+      .active{
+        a{
+          //background-color: @brand-warning;
+          .box-shadow(none);
+          color: #fff;
+        }
+        a:hover{
+          //background-color: darken(@brand-warning, 10%);
+        }
+      }
+      .current{
+        a{
+          //background-color: @brand-warning;
+          color: #fff;
+        }
+        a:hover{
+          //background-color: darken(@brand-warning, 10%);
+        }
+      }
+      .nav{
+        margin-top: 8px;
+      }
+      .navbar-inner{
+        background: transparent;
+        border: 0;
+        box-shadow: none;
+        padding: 0;
+      }
+      #logo{
+        display: inline-block;
+        width: 110px;
+      }
+    }
+  }
+  #bottomBar{
+    .row{
+      #disclaimer{
+        line-height: 100%;
+        margin-bottom: 0;
+      }
+    }
+  }
+
+  #orangeBar{
+    h1{
+      font-size: 22px;
+    }
+    .breadcrumb{
+      padding: 29px 0 17px 0;
+    }
+  }
+
+  #topBar{
     .navbar{
       margin-right: 165px;
       .nav-collapse{
@@ -690,8 +926,8 @@ p{
         width: auto;
       }
       .nav > li > a{
-        border-right: 1px solid #79797A;
-        color: #79797A;
+        border-right: 1px solid #989899;
+        color: #989899;
         display: inline;
         font-size: 9px;
         line-height: @font-size-base;
@@ -699,10 +935,10 @@ p{
       }
       .nav > li > a:hover{
         background: transparent;
-        color: #79797A;
+        color: #989899;
       }
       .nav > li.active > a{
-        color: #79797A;
+        color: #989899;
         padding: 0 6px 0 5px;
       }
       .nav > li.current > a{
@@ -736,7 +972,7 @@ p{
     }  
     #siteSearch{
       display: block;
-      margin: 1px 0 0 0;
+      margin: 3px 0 0 0;
       .btn{
         display: none;
       }
@@ -753,71 +989,6 @@ p{
         display: none;
       }
     }
-	}
-
-  #bodyBar{
-    margin-top: 66px;
-    #topNav{
-      display: block;
-      font-size: @font-size-small;
-      margin-bottom: 2px;
-      .nav > li > a.top-only{
-        display: none;
-      }
-      li{
-        a{
-          color: @gray-dark;
-          padding: 8px 13px;
-        }
-        a:hover{
-          background-color: @themeLight;
-        }
-      }
-      .active{
-        a{
-          background-color: @brand-warning;
-          .box-shadow(none);
-          color: #fff;
-        }
-        a:hover{
-          background-color: darken(@brand-warning, 10%);
-        }
-      }
-      .current{
-        a{
-          background-color: @brand-warning;
-          color: #fff;
-        }
-        a:hover{
-          background-color: darken(@brand-warning, 10%);
-        }
-      }
-      .nav{
-        margin-top: 26px;
-      }
-      .navbar-inner{
-        background: transparent;
-        border: 0;
-        box-shadow: none;
-        padding: 0;
-      }
-      #logo{
-        display: inline-block;
-        width: 145px;
-      }
-    }
-  }	
-  #bottomBar{
-    .row{
-      #disclaimer{
-        line-height: 100%;
-        margin-bottom: 0;
-      }
-    }
-  }
-  .video-wrapper{
-    height: 450px;
-    width: 600px;
   }
 }
 
@@ -832,6 +1003,33 @@ p{
 /* --- Small Desktop Screens and Tablets (>=992px) --- */
 
 @media screen and (min-width: @screen-md-min){
+  .video-wrapper{
+    height: 577px;
+    width: 770px;
+  }
+
+  #bodyBar{
+    #topNav{
+      li{
+        a{
+          padding: 12px 20px;
+        }
+      }
+      #logo{
+        width: 120px;
+      }
+    }
+  }
+
+  #orangeBar{
+    h1{
+      font-size: 28px;
+    }
+    .breadcrumb{
+      padding: 34px 0 23px 0;
+    }
+  }
+
   #topBar{
     .form-search{
       margin-top: 5px;
@@ -842,31 +1040,40 @@ p{
       }
     }
   }
-
-  #bodyBar{
-    min-height: 450px;
-    #topNav{
-      li{
-        a{
-          padding: 12px 20px;
-        }
-      }
-    }
-  }
-  .video-wrapper{
-    height: 577px;
-    width: 770px;
-  }
 }
 
 /* --- Large Desktop Screens (>= 1200px) --- */
 
 @media screen and (min-width: @screen-lg-min){
+  .filter-list{
+    .checkbox input[type="checkbox"]{
+      margin-left: -20px;
+    }
+    input, label{
+      font-size: @font-size-base;
+    }
+  }
+  
+  #bodyBar{
+    #topNav{
+      font-size: @font-size-base;
+      margin-bottom: 3px;
+      li a{
+        padding: 15px 25px;
+      }
+      .navbar-inner{
+        background: transparent;
+      }
+    }
+  }
+
+  #orangeBar{
+    h1{
+      font-size: 30px;
+    }
+  }
   
   #topBar{
-    /*.container{
-      width: 1170px;
-    }*/
     .navbar{
       .container{
         width: 860px;
@@ -885,34 +1092,6 @@ p{
     }
     #topLogo{
       margin: -3px 0 0 30px;
-    }
-  } 
-  
-  #bodyBar{
-    min-height: 650px;
-    #topNav{
-      font-size: @font-size-base;
-      margin-bottom: 3px;
-      li a{
-        padding: 15px 25px;
-      }
-      .navbar-inner{
-        background: transparent;
-        .nav{
-          margin-top: 33px;
-        } 
-      }
-      #logo{
-        width: 180px;
-      }
-    }
-  }
-  .filter-list{
-    .checkbox input[type="checkbox"]{
-      margin-left: -20px;
-    }
-    input, label{
-      font-size: @font-size-base;
     }
   } 
 }

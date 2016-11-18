@@ -48,12 +48,16 @@ class LibraryModeldirectory extends JModelItem{
 			$db->quoteName('pro.website', 'org_website'),
 			$db->quoteName('lib.description'),
 			$db->quoteName('lib.base_file_name'),
-			$db->quoteName('lib.created') 
+			$db->quoteName('lib.created'),
+			$db->quoteName('t.title', 'tags')
 		));
 		$query->from($db->quoteName('#__library', 'lib'));
 		$query->join('LEFT', $db->quoteName('#__ta_providers','pro') . ' ON ' . $db->quoteName('lib.org') . ' = ' . $db->quoteName('pro.id'));
+		$query->join('LEFT', $db->quoteName('#__ucm_content', 'c') . ' ON ' . $db->quoteName('c.core_content_item_id') . ' = ' . $db->quoteName('lib.id'));
+		$query->join('LEFT', $db->quoteName('#__contentitem_tag_map', 'm') . ' ON ' . $db->quoteName('c.core_content_id') . ' = ' . $db->quoteName('m.core_content_id'));
+		$query->join('LEFT', $db->quoteName('#__tags', 't') . ' ON ' . $db->quoteName('m.tag_id') . ' =  ' . $db->quoteName('t.id'));
 		if($permission_level == 2){
-			$query->where('(' . $db->quoteName('lib.state') . ' IN (' . $db->quote('1') . ',' . $db->quote('2') . ',' . $db->quote('-1') . '))');
+			$query->where('(' . $db->quoteName('lib.state') . ' IN (' . $db->quote('1') . ',' . $db->quote('2') . ',' . $db->quote('3') . ',' . $db->quote('-1') . '))');
 		}else{
 			$query->where($db->quoteName('lib.state') . ' = ' . $db->quote('1'));
 		}
@@ -66,6 +70,40 @@ class LibraryModeldirectory extends JModelItem{
 			JError::raiseWarning(100, 'Unable to retrieve items. Please contact us.');
 			return $items;
 		}
+
+		// combine the tags and remove duplicate rows
+		$new_items = array();
+		$last_id = 0;
+		foreach($items as $item){
+			// grab the tag for later use
+			$tag = $item->tags;
+
+			// check if this is the first row for a new item
+			if($item->id != $last_id){
+				// create a new array to hold tags
+				$item->tags = array();
+
+				// remember the ID
+				$last_id = $item->id;
+			}
+
+			// check if this item already exists in the new_items array
+			if(array_key_exists($item->id, $new_items)){
+				if(!empty($tag)){
+					// simply add the tag to the existing object
+					$new_items[$item->id]->tags[] = $tag;
+				}
+			}else{
+				// add the tag and then add this item to the array
+				if(!empty($tag)){
+					$item->tags[] = $tag;
+				}
+				$new_items[$item->id] = $item;
+			}			
+		}
+
+		// replace the items array with the new_items array
+		$items = array_values($new_items);
 	
 		// obtain the target audiences
 		$query = $db->getQuery(true);

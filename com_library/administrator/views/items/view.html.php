@@ -106,7 +106,8 @@ class LibraryViewItems extends JViewLegacy{
 				<option value="1"' . ($filterState == '1' ? ' selected="selected"' : '') . '>Published</option>
 				<option value="0"' . ($filterState == '0' ? ' selected="selected"' : '') . '>Unpublished</option>
 				<option value="-1"' . ($filterState == '-1' ? ' selected="selected"' : '') . '>Pending Approval</option>
-				<option value="2"' . ($filterState == '2' ? ' selected="selected"' : '') . '>Archived</option>
+				<option value="2"' . ($filterState == '2' ? ' selected="selected"' : '') . '>Outdated</option>
+				<option value="3"' . ($filterState == '3' ? ' selected="selected"' : '') . '>OVW Only</option>
 				<option value="-2"' . ($filterState == '-2' ? ' selected="selected"' : '') . '>Trashed</option>
 				<option value="*"' . ($filterState == '*' || $filterState == '' ? ' selected="selected"' : '') . '>All</option>
 			</select>

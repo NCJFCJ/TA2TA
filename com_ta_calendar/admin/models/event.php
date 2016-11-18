@@ -69,7 +69,7 @@ class Ta_calendarModelevent extends JModelAdmin{
 		if(empty($data)){
 			$data = $this->getItem();
             
-			//Support for multiple or not foreign key field: type
+			// Support for multiple or not foreign key field: type
 			$array = array();
 			foreach((array)$data->type as $value): 
 				if(!is_array($value)):
@@ -78,7 +78,7 @@ class Ta_calendarModelevent extends JModelAdmin{
 			endforeach;
 			$data->type = implode(',',$array);
 			
-			//Support for topic areas
+			// Support for topic areas
 			$data->topic_areas = '';
 			if($data->id){
 				$db = JFactory::getDbo();
@@ -116,6 +116,20 @@ class Ta_calendarModelevent extends JModelAdmin{
 			
 			// Support for approved
 			$data->approved = ($data->approved == '0000-00-00 00:00:00' ? 0 : 1);
+
+			// Adjust the times for the selected timezone
+			date_default_timezone_set('UTC');
+			$end = new DateTime($data->end);
+			$start = new DateTime($data->start);
+
+			if(in_array($data->timezone, DateTimeZone::listIdentifiers())){
+				$timezone = new DateTimeZone($data->timezone);
+				$end->setTimeZone($timezone);
+				$start->setTimeZone($timezone);
+			}
+
+			$data->end = $end->format('Y-m-d H:i:s');
+			$data->start =$start->format('Y-m-d H:i:s');
 		}
 
 		return $data;
@@ -202,6 +216,18 @@ class Ta_calendarModelevent extends JModelAdmin{
 			$data['approved'] = 'NULL';
 			$data['approved_by'] = 0;
 		}
+
+		// convert dates to UTC
+		date_default_timezone_set($data['timezone']);
+		$end = new DateTime($data['end']);
+		$start = new DateTime($data['start']);
+
+		$timezone = new DateTimeZone('UTC');
+		$end->setTimeZone($timezone);
+		$start->setTimeZone($timezone);
+
+		$data['end'] = $end->format('Y-m-d H:i:s');
+		$data['start'] =$start->format('Y-m-d H:i:s');
 
 		// Allow an exception to be thrown.
 		try{

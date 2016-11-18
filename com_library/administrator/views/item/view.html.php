@@ -26,9 +26,13 @@ class LibraryViewItem extends JViewLegacy{
 		$this->item		= $this->get('Item');
 		$this->state	= $this->get('State');
 
-		// Check for errors.
+		// add support for tags
+		$this->item->tags = new JHelperTags;
+		$this->item->tags->getItemTags('com_library.resource' , $this->item->id);
+
+		// Check for errors
 		if(count($errors = $this->get('Errors'))){
-            throw new Exception(implode("\n", $errors));
+      throw new Exception(implode("\n", $errors));
 		}
 
 		$this->addToolbar();
@@ -41,20 +45,19 @@ class LibraryViewItem extends JViewLegacy{
 	protected function addToolbar(){
 		JFactory::getApplication()->input->set('hidemainmenu', true);
 
-		$user		= JFactory::getUser();
-		$isNew		= ($this->item->id == 0);
-        if(isset($this->item->checked_out)){
-		    $checkedOut	= !($this->item->checked_out == 0 || $this->item->checked_out == $user->get('id'));
-        }else{
-            $checkedOut = false;
-        }
+		$user	= JFactory::getUser();
+		$isNew = ($this->item->id == 0);
+    if(isset($this->item->checked_out)){
+	    $checkedOut	= !($this->item->checked_out == 0 || $this->item->checked_out == $user->get('id'));
+    }else{
+      $checkedOut = false;
+    }
 		$canDo = LibraryHelper::getActions();
 
 		JToolBarHelper::title(JText::_('COM_LIBRARY_ITEM'), 'item.png');
 
 		// If not checked out, can save the item.
 		if(!$checkedOut && ($canDo->get('core.edit')||($canDo->get('core.create')))){
-
 			JToolBarHelper::apply('item.apply', 'JTOOLBAR_APPLY');
 			JToolBarHelper::save('item.save', 'JTOOLBAR_SAVE');
 		}

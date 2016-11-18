@@ -1,10 +1,9 @@
 <?php
 /**
- * @package     Joomla.Site
- * @subpackage  Templates.protostar
- *
- * @copyright   Copyright (C) 2005 - 2014 Open Source Matters, Inc. All rights reserved.
- * @license     GNU General Public License version 2 or later; see LICENSE.txt
+ * @version                $Id: component.php $
+ * @package                Joomla.Site
+ * @subpackage        	   tpl_ta2ta
+ * @copyright              Copyright (C) 2013 NCJFCJ. All rights reserved.
  */
 
 defined('_JEXEC') or die;

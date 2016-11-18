@@ -44,13 +44,5 @@ class Ta_calendarViewAjax extends JViewLegacy {
 				require_once('tmpl/month.php');
 				break;
 		}
-
-
-		// end
-		$pre_micro_end = microtime();
-
-		echo "\n\n<!--- VIEW EXECUTION PROFILE ---\n\n";
-		echo 'Total View Execution Time: ' . ($pre_micro_start - $pre_micro_end) . "seconds\n";
-		echo "--->\n\n";		
 	}
 }

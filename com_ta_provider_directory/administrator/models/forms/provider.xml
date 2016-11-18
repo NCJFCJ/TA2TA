@@ -70,7 +70,15 @@
 		        <option value="1">JPUBLISHED</option>
 		        <option value="0">JUNPUBLISHED</option>
 		        <option value="-1">JTRASHED</option>
-    	</field> 	
+    	</field>
+        
+        <field
+            class="form-control"
+            description="COM_TA_PROVIDER_DIRECTORY_FORM_PROJECT_AWARD_NUMBER_DESC"
+            label="COM_TA_PROVIDER_DIRECTORY_FORM_PROJECT_AWARD_NUMBER_LBL"
+            maxlength="15"
+            name="project_award_number"
+            type="text" />
     	
     	<field
         	description="COM_TA_PROVIDER_DIRECTORY_FORM_PROJECT_TITLE_DESC"

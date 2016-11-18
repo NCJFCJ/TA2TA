@@ -14,6 +14,6 @@ defined('_JEXEC') or die;
 		<span class="input-group-addon dark icomoon-search" onclick="jQuery(this).closest('form').submit();"></span>
 	</div>
 	<input type="hidden" name="task" value="search" />
-    <input type="hidden" name="option" value="com_search" />
-    <input type="hidden" name="Itemid" value="<?php echo $mitemid; ?>" />
+  <input type="hidden" name="option" value="com_search" />
+  <input type="hidden" name="Itemid" value="0" />
 </form>

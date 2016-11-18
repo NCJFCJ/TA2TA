@@ -41,7 +41,7 @@ class LibraryViewApprove extends JViewLegacy{
 		$permission_level = LibraryHelper::getPermissionLevel();
 
 		// if there is no state, the state is invalid, or there is no token AND the user is not OVW or NCJFCJ
-		if(empty($this->state) || !in_array($this->state, array(1,2)) || (empty($token) && $permission_level < 2)){
+		if(empty($this->state) || !in_array($this->state, array(1,2,3)) || (empty($token) && $permission_level < 2)){
 			JError::raiseError(404, 'Page Not Found');
 			return false;
 		}

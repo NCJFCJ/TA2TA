@@ -1,0 +1,158 @@
+msgid ""
+msgstr ""
+"Project-Id-Version: Basic Front-End Login\n"
+"POT-Creation-Date: 2020-10-15 11:44-0500\n"
+"PO-Revision-Date: 2020-10-15 11:48-0500\n"
+"Last-Translator: \n"
+"Language-Team: \n"
+"Language: fr_BE\n"
+"MIME-Version: 1.0\n"
+"Content-Type: text/plain; charset=UTF-8\n"
+"Content-Transfer-Encoding: 8bit\n"
+"Plural-Forms: nplurals=2; plural=(n > 1);\n"
+"X-Generator: Poedit 2.4.1\n"
+"X-Poedit-Basepath: ..\n"
+"X-Poedit-Flags-xgettext: --add-comments=translators:\n"
+"X-Poedit-WPHeader: ee-basic-front-end-login.php\n"
+"X-Poedit-SourceCharset: UTF-8\n"
+"X-Poedit-KeywordsList: __;_e;_n:1,2;_x:1,2c;_ex:1,2c;_nx:4c,1,2;esc_attr__;"
+"esc_attr_e;esc_attr_x:1,2c;esc_html__;esc_html_e;esc_html_x:1,2c;_n_noop:1,2;"
+"_nx_noop:3c,1,2;__ngettext_noop:1,2\n"
+"X-Poedit-SearchPath-0: .\n"
+"X-Poedit-SearchPathExcluded-0: *.min.js\n"
+
+#: ee-basic-front-end-login.php:48
+msgid "Username"
+msgstr "Nom d’utilisateur"
+
+#: ee-basic-front-end-login.php:49
+msgid "Password"
+msgstr "Mot de passe"
+
+#: ee-basic-front-end-login.php:50
+msgid "Remember Me"
+msgstr "Se souvenir de moi"
+
+#: ee-basic-front-end-login.php:51
+msgid "Log In"
+msgstr "Se connecter"
+
+#: ee-basic-front-end-login.php:64
+msgid "Logout"
+msgstr "Déconnexion"
+
+#: ee-basic-front-end-login.php:158 ee-basic-front-end-login.php:232
+msgid "Basic Front-End Login Form"
+msgstr "Formulaire d'ouverture de session de base"
+
+#: ee-basic-front-end-login.php:159
+msgid "Login Form"
+msgstr "Formulaire de contact"
+
+#: ee-basic-front-end-login.php:235
+msgid ""
+"This plugin provides you with a basic front-end login form for any page, "
+"post or widget."
+msgstr ""
+"Ce plugin vous fournit un formulaire d'ouverture de session de base pour "
+"toute page, message ou widget."
+
+#: ee-basic-front-end-login.php:235
+msgid "It will also redirect to the page you choose."
+msgstr "Il redirigera également vers la page que vous aurez choisie."
+
+#: ee-basic-front-end-login.php:236
+msgid "It also blocks access to the back-end and hides the Admin Bar."
+msgstr "Il bloque également l'accès à l'arrière-plan et cache l'Admin Bar."
+
+#: ee-basic-front-end-login.php:237
+msgid ""
+"To display the login form, place this shortcode on any page, post, or widget:"
+msgstr ""
+"Pour afficher le formulaire de connexion, placez ce raccourci sur n'importe "
+"quelle page, message ou widget :"
+
+#: ee-basic-front-end-login.php:243
+msgid "Redirect URL"
+msgstr "Rediriger l'URL"
+
+#: ee-basic-front-end-login.php:245
+msgid "Default Login Redirect"
+msgstr "Redirection de la connexion par défaut"
+
+#: ee-basic-front-end-login.php:247
+msgid "After login, go to this page."
+msgstr "Après vous être connecté, allez à cette page."
+
+#: ee-basic-front-end-login.php:248
+msgid ""
+"You can over-ride this to create multiple login forms by using this "
+"shortcode attribute:"
+msgstr ""
+"Vous pouvez passer outre pour créer plusieurs formulaires de connexion en "
+"utilisant cet attribut de code court :"
+
+#: ee-basic-front-end-login.php:254
+msgid "Restrict Dashboard Access"
+msgstr "Restreindre l'accès au tableau de bord"
+
+#: ee-basic-front-end-login.php:256
+msgid ""
+"This setting is for when you want your users to be logged-in, but do not "
+"want them to have access to the Wordpress Dashboard."
+msgstr ""
+"Ce paramètre est destiné aux cas où vous souhaitez que vos utilisateurs "
+"soient connectés, mais ne veulent pas qu'ils aient accès au tableau de bord "
+"Wordpress."
+
+#: ee-basic-front-end-login.php:267
+msgid ""
+"Checked roles will not see the Admin Bar or be allowed to access the "
+"Dashboard."
+msgstr ""
+"Les rôles cochés ne verront pas la barre d'administration ou ne seront pas "
+"autorisés à accéder au tableau de bord."
+
+#: ee-basic-front-end-login.php:272
+msgid "SAVE"
+msgstr "SAVE"
+
+#: ee-basic-front-end-login.php:276
+msgid "Basic Front End Login"
+msgstr "Login de base pour le front end"
+
+#: ee-basic-front-end-login.php:276
+msgid "Version"
+msgstr "Version"
+
+#: ee-basic-front-end-login.php:276
+msgid "Plugin by"
+msgstr "Une nouvelle version du plugin %s est disponible."
+
+#: ee-basic-front-end-login.php:277
+msgid "Please donate if you find this plugin useful."
+msgstr "Veuillez faire un don si vous trouvez ce plugin utile."
+
+#. Plugin Name of the plugin/theme
+msgid "Basic Front-End Login"
+msgstr "Connexion de base à l'interface"
+
+#. Plugin URI of the plugin/theme
+msgid "https://simplefilelist.com/basic-front-end-login/"
+msgstr "https://simplefilelist.com/basic-front-end-login/"
+
+#. Description of the plugin/theme
+msgid ""
+"A very simple front-end login form which can also disable access to the back-"
+"end."
+msgstr ""
+"Un formulaire de connexion frontal très simple qui peut également désactiver "
+"l'accès au back-end."
+
+#. Author of the plugin/theme
+msgid "Mitchell Bennis"
+msgstr "Mitchell Bennis"
+
+#. Author URI of the plugin/theme
+msgid "https://elementengage.com"
+msgstr "https://elementengage.com"

@@ -1,0 +1,17 @@
+/*
+Theme Name: TA2TA Theme
+Theme URI: https://them.es/starter-fse
+Author: Rene K
+Author URI: https://github.com/55953
+Description: This theme is built block based and compatible with spectra
+Version: 1.1.6
+Requires at least: 5.9
+Tested up to: 6.3
+Requires PHP: 7.2
+License: GPL version 2 or later
+License URI: https://www.gnu.org/licenses/gpl-2.0
+Text Domain: ta2ta-wp-theme
+Tags: full-site-editing, one-column, flexible-header, accessibility-ready, custom-colors, custom-menu, custom-logo, editor-style, featured-images, footer-widgets, rtl-language-support, sticky-post, threaded-comments, translation-ready
+*/
+
+/* Don't overwrite this file. Compile "/assets/main.scss" to "/assets/dist/main.css" */

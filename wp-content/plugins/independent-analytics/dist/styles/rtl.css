@@ -1,0 +1,417 @@
+#iawp-parent {
+  margin-left: 0;
+  margin-right: -10px;
+}
+
+#iawp-parent .iawp-button .dashicons, #iawp-parent .toplevel_page_independent-analytics #fs_connect .button .dashicons, #iawp-parent .toplevel_page_independent-analytics #fs_connect #iawp-parent .button .dashicons {
+  margin-left: 6px;
+  margin-right: 0;
+}
+
+#iawp-parent .iawp-button .dashicons.dashicons-trash, #iawp-parent .iawp-button .dashicons.dashicons-star-filled, #iawp-parent .toplevel_page_independent-analytics #fs_connect .button .dashicons.dashicons-trash, #iawp-parent .toplevel_page_independent-analytics #fs_connect .button .dashicons.dashicons-star-filled, #iawp-parent .toplevel_page_independent-analytics #fs_connect #iawp-parent .button .dashicons.dashicons-trash, #iawp-parent .toplevel_page_independent-analytics #fs_connect #iawp-parent .button .dashicons.dashicons-star-filled {
+  margin-left: 0;
+}
+
+#iawp-parent select {
+  padding: 2px 12px 2px 24px;
+}
+
+#iawp-parent select:hover, #iawp-parent select:active, #iawp-parent select:focus {
+  background: #fff url("data:image/svg+xml;base64,PHN2ZyB3aWR0aD0nMjAnIGhlaWdodD0nMjAnIHhtbG5zPSdodHRwOi8vd3d3LnczLm9yZy8yMDAwL3N2Zyc+PHBhdGggZD0nTTUgNmw1IDUgNS01IDIgMS03IDctNy03IDItMXonIGZpbGw9JyM1MTIzQTAnLz48L3N2Zz4K") 5px 55% / 16px 16px no-repeat;
+}
+
+#iawp-parent .report-title-bar .rename-link h1 {
+  margin-left: 8px;
+  margin-right: 0;
+}
+
+#iawp-parent .rename-link .dashicons {
+  transform: scale(-1, 1);
+}
+
+#iawp-parent .toolbar .date-picker-parent {
+  margin-left: 12px;
+  margin-right: 0;
+}
+
+#iawp-parent .modal.large {
+  left: auto;
+  right: 24px;
+}
+
+#iawp-parent .report-title-bar .buttons:before {
+  background: linear-gradient(90deg, #5123a0, rgba(0, 0, 0, 0));
+  left: 100%;
+  right: auto;
+}
+
+#iawp-parent .report-title-bar .modal.small {
+  left: 0;
+  right: auto;
+}
+
+#iawp-parent .report-title-bar .rename-report .modal.small {
+  left: auto;
+  right: 0;
+}
+
+#iawp-parent .toolbar .filters-condition-button, #iawp-parent .toolbar .dashicons-filter {
+  margin-left: 6px;
+  margin-right: 0;
+}
+
+#iawp-parent .report-title-bar .buttons > div {
+  margin-left: 0;
+  margin-right: 8px;
+}
+
+#iawp-parent .report-title-bar .save-report .unsaved-warning .text {
+  left: calc(100% + 4px);
+  right: auto;
+}
+
+#iawp-parent .modal.downloads {
+  left: 24px;
+  right: auto;
+}
+
+#iawp-parent .stat .period-label {
+  margin-left: 0;
+  margin-right: 6px;
+}
+
+#iawp-parent .stat .growth-arrow {
+  margin-left: 0;
+  margin-right: -3px;
+}
+
+#iawp-parent .stat .count {
+  margin-left: 8px;
+  margin-right: 0;
+}
+
+#iawp-parent .chart-interval-select {
+  margin-left: 0;
+  margin-right: auto;
+}
+
+#iawp-parent .legend-item {
+  margin: 0 0 4px 4px;
+  padding: 4px 8px 4px 12px;
+}
+
+#iawp-parent .legend-item span {
+  margin-left: 4px;
+  margin-right: 0;
+}
+
+#iawp-parent .column-picker {
+  left: auto;
+  right: 0;
+}
+
+#iawp-parent .column-picker .toggle {
+  margin-left: 6px;
+  margin-right: 0;
+}
+
+#iawp-parent .column-picker .toggle.on .indicator {
+  transform: translateX(-15px);
+}
+
+#iawp-parent .table-toolbar .group-select-container label {
+  left: auto;
+  right: 15px;
+}
+
+#iawp-parent .table-toolbar .group-select {
+  padding: 5px 40px 5px 28px;
+}
+
+#iawp-parent .row-number {
+  left: calc(100% - 32px);
+  right: auto;
+}
+
+#iawp-parent .cell:first-child, #iawp-parent .cell:first-child.hide + .cell, #iawp-parent .cell:first-child.hide + .cell.hide + .cell, #iawp-parent .cell:first-child.hide + .cell.hide + .cell.hide + .cell, #iawp-parent .cell:first-child.hide + .cell.hide + .cell.hide + .cell.hide + .cell, #iawp-parent .cell:first-child.hide + .cell.hide + .cell.hide + .cell.hide + .cell.hide + .cell, #iawp-parent .cell:first-child.hide + .cell.hide + .cell.hide + .cell.hide + .cell.hide + .cell.hide + .cell, #iawp-parent .cell:first-child.hide + .cell.hide + .cell.hide + .cell.hide + .cell.hide + .cell.hide + .cell.hide + .cell, #iawp-parent .cell:first-child.hide + .cell.hide + .cell.hide + .cell.hide + .cell.hide + .cell.hide + .cell.hide + .cell.hide + .cell, #iawp-parent .cell:first-child.hide + .cell.hide + .cell.hide + .cell.hide + .cell.hide + .cell.hide + .cell.hide + .cell.hide + .cell.hide + .cell, #iawp-parent .cell:first-child.hide + .cell.hide + .cell.hide + .cell.hide + .cell.hide + .cell.hide + .cell.hide + .cell.hide + .cell.hide + .cell.hide + .cell, #iawp-parent .cell:first-child.hide + .cell.hide + .cell.hide + .cell.hide + .cell.hide + .cell.hide + .cell.hide + .cell.hide + .cell.hide + .cell.hide + .cell.hide + .cell, #iawp-parent .cell:first-child.hide + .cell.hide + .cell.hide + .cell.hide + .cell.hide + .cell.hide + .cell.hide + .cell.hide + .cell.hide + .cell.hide + .cell.hide + .cell.hide + .cell, #iawp-parent .cell:first-child.hide + .cell.hide + .cell.hide + .cell.hide + .cell.hide + .cell.hide + .cell.hide + .cell.hide + .cell.hide + .cell.hide + .cell.hide + .cell.hide + .cell.hide + .cell, #iawp-parent .cell:first-child.hide + .cell.hide + .cell.hide + .cell.hide + .cell.hide + .cell.hide + .cell.hide + .cell.hide + .cell.hide + .cell.hide + .cell.hide + .cell.hide + .cell.hide + .cell.hide + .cell, #iawp-parent .cell:first-child.hide + .cell.hide + .cell.hide + .cell.hide + .cell.hide + .cell.hide + .cell.hide + .cell.hide + .cell.hide + .cell.hide + .cell.hide + .cell.hide + .cell.hide + .cell.hide + .cell.hide + .cell, #iawp-parent .cell:first-child.hide + .cell.hide + .cell.hide + .cell.hide + .cell.hide + .cell.hide + .cell.hide + .cell.hide + .cell.hide + .cell.hide + .cell.hide + .cell.hide + .cell.hide + .cell.hide + .cell.hide + .cell.hide + .cell, #iawp-parent .cell:first-child.hide + .cell.hide + .cell.hide + .cell.hide + .cell.hide + .cell.hide + .cell.hide + .cell.hide + .cell.hide + .cell.hide + .cell.hide + .cell.hide + .cell.hide + .cell.hide + .cell.hide + .cell.hide + .cell.hide + .cell {
+  padding-left: 24px !important;
+  padding-right: 48px !important;
+}
+
+#iawp-parent .data-table-container.horizontal .data-table .cell:first-child:not(.hide), #iawp-parent .data-table-container.horizontal .data-table .cell.hide:first-child + .cell {
+  left: auto;
+  right: 0;
+  box-shadow: -1px 0 1px rgba(0, 0, 0, .1);
+}
+
+#iawp-parent .cell-content .dashicons, #iawp-parent .cell-content img, #iawp-parent .cell-content .flag {
+  margin-left: 6px;
+  margin-right: 0;
+}
+
+#iawp-parent .cell .percentage, #iawp-parent .cell .deleted-label {
+  margin-left: 0;
+  margin-right: 4px;
+}
+
+#iawp-parent .iawp-layout-sidebar .collapse-container .collapse-sidebar .dashicons {
+  margin-left: 3px;
+  margin-right: 0;
+}
+
+#iawp-parent .iawp-layout-sidebar .menu-section .report-name a {
+  margin-left: auto;
+  margin-right: 0;
+}
+
+#iawp-parent .iawp-layout-sidebar .menu-section ol {
+  margin: 0 26px 0 0;
+}
+
+#iawp-parent .iawp-layout-sidebar .menu-section .report-name.favorite a:after {
+  content: "";
+  display: none;
+}
+
+#iawp-parent .iawp-layout-sidebar .menu-section .report-name.favorite a:before {
+  content: "";
+  color: #f69d0a;
+  margin-right: 2px;
+  font-family: dashicons;
+}
+
+#iawp-parent .iawp-layout-sidebar .menu-section .icon-container {
+  margin-left: 6px;
+  margin-right: 0;
+}
+
+#iawp-parent .iawp-layout-sidebar .collapsed-label {
+  left: auto;
+  right: calc(100% - 6px);
+}
+
+#iawp-parent .settings-container .tutorial-link {
+  margin-left: 0;
+  margin-right: auto;
+}
+
+#iawp-parent .settings-container .tutorial-link:before {
+  margin-left: 6px;
+  margin-right: 0;
+}
+
+#iawp-parent .pro-tag, #iawp-parent .email-reports .test-email {
+  margin-left: 0;
+  margin-right: 12px;
+}
+
+#iawp-parent .blocked-ip-settings .current-ip-status:before {
+  margin-left: 4px;
+  margin-right: 0;
+}
+
+#iawp-parent .blocked-ip-settings .current-ip {
+  margin-left: 0;
+  margin-right: 2px;
+}
+
+#iawp-parent form .entry button {
+  margin-left: 0;
+  margin-right: 8px;
+}
+
+#iawp-parent .settings-container .tutorial-link.absolute {
+  left: 24px;
+  right: auto;
+}
+
+#iawp-parent .campaign-text {
+  margin-left: 12px;
+  margin-right: 0;
+}
+
+#iawp-parent .campaign-copy input {
+  margin: 0 0 0 16px;
+}
+
+#iawp-parent .campaign-actions .iawp-button {
+  margin: 0 0 0 12px;
+}
+
+#iawp-parent .campaign.new .campaign-copy {
+  padding-left: 90px;
+  padding-right: 0;
+}
+
+#iawp-parent .scroll-to-top {
+  left: 32px;
+  right: auto;
+}
+
+body.analytics_page_independent-analytics-support-center #toplevel_page_independent-analytics .toplevel_page_independent-analytics:after {
+  border-left-color: #5123a0;
+  border-right: none;
+}
+
+@media (min-width: 600px) {
+  #iawp-parent .toolbar[data-filter-count="0"] .download-options-parent {
+    margin-left: 0;
+    margin-right: auto;
+  }
+}
+
+@media (min-width: 650px) and (max-width: 1199px) {
+  #iawp-parent .quick-stats .stat:nth-child(2n+1) {
+    border-left: 1px solid #dedae6;
+    border-right: none;
+  }
+
+  #iawp-parent .quick-stats.total-of-3 .stat:nth-child(3), #iawp-parent .quick-stats.total-of-4 .stat:nth-child(3), #iawp-parent .quick-stats.total-of-5 .stat:nth-child(5), #iawp-parent .quick-stats.total-of-6 .stat:nth-child(5), #iawp-parent .quick-stats.total-of-7 .stat:nth-child(7), #iawp-parent .quick-stats.total-of-8 .stat:nth-child(7) {
+    border-bottom: none;
+  }
+}
+
+@media (min-width: 750px) {
+  #iawp-parent .legend-item {
+    margin: 0 12px 0 0;
+  }
+}
+
+@media (min-width: 700px) {
+  body.analytics_page_independent-analytics-support-center #iawp-parent .support-menu .resource.review {
+    margin-left: 2%;
+    margin-right: 0;
+  }
+}
+
+@media (min-width: 783px) {
+  #iawp-parent {
+    margin-left: 0;
+    margin-right: -20px;
+  }
+
+  #iawp-parent .campaign.new {
+    left: 0;
+    right: 36px;
+  }
+}
+
+@media (min-width: 825px) {
+  #iawp-parent .report-title-bar .buttons .favorite {
+    padding: 10px 8px 10px 14px;
+  }
+
+  #iawp-parent #favorite-report-button:not(.active) .dashicons {
+    margin-left: 6px;
+    margin-right: 0;
+  }
+}
+
+@media (min-width: 961px) {
+  #iawp-parent .campaign.new {
+    left: 0;
+    right: 160px;
+  }
+}
+
+@media (min-width: 1000px) {
+  #iawp-parent .iawp-layout-sidebar {
+    border-left: 1px solid #dedae6;
+    border-right: none;
+  }
+
+  #iawp-parent .iawp-layout-sidebar .collapse-sidebar .dashicons {
+    transform: rotate(180deg);
+  }
+
+  #iawp-parent .iawp-layout.collapsed .collapse-sidebar .dashicons {
+    transform: rotate(0deg);
+  }
+
+  #iawp-parent .iawp-layout.collapsed .report-inner {
+    border-left: 1px solid #dedae6;
+    border-right: none;
+    padding-left: 18px;
+    padding-right: 0;
+    left: auto;
+    right: calc(100% + 1px);
+  }
+
+  #iawp-parent .iawp-layout.collapsed .collapse-sidebar .dashicons {
+    margin: 0;
+  }
+
+  #iawp-parent .campaign.new {
+    left: 0;
+    right: 390px;
+  }
+
+  #iawp-parent .iawp-layout.collapsed .campaign.new {
+    left: 0;
+    right: 202px;
+  }
+}
+
+@media (min-width: 1100px) {
+  #iawp-parent .iawp-layout .toolbar[data-filter-count="1"] .download-options-parent, #iawp-parent .iawp-layout .toolbar[data-filter-count="2"] .download-options-parent {
+    margin-right: auto;
+    margin-left: 0 !important;
+  }
+
+  #iawp-parent .real-time-dashboard .most-popular-list:last-child {
+    margin-left: auto;
+    margin-right: calc(1% + 12px);
+  }
+}
+
+@media (min-width: 1200px) {
+  #iawp-parent .toolbar[data-filter-count="2"] .download-options-parent {
+    margin-left: 0;
+    margin-right: auto;
+  }
+
+  #iawp-parent .quick-stats .stat {
+    width: 25%;
+    border-left: 1px solid #dedae6;
+    border-right: none;
+  }
+
+  #iawp-parent .quick-stats .stat:last-child {
+    border-left: none;
+  }
+
+  #iawp-parent .quick-stats.total-of-5 .stat, #iawp-parent .quick-stats.total-of-6 .stat {
+    width: 33.33%;
+  }
+
+  #iawp-parent .quick-stats.total-of-5 .stat:nth-child(3), #iawp-parent .quick-stats.total-of-6 .stat:nth-child(3) {
+    border-left: none;
+  }
+
+  #iawp-parent .quick-stats.total-of-5 .stat:nth-child(4), #iawp-parent .quick-stats.total-of-5 .stat:nth-child(5), #iawp-parent .quick-stats.total-of-6 .stat:nth-child(4), #iawp-parent .quick-stats.total-of-6 .stat:nth-child(5), #iawp-parent .quick-stats.total-of-7 .stat:nth-child(5), #iawp-parent .quick-stats.total-of-7 .stat:nth-child(6), #iawp-parent .quick-stats.total-of-7 .stat:nth-child(7), #iawp-parent .quick-stats.total-of-8 .stat:nth-child(5), #iawp-parent .quick-stats.total-of-8 .stat:nth-child(6), #iawp-parent .quick-stats.total-of-8 .stat:nth-child(7) {
+    border-bottom: none;
+  }
+
+  #iawp-parent .quick-stats.total-of-7 .stat:nth-child(4), #iawp-parent .quick-stats.total-of-8 .stat:nth-child(4) {
+    border-left: none;
+  }
+}
+
+@media (min-width: 1400px) {
+  #iawp-parent .toolbar .modal.large {
+    left: auto;
+    right: 0;
+  }
+}
+
+.html2pdf__container #iawp-parent .row-number {
+  left: calc(100% - 18px);
+  right: auto;
+}
+
+.html2pdf__container #iawp-parent .cell:first-child, .html2pdf__container #iawp-parent #iawp-parent .cell:first-child.hide + .cell, .html2pdf__container #iawp-parent #iawp-parent .cell:first-child.hide + .cell.hide + .cell, .html2pdf__container #iawp-parent #iawp-parent .cell:first-child.hide + .cell.hide + .cell.hide + .cell, .html2pdf__container #iawp-parent #iawp-parent .cell:first-child.hide + .cell.hide + .cell.hide + .cell.hide + .cell, .html2pdf__container #iawp-parent #iawp-parent .cell:first-child.hide + .cell.hide + .cell.hide + .cell.hide + .cell.hide + .cell, .html2pdf__container #iawp-parent #iawp-parent .cell:first-child.hide + .cell.hide + .cell.hide + .cell.hide + .cell.hide + .cell.hide + .cell, .html2pdf__container #iawp-parent #iawp-parent .cell:first-child.hide + .cell.hide + .cell.hide + .cell.hide + .cell.hide + .cell.hide + .cell.hide + .cell, .html2pdf__container #iawp-parent #iawp-parent .cell:first-child.hide + .cell.hide + .cell.hide + .cell.hide + .cell.hide + .cell.hide + .cell.hide + .cell.hide + .cell, .html2pdf__container #iawp-parent #iawp-parent .cell:first-child.hide + .cell.hide + .cell.hide + .cell.hide + .cell.hide + .cell.hide + .cell.hide + .cell.hide + .cell.hide + .cell, .html2pdf__container #iawp-parent #iawp-parent .cell:first-child.hide + .cell.hide + .cell.hide + .cell.hide + .cell.hide + .cell.hide + .cell.hide + .cell.hide + .cell.hide + .cell.hide + .cell, .html2pdf__container #iawp-parent #iawp-parent .cell:first-child.hide + .cell.hide + .cell.hide + .cell.hide + .cell.hide + .cell.hide + .cell.hide + .cell.hide + .cell.hide + .cell.hide + .cell.hide + .cell, .html2pdf__container #iawp-parent #iawp-parent .cell:first-child.hide + .cell.hide + .cell.hide + .cell.hide + .cell.hide + .cell.hide + .cell.hide + .cell.hide + .cell.hide + .cell.hide + .cell.hide + .cell.hide + .cell, .html2pdf__container #iawp-parent #iawp-parent .cell:first-child.hide + .cell.hide + .cell.hide + .cell.hide + .cell.hide + .cell.hide + .cell.hide + .cell.hide + .cell.hide + .cell.hide + .cell.hide + .cell.hide + .cell.hide + .cell, .html2pdf__container #iawp-parent #iawp-parent .cell:first-child.hide + .cell.hide + .cell.hide + .cell.hide + .cell.hide + .cell.hide + .cell.hide + .cell.hide + .cell.hide + .cell.hide + .cell.hide + .cell.hide + .cell.hide + .cell.hide + .cell, .html2pdf__container #iawp-parent #iawp-parent .cell:first-child.hide + .cell.hide + .cell.hide + .cell.hide + .cell.hide + .cell.hide + .cell.hide + .cell.hide + .cell.hide + .cell.hide + .cell.hide + .cell.hide + .cell.hide + .cell.hide + .cell.hide + .cell, .html2pdf__container #iawp-parent #iawp-parent .cell:first-child.hide + .cell.hide + .cell.hide + .cell.hide + .cell.hide + .cell.hide + .cell.hide + .cell.hide + .cell.hide + .cell.hide + .cell.hide + .cell.hide + .cell.hide + .cell.hide + .cell.hide + .cell.hide + .cell, .html2pdf__container #iawp-parent #iawp-parent .cell:first-child.hide + .cell.hide + .cell.hide + .cell.hide + .cell.hide + .cell.hide + .cell.hide + .cell.hide + .cell.hide + .cell.hide + .cell.hide + .cell.hide + .cell.hide + .cell.hide + .cell.hide + .cell.hide + .cell.hide + .cell {
+  padding-left: 6px !important;
+  padding-right: 30px !important;
+}
+
+/*# sourceMappingURL=rtl.css.map */

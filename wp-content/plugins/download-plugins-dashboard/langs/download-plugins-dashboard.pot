@@ -1,0 +1,335 @@
+# Copyright (C) 2023 WPFactory
+# This file is distributed under the same license as the Download Plugins and Themes from Dashboard Pro plugin.
+msgid ""
+msgstr ""
+"Project-Id-Version: download-plugins-dashboard 1.8.4\n"
+"Report-Msgid-Bugs-To: https://wordpress.org/support/plugin/download-plugins-dashboard\n"
+"Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
+"Language-Team: LANGUAGE <LL@li.org>\n"
+"MIME-Version: 1.0\n"
+"Content-Type: text/plain; charset=UTF-8\n"
+"Content-Transfer-Encoding: 8bit\n"
+"POT-Creation-Date: 2023-09-20T00:27:02+02:00\n"
+"PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
+"X-Generator: WP-CLI 2.7.1\n"
+"X-Domain: download-plugins-dashboard\n"
+
+#. Plugin Name of the plugin
+msgid "Download Plugins and Themes from Dashboard Pro"
+msgstr ""
+
+#. Plugin URI of the plugin
+msgid "https://wpfactory.com/item/download-plugins-and-themes-from-dashboard/"
+msgstr ""
+
+#. Description of the plugin
+msgid "Download installed plugins and themes ZIP files directly from your admin dashboard without using FTP."
+msgstr ""
+
+#. Author of the plugin
+msgid "WPFactory"
+msgstr ""
+
+#. Author URI of the plugin
+msgid "https://wpfactory.com"
+msgstr ""
+
+#: includes/class-alg-download-plugins-core.php:66
+#: includes/class-alg-download-plugins-core.php:83
+msgid "Download ZIP"
+msgstr ""
+
+#: includes/class-alg-download-plugins-core.php:257
+msgid "Every 4 Weeks"
+msgstr ""
+
+#: includes/class-alg-download-plugins-core.php:261
+msgid "Once Weekly"
+msgstr ""
+
+#: includes/class-alg-download-plugins-core.php:265
+msgid "Once a Minute"
+msgstr ""
+
+#: includes/class-alg-download-plugins-core.php:515
+msgid "To use %s plugin, %s must be available on your server."
+msgstr ""
+
+#: includes/class-alg-download-plugins-core.php:516
+#: includes/settings/class-alg-download-plugins-settings.php:70
+#: includes/settings/class-alg-download-plugins-settings.php:86
+msgid "Download Plugins and Themes from Dashboard"
+msgstr ""
+
+#: includes/class-alg-download-plugins-core.php:536
+msgid "Error: %s"
+msgstr ""
+
+#: includes/class-alg-download-plugins-core.php:537
+msgid "Something went wrong..."
+msgstr ""
+
+#: includes/class-alg-download-plugins-core.php:616
+msgid "%s can not open a new zip archive (error code %s)."
+msgstr ""
+
+#: includes/class-alg-download-plugins-core.php:675
+msgid "Unexpected error"
+msgstr ""
+
+#: includes/class-alg-download-plugins.php:119
+msgid "Settings"
+msgstr ""
+
+#: includes/class-alg-download-plugins.php:122
+msgid "Go Pro"
+msgstr ""
+
+#: includes/pro/class-alg-download-plugins-pro.php:60
+#: includes/pro/class-alg-download-plugins-pro.php:65
+msgid "Run now"
+msgstr ""
+
+#: includes/pro/class-alg-download-plugins-pro.php:62
+#: includes/pro/class-alg-download-plugins-pro.php:67
+msgid "Scheduled in %s"
+msgstr ""
+
+#: includes/settings/class-alg-download-plugins-settings.php:50
+msgid "Plugins successfully downloaded to %s."
+msgstr ""
+
+#: includes/settings/class-alg-download-plugins-settings.php:56
+msgid "Themes successfully downloaded to %s."
+msgstr ""
+
+#: includes/settings/class-alg-download-plugins-settings.php:71
+msgid "Download Plugins and Themes"
+msgstr ""
+
+#: includes/settings/class-alg-download-plugins-settings.php:91
+msgid "Save settings"
+msgstr ""
+
+#: includes/settings/class-alg-download-plugins-settings.php:93
+msgid "Reset settings"
+msgstr ""
+
+#: includes/settings/class-alg-download-plugins-settings.php:95
+msgid "Are you sure?"
+msgstr ""
+
+#: includes/settings/class-alg-download-plugins-settings.php:148
+msgid "Something went wrong!"
+msgstr ""
+
+#: includes/settings/class-alg-download-plugins-settings.php:158
+msgid "Settings saved."
+msgstr ""
+
+#: includes/settings/class-alg-download-plugins-settings.php:179
+msgid "Yes"
+msgstr ""
+
+#: includes/settings/class-alg-download-plugins-settings.php:180
+msgid "No"
+msgstr ""
+
+#: includes/settings/class-alg-download-plugins-settings.php:221
+msgid "Do not download"
+msgstr ""
+
+#: includes/settings/class-alg-download-plugins-settings.php:222
+msgid "Download once a minute"
+msgstr ""
+
+#: includes/settings/class-alg-download-plugins-settings.php:223
+msgid "Download once hourly"
+msgstr ""
+
+#: includes/settings/class-alg-download-plugins-settings.php:224
+msgid "Download twice daily"
+msgstr ""
+
+#: includes/settings/class-alg-download-plugins-settings.php:225
+msgid "Download once daily"
+msgstr ""
+
+#: includes/settings/class-alg-download-plugins-settings.php:226
+msgid "Download once weekly"
+msgstr ""
+
+#: includes/settings/class-alg-download-plugins-settings.php:227
+msgid "Download every 4 weeks"
+msgstr ""
+
+#: includes/settings/class-alg-download-plugins-settings.php:231
+msgid "General Settings"
+msgstr ""
+
+#: includes/settings/class-alg-download-plugins-settings.php:236
+msgid "Add main plugin directory to ZIP"
+msgstr ""
+
+#: includes/settings/class-alg-download-plugins-settings.php:242
+msgid "Add main theme directory to ZIP"
+msgstr ""
+
+#: includes/settings/class-alg-download-plugins-settings.php:248
+msgid "Append plugin version number to ZIP filename"
+msgstr ""
+
+#: includes/settings/class-alg-download-plugins-settings.php:254
+msgid "Append theme version number to ZIP filename"
+msgstr ""
+
+#: includes/settings/class-alg-download-plugins-settings.php:260
+msgid "Tools"
+msgstr ""
+
+#: includes/settings/class-alg-download-plugins-settings.php:264
+msgid "Please note that if you have large number of plugins or themes, you may need to <a href=\"%s\" target=\"_blank\">increase your WP memory limits</a> to use \"Download all\" tools. Your current memory limits are: %s (standard) and %s (admin)."
+msgstr ""
+
+#: includes/settings/class-alg-download-plugins-settings.php:268
+msgid "Plugins"
+msgstr ""
+
+#: includes/settings/class-alg-download-plugins-settings.php:272
+#: includes/settings/class-alg-download-plugins-settings.php:283
+msgid "Download all"
+msgstr ""
+
+#: includes/settings/class-alg-download-plugins-settings.php:274
+msgid "Please note that this won't include \"Must-Use\" and \"Drop-in\" plugins."
+msgstr ""
+
+#: includes/settings/class-alg-download-plugins-settings.php:275
+#: includes/settings/class-alg-download-plugins-settings.php:328
+msgid "However, you can download them from \"Plugins\" page directly."
+msgstr ""
+
+#: includes/settings/class-alg-download-plugins-settings.php:279
+msgid "Themes"
+msgstr ""
+
+#: includes/settings/class-alg-download-plugins-settings.php:286
+msgid "Advanced Settings"
+msgstr ""
+
+#: includes/settings/class-alg-download-plugins-settings.php:291
+msgid "ZIP library"
+msgstr ""
+
+#: includes/settings/class-alg-download-plugins-settings.php:292
+msgid "Sets which ZIP library should be used."
+msgstr ""
+
+#: includes/settings/class-alg-download-plugins-settings.php:293
+msgid "Leave the default value if not sure."
+msgstr ""
+
+#: includes/settings/class-alg-download-plugins-settings.php:303
+msgid "Temporary directory"
+msgstr ""
+
+#: includes/settings/class-alg-download-plugins-settings.php:304
+msgid "Leave blank to use the default system temporary directory: %s."
+msgstr ""
+
+#: includes/settings/class-alg-download-plugins-settings.php:311
+msgid "Periodical Downloads"
+msgstr ""
+
+#: includes/settings/class-alg-download-plugins-settings.php:314
+msgid "Periodical downloads are available in %s only."
+msgstr ""
+
+#: includes/settings/class-alg-download-plugins-settings.php:316
+msgid "Pro version"
+msgstr ""
+
+#: includes/settings/class-alg-download-plugins-settings.php:319
+msgid "Periodical plugins downloads"
+msgstr ""
+
+#: includes/settings/class-alg-download-plugins-settings.php:324
+#: includes/settings/class-alg-download-plugins-settings.php:379
+msgid "Possible options: %s."
+msgstr ""
+
+#: includes/settings/class-alg-download-plugins-settings.php:327
+msgid "Please note that this won't include \"Must-Use\", \"Drop-in\" and \"Single File\" plugins."
+msgstr ""
+
+#: includes/settings/class-alg-download-plugins-settings.php:333
+msgid "Periodical themes downloads"
+msgstr ""
+
+#: includes/settings/class-alg-download-plugins-settings.php:342
+msgid "Path for periodical plugins downloads"
+msgstr ""
+
+#: includes/settings/class-alg-download-plugins-settings.php:349
+msgid "Path for periodical themes downloads"
+msgstr ""
+
+#: includes/settings/class-alg-download-plugins-settings.php:356
+msgid "Append download date & time to plugin ZIP filename"
+msgstr ""
+
+#: includes/settings/class-alg-download-plugins-settings.php:363
+msgid "Append download date & time to theme ZIP filename"
+msgstr ""
+
+#: includes/settings/class-alg-download-plugins-settings.php:370
+msgid "Plugins output file(s)"
+msgstr ""
+
+#: includes/settings/class-alg-download-plugins-settings.php:375
+msgid "Each plugin's zip"
+msgstr ""
+
+#: includes/settings/class-alg-download-plugins-settings.php:376
+msgid "All plugins in single zip"
+msgstr ""
+
+#: includes/settings/class-alg-download-plugins-settings.php:377
+msgid "Each plugin's zip + All plugins in single zip"
+msgstr ""
+
+#: includes/settings/class-alg-download-plugins-settings.php:381
+msgid "Each plugin's or theme's zip"
+msgstr ""
+
+#: includes/settings/class-alg-download-plugins-settings.php:382
+msgid "All plugins or themes in single zip"
+msgstr ""
+
+#: includes/settings/class-alg-download-plugins-settings.php:383
+msgid "Each plugin's or theme's zip + All plugins or themes in single zip"
+msgstr ""
+
+#: includes/settings/class-alg-download-plugins-settings.php:388
+msgid "Themes output file(s)"
+msgstr ""
+
+#: includes/settings/class-alg-download-plugins-settings.php:393
+msgid "Each theme's zip"
+msgstr ""
+
+#: includes/settings/class-alg-download-plugins-settings.php:394
+msgid "All themes in single zip"
+msgstr ""
+
+#: includes/settings/class-alg-download-plugins-settings.php:395
+msgid "Each theme's zip + All themes in single zip"
+msgstr ""
+
+#: includes/settings/class-alg-download-plugins-settings.php:400
+msgid "Plugins single ZIP file name"
+msgstr ""
+
+#: includes/settings/class-alg-download-plugins-settings.php:407
+msgid "Themes single ZIP file name"
+msgstr ""

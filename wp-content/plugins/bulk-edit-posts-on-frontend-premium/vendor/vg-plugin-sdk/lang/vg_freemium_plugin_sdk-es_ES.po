@@ -1,0 +1,127 @@
+msgid ""
+msgstr ""
+"Project-Id-Version: \n"
+"Report-Msgid-Bugs-To: \n"
+"POT-Creation-Date: 2023-04-26T22:48:09+00:00\n"
+"PO-Revision-Date: 2023-04-26 17:02-0600\n"
+"Last-Translator: \n"
+"Language-Team: \n"
+"Language: es\n"
+"MIME-Version: 1.0\n"
+"Content-Type: text/plain; charset=UTF-8\n"
+"Content-Transfer-Encoding: 8bit\n"
+"Plural-Forms: nplurals=2; plural=(n != 1);\n"
+"X-Generator: Poedit 3.2.2\n"
+
+#: index.php:40
+msgid "Buy extension now"
+msgstr "Buy extension now"
+
+#: index.php:139 index.php:171
+msgid "You dont have enough permissions to view this page."
+msgstr "No tienes permisos para ver esta página."
+
+#: samples/email-optin-form.php:3
+msgid ""
+"<p>As a thank you for using our plugin, we want to give you access to a "
+"<b>Premium Extension for free</b>.</p>\r\n"
+"\t\t\t\t<p>The <b>Auto fill cells</b> extension allows you to copy "
+"information between posts.</p>\r\n"
+"\t\t\t\t<p><img src=\"%s\" /></p><p>Copy categories , excerpts , dates , "
+"authors , etc.</p>\r\n"
+"\t\t\t\t<p>Please enter your email below and we will send you the download "
+"link for free.</p><p>We will also send you tips on how to use the "
+"spreadsheet editor to improve your SEO, increase visitors and subscribers, "
+"and <b>edit your posts extra fast</b>.</p>"
+msgstr ""
+
+#: samples/email-optin-form.php:8
+msgid "Email"
+msgstr "Correo"
+
+#: samples/email-optin-form.php:12
+msgid "My email is...."
+msgstr "Mi correo es..."
+
+#: samples/email-optin-form.php:17
+msgid "Download extension for free"
+msgstr ""
+
+#: samples/email-optin-form.php:18
+msgid "Dont show this again"
+msgstr "No mostrar otra vez"
+
+#: settings-page.php:16 views/page-template.php:33
+msgid "Settings"
+msgstr "Ajustes"
+
+#: views/settings-form.php:1
+msgid "Advanced Settings"
+msgstr "Opciones avanzadas"
+
+#: views/settings-form.php:12 views/settings-form.php:198
+msgid "Reset settings"
+msgstr "Restablecer ajustes"
+
+#: views/settings-form.php:13
+msgid "Export and import settings"
+msgstr "Exportar e importar configuraciones"
+
+#: views/settings-form.php:92
+msgid "Upload"
+msgstr "Subir"
+
+#: views/settings-form.php:179
+msgid "Add new"
+msgstr "Añadir nuevo"
+
+#: views/settings-form.php:196
+msgid ""
+"Click on the button below to delete all the settings from the plugin. Please "
+"make a database backup if you want to undo this change later."
+msgstr ""
+"Click en el botón de abajo para eliminar todos los ajustes del plugin. Por "
+"favor haz una copia de respaldo de tu base de datos si quieres revertir esta "
+"acción después."
+
+#: views/settings-form.php:202
+msgid "Export settings"
+msgstr "Exportar ajustes"
+
+#: views/settings-form.php:204
+msgid "Click here to export the settings"
+msgstr "Click aquí para exportar"
+
+#: views/settings-form.php:206
+msgid "Import settings"
+msgstr "Importar ajustes"
+
+#: views/settings-form.php:208
+msgid "The import will overwrite existing settings"
+msgstr "La importación sobreescribirá las opciones existentes"
+
+#: views/settings-form.php:209
+msgid "Please make a database backup before the import to be safe"
+msgstr ""
+"Por favor haz una copia de respaldo de tu base de datos antes de la "
+"importación para poder revertir después"
+
+#: views/settings-form.php:210
+msgid ""
+"Some settings depend on other plugins. So make sure that both sites use the "
+"same plugins."
+msgstr ""
+"Algunos ajustes dependen de otros plugins, así que asegúrate que ambos "
+"sitios usan los mismos plugins."
+
+#: views/settings-form.php:212
+msgid "Paste the settings here (the contents of the exported file)."
+msgstr "Pega aquí los ajustes (el contenido del archivo exportado)."
+
+#: views/settings-form.php:219
+msgid "Save"
+msgstr "Guardar"
+
+#: views/settings-form.php:303
+msgid "Settings saved"
+msgstr "Ajustes guardados"

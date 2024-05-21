@@ -1,0 +1,42 @@
+/*
+ * Tabs
+ * -------------------------------------------------------------
+ */
+.tec-tabs {
+	.tec-tabs-list {
+		background-color: var(--tec-color-table-background);
+		display: grid;
+		grid-template-columns: repeat(var(--tec-tabs-grid-template-columns), 1fr);
+		margin-bottom: 14px;
+		text-align: center;
+
+		@media screen and (min-width: 700px) {
+			grid-template-columns: repeat(var(--tec-tabs-grid-template-columns), 1fr);
+		}
+
+		.tec-tabs-list-button {
+			background-color: var(--tec-color-tabs-button-background);
+			border: 1px solid var(--tec-color-tabs-border);
+			border-radius: 0;
+			color: var(--tec-color-tabs-button-text);
+			font-size: 0.9em;
+			line-height: 1.4em;
+			margin: 0;
+			padding: 12px 16px;
+
+			@media screen and (min-width: 700px) {
+				width: auto;
+			}
+
+			&:hover,
+			&[aria-selected="true"] {
+				background-color: var(--tec-color-tabs-button-text);
+				color: var(--tec-color-tabs-button-background);
+			}
+
+			+ .tec-tabs-list-button {
+				border-left-width: 0;
+			}
+		}
+	}
+}

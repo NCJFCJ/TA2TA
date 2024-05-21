@@ -1,0 +1,107 @@
+msgid ""
+msgstr ""
+"Project-Id-Version: \n"
+"Report-Msgid-Bugs-To: \n"
+"Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
+"Language-Team: LANGUAGE <LL@li.org>\n"
+"MIME-Version: 1.0\n"
+"Content-Type: text/plain; charset=UTF-8\n"
+"Content-Transfer-Encoding: 8bit\n"
+"POT-Creation-Date: 2023-04-26T22:45:57+00:00\n"
+"PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
+"X-Generator: WP-CLI 2.4.0\n"
+
+#: index.php:40
+msgid "Buy extension now"
+msgstr ""
+
+#: index.php:139
+#: index.php:171
+msgid "You dont have enough permissions to view this page."
+msgstr ""
+
+#: samples/email-optin-form.php:3
+msgid ""
+"<p>As a thank you for using our plugin, we want to give you access to a <b>Premium Extension for free</b>.</p>\r\n"
+"\t\t\t\t<p>The <b>Auto fill cells</b> extension allows you to copy information between posts.</p>\r\n"
+"\t\t\t\t<p><img src=\"%s\" /></p><p>Copy categories , excerpts , dates , authors , etc.</p>\r\n"
+"\t\t\t\t<p>Please enter your email below and we will send you the download link for free.</p><p>We will also send you tips on how to use the spreadsheet editor to improve your SEO, increase visitors and subscribers, and <b>edit your posts extra fast</b>.</p>"
+msgstr ""
+
+#: samples/email-optin-form.php:8
+msgid "Email"
+msgstr ""
+
+#: samples/email-optin-form.php:12
+msgid "My email is...."
+msgstr ""
+
+#: samples/email-optin-form.php:17
+msgid "Download extension for free"
+msgstr ""
+
+#: samples/email-optin-form.php:18
+msgid "Dont show this again"
+msgstr ""
+
+#: settings-page.php:16
+#: views/page-template.php:33
+msgid "Settings"
+msgstr ""
+
+#: views/settings-form.php:1
+msgid "Advanced Settings"
+msgstr ""
+
+#: views/settings-form.php:12
+#: views/settings-form.php:198
+msgid "Reset settings"
+msgstr ""
+
+#: views/settings-form.php:13
+msgid "Export and import settings"
+msgstr ""
+
+#: views/settings-form.php:92
+msgid "Upload"
+msgstr ""
+
+#: views/settings-form.php:196
+msgid "Click on the button below to delete all the settings from the plugin. Please make a database backup if you want to undo this change later."
+msgstr ""
+
+#: views/settings-form.php:202
+msgid "Export settings"
+msgstr ""
+
+#: views/settings-form.php:204
+msgid "Click here to export the settings"
+msgstr ""
+
+#: views/settings-form.php:206
+msgid "Import settings"
+msgstr ""
+
+#: views/settings-form.php:208
+msgid "The import will overwrite existing settings"
+msgstr ""
+
+#: views/settings-form.php:209
+msgid "Please make a database backup before the import to be safe"
+msgstr ""
+
+#: views/settings-form.php:210
+msgid "Some settings depend on other plugins. So make sure that both sites use the same plugins."
+msgstr ""
+
+#: views/settings-form.php:212
+msgid "Paste the settings here (the contents of the exported file)."
+msgstr ""
+
+#: views/settings-form.php:219
+msgid "Save"
+msgstr ""
+
+#: views/settings-form.php:303
+msgid "Settings saved"
+msgstr ""

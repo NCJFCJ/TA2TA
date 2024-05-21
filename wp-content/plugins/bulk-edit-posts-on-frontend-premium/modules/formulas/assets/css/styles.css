@@ -1,0 +1,26 @@
+.formula-builder .action-fields .relationship:first-child,
+.formula-builder .action-fields .relationship-and {
+    display: none;
+}
+
+.formula-builder label {
+    display: block;
+}
+.formula-builder input,.formula-builder select, .formula-builder textarea {
+    display: block;
+    margin: 8px auto;
+    width: 53%;
+}
+.formula-builder textarea {
+    height: 27px;
+}
+
+/*Simplify formulas modal*/
+.modal-formula ul.vgse-simple-tabs,
+.modal-formula .formula-field,
+.modal-formula .formula-textarea {
+    display: none;
+}
+.formula-builder .action-title,.formula-builder .action-description {
+    margin: 0;
+}

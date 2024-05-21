@@ -1,0 +1,103 @@
+#, fuzzy
+msgid ""
+msgstr ""
+"Project-Id-Version: PDF Thumbnail Generator\n"
+"Report-Msgid-Bugs-To: \n"
+"POT-Creation-Date: 2022-07-07 21:13+0000\n"
+"PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
+"Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
+"Language-Team: \n"
+"Language: \n"
+"Plural-Forms: nplurals=INTEGER; plural=EXPRESSION;\n"
+"MIME-Version: 1.0\n"
+"Content-Type: text/plain; charset=UTF-8\n"
+"Content-Transfer-Encoding: 8bit\n"
+"X-Generator: Loco https://localise.biz/\n"
+"X-Loco-Version: 2.6.2; wp-6.0\n"
+"X-Domain: pdf-thumbnail-generator"
+
+#: pdf-thumbnail-generator.php:113
+msgid "Back to the settings"
+msgstr ""
+
+#: pdf-thumbnail-generator.php:185
+msgid "Generate missing PDF thumbnails"
+msgstr ""
+
+#: pdf-thumbnail-generator.php:180
+msgid "Generate thumbnails for already uploaded PDFs"
+msgstr ""
+
+#: pdf-thumbnail-generator.php:111
+#, php-format
+msgid "Generated thumbnails: %d"
+msgstr ""
+
+#. Description of the plugin
+msgid "Generates thumbnail for PDF files"
+msgstr ""
+
+#: pdf-thumbnail-generator.php:88
+msgid "Generating PDF thumbnails..."
+msgstr ""
+
+#: pdf-thumbnail-generator.php:182
+msgid "If you changed some settings, please save them firstly."
+msgstr ""
+
+#: pdf-thumbnail-generator.php:46
+msgid ""
+"Imagick is missing on your server. PDF Thumbnail Generator can not work "
+"without it."
+msgstr ""
+
+#: pdf-thumbnail-generator.php:148
+msgid "Max height"
+msgstr ""
+
+#: pdf-thumbnail-generator.php:140
+msgid "Max width"
+msgstr ""
+
+#: pdf-thumbnail-generator.php:101
+#, php-format
+msgid "New thumbnail was generated for %d"
+msgstr ""
+
+#. Name of the plugin
+msgid "PDF Thumbnail Generator"
+msgstr ""
+
+#: pdf-thumbnail-generator.php:58 pdf-thumbnail-generator.php:59
+#: pdf-thumbnail-generator.php:132
+msgid "PDF Thumbnails"
+msgstr ""
+
+#: pdf-thumbnail-generator.php:156
+msgid "Quality"
+msgstr ""
+
+#: pdf-thumbnail-generator.php:189
+msgid "Regenerate all PDF thumbnails"
+msgstr ""
+
+#: pdf-thumbnail-generator.php:177
+msgid "Save"
+msgstr ""
+
+#: pdf-thumbnail-generator.php:68
+msgid "Settings"
+msgstr ""
+
+#: pdf-thumbnail-generator.php:133
+msgid "Settings saved."
+msgstr ""
+
+#: pdf-thumbnail-generator.php:103 pdf-thumbnail-generator.php:106
+#, php-format
+msgid "Thumbnail already exists for %d"
+msgstr ""
+
+#: pdf-thumbnail-generator.php:164
+msgid "Type"
+msgstr ""

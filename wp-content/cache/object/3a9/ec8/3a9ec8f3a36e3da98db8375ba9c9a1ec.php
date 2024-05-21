@@ -1,0 +1,6 @@
+[t≈e<?php exit; ?>a:1:{s:7:"content";O:8:"stdClass":24:{s:2:"ID";i:14;s:11:"post_author";s:1:"2";s:9:"post_date";s:19:"2013-06-07 15:53:27";s:13:"post_date_gmt";s:19:"2013-06-07 15:53:27";s:12:"post_content";s:364:"<div class="row-fluid">
+		<div class="offset3 span6" style="text-align: center;">
+			<h3>Your Request Has Been Received!</h3>
+			<p>Thank you for requesting services through the Technical Assistance to Technical Assistance Providers (TA2TA) Program. We have received your request and someone will get back to you within two business days.</p>
+		</div>
+	</div>";s:10:"post_title";s:24:"Service Request Recieved";s:12:"post_excerpt";s:0:"";s:11:"post_status";s:7:"publish";s:14:"comment_status";s:6:"closed";s:11:"ping_status";s:6:"closed";s:13:"post_password";s:0:"";s:9:"post_name";s:24:"service-request-recieved";s:7:"to_ping";s:0:"";s:6:"pinged";s:0:"";s:13:"post_modified";s:19:"2013-06-07 15:53:27";s:17:"post_modified_gmt";s:19:"2013-06-07 15:53:27";s:21:"post_content_filtered";s:0:"";s:11:"post_parent";i:0;s:4:"guid";s:48:"https://ldev.ta2ta.org/service-request-recieved/";s:10:"menu_order";i:114;s:9:"post_type";s:4:"page";s:14:"post_mime_type";s:0:"";s:13:"comment_count";s:1:"0";s:6:"filter";s:3:"raw";}}

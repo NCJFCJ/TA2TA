@@ -1,0 +1,2095 @@
+# Copyright (C) 2024 The Events Calendar
+# This file is distributed under the GPLv2 or later.
+msgid ""
+msgstr ""
+"Project-Id-Version: The Events Calendar: Virtual Events 1.15.6\n"
+"Report-Msgid-Bugs-To: https://evnt.is/191x\n"
+"Last-Translator: \n"
+"Language-Team: \n"
+"MIME-Version: 1.0\n"
+"Content-Type: text/plain; charset=UTF-8\n"
+"Content-Transfer-Encoding: 8bit\n"
+"POT-Creation-Date: 2024-01-22T07:17:32-08:00\n"
+"PO-Revision-Date: 2024-01-22 15:17\n"
+"X-Generator: WP-CLI 2.7.1\n"
+"X-Domain: events-virtual\n"
+
+#. Plugin Name of the plugin
+msgid "The Events Calendar: Virtual Events"
+msgstr ""
+
+#. Description of the plugin
+msgid "Virtual Events is an add-on to The Events Calendar suite of products that optimizes your calendar, tickets, and email notifications for virtual events."
+msgstr ""
+
+#. Author of the plugin
+#: src/functions/load.php:35
+msgid "The Events Calendar"
+msgstr ""
+
+#. Author URI of the plugin
+msgid "http://evnt.is/20"
+msgstr ""
+
+#: events-virtual.php:52
+msgid "Events Virtual"
+msgstr ""
+
+#: src/admin-views/facebook/find-app-id.php:25
+msgctxt "The link label to get the Facebook App ID."
+msgid "How to find your Facebook App ID."
+msgstr ""
+
+#: src/admin-views/facebook/find-page-id.php:25
+msgctxt "The link label to get the Facebook page/group ID."
+msgid "How to find your Facebook page/group ID."
+msgstr ""
+
+#: src/admin-views/facebook/intro-text.php:21
+msgctxt "API connection header"
+msgid "Facebook Live Video"
+msgstr ""
+
+#: src/admin-views/facebook/page/add-link.php:20
+msgctxt "Label to connect an page to the Facebook Live API."
+msgid "Add Facebook Page"
+msgstr ""
+
+#: src/admin-views/facebook/page/components/add-button.php:21
+msgctxt "Add a facebook page from the list of Facebook live pages."
+msgid "Add"
+msgstr ""
+
+#: src/admin-views/facebook/page/components/delete-button.php:22
+msgctxt "Removes a facebook page from the list of Facebook live pages."
+msgid "Remove facebook page"
+msgstr ""
+
+#: src/admin-views/facebook/page/components/status.php:21
+msgctxt "The status of the Page's access token."
+msgid "Not Connected"
+msgstr ""
+
+#: src/admin-views/facebook/page/components/status.php:26
+msgctxt "The message to display if a Faceook Page is not connected."
+msgid "click \"Continue with Facebook\" to authorize it."
+msgstr ""
+
+#: src/admin-views/facebook/page/components/status.php:39
+msgctxt "The status of the Page's access token."
+msgid "Connected"
+msgstr ""
+
+#: src/admin-views/facebook/page/components/status.php:44
+msgctxt "The message to display if a Faceook Page is connected."
+msgid "token expires:"
+msgstr ""
+
+#: src/admin-views/facebook/page/components/status.php:49
+msgctxt "The label of the link to clear the token."
+msgid "clear token"
+msgstr ""
+
+#: src/admin-views/facebook/page/components/status.php:69
+msgctxt "The label of the status of the Page's access token."
+msgid "Status: "
+msgstr ""
+
+#: src/admin-views/facebook/page/components/update-button.php:21
+msgctxt "Save a facebook page from the list of Facebook live pages."
+msgid "Update Facebook Page."
+msgstr ""
+
+#: src/admin-views/facebook/page/fields.php:33
+msgctxt "Label for the name of the Facebook page connected to the site."
+msgid "Page Name"
+msgstr ""
+
+#: src/admin-views/facebook/page/fields.php:35
+msgctxt "The placeholder for the Facebook Page name."
+msgid "Enter a Facebook Page Name"
+msgstr ""
+
+#: src/admin-views/facebook/page/fields.php:36
+msgctxt "The screen reader text of the label for the Facebook Page name."
+msgid "Enter a Facebook Page name."
+msgstr ""
+
+#: src/admin-views/facebook/page/fields.php:46
+msgctxt "Label for the id of the Facebook page connected to the site."
+msgid "Page ID"
+msgstr ""
+
+#: src/admin-views/facebook/page/fields.php:48
+msgctxt "The placeholder for the Facebook page id."
+msgid "Enter a Facebook Page ID"
+msgstr ""
+
+#: src/admin-views/facebook/page/fields.php:49
+msgctxt "The screen reader text of the label for the Facebook page id."
+msgid "Enter a Facebook Page ID."
+msgstr ""
+
+#: src/admin-views/facebook/save.php:27
+msgctxt "Save a Facebook App ID and App Secret."
+msgid "Save Facebook App"
+msgstr ""
+
+#: src/admin-views/google/api/accounts/list.php:46
+msgctxt "Refreshes a Google account from the website."
+msgid "Refresh Google Account"
+msgstr ""
+
+#: src/admin-views/google/api/accounts/list.php:54
+msgctxt "Disables the Google Account for the Website."
+msgid "Toggle to Change Account Status"
+msgstr ""
+
+#: src/admin-views/google/api/accounts/list.php:76
+msgctxt "Removes a Google account from the website."
+msgid "Remove Google Account"
+msgstr ""
+
+#: src/admin-views/google/api/authorize-fields.php:24
+#: src/admin-views/microsoft/api/authorize-fields.php:24
+#: src/admin-views/webex/api/authorize-fields.php:24
+#: src/admin-views/zoom/api/authorize-fields.php:27
+msgid "Connected Accounts"
+msgstr ""
+
+#: src/admin-views/google/api/authorize-fields/add-link.php:21
+msgctxt "Label to connect an account to the Google API."
+msgid "Add Google Account"
+msgstr ""
+
+#: src/admin-views/google/api/authorize-fields/add-link.php:40
+msgctxt "Settings help text for multiple Google accounts button"
+msgid "Using multiple Google Accounts"
+msgstr ""
+
+#: src/admin-views/google/api/intro-text.php:21
+msgctxt "API connection header"
+msgid "Google"
+msgstr ""
+
+#: src/admin-views/google/api/intro-text.php:28
+msgctxt "Settings help text for multiple Google accounts."
+msgid "You need to connect your site to a Google account to be able to generate Google Meet links for your"
+msgstr ""
+
+#: src/admin-views/google/api/intro-text.php:35
+msgctxt "Settings link text for multiple Google accounts."
+msgid "Read more about adding and managing Google Accounts."
+msgstr ""
+
+#: src/admin-views/microsoft/api/accounts/list.php:46
+msgctxt "Refreshes a Microsoft account from the website."
+msgid "Refresh Microsoft Account"
+msgstr ""
+
+#: src/admin-views/microsoft/api/accounts/list.php:54
+msgctxt "Disables the Microsoft Account for the Website."
+msgid "Toggle to Change Account Status"
+msgstr ""
+
+#: src/admin-views/microsoft/api/accounts/list.php:76
+msgctxt "Removes a Microsoft account from the website."
+msgid "Remove Microsoft Account"
+msgstr ""
+
+#: src/admin-views/microsoft/api/authorize-fields/add-link.php:21
+msgctxt "Label to connect an account to the Microsoft API."
+msgid "Add Microsoft Account"
+msgstr ""
+
+#: src/admin-views/microsoft/api/authorize-fields/add-link.php:42
+msgctxt "Settings help text for multiple Microsoft accounts button"
+msgid "Using multiple Microsoft Accounts"
+msgstr ""
+
+#: src/admin-views/microsoft/api/intro-text.php:21
+msgctxt "API connection header"
+msgid "Microsoft"
+msgstr ""
+
+#: src/admin-views/microsoft/api/intro-text.php:28
+msgctxt "Settings help text for multiple Microsoft accounts."
+msgid "You need to connect your site to a Microsoft account to be able to generate Microsoft Meeting links for your"
+msgstr ""
+
+#: src/admin-views/microsoft/api/intro-text.php:35
+msgctxt "Settings link text for multiple Microsoft accounts."
+msgid "Read more about adding and managing Microsoft Accounts."
+msgstr ""
+
+#: src/admin-views/virtual-metabox/api/display.php:51
+msgctxt "Option to display Meeting link details in event."
+msgid "Meeting link with details"
+msgstr ""
+
+#: src/admin-views/virtual-metabox/api/meeting-link-error-details.php:30
+msgctxt "Accessible label of the control to dismiss a failure to generate an API connection."
+msgid "Dismiss"
+msgstr ""
+
+#: src/admin-views/virtual-metabox/api/type-options.php:47
+#: src/Tribe/Meetings/Google/Classic_Editor.php:299
+#: src/Tribe/Meetings/Microsoft/Classic_Editor.php:301
+#: src/Tribe/Meetings/Webex/Classic_Editor.php:299
+#: src/Tribe/Meetings/Zoom/Classic_Editor.php:300
+msgctxt "The placeholder for the dropdown to select a host."
+msgid "Select a Host"
+msgstr ""
+
+#: src/admin-views/virtual-metabox/autodetect/controls.php:37
+msgctxt "Title for video source."
+msgid "Video or Meeting Link URL"
+msgstr ""
+
+#: src/admin-views/virtual-metabox/autodetect/controls.php:51
+msgctxt "Label for button to find the video source."
+msgid "Find"
+msgstr ""
+
+#: src/admin-views/virtual-metabox/autodetect/video-preview.php:24
+msgctxt "Label for video preview of the Smart URL/autodetect."
+msgid "Preview"
+msgstr ""
+
+#. Translators: %1$s: singular ticket term.
+#: src/admin-views/virtual-metabox/container/compatibility/event-tickets/share-tickets.php:37
+msgctxt "Include virtual link in ticket emails."
+msgid "Include link in %1$s emails"
+msgstr ""
+
+#: src/admin-views/virtual-metabox/container/compatibility/event-tickets/share.php:25
+msgid "Share:"
+msgstr ""
+
+#. Translators: %1$s: singular RSVP term.
+#: src/admin-views/virtual-metabox/container/compatibility/event-tickets/share.php:47
+msgctxt "Include virtual link in RSVP emails."
+msgid "Include link in %1$s emails"
+msgstr ""
+
+#. Translators: %1$s: singular RSVP term.
+#: src/admin-views/virtual-metabox/container/compatibility/event-tickets/show-to-rsvp.php:46
+msgctxt "Only show virtual content to users with RSVPs."
+msgid "%1$s Attendees only"
+msgstr ""
+
+#. Translators: %1$s is the URL
+#: src/admin-views/virtual-metabox/container/compatibility/event-tickets/show-to-rsvp.php:65
+msgctxt "Explains why the radio button is disabled and how to enable it via ticket settings."
+msgid "Login requirements for RSVPs must be active to use this option. <a href=\"%1$s\">Go to Tickets settings.</a>"
+msgstr ""
+
+#. Translators: %1$s: singular ticket term.
+#: src/admin-views/virtual-metabox/container/compatibility/event-tickets/show-to-tickets.php:47
+msgctxt "Only show virtual content to users with tickets."
+msgid "%1$s Attendees only"
+msgstr ""
+
+#. Translators: %1$s is the URL
+#: src/admin-views/virtual-metabox/container/compatibility/event-tickets/show-to-tickets.php:66
+msgctxt "Explains why the radio button is disabled and how to enable it via ticket settings."
+msgid "Login requirements for tickets must be active to use this option. <a href=\"%1$s\">Go to Tickets settings.</a>"
+msgstr ""
+
+#: src/admin-views/virtual-metabox/container/compatibility/event-tickets/show-to.php:25
+#: src/admin-views/virtual-metabox/container/show-to.php:26
+msgid "Show to:"
+msgstr ""
+
+#: src/admin-views/virtual-metabox/container/compatibility/event-tickets/show-to.php:45
+#: src/admin-views/virtual-metabox/container/show-to.php:46
+msgctxt "Show virtual content to all users."
+msgid "Everyone"
+msgstr ""
+
+#: src/admin-views/virtual-metabox/container/compatibility/event-tickets/show-to.php:65
+#: src/admin-views/virtual-metabox/container/show-to.php:66
+msgctxt "Show virtual content to logged-in users only."
+msgid "Logged in users"
+msgstr ""
+
+#: src/admin-views/virtual-metabox/container/display.php:39
+msgid "Display:"
+msgstr ""
+
+#: src/admin-views/virtual-metabox/container/display.php:53
+msgctxt "Option to embed video in event."
+msgid "Embed Video"
+msgstr ""
+
+#: src/admin-views/virtual-metabox/container/display.php:74
+msgctxt "Show watch button or embed only at the start of the event."
+msgid "Linked Button"
+msgstr ""
+
+#: src/admin-views/virtual-metabox/container/display.php:91
+msgctxt "Label for virtual events watch button, defaults to watch"
+msgid "Label"
+msgstr ""
+
+#: src/admin-views/virtual-metabox/container/event-type.php:27
+msgid "Type of Event:"
+msgstr ""
+
+#: src/admin-views/virtual-metabox/container/event-type.php:36
+msgctxt "Resets the virtual settings"
+msgid "Remove Virtual Settings"
+msgstr ""
+
+#. Translators: single event term.
+#: src/admin-views/virtual-metabox/container/head.php:36
+msgid "Virtual %1$s"
+msgstr ""
+
+#. Translators: single event term.
+#: src/admin-views/virtual-metabox/container/head.php:58
+msgid "Configure Virtual %1$s"
+msgstr ""
+
+#. Translators: single event term.
+#: src/admin-views/virtual-metabox/container/head.php:81
+msgctxt "Event State of being virtual-only checkbox label"
+msgid "Mark as a virtual %1$s"
+msgstr ""
+
+#: src/admin-views/virtual-metabox/container/label.php:25
+msgid "Virtual Event Label:"
+msgstr ""
+
+#. Translators: single event term.
+#: src/admin-views/virtual-metabox/container/label.php:41
+msgctxt "Show virtual events marker on single event page."
+msgid "Show on %1$s page"
+msgstr ""
+
+#: src/admin-views/virtual-metabox/container/label.php:62
+msgctxt "Show virtual events marker on calendar views."
+msgid "Show on calendar views"
+msgstr ""
+
+#. Translators: plural event term.
+#: src/admin-views/virtual-metabox/container/label.php:76
+msgid "Virtual %1$s will be indexed on Google as online %1$s."
+msgstr ""
+
+#: src/admin-views/virtual-metabox/container/show-when.php:26
+msgid "Show when:"
+msgstr ""
+
+#. Translators: single event term.
+#: src/admin-views/virtual-metabox/container/show-when.php:42
+msgctxt "Show watch button or embed when the event is published."
+msgid "%1$s is published"
+msgstr ""
+
+#. Translators: single event term.
+#: src/admin-views/virtual-metabox/container/show-when.php:66
+msgctxt "Show watch button or embed only at the start of the event."
+msgid "%1$s starts"
+msgstr ""
+
+#. Translators: %1$d: number of minutes of lead-up before event %2$s: single event term.
+#: src/admin-views/virtual-metabox/container/show-when.php:89
+msgctxt "Explains when the link will show."
+msgid "Link and/or embed will appear on the page %1$d minutes before the %2$s start time."
+msgstr ""
+
+#: src/admin-views/virtual-metabox/container/video-source.php:26
+msgid "Add Video or Meeting Link:"
+msgstr ""
+
+#: src/admin-views/virtual-metabox/container/video-source.php:50
+msgctxt "The placeholder for the dropdown to choose the virtual video source."
+msgid "Choose Video Source"
+msgstr ""
+
+#: src/admin-views/virtual-metabox/facebook/controls.php:35
+msgctxt "Title for Zoom Meeting or Webinar creation."
+msgid "Facebook Live"
+msgstr ""
+
+#. translators: %1$s: Google Meet phone pin.
+#: src/admin-views/virtual-metabox/google/details.php:136
+#: src/views/google/email/details/dial-in-content.php:42
+#: src/views/google/single/google-details.php:115
+msgctxt "The label for the Google Phone Pin, prefixed by the Pin label."
+msgid "Pin: %1$s"
+msgstr ""
+
+#: src/admin-views/virtual-metabox/google/setup.php:61
+msgctxt "Title for Google Meeting creation."
+msgid "Google Meeting"
+msgstr ""
+
+#: src/admin-views/virtual-metabox/microsoft/setup.php:62
+msgctxt "Title for Microsoft Meeting creation."
+msgid "Microsoft Meeting"
+msgstr ""
+
+#. translators: %1$s: Webex meeting password.
+#: src/admin-views/virtual-metabox/webex/details.php:124
+msgctxt "The label for the webex Meeting password, prefixed by password label."
+msgid "Password*: %1$s"
+msgstr ""
+
+#: src/admin-views/virtual-metabox/webex/details.php:136
+msgctxt "The message about how the Webex meeting password displays."
+msgid "Webex meeting password will display based on the Virtual \"Show to\" settings. "
+msgstr ""
+
+#: src/admin-views/virtual-metabox/webex/setup.php:61
+msgctxt "Title for Webex Meeting creation."
+msgid "Webex Meeting"
+msgstr ""
+
+#: src/admin-views/virtual-metabox/youtube/controls.php:36
+msgctxt "Title for Zoom Meeting or Webinar creation."
+msgid "YouTube Live"
+msgstr ""
+
+#: src/admin-views/virtual-metabox/youtube/controls.php:44
+msgctxt "Label for virtual events YouTube channel id."
+msgid "YouTube Channel ID:"
+msgstr ""
+
+#: src/admin-views/virtual-metabox/youtube/controls.php:61
+msgctxt "The settings for YouTube Integration for an event."
+msgid "Video Settings"
+msgstr ""
+
+#: src/admin-views/virtual-metabox/zoom/accounts.php:53
+#: src/admin-views/virtual-metabox/zoom/setup.php:68
+msgctxt "Title for Zoom Meeting or Webinar creation."
+msgid "Zoom Meeting"
+msgstr ""
+
+#: src/admin-views/webex/api/accounts/list.php:43
+msgctxt "Refreshes a Webex account from the website."
+msgid "Refresh Webex Account"
+msgstr ""
+
+#: src/admin-views/webex/api/accounts/list.php:51
+msgctxt "Disables the Webex Account for the Website."
+msgid "Toggle to Change Account Status"
+msgstr ""
+
+#: src/admin-views/webex/api/accounts/list.php:73
+msgctxt "Removes a Webex account from the website."
+msgid "Remove Webex Account"
+msgstr ""
+
+#: src/admin-views/webex/api/authorize-fields/add-link.php:21
+msgctxt "Label to connect an account to the Webex API."
+msgid "Add Webex Account"
+msgstr ""
+
+#: src/admin-views/webex/api/authorize-fields/add-link.php:42
+msgctxt "Settings help text for multiple Webex accounts button"
+msgid "Using multiple Webex Accounts"
+msgstr ""
+
+#: src/admin-views/webex/api/intro-text.php:21
+msgctxt "API connection header"
+msgid "Webex"
+msgstr ""
+
+#: src/admin-views/webex/api/intro-text.php:28
+msgctxt "Settings help text for multiple Webex accounts."
+msgid "You need to connect your site to a Webex account to be able to generate Webex links for your"
+msgstr ""
+
+#: src/admin-views/webex/api/intro-text.php:35
+msgctxt "Settings link text for multiple Webex accounts."
+msgid "Read more about adding and managing Webex Accounts."
+msgstr ""
+
+#: src/admin-views/youtube/components/trash.php:30
+msgctxt "Delete YouTube channel id by AJAX."
+msgid "Delete YouTube Channel ID"
+msgstr ""
+
+#: src/admin-views/youtube/intro-text.php:21
+msgctxt "API connection header"
+msgid "YouTube Live"
+msgstr ""
+
+#: src/admin-views/zoom/api/accounts/list.php:44
+msgctxt "Refreshes a Zoom account from the website."
+msgid "Refresh Zoom Account"
+msgstr ""
+
+#: src/admin-views/zoom/api/accounts/list.php:52
+msgctxt "Disables the Zoom Account for the Website."
+msgid "Toggle to Change Account Status"
+msgstr ""
+
+#: src/admin-views/zoom/api/accounts/list.php:74
+msgctxt "Removes a Zoom account from the website."
+msgid "Remove Zoom Account"
+msgstr ""
+
+#: src/admin-views/zoom/api/authorize-fields/add-link.php:22
+msgctxt "Label to connect an account to the Zoom API."
+msgid "Add Zoom Account"
+msgstr ""
+
+#: src/admin-views/zoom/api/authorize-fields/add-link.php:43
+msgctxt "Settings help text for multiple Zoom accounts button"
+msgid "Using multiple Zoom Accounts"
+msgstr ""
+
+#: src/admin-views/zoom/api/intro-text.php:21
+msgctxt "API connection header"
+msgid "Zoom"
+msgstr ""
+
+#: src/admin-views/zoom/api/intro-text.php:28
+msgctxt "Settings help text for multiple Zoom accounts."
+msgid "You need to connect your site to a Zoom account to be able to generate Zoom links for your"
+msgstr ""
+
+#: src/admin-views/zoom/api/intro-text.php:35
+msgctxt "Settings link text for multiple Zoom accounts."
+msgid "Read more about adding and managing Zoom Accounts."
+msgstr ""
+
+#: src/functions/load.php:30
+msgid "To begin using Virtual Events, please install the latest version of"
+msgstr ""
+
+#: src/functions/load.php:138
+msgid "The Virtual Events plugin is already loaded. Please check your site for conflicting plugins."
+msgstr ""
+
+#: src/functions/template-tags/general.php:20
+msgctxt "Capitalized version of the \"virtual\" term."
+msgid "Virtual"
+msgstr ""
+
+#: src/functions/template-tags/general.php:46
+msgctxt "Lowercase version of the \"virtual\" term."
+msgid "virtual"
+msgstr ""
+
+#: src/functions/template-tags/general.php:74
+msgctxt "Capitalized \"virtual\" term, capitalized singular event term."
+msgid "%1$s %2$s"
+msgstr ""
+
+#: src/functions/template-tags/general.php:111
+msgctxt "Lowercase \"virtual\" term, singular lowercase event term."
+msgid "%1$s %2$s"
+msgstr ""
+
+#: src/functions/template-tags/general.php:148
+msgctxt "Capitalized \"virtual\" term, capitalized plural event term."
+msgid "%1$s %2$s"
+msgstr ""
+
+#: src/functions/template-tags/general.php:185
+msgctxt "Lowercase \"virtual\" term, lowercase plural event term."
+msgid "%1$s %2$s"
+msgstr ""
+
+#: src/functions/template-tags/general.php:220
+msgctxt "Capitalized version of the \"hybrid\" term."
+msgid "Hybrid"
+msgstr ""
+
+#: src/functions/template-tags/general.php:247
+msgctxt "Capitalized \"hybrid\" term, capitalized singular event term."
+msgid "%1$s %2$s"
+msgstr ""
+
+#: src/Tribe/Assets.php:484
+msgctxt "The block editor message to display to confirm a user would like to delete the virtual settings."
+msgid ""
+"Are you sure you want to delete the virtual settings? \n"
+"This will also delete any virtual event blocks for this event. \n"
+"\n"
+"This operation cannot be undone."
+msgstr ""
+
+#: src/Tribe/Assets.php:491
+msgctxt "The classic editor message to display to confirm a user would like to delete the virtual settings."
+msgid ""
+"Are you sure you want to delete the virtual settings? \n"
+"\n"
+"This operation cannot be undone."
+msgstr ""
+
+#: src/Tribe/Autodetect/AJAX.php:84
+msgctxt "The autodetect no url found message."
+msgid "No URL found."
+msgstr ""
+
+#: src/Tribe/Autodetect/AJAX.php:106
+msgctxt "An error raised in the context of the Autodetect ajax request."
+msgid "The post ID is missing from the request."
+msgstr ""
+
+#: src/Tribe/Autodetect/AJAX.php:118
+msgctxt "An error raised in the context of the Autodetect ajax request."
+msgid "The event could not be found."
+msgstr ""
+
+#: src/Tribe/Autodetect/AJAX.php:154
+msgctxt "The autodetect no video source found message."
+msgid "No video found. Please check the URL."
+msgstr ""
+
+#: src/Tribe/Autodetect/Metabox.php:152
+msgctxt "The label to choose the Smart URL/autodetect source."
+msgid "Video source:"
+msgstr ""
+
+#: src/Tribe/Autodetect/Metabox.php:163
+msgctxt "The placeholder for the dropdown to choose the virtual Smart URL/autodetect source."
+msgid "Choose a video source:"
+msgstr ""
+
+#: src/Tribe/Autodetect/Metabox.php:175
+msgctxt "Explains what the smart url/autodetect video source is used for."
+msgid "Video source is detected based on the URL you’ve entered. If no video was found, you may need to manually select a different video source from the dropdown below and click Find."
+msgstr ""
+
+#: src/Tribe/Compatibility/Events_Control_Extension/metabox-container.php:29
+msgctxt "Event status default option"
+msgid "Scheduled"
+msgstr ""
+
+#: src/Tribe/Compatibility/Events_Control_Extension/metabox-container.php:34
+msgctxt "Event status of being canceled in the select field"
+msgid "Canceled"
+msgstr ""
+
+#: src/Tribe/Compatibility/Events_Control_Extension/metabox-container.php:40
+msgctxt "Event status of being postponed in the select field"
+msgid "Postponed"
+msgstr ""
+
+#. Translators: %1$s is the lowercase plural event term.
+#: src/Tribe/Compatibility/Filter_Bar/Events_Virtual_Filter.php:126
+msgid "Show all %1$s"
+msgstr ""
+
+#. Translators: %1$s is the lowercase plural virtual event term.
+#: src/Tribe/Compatibility/Filter_Bar/Events_Virtual_Filter.php:134
+msgid "Show only %1$s"
+msgstr ""
+
+#. Translators: %1$s is the lowercase plural virtual event term.
+#: src/Tribe/Compatibility/Filter_Bar/Events_Virtual_Filter.php:142
+msgid "Hide %1$s"
+msgstr ""
+
+#. Translators: Opening and closing tags.
+#: src/Tribe/Compatibility/Online_Event_Extension/Settings.php:39
+msgid "%1$sYou have the %2$sVirtual Events%3$s plugin installed, these settings are superseded by it.%4$s"
+msgstr ""
+
+#. Translators: Opening and closing tags.
+#: src/Tribe/Compatibility/Online_Event_Extension/Settings.php:50
+msgid "%1$sYou should deactivate The Events Control extension as all functionality is handled by the Virtual Events plugin.%2$s"
+msgstr ""
+
+#: src/Tribe/Editor/Blocks/Virtual_Event.php:29
+msgid "Virtual Events"
+msgstr ""
+
+#: src/Tribe/Event_Meta.php:277
+msgctxt "Default label of the virtual event URL call-to-action link."
+msgid "Watch"
+msgstr ""
+
+#: src/Tribe/Event_Meta.php:296
+msgctxt "Default placeholder text for the virtual event smart URL input."
+msgid "Enter URL (YouTube, Zoom, Outlook Event, Webex, etc.)"
+msgstr ""
+
+#: src/Tribe/Event_Status/Compatibility/Filter_Bar/Events_Status_Virtual_Filter.php:40
+msgctxt "Moved online label for filter bar to show moved online events."
+msgid "Show only moved online events"
+msgstr ""
+
+#: src/Tribe/Event_Status/Status_Labels.php:61
+msgctxt "Moved Online event status label"
+msgid "Moved Online"
+msgstr ""
+
+#: src/Tribe/Hooks.php:1030
+msgctxt "The label of the video source option."
+msgid "Search for video or meeting link"
+msgstr ""
+
+#: src/Tribe/Hooks.php:1067
+msgctxt "The name of the autodetect source."
+msgid "OEmbed"
+msgstr ""
+
+#. Translators: %1$s: Virtual Events label, %2$s: Events label singular
+#: src/Tribe/Importer/Events.php:68
+msgctxt "Column name for importer of virtual events."
+msgid "Configure %1$s %2$s"
+msgstr ""
+
+#: src/Tribe/Importer/Events.php:79
+msgctxt "Column name for importer of virtual event type."
+msgid "Type of %1$s (Virtual, Hybrid)"
+msgstr ""
+
+#: src/Tribe/Importer/Events.php:88
+msgctxt "Column name for importer of virtual event source url."
+msgid "Video Source URL"
+msgstr ""
+
+#: src/Tribe/Importer/Events.php:95
+msgctxt "Column name for importer of virtual event to embed the video."
+msgid "Embed Video"
+msgstr ""
+
+#: src/Tribe/Importer/Events.php:102
+msgctxt "Column name for importer of virtual event linked button shows."
+msgid "Linked Button"
+msgstr ""
+
+#: src/Tribe/Importer/Events.php:109
+msgctxt "Column name for importer of virtual event linked button text."
+msgid "Linked Button Text"
+msgstr ""
+
+#: src/Tribe/Importer/Events.php:116
+msgctxt "Column name for importer of virtual event for when to show the emebed."
+msgid "Show Embed At"
+msgstr ""
+
+#: src/Tribe/Importer/Events.php:123
+msgctxt "Column name for importer of virtual event to show virtual icon on signle view."
+msgid "Show Virtual Event Icon on Single"
+msgstr ""
+
+#: src/Tribe/Importer/Events.php:130
+msgctxt "Column name for importer of virtual event to show virtual icon on all views."
+msgid "Show Virtual Event on all Views"
+msgstr ""
+
+#: src/Tribe/Importer/Events.php:137
+msgctxt "Column name for importer of virtual event to show the embed to."
+msgid "Show Embed to"
+msgstr ""
+
+#: src/Tribe/Importer/Events.php:144
+msgctxt "Column name for importer of virtual event RSVP email link."
+msgid "Include Link in RSVP Email"
+msgstr ""
+
+#: src/Tribe/Importer/Events.php:151
+msgctxt "Column name for importer of virtual event ticket email link."
+msgid "Include Link in Ticket Email"
+msgstr ""
+
+#. translators: the placeholders is for the API name.
+#: src/Tribe/Integrations/Abstract_Account_Api.php:801
+#: src/Tribe/Integrations/Abstract_Account_Api.php:900
+msgctxt "Account ID is missing on status change error message."
+msgid "The %1$s Account ID or Account is missing to change the status."
+msgstr ""
+
+#. translators: the placeholders are for the API name.
+#: src/Tribe/Integrations/Abstract_Account_Api.php:824
+msgctxt "Message to display when the %1$s account could not be loaded after being enabled."
+msgid "There seems to be a problem with the connection to this %1$s account. Please refresh the connection."
+msgstr ""
+
+#: src/Tribe/Integrations/Abstract_Account_Api.php:838
+msgctxt "Enables the API Account for the Website."
+msgid "%1$s connection enabled for %2$s"
+msgstr ""
+
+#: src/Tribe/Integrations/Abstract_Account_Api.php:843
+msgctxt "Disables the API Account for the Website."
+msgid "%1$s connection disabled for %2$s"
+msgstr ""
+
+#. translators: the placeholders are for the API name.
+#: src/Tribe/Integrations/Abstract_Account_Api.php:871
+msgctxt "The message to display before a user attempts to refresh a %1$s account connection."
+msgid "Before refreshing the connection, make sure you are logged into the %1$s account in this browser."
+msgstr ""
+
+#. Translators: %1$s: the name of the account that has been deleted.
+#: src/Tribe/Integrations/Abstract_Account_Api.php:917
+msgctxt "Account ID is missing on status change error message."
+msgid "%1$s was successfully deleted"
+msgstr ""
+
+#. Translators: %1$s: the name of the account that has been deleted.
+#: src/Tribe/Integrations/Abstract_Account_Api.php:932
+msgctxt "Message to display when the %1$s account could not be loaded after being enabled."
+msgid "The %1$s Account access token could not be revoked."
+msgstr ""
+
+#. translators: the placeholders are for the API name.
+#: src/Tribe/Integrations/Abstract_Account_Api.php:955
+msgctxt "The message to display to confirm a user would like to delete a %1$s account."
+msgid "Are you sure you want to delete this %1$s connection? This operation cannot be undone. Existing meetings tied to this account will not be impacted."
+msgstr ""
+
+#: src/Tribe/Integrations/Editor/Abstract_Classic.php:295
+msgctxt "The label used to designate the next step after selecting an API Account."
+msgid "Next "
+msgstr ""
+
+#: src/Tribe/Integrations/Editor/Abstract_Classic.php:301
+msgctxt "The label to choose an API account."
+msgid "Choose account:"
+msgstr ""
+
+#: src/Tribe/Integrations/Editor/Abstract_Classic.php:311
+msgctxt "The placeholder for the dropdown to select an API account."
+msgid "Select an Account"
+msgstr ""
+
+#: src/Tribe/Integrations/Editor/Abstract_Classic.php:391
+msgctxt "The message for smart url/autodetect when there are no valid api accounts."
+msgid "No accounts found. Use the link to authorize a new account or reauthorize an existing account:"
+msgstr ""
+
+#: src/Tribe/Integrations/Editor/Abstract_Classic.php:408
+msgctxt "The label of an api accounts dropdown."
+msgid "Choose account:"
+msgstr ""
+
+#: src/Tribe/Integrations/Editor/Abstract_Classic.php:415
+msgctxt "The placeholder for the dropdown to select an account."
+msgid "Select an Account"
+msgstr ""
+
+#: src/Tribe/Integrations/Editor/Abstract_Classic.php:503
+msgctxt "The label of the button to try and generate an connection again."
+msgid "Try again"
+msgstr ""
+
+#: src/Tribe/Integrations/Editor/Abstract_Classic.php:558
+msgctxt "The label of the button to link back to the settings to refresh an API account."
+msgid "Refresh your account on the settings page"
+msgstr ""
+
+#. translators: the placeholders is for the API name.
+#: src/Tribe/Integrations/Editor/Abstract_Classic_Labels.php:31
+msgctxt "Title for an API integration in the event classic editor UI."
+msgid "%1$s Meeting"
+msgstr ""
+
+#. translators: the placeholders is for the API name.
+#: src/Tribe/Integrations/Editor/Abstract_Classic_Labels.php:50
+msgctxt "Label for the link to set up an API integration in the event classic editor UI."
+msgid "Set up %1$s integration"
+msgstr ""
+
+#. translators: the placeholders is for the API name.
+#: src/Tribe/Integrations/Editor/Abstract_Classic_Labels.php:69
+msgctxt "The label for the admin UI control that allows removing an API integration from the event."
+msgid "Remove %1$s link"
+msgstr ""
+
+#. translators: the placeholder is for the API name.
+#: src/Tribe/Integrations/Editor/Abstract_Classic_Labels.php:91
+msgctxt "Header of the disabled account details section when an account is disabled."
+msgid "%1$s Account Disabled"
+msgstr ""
+
+#. translators: the placeholder is for the API name.
+#: src/Tribe/Integrations/Editor/Abstract_Classic_Labels.php:100
+msgctxt "Header of the account details section shown when no account is loaded."
+msgid "%1$s Account Not Found"
+msgstr ""
+
+#. translators: the placeholder is for the API name.
+#: src/Tribe/Integrations/Editor/Abstract_Classic_Labels.php:122
+msgctxt "The message to display when an API account is disabled."
+msgid "The %1$s account is disabled on your website, please use the link to go to the API settings and activate it."
+msgstr ""
+
+#. translators: the placeholder is for the API name.
+#: src/Tribe/Integrations/Editor/Abstract_Classic_Labels.php:131
+msgctxt "The message to display when an API account is not found."
+msgid "The %1$s account is not found on your website, please use the link and add back the account to your site."
+msgstr ""
+
+#: src/Tribe/Integrations/Editor/Abstract_Classic_Labels.php:151
+msgctxt "The label of the button to link back to the settings to enable an API account."
+msgid "Enable your account on the settings page"
+msgstr ""
+
+#: src/Tribe/Integrations/Editor/Abstract_Classic_Labels.php:156
+msgctxt "The label of the button to link back to the settings to add an API account."
+msgid "Add your account on the settings page"
+msgstr ""
+
+#. translators: the placeholder is for the API name.
+#: src/Tribe/Integrations/Editor/Abstract_Classic_Labels.php:173
+msgctxt "A message to indicate an unknown error happened while interacting with the an API integration."
+msgid "Unknown error from %1$s"
+msgstr ""
+
+#: src/Tribe/Integrations/Editor/Abstract_Classic_Labels.php:190
+msgctxt "Header shown if no hosts are found before generating an API connection."
+msgid "No Hosts Found"
+msgstr ""
+
+#. translators: the placeholder is for the API name.
+#: src/Tribe/Integrations/Editor/Abstract_Classic_Labels.php:207
+msgctxt "The message shown if no hosts are found before generating an API connection."
+msgid "The %1$s account could not load any hosts, please follow the link to refresh your account and try again."
+msgstr ""
+
+#. translators: the placeholder is for the API name.
+#: src/Tribe/Integrations/Editor/Abstract_Classic_Labels.php:226
+msgctxt "Header of the details shown when an attempt to generate an API connection fails."
+msgid "%1$s Link"
+msgstr ""
+
+#. translators: the placeholder is for the API name.
+#: src/Tribe/Integrations/Editor/Abstract_Classic_Labels.php:245
+msgctxt "Message shown when an attempt to generate an API connection fails."
+msgid "We were not able to generate a %1$s link."
+msgstr ""
+
+#. translators: the placeholder is for the API name.
+#: src/Tribe/Integrations/Editor/Abstract_Classic_Labels.php:264
+msgctxt "Header of the error details section shown when an attempt to generate an API connection link fails."
+msgid "%1$s error:"
+msgstr ""
+
+#. translators: the placeholder is for the API name.
+#: src/Tribe/Integrations/Editor/Abstract_Classic_Labels.php:283
+msgctxt "The message to display to confirm a user would like to remove an API connection from an event."
+msgid "Are you sure you want to remove the %1$s meeting from this event? This operation cannot be undone."
+msgstr ""
+
+#. translators: %1$s: the API name, %2$s: the error as returned from the API.
+#: src/Tribe/Integrations/Request_Api.php:177
+msgctxt "The prefix of a message reporting a %1$s API communication error, the placeholder is for the error."
+msgid "Error while trying to communicate with %1$s API: %2$s. Please try again in a minute."
+msgstr ""
+
+#. translators: the placeholders are, %1$s: the API name, %2$s: the expected code, and %3$s: the actual response code.
+#: src/Tribe/Integrations/Request_Api.php:231
+msgctxt "The message reporting an API unexpected response code, placeholders are the AP name and the codes."
+msgid "%1$s API response is not the expected one, expected %2$s, received %3$s. Please, try again in a minute."
+msgstr ""
+
+#: src/Tribe/Meetings/Facebook/Classic_Editor.php:97
+msgctxt "The label of Facebook Page to choose."
+msgid "Choose Page:"
+msgstr ""
+
+#: src/Tribe/Meetings/Facebook/Classic_Editor.php:107
+msgctxt "The placeholder for the dropdown to select a Facebook Page."
+msgid "Select a Facebook Page"
+msgstr ""
+
+#: src/Tribe/Meetings/Facebook/Classic_Editor.php:135
+msgctxt "The title of Facebook Live incomplete setup message."
+msgid "Facebook Live"
+msgstr ""
+
+#: src/Tribe/Meetings/Facebook/Classic_Editor.php:140
+msgctxt "The message to complete the Facebook setup."
+msgid "No connected Facebook Pages found. You must connect a Facebook App to your site before you can add Facebook Live videos to events."
+msgstr ""
+
+#: src/Tribe/Meetings/Facebook/Classic_Editor.php:146
+msgctxt "The label of the link to setup Facebook Live."
+msgid "Set up Facebook Live"
+msgstr ""
+
+#: src/Tribe/Meetings/Facebook/Page_API.php:552
+msgctxt "The local id for the facebook page is missing error message."
+msgid "The local id to save the Facebook Page is missing."
+msgstr ""
+
+#: src/Tribe/Meetings/Facebook/Page_API.php:566
+msgctxt "Facebook Page Name or ID is missing error message."
+msgid "The Facebook Page Name or ID is missing."
+msgstr ""
+
+#: src/Tribe/Meetings/Facebook/Page_API.php:594
+msgctxt "Facebook Page is saved to the options."
+msgid "Facebook Page Saved."
+msgstr ""
+
+#: src/Tribe/Meetings/Facebook/Page_API.php:681
+msgctxt "Facebook Page ID, local ID, or access token is missing error message."
+msgid "The Facebook Page ID, local ID, or access token is missing."
+msgstr ""
+
+#: src/Tribe/Meetings/Facebook/Page_API.php:694
+msgctxt "Error message if the Facebook Page was not found in the options."
+msgid "No Facebook Page found to update."
+msgstr ""
+
+#: src/Tribe/Meetings/Facebook/Page_API.php:709
+msgctxt "Facebook Page is saved to the options."
+msgid "Facebook Page access token saved."
+msgstr ""
+
+#: src/Tribe/Meetings/Facebook/Page_API.php:739
+msgctxt "Facebook Page ID local ID is missing error message."
+msgid "No access token to clear as the the Facebook Page local ID is missing."
+msgstr ""
+
+#: src/Tribe/Meetings/Facebook/Page_API.php:752
+msgctxt "Error message if the Facebook Page was not found in the options."
+msgid "No access token is cleared as no Facebook Page was found to update."
+msgstr ""
+
+#: src/Tribe/Meetings/Facebook/Page_API.php:764
+msgctxt "Facebook Page access token is cleared message."
+msgid "Facebook Page access token cleared."
+msgstr ""
+
+#: src/Tribe/Meetings/Facebook/Page_API.php:791
+msgctxt "Facebook Page new fields are added message."
+msgid "Facebook Page fields added."
+msgstr ""
+
+#: src/Tribe/Meetings/Facebook/Page_API.php:829
+msgctxt "Facebook Page local id missing when trying to delete error message."
+msgid "The Facebook Page local id is missing and cannot be deleted."
+msgstr ""
+
+#: src/Tribe/Meetings/Facebook/Page_API.php:841
+msgctxt "Error message if the Facebook Page was not found in the options."
+msgid "No Facebook Page Found to Delete."
+msgstr ""
+
+#: src/Tribe/Meetings/Facebook/Page_API.php:853
+msgctxt "Message when a Facebook Page is deleted from the options table."
+msgid "Facebook Page Deleted."
+msgstr ""
+
+#: src/Tribe/Meetings/Facebook/Page_API.php:916
+msgctxt "The start of the message for smart url/autodetect when there is no Facebook App ID."
+msgid "No connected Facebook Pages found. You must"
+msgstr ""
+
+#: src/Tribe/Meetings/Facebook/Page_API.php:922
+msgctxt "The link text in message for smart url/autodetect when there is no Facebook App ID."
+msgid "connect a Facebook App"
+msgstr ""
+
+#: src/Tribe/Meetings/Facebook/Page_API.php:927
+msgctxt "The end of the message for smart url/autodetect when there is no Facebook App ID."
+msgid "to your site before you can add a Facebook video to an event."
+msgstr ""
+
+#: src/Tribe/Meetings/Facebook/Settings.php:137
+msgid "Facebook App ID"
+msgstr ""
+
+#: src/Tribe/Meetings/Facebook/Settings.php:138
+msgctxt "The Facebook App ID to use for Facebook Live."
+msgid "Enter your Facebook App ID."
+msgstr ""
+
+#: src/Tribe/Meetings/Facebook/Settings.php:143
+msgid "Facebook App Secret"
+msgstr ""
+
+#: src/Tribe/Meetings/Facebook/Settings.php:144
+msgctxt "The Facebook App secret key to use for Facebook Live."
+msgid "Enter your Facebook App Secret."
+msgstr ""
+
+#: src/Tribe/Meetings/Facebook/Settings.php:166
+msgctxt "The label for the Facebook Video settings."
+msgid "Facebook Video"
+msgstr ""
+
+#: src/Tribe/Meetings/Facebook/Settings.php:170
+msgctxt "The label to disable Facebook JS sdk."
+msgid "Disable Facebook JS SDK for Facebook Video"
+msgstr ""
+
+#: src/Tribe/Meetings/Facebook/Settings.php:171
+msgctxt "The tooltip for the option to disable the Facebook JS SDK."
+msgid "Disable the Facebook JS SDK script for single events on the frontend. This may be necessary to prevent conflicts with other Facebook plugins or scripts."
+msgstr ""
+
+#: src/Tribe/Meetings/Facebook/Settings.php:293
+msgctxt "Facebook App ID is missing error message."
+msgid "The Facebook App ID field is missing."
+msgstr ""
+
+#: src/Tribe/Meetings/Facebook/Settings.php:307
+msgctxt "Facebook App Secret is missing error message."
+msgid "The Facebook App Secret field is missing."
+msgstr ""
+
+#: src/Tribe/Meetings/Facebook/Settings.php:328
+msgctxt "The message after a Facebook app id and secret have been saved."
+msgid "The Facebook App was successfully saved."
+msgstr ""
+
+#: src/Tribe/Meetings/Facebook/Settings.php:341
+msgctxt "The message after a Facebook app id and secret did not save successfully."
+msgid "The Facebook App was not saved."
+msgstr ""
+
+#: src/Tribe/Meetings/Facebook/Template_Modifications.php:239
+msgctxt "Facebook offline message"
+msgid "The Live Stream is Offline."
+msgstr ""
+
+#. translators: the placeholder is for the error as returned from Facebook API.
+#: src/Tribe/Meetings/Facebook/Video_API.php:282
+msgctxt "The prefix of a message reporting a Facebook API communication error, the placeholder is for the error."
+msgid "Error while trying to communicate with Facebook API: %1$s. Please try again in a minute."
+msgstr ""
+
+#. translators: the placeholders are, respectively, for the expected and actual response codes.
+#: src/Tribe/Meetings/Facebook/Video_API.php:313
+msgctxt "The message reporting a Facebook API unexpected response code, placeholders are the codes."
+msgid "Facebook API response is not the expected one, expected %1$s, received %2$s. Please, try again in a minute."
+msgstr ""
+
+#: src/Tribe/Meetings/Facebook/Video_API.php:505
+msgctxt "Facebook video autodetect missing video url error message."
+msgid "No video found. Please enter a Facebook video URL or change the selected source."
+msgstr ""
+
+#: src/Tribe/Meetings/Facebook/Video_API.php:514
+msgctxt "Invalid Facebook video url for autodetect error message."
+msgid "This is not a valid Facebook video URL. Please recheck the URL and try again."
+msgstr ""
+
+#: src/Tribe/Meetings/Facebook/Video_API.php:526
+msgctxt "Facebook video valid success message."
+msgid "Success! Save your event to add this video."
+msgstr ""
+
+#: src/Tribe/Meetings/Facebook_Provider.php:248
+msgctxt "The name of the video source."
+msgid "Facebook Live"
+msgstr ""
+
+#: src/Tribe/Meetings/Facebook_Provider.php:308
+msgctxt "The name of the autodetect source."
+msgid "Facebook Video"
+msgstr ""
+
+#: src/Tribe/Meetings/Facebook_Provider.php:468
+msgctxt "The message to display if no local id is found when trying to authorize a facebook page."
+msgid "The local id for the Facebook is not set."
+msgstr ""
+
+#: src/Tribe/Meetings/Facebook_Provider.php:483
+msgctxt "The message to display if no Facebook page wrap found."
+msgid "No Facebook Page data found."
+msgstr ""
+
+#: src/Tribe/Meetings/Facebook_Provider.php:498
+msgctxt "The message to display if no connection is established to the Facebook sdk."
+msgid "The Facebook Page could not be connected to your site, please try again."
+msgstr ""
+
+#: src/Tribe/Meetings/Facebook_Provider.php:513
+msgctxt "The message to display if a Facebook user could not obtain an extended access token."
+msgid "The attempt to get an extended Facebook user access token failed with error"
+msgstr ""
+
+#: src/Tribe/Meetings/Facebook_Provider.php:528
+msgctxt "The message to display if a Facebook Page could not obtain an access token."
+msgid "Unable to capture the Facebook page’s access token. Please verify your Facebook app credentials. The attempt failed with error"
+msgstr ""
+
+#: src/Tribe/Meetings/Facebook_Provider.php:543
+msgctxt "The message to display to confirm when deleting a Facebook Page."
+msgid "Are you sure you want to delete the Facebook Page? Deleting it will disconnect any upcoming virtual events using this Facebook Page."
+msgstr ""
+
+#: src/Tribe/Meetings/Facebook_Provider.php:558
+msgctxt "The message to display to confirm clear Facebook Page's access token."
+msgid "Are you sure you want to clear the access token? Clearing it will disconnect any upcoming virtual events using this Facebook Page until you authorize the page again."
+msgstr ""
+
+#: src/Tribe/Meetings/Google/Abstract_Meetings.php:150
+msgctxt "Google Host Email is missing error message."
+msgid "The Google Host Email to access the API is missing."
+msgstr ""
+
+#: src/Tribe/Meetings/Google/Abstract_Meetings.php:160
+msgctxt "Account ID is missing error message."
+msgid "The Google Account ID to access the API is missing."
+msgstr ""
+
+#: src/Tribe/Meetings/Google/Abstract_Meetings.php:169
+msgctxt "Google account loading error message."
+msgid "The Google Account to access to API could not be loaded."
+msgstr ""
+
+#: src/Tribe/Meetings/Google/Account_API.php:135
+msgctxt "The message shown to a user providing a wrong Google API OAuth authorization nonce."
+msgid "You are not authorized to do this."
+msgstr ""
+
+#. Translators: %1$s: the name of the account that has been refreshed from Google .
+#: src/Tribe/Meetings/Google/Account_API.php:201
+msgctxt "The refresh message for a Google account."
+msgid "Google connection refreshed for %1$s"
+msgstr ""
+
+#. Translators: %1$s: the name of the account that has been added from Google .
+#: src/Tribe/Meetings/Google/Account_API.php:210
+msgctxt "The Google account added message."
+msgid "Google Account added for %1$s"
+msgstr ""
+
+#: src/Tribe/Meetings/Google/Api.php:409
+msgctxt "The start of the message for smart url/autodetect when there is no Google account found."
+msgid "No Google account found."
+msgstr ""
+
+#: src/Tribe/Meetings/Google/Api.php:415
+msgctxt "The link in of the message for smart url/autodetect when no Google account is found."
+msgid "Please check your account connection."
+msgstr ""
+
+#: src/Tribe/Meetings/Google/Classic_Editor.php:160
+msgctxt "Title of the details box shown for a generated Google Meet link in the backend."
+msgid "Google Meet:"
+msgstr ""
+
+#: src/Tribe/Meetings/Google/Classic_Editor.php:176
+msgctxt "Message for a manually connected Google Meet."
+msgid "This meeting is manually connected to the event and changes to the event will not alter the Google Meet."
+msgstr ""
+
+#: src/Tribe/Meetings/Google/Classic_Editor.php:201
+msgctxt "The label used to designate the host of a Google Meet."
+msgid "Host: "
+msgstr ""
+
+#: src/Tribe/Meetings/Google/Classic_Editor.php:207
+msgctxt "The label used to prefix a Google Meet in the backend."
+msgid "ID: "
+msgstr ""
+
+#: src/Tribe/Meetings/Google/Classic_Editor.php:269
+msgctxt "The label used to designate the account of a Google Meet."
+msgid "Account: "
+msgstr ""
+
+#: src/Tribe/Meetings/Google/Classic_Editor.php:275
+msgctxt "The label of the toggle to show the links to generate Google Meet."
+msgid "Generate Google Link"
+msgstr ""
+
+#: src/Tribe/Meetings/Google/Classic_Editor.php:281
+msgctxt "The label used to designate the next step in generation of a Google Meet."
+msgid "Create "
+msgstr ""
+
+#: src/Tribe/Meetings/Google/Classic_Editor.php:287
+msgctxt "The label of the Google Meet host."
+msgid "Meeting Host"
+msgstr ""
+
+#: src/Tribe/Meetings/Google/Classic_Editor.php:332
+msgctxt "Label for the control to generate a Google Meet link in the event classic editor UI."
+msgid "Meeting"
+msgstr ""
+
+#: src/Tribe/Meetings/Google/Classic_Editor.php:377
+msgctxt "Account ID is missing error message."
+msgid "The Google Account ID is missing to access the API."
+msgstr ""
+
+#: src/Tribe/Meetings/Google/Classic_Editor.php:386
+msgctxt "Google account loading error message."
+msgid "The Google Account could not be loaded to access the API. Please try refreshing the account in the Events API Settings."
+msgstr ""
+
+#: src/Tribe/Meetings/Google/Meetings.php:68
+msgctxt "Google autodetect missing video url error message."
+msgid "No url found. Please enter a Google Meet URL or change the selected source."
+msgstr ""
+
+#: src/Tribe/Meetings/Google/Meetings.php:77
+msgctxt "No Google Event link found for autodetect error message."
+msgid "No Google Event link found. Please check your URL."
+msgstr ""
+
+#: src/Tribe/Meetings/Google/Meetings.php:86
+msgctxt "No Google Event ID found for autodetect error message."
+msgid "No Google Event ID found. Please check your URL."
+msgstr ""
+
+#: src/Tribe/Meetings/Google/Meetings.php:119
+msgctxt "No Google Meet found for autodetect error message."
+msgid "This Google Meet could not be found in the selected account. Please select the associated account below and try again."
+msgstr ""
+
+#: src/Tribe/Meetings/Google/Meetings.php:138
+msgctxt "Google Meet connected success message."
+msgid "Google Meet successfully connected!"
+msgstr ""
+
+#: src/Tribe/Meetings/Google_Provider.php:123
+msgctxt "The name of the video source."
+msgid "Google Meet"
+msgstr ""
+
+#: src/Tribe/Meetings/Google_Provider.php:146
+msgctxt "The name of the autodetect source."
+msgid "Google Meet"
+msgstr ""
+
+#: src/Tribe/Meetings/Microsoft/Abstract_Meetings.php:127
+msgctxt "Microsoft Host Email is missing error message."
+msgid "The Microsoft Host Email to access the API is missing."
+msgstr ""
+
+#: src/Tribe/Meetings/Microsoft/Abstract_Meetings.php:137
+msgctxt "The no Microsoft meeting provider is selected error message."
+msgid "No Microsoft meeting provider selected, please choose an available meeting provider."
+msgstr ""
+
+#: src/Tribe/Meetings/Microsoft/Abstract_Meetings.php:147
+msgctxt "Account ID is missing error message."
+msgid "The Microsoft Account ID to access the API is missing."
+msgstr ""
+
+#: src/Tribe/Meetings/Microsoft/Abstract_Meetings.php:156
+msgctxt "Microsoft account loading error message."
+msgid "The Microsoft Account to access to API could not be loaded."
+msgstr ""
+
+#: src/Tribe/Meetings/Microsoft/Account_API.php:108
+msgctxt "The message shown to a user providing a wrong Microsoft API OAuth authorization nonce."
+msgid "You are not authorized to do this."
+msgstr ""
+
+#. Translators: %1$s: the name of the account that has been added or refreshed from Microsoft .
+#: src/Tribe/Meetings/Microsoft/Account_API.php:172
+msgctxt "The refresh message for a Microsoft account."
+msgid "Microsoft connection refreshed for %1$s"
+msgstr ""
+
+#. Translators: %1$s: the name of the account that has been added or refreshed from Microsoft .
+#: src/Tribe/Meetings/Microsoft/Account_API.php:181
+msgctxt "The Microsoft account added message."
+msgid "Microsoft Account added for %1$s"
+msgstr ""
+
+#: src/Tribe/Meetings/Microsoft/Account_API.php:304
+msgctxt "The name of the online meeting provider for Microsoft API."
+msgid "Teams"
+msgstr ""
+
+#: src/Tribe/Meetings/Microsoft/Account_API.php:307
+msgctxt "Explains when the Skype for personal is active when creating a meeting link for the Microsoft API."
+msgid "Teams is active when you have it enabled in your work or school account. (it is not available in personal accounts)"
+msgstr ""
+
+#: src/Tribe/Meetings/Microsoft/Account_API.php:316
+msgctxt "The name of the online meeting provider for Microsoft API."
+msgid "Skype (business)"
+msgstr ""
+
+#: src/Tribe/Meetings/Microsoft/Account_API.php:319
+msgctxt "Explains when the Skype for personal is active when creating a meeting link for the Microsoft API."
+msgid "Skype for business use is active when you have it enabled in your work or school account. (it is not available in personal accounts)"
+msgstr ""
+
+#: src/Tribe/Meetings/Microsoft/Account_API.php:328
+msgctxt "The name of the online meeting provider for Microsoft API."
+msgid "Skype (personal)"
+msgstr ""
+
+#: src/Tribe/Meetings/Microsoft/Account_API.php:331
+msgctxt "Explains when the Skype for personal is active when creating a meeting link for the Microsoft API."
+msgid "Skype for personal use is active when you have a paid Office 365 subscription."
+msgstr ""
+
+#: src/Tribe/Meetings/Microsoft/Api.php:324
+msgctxt "The start of the message for smart url/autodetect when there is no Microsoft account found."
+msgid "No Microsoft account found."
+msgstr ""
+
+#: src/Tribe/Meetings/Microsoft/Api.php:330
+msgctxt "The link in of the message for smart url/autodetect when no Microsoft account is found."
+msgid "Please check your account connection."
+msgstr ""
+
+#: src/Tribe/Meetings/Microsoft/Classic_Editor.php:158
+msgctxt "Title of the details box shown for a generated Microsoft Meet link in the backend."
+msgid "Microsoft Meet:"
+msgstr ""
+
+#: src/Tribe/Meetings/Microsoft/Classic_Editor.php:174
+msgctxt "Message for a manually connected Microsoft Meet."
+msgid "This meeting is manually connected to the event and changes to the event will not alter the Microsoft Meet."
+msgstr ""
+
+#: src/Tribe/Meetings/Microsoft/Classic_Editor.php:199
+msgctxt "The label used to designate the host of a Microsoft Meet."
+msgid "Host: "
+msgstr ""
+
+#: src/Tribe/Meetings/Microsoft/Classic_Editor.php:205
+msgctxt "The label used to prefix a Microsoft Meet in the backend."
+msgid "ID: "
+msgstr ""
+
+#: src/Tribe/Meetings/Microsoft/Classic_Editor.php:270
+msgctxt "The label used to designate the account of a Microsoft Meet."
+msgid "Account: "
+msgstr ""
+
+#: src/Tribe/Meetings/Microsoft/Classic_Editor.php:277
+msgctxt "The label of the toggle to show the links to generate Microsoft Meet."
+msgid "Generate Microsoft Link"
+msgstr ""
+
+#: src/Tribe/Meetings/Microsoft/Classic_Editor.php:283
+msgctxt "The label used to designate the next step in generation of a Microsoft Meet."
+msgid "Create "
+msgstr ""
+
+#: src/Tribe/Meetings/Microsoft/Classic_Editor.php:289
+msgctxt "The label of the Microsoft Meet host."
+msgid "Meeting Host"
+msgstr ""
+
+#: src/Tribe/Meetings/Microsoft/Classic_Editor.php:376
+msgctxt "Account ID is missing error message."
+msgid "The Microsoft Account ID is missing to access the API."
+msgstr ""
+
+#: src/Tribe/Meetings/Microsoft/Classic_Editor.php:385
+msgctxt "Microsoft account loading error message."
+msgid "The Microsoft Account could not be loaded to access the API. Please try refreshing the account in the Events API Settings."
+msgstr ""
+
+#: src/Tribe/Meetings/Microsoft/Meetings.php:68
+msgctxt "Microsoft autodetect missing video url error message."
+msgid "No url found. Please enter a Outlook Event URL or change the selected source."
+msgstr ""
+
+#: src/Tribe/Meetings/Microsoft/Meetings.php:77
+msgctxt "No Microsoft Event link found for autodetect error message."
+msgid "No Microsoft Event link found. Please check your URL."
+msgstr ""
+
+#: src/Tribe/Meetings/Microsoft/Meetings.php:108
+msgctxt "No Microsoft Meet found for autodetect error message."
+msgid "This Microsoft Meet could not be found in the selected account. Please select the associated account below and try again."
+msgstr ""
+
+#: src/Tribe/Meetings/Microsoft/Meetings.php:127
+msgctxt "Microsoft Meet connected success message."
+msgid "Microsoft Meet successfully connected!"
+msgstr ""
+
+#: src/Tribe/Meetings/Microsoft_Provider.php:140
+msgctxt "The name of the video source."
+msgid "Microsoft (Teams and Skype)"
+msgstr ""
+
+#: src/Tribe/Meetings/Microsoft_Provider.php:163
+msgctxt "The name of the autodetect source."
+msgid "Microsoft (Teams and Skype)"
+msgstr ""
+
+#: src/Tribe/Meetings/Webex/Abstract_Meetings.php:150
+msgctxt "Webex Host Email is missing error message."
+msgid "The Webex Host Email to access the API is missing."
+msgstr ""
+
+#: src/Tribe/Meetings/Webex/Abstract_Meetings.php:160
+msgctxt "Account ID is missing error message."
+msgid "The Webex Account ID to access the API is missing."
+msgstr ""
+
+#: src/Tribe/Meetings/Webex/Abstract_Meetings.php:169
+msgctxt "Webex account loading error message."
+msgid "The Webex Account to access to API could not be loaded."
+msgstr ""
+
+#: src/Tribe/Meetings/Webex/Abstract_Meetings.php:177
+msgctxt "Webex all day error message."
+msgid "The Webex API does not support all day events, please set a start date and end date with time for both."
+msgstr ""
+
+#: src/Tribe/Meetings/Webex/Abstract_Meetings.php:219
+msgctxt "Webex no duration error message."
+msgid "To create an event please set the event end time at least 10 minutes from the start time."
+msgstr ""
+
+#: src/Tribe/Meetings/Webex/Account_API.php:144
+msgctxt "The message shown to a user providing a wrong Webex API OAuth authorization nonce."
+msgid "You are not authorized to do this."
+msgstr ""
+
+#. Translators: %1$s: the name of the account that has been added or refreshed from Webex .
+#: src/Tribe/Meetings/Webex/Account_API.php:205
+msgctxt "The refresh message for a Webex account."
+msgid "Webex connection refreshed for %1$s"
+msgstr ""
+
+#. Translators: %1$s: the name of the account that has been added or refreshed from Webex .
+#: src/Tribe/Meetings/Webex/Account_API.php:214
+msgctxt "The Webex account added message."
+msgid "Webex Account added for %1$s"
+msgstr ""
+
+#: src/Tribe/Meetings/Webex/Api.php:334
+msgctxt "The start of the message for smart url/autodetect when there is no Webex account found."
+msgid "No Webex account found. "
+msgstr ""
+
+#: src/Tribe/Meetings/Webex/Api.php:340
+msgctxt "The link in of the message for smart url/autodetect when no Webex account is found."
+msgid "Please check your account connection."
+msgstr ""
+
+#: src/Tribe/Meetings/Webex/Classic_Editor.php:160
+msgctxt "Title of the details box shown for a generated Webex Meeting link in the backend."
+msgid "Webex Meeting:"
+msgstr ""
+
+#: src/Tribe/Meetings/Webex/Classic_Editor.php:176
+msgctxt "Message for a manually connected Webex meeting or webinar."
+msgid "This meeting is manually connected to the event and changes to the event will not alter the Webex meeting."
+msgstr ""
+
+#: src/Tribe/Meetings/Webex/Classic_Editor.php:201
+msgctxt "The label used to designate the host of a Webex Meeting."
+msgid "Host: "
+msgstr ""
+
+#: src/Tribe/Meetings/Webex/Classic_Editor.php:207
+msgctxt "The label used to prefix a Webex Meeting in the backend."
+msgid "ID: "
+msgstr ""
+
+#: src/Tribe/Meetings/Webex/Classic_Editor.php:269
+msgctxt "The label used to designate the account of a Webex Meeting."
+msgid "Account: "
+msgstr ""
+
+#: src/Tribe/Meetings/Webex/Classic_Editor.php:275
+msgctxt "The label of the toggle to show the links to generate Webex Meeting."
+msgid "Generate Webex Link"
+msgstr ""
+
+#: src/Tribe/Meetings/Webex/Classic_Editor.php:281
+msgctxt "The label used to designate the next step in generation of a Webex Meeting."
+msgid "Create "
+msgstr ""
+
+#: src/Tribe/Meetings/Webex/Classic_Editor.php:287
+#: src/Tribe/Meetings/Zoom/Classic_Editor.php:290
+msgctxt "The label of the meeting or webinar host."
+msgid "Meeting Host"
+msgstr ""
+
+#: src/Tribe/Meetings/Webex/Classic_Editor.php:333
+msgctxt "Label for the control to generate a Webex meeting link in the event classic editor UI."
+msgid "Meeting"
+msgstr ""
+
+#: src/Tribe/Meetings/Webex/Classic_Editor.php:378
+msgctxt "Account ID is missing error message."
+msgid "The Webex Account ID is missing to access the API."
+msgstr ""
+
+#: src/Tribe/Meetings/Webex/Classic_Editor.php:387
+msgctxt "Webex account loading error message."
+msgid "The Webex Account could not be loaded to access the API. Please try refreshing the account in the Events API Settings."
+msgstr ""
+
+#. translators: %1$s:  Webex meeting password.
+#: src/Tribe/Meetings/Webex/Event_Export.php:156
+msgctxt "The label for the Webex Meeting password, followed by the password for an exported event."
+msgid "Webex Password: %1$s"
+msgstr ""
+
+#: src/Tribe/Meetings/Webex/Meetings.php:68
+msgctxt "Webex autodetect missing video url error message."
+msgid "No url found. Please enter a Webex meeting URL or change the selected source."
+msgstr ""
+
+#: src/Tribe/Meetings/Webex/Meetings.php:77
+msgctxt "No Webex Meeting web link  found for autodetect error message."
+msgid "No Webex Meeting web link found. Please check your web link URL."
+msgstr ""
+
+#: src/Tribe/Meetings/Webex/Meetings.php:107
+msgctxt "No Webex meeting or webinar found for autodetect error message."
+msgid "This Webex meeting could not be found in the selected account. Please select the associated account below and try again."
+msgstr ""
+
+#: src/Tribe/Meetings/Webex/Meetings.php:126
+msgctxt "Webex meeting/webinar connected success message."
+msgid "Webex meeting successfully connected!"
+msgstr ""
+
+#: src/Tribe/Meetings/Webex_Provider.php:316
+msgctxt "The name of the video source."
+msgid "Webex"
+msgstr ""
+
+#: src/Tribe/Meetings/Webex_Provider.php:339
+msgctxt "The name of the autodetect source."
+msgid "Webex"
+msgstr ""
+
+#: src/Tribe/Meetings/YouTube/Settings.php:158
+msgctxt "YouTube default setting"
+msgid "Autoplay Video"
+msgstr ""
+
+#: src/Tribe/Meetings/YouTube/Settings.php:163
+msgctxt "YouTube default setting tooltip"
+msgid "Autoplay is being deprecated by most browsers and is prevented in Chrome and Safari, it maybe removed in all the browsers soon."
+msgstr ""
+
+#: src/Tribe/Meetings/YouTube/Settings.php:174
+msgctxt "YouTube default setting"
+msgid "Include live chat"
+msgstr ""
+
+#: src/Tribe/Meetings/YouTube/Settings.php:186
+msgctxt "YouTube default setting"
+msgid "Mute Video"
+msgstr ""
+
+#: src/Tribe/Meetings/YouTube/Settings.php:191
+msgctxt "YouTube default setting tooltip"
+msgid "Best used with autoplay."
+msgstr ""
+
+#: src/Tribe/Meetings/YouTube/Settings.php:202
+msgctxt "YouTube default setting"
+msgid "Modest Branding"
+msgstr ""
+
+#: src/Tribe/Meetings/YouTube/Settings.php:207
+msgctxt "YouTube default setting tooltip"
+msgid "Hides the YouTube logo in the control bar."
+msgstr ""
+
+#: src/Tribe/Meetings/YouTube/Settings.php:218
+msgctxt "YouTube default setting"
+msgid "Restrict Related Videos"
+msgstr ""
+
+#: src/Tribe/Meetings/YouTube/Settings.php:223
+msgctxt "YouTube default setting tooltip"
+msgid "Restricts related videos to only come from your channel."
+msgstr ""
+
+#: src/Tribe/Meetings/YouTube/Settings.php:234
+msgctxt "YouTube default setting"
+msgid "Hide Controls"
+msgstr ""
+
+#: src/Tribe/Meetings/YouTube/Settings.php:239
+msgctxt "YouTube default setting tooltip"
+msgid "Hides the video control bar."
+msgstr ""
+
+#: src/Tribe/Meetings/YouTube/Settings.php:294
+msgctxt "Settings help text for finding a YouTube channel id."
+msgid "Click here to find channel ID"
+msgstr ""
+
+#: src/Tribe/Meetings/YouTube/Settings.php:303
+msgctxt "The field label for the default YouTube channel ID"
+msgid "Default YouTube Live Channel ID"
+msgstr ""
+
+#: src/Tribe/Meetings/YouTube/Settings.php:304
+msgctxt "The field placeholder for the default YouTube channel ID"
+msgid "Enter your YouTube Live ID"
+msgstr ""
+
+#: src/Tribe/Meetings/YouTube/Settings.php:344
+msgctxt "YouTube channel ID is missing on delete error message."
+msgid "The YouTube channel ID field is missing."
+msgstr ""
+
+#: src/Tribe/Meetings/YouTube/Settings.php:353
+msgctxt "The message after a YouTube channel ID has been deleted from the Website."
+msgid "The YouTube channel ID was successfully deleted."
+msgstr ""
+
+#: src/Tribe/Meetings/YouTube/Settings.php:363
+msgctxt "The message to display if a YouTube channel ID could not be deleted."
+msgid "The YouTube channel ID could not be deleted."
+msgstr ""
+
+#: src/Tribe/Meetings/YouTube/Template_Modifications.php:123
+msgctxt "The default settings for YouTube Integration."
+msgid "Default Settings"
+msgstr ""
+
+#: src/Tribe/Meetings/YouTube/Template_Modifications.php:219
+msgctxt "YouTube offline message"
+msgid "The Live Stream is Offline."
+msgstr ""
+
+#: src/Tribe/Meetings/YouTube_Provider.php:148
+msgctxt "The name of the video source."
+msgid "YouTube Live"
+msgstr ""
+
+#: src/Tribe/Meetings/YouTube_Provider.php:291
+msgctxt "The message to display to confirm a user would like to delete a YouTube channel ID."
+msgid "Are you sure you want to delete your default YouTube channel ID?"
+msgstr ""
+
+#: src/Tribe/Meetings/Zoom/Abstract_Meetings.php:203
+msgctxt "Host ID is missing error message."
+msgid "The Zoom Host ID is missing to access the API."
+msgstr ""
+
+#: src/Tribe/Meetings/Zoom/Abstract_Meetings.php:215
+#: src/Tribe/Meetings/Zoom/Classic_Editor.php:564
+msgctxt "Account ID is missing error message."
+msgid "The Zoom Account ID is missing to access the API."
+msgstr ""
+
+#: src/Tribe/Meetings/Zoom/Abstract_Meetings.php:226
+msgctxt "Zoom account loading error message."
+msgid "The Zoom Account could not be loaded to access to API."
+msgstr ""
+
+#: src/Tribe/Meetings/Zoom/Account_API.php:116
+#: src/Tribe/Meetings/Zoom/OAuth.php:103
+msgctxt "The message shown to a user providing a wrong Zoom API OAuth authorization nonce."
+msgid "You are not authorized to do this"
+msgstr ""
+
+#: src/Tribe/Meetings/Zoom/Account_API.php:312
+msgctxt "The refresh message if the account exists."
+msgid "Zoom connection refreshed for %1$s"
+msgstr ""
+
+#: src/Tribe/Meetings/Zoom/Account_API.php:313
+msgctxt "The refresh message if the account exists."
+msgid "Zoom Account added for %1$s"
+msgstr ""
+
+#: src/Tribe/Meetings/Zoom/Api.php:416
+msgctxt "Zoom autodetect missing video url error message."
+msgid "No url found. Please enter a Zoom meeting URL or change the selected source."
+msgstr ""
+
+#: src/Tribe/Meetings/Zoom/Api.php:425
+msgctxt "No Zoom meeting/webinar ID found for autodetect error message."
+msgid "No Zoom ID found. Please check your meeting URL."
+msgstr ""
+
+#: src/Tribe/Meetings/Zoom/Api.php:459
+msgctxt "No Zoom meeting or webinar found for autodetect error message."
+msgid "This Zoom meeting could not be found in the selected account. Please select the associated account below and try again."
+msgstr ""
+
+#: src/Tribe/Meetings/Zoom/Api.php:477
+msgctxt "Zoom meeting/webinar connected success message."
+msgid "Zoom meeting successfully connected!"
+msgstr ""
+
+#: src/Tribe/Meetings/Zoom/Api.php:493
+msgctxt "The start of the message for smart url/autodetect when there is no Zoom account found."
+msgid "No Zoom account found. Please check"
+msgstr ""
+
+#: src/Tribe/Meetings/Zoom/Api.php:499
+msgctxt "The link in of the message for smart url/autodetect when no Zoom account is found."
+msgid "check your account connection."
+msgstr ""
+
+#: src/Tribe/Meetings/Zoom/Classic_Editor.php:174
+msgctxt "The label for the admin UI control that allows removing the Zoom Meeting or Webinar link from the event."
+msgid "Remove Zoom link"
+msgstr ""
+
+#: src/Tribe/Meetings/Zoom/Classic_Editor.php:267
+msgctxt "The lowercase \"or\" label used to offer the creation of a Zoom Meetings or Webinars API link."
+msgid "or"
+msgstr ""
+
+#: src/Tribe/Meetings/Zoom/Classic_Editor.php:272
+msgctxt "The label used to designate the account of a Zoom Meeting or Webinar."
+msgid "Account: "
+msgstr ""
+
+#: src/Tribe/Meetings/Zoom/Classic_Editor.php:278
+msgctxt "The label of the toggle to show the links to generate Zoom Meetings or Webinars."
+msgid "Generate Zoom Link"
+msgstr ""
+
+#: src/Tribe/Meetings/Zoom/Classic_Editor.php:284
+msgctxt "The label used to designate the next step in generation of a Zoom Meeting or Webinar."
+msgid "Create "
+msgstr ""
+
+#: src/Tribe/Meetings/Zoom/Classic_Editor.php:337
+msgctxt "Label for the control to generate a Zoom meeting link in the event classic editor UI."
+msgid "Meeting"
+msgstr ""
+
+#: src/Tribe/Meetings/Zoom/Classic_Editor.php:342
+msgctxt "Label for the control to generate a Zoom webinar link in the event classic editor UI."
+msgid "Webinar"
+msgstr ""
+
+#: src/Tribe/Meetings/Zoom/Classic_Editor.php:359
+msgctxt "Explains why the webinar field is disabled when creating a meeting/webinar for an event."
+msgid "Webinars are not enabled for this host. Webinar support is enabled by the account plan in Zoom."
+msgstr ""
+
+#: src/Tribe/Meetings/Zoom/Classic_Editor.php:433
+msgctxt "Title of the details box shown for a generated Zoom Webinar link in the backend."
+msgid "Zoom Webinar:"
+msgstr ""
+
+#: src/Tribe/Meetings/Zoom/Classic_Editor.php:438
+msgctxt "Title of the details box shown for a generated Zoom Meeting link in the backend."
+msgid "Zoom Meeting:"
+msgstr ""
+
+#: src/Tribe/Meetings/Zoom/Classic_Editor.php:471
+msgctxt "Message for a manually connected Zoom meeting or webinar."
+msgid "This webinar is manually connected to the event and changes to the event will not alter the Zoom webinar."
+msgstr ""
+
+#: src/Tribe/Meetings/Zoom/Classic_Editor.php:476
+msgctxt "Message for a manually connected Zoom meeting or webinar."
+msgid "This meeting is manually connected to the event and changes to the event will not alter the Zoom meeting."
+msgstr ""
+
+#: src/Tribe/Meetings/Zoom/Classic_Editor.php:502
+msgctxt "The label used to designate the host of a Zoom Meeting or Webinar."
+msgid "Host: "
+msgstr ""
+
+#: src/Tribe/Meetings/Zoom/Classic_Editor.php:508
+msgctxt "The label used to prefix a Zoom Meeting or Webinar ID in the backend."
+msgid "ID: "
+msgstr ""
+
+#: src/Tribe/Meetings/Zoom/Classic_Editor.php:518
+msgctxt "The label of the alternative host multiselect"
+msgid "Alternative Hosts"
+msgstr ""
+
+#: src/Tribe/Meetings/Zoom/Classic_Editor.php:528
+msgctxt "The placeholder for the multiselect to select alternative hosts."
+msgid "Add Alternative hosts"
+msgstr ""
+
+#: src/Tribe/Meetings/Zoom/Classic_Editor.php:573
+msgctxt "Zoom account loading error message."
+msgid "The Zoom Account could not be loaded to access the API. Please try refreshing the account in the Events API Settings."
+msgstr ""
+
+#: src/Tribe/Meetings/Zoom/Migration_Notice.php:69
+msgctxt "The migration notice to authorize the new Zoom App."
+msgid "Thank you for updating to the latest version of Virtual Events. You will need to <a href=\"%1$s\">reconnect your Zoom account</a> for the plugin to work as intended."
+msgstr ""
+
+#: src/Tribe/Meetings/Zoom/Users.php:149
+msgctxt "The event is missing error message for Zoom user validation."
+msgid "User validation failed because no event was found."
+msgstr ""
+
+#: src/Tribe/Meetings/Zoom/Users.php:161
+msgctxt "Host ID is missing error message for Zoom user validation."
+msgid "The Zoom Host ID is missing to access the API, please select a host from the dropdown and try again."
+msgstr ""
+
+#: src/Tribe/Meetings/Zoom/Users.php:173
+msgctxt "Account ID is missing error message for Zoom user validation."
+msgid "The Zoom Account ID is missing to access the API."
+msgstr ""
+
+#: src/Tribe/Meetings/Zoom/Users.php:185
+msgctxt "Zoom account loading error message for Zoom user validation."
+msgid "The Zoom Account could not be loaded to access the API. Please try refreshing the account in the Events API Settings."
+msgstr ""
+
+#: src/Tribe/Meetings/Zoom/Users.php:197
+msgctxt "Zoom API loading error message for Zoom user validation."
+msgid "The Zoom API did not return the user settings. Please try refreshing the account in the Events Integration Settings."
+msgstr ""
+
+#: src/Tribe/Meetings/Zoom_Provider.php:488
+msgctxt "The name of the video source."
+msgid "Zoom"
+msgstr ""
+
+#: src/Tribe/Meetings/Zoom_Provider.php:566
+msgctxt "The name of the autodetect source."
+msgid "Zoom"
+msgstr ""
+
+#: src/Tribe/Metabox.php:83
+msgctxt "Meta box title for the Virtual Event controls"
+msgid "Virtual Event"
+msgstr ""
+
+#. Translators: %1$s: opening anchor tag, %2$s: closing anchor tag
+#: src/Tribe/OEmbed.php:164
+msgctxt "Tells user that URL cannot be embedded, and links to the WordPress oEmbed page for a list of embeddable sites."
+msgid "This video cannot be embedded because the source is not supported by %1$sWordPress oEmbed%2$s."
+msgstr ""
+
+#: src/Tribe/OEmbed.php:192
+msgctxt "Tells user the URL is embedded and to save to use that url."
+msgid "Success! Save your event to add this video."
+msgstr ""
+
+#. Translators: %1$s: opening anchor tag, %2$s: closing anchor tag
+#: src/Tribe/OEmbed.php:220
+msgctxt "Tells user the URL is used in the linked button and that it cannot be embedded, and links to the WordPress oEmbed page for a list of embeddable sites."
+msgid "This video cannot be embedded because the source is not supported by %1$sWordPress oEmbed%2$s. You can link to the video source with a button instead."
+msgstr ""
+
+#: src/Tribe/OEmbed.php:333
+msgctxt "The label for the autodetect video source input."
+msgid "Video"
+msgstr ""
+
+#: src/Tribe/Traits/With_AJAX.php:43
+msgctxt "Ajax error message."
+msgid "The provided nonce is not valid."
+msgstr ""
+
+#: src/Tribe/Traits/With_AJAX.php:71
+msgctxt "An error raised in the context of the Zoom API integration."
+msgid "The post ID is missing from the request."
+msgstr ""
+
+#: src/views/compatibility/event-tickets/email/ticket-email-link.php:30
+msgid "Join"
+msgstr ""
+
+#: src/views/google/email/details/dial-in-header.php:18
+msgid "Join Google Meet Call"
+msgstr ""
+
+#. translators: %1$s: Google Meet ID.
+#: src/views/google/email/details/join-content.php:43
+#: src/views/google/single/google-details.php:72
+msgctxt "The label for the Google Meet ID, prefixed by ID label."
+msgid "ID: %1$s"
+msgstr ""
+
+#: src/views/google/email/details/join-header.php:18
+msgid "Join Google Video"
+msgstr ""
+
+#: src/views/integrations/event-tickets-wallet-plus/pdf/pass/body/virtual-event/link/header.php:28
+#: src/views/integrations/event-tickets/emails/template-parts/body/virtual-event/link.php:38
+msgctxt "Link to Virtual Event on the Ticket Email"
+msgid "Virtual Event"
+msgstr ""
+
+#. translators: %1$s: Microsoft Meet ID.
+#: src/views/microsoft/email/details/join-content.php:43
+#: src/views/microsoft/single/microsoft-details.php:72
+msgctxt "The label for the Microsoft Meet ID, prefixed by ID label."
+msgid "ID: %1$s"
+msgstr ""
+
+#: src/views/microsoft/email/details/join-header.php:17
+msgctxt "The header for Microsoft Skype link in a ticket email."
+msgid "Join Skype Video"
+msgstr ""
+
+#: src/views/microsoft/email/details/join-header.php:19
+msgctxt "The header for Microsoft Teams link in a ticket email."
+msgid "Join Teams Video"
+msgstr ""
+
+#. translators: %1$s: Webex meeting ID.
+#: src/views/webex/email/details/join-content.php:45
+#: src/views/webex/single/webex-details.php:72
+msgctxt "The label for the Webex Meeting ID, prefixed by ID label."
+msgid "ID: %1$s"
+msgstr ""
+
+#: src/views/webex/email/details/join-header.php:20
+msgid "Join Webex"
+msgstr ""
+
+#. translators: %1$s: Webex meeting password.
+#: src/views/webex/email/details/password-content.php:28
+msgctxt "The Webex Meeting password, prefixed by password label."
+msgid "Password: %1$s"
+msgstr ""
+
+#: src/views/webex/email/details/password-header.php:20
+msgid "Webex Password"
+msgstr ""
+
+#. translators: %1$s:  Webex meeting password.
+#: src/views/webex/single/webex-details.php:105
+msgctxt "The label for the Webex Meeting password, followed by the password."
+msgid "Password: %1$s"
+msgstr ""
+
+#: src/views/zoom/email/details/dial-in-header.php:18
+msgid "Join Zoom Call"
+msgstr ""
+
+#. translators: %1$s: Zoom meeting ID.
+#: src/views/zoom/email/details/join-content.php:44
+#: src/views/zoom/zoom-details.php:71
+msgctxt "The label for the Zoom Meeting ID, prefixed by ID label."
+msgid "ID: %1$s"
+msgstr ""
+
+#: src/views/zoom/email/details/join-header.php:18
+msgid "Join Zoom Video"
+msgstr ""
+
+#. translators: %1$s: ID label, %2$s: Zoom meeting ID.
+#: src/views/zoom/single/zoom-details.php:72
+msgctxt "The label for the Zoom Meeting ID, prefixed by ID label."
+msgid "%1$s: %2$s"
+msgstr ""
+
+#. translators: %1$s: country, %2$s: Zoom meeting phone number.
+#: src/views/zoom/single/zoom-details.php:112
+msgctxt "The country and phone number for Zoom meeting."
+msgid "(%1$s) %2$s"
+msgstr ""
+
+#: src/modules/blocks/virtual-event/index.js:22
+msgid "Virtual Event"
+msgstr ""
+
+#: src/modules/blocks/virtual-event/index.js:23
+msgid "Displays the virtual event block."
+msgstr ""
+
+#: src/modules/blocks/virtual-event/template.js:19
+msgid "Virtual Event Details"
+msgstr ""
+
+#: src/modules/blocks/virtual-event/template.js:22
+msgid "Configure Virtual Event details using the section at the bottom of this page"
+msgstr ""

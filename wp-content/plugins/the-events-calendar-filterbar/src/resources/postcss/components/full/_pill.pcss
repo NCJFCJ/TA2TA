@@ -1,0 +1,90 @@
+/* -----------------------------------------------------------------------------
+ *
+ * Pill
+ *
+ * ----------------------------------------------------------------------------- */
+
+.tribe-filter-bar {
+
+	.tribe-filter-bar-c-pill__pill {
+		background-color: var(--tec-color-background);
+		border: 1px solid var(--tec-color-icon-disabled);
+		border-radius: 18px;
+	}
+
+	.tribe-filter-bar-c-pill--button .tribe-filter-bar-c-pill__pill {
+		background-color: var(--tec-color-background);
+		transition: var(--tec-transition);
+
+		&:hover,
+		&:focus {
+			background-color: var(--tec-color-background-secondary);
+			border-color: var(--tec-color-icon-primary);
+			outline: auto;
+		}
+
+		&:active {
+			background-color: var(--tec-color-background);
+			border-color: var(--tec-color-border-tertiary);
+		}
+	}
+
+	.tribe-filter-bar-c-pill--has-selections .tribe-filter-bar-c-pill__pill {
+		background-color: var(--tec-color-background-secondary);
+		border: 1px solid var(--tec-color-icon-primary);
+		border-radius: 14px;
+		font-weight: var(--tec-font-weight-bold);
+	}
+
+	.tribe-filter-bar-c-pill--has-selections.tribe-filter-bar-c-pill--button .tribe-filter-bar-c-pill__pill {
+
+		&:hover,
+		&:focus {
+			background-color: var(--tec-color-background-secondary-hover);
+			outline: auto;
+		}
+
+		&:active {
+			background-color: var(--tec-color-background);
+			border-color: var(--tec-color-border-tertiary);
+		}
+	}
+
+	.tribe-filter-bar-c-pill__remove-button {
+
+		path {
+			transition: var(--tec-transition-opacity);
+		}
+
+		&:hover,
+		&:focus {
+
+			path {
+				opacity: var(--tec-opacity-icon-hover);
+			}
+		}
+
+		&:focus {
+			outline: auto;
+		}
+	}
+
+	.tribe-filter-bar-c-pill__remove-button-icon path {
+		stroke: var(--tec-color-icon-active);
+	}
+
+	/* -------------------------------------------------------------------------
+	 * Theme Overrides - Avada
+	 * ------------------------------------------------------------------------- */
+
+	.fusion-body & {
+
+		.tribe-filter-bar-c-pill .tribe-filter-bar-c-pill__pill {
+			@mixin desktop-body-3-sup;
+		}
+
+		.tribe-filter-bar-c-pill--has-selections .tribe-filter-bar-c-pill__pill {
+			font-weight: var(--tec-font-weight-bold);
+		}
+	}
+}

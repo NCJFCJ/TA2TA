@@ -1,0 +1,1387 @@
+/**
+ * This CSS file was auto-generated via PostCSS
+ *
+ * Contributors should avoid editing this file, but instead edit the associated
+ * src/resources/postcss/ file. For more information, check out our engineering
+ * docs on how we handle CSS in our engineering docs.
+ *
+ * @see: https://the-events-calendar.github.io/products-engineering/docs/code-standards/css/
+ */
+
+/* Utilities */
+/* -----------------------------------------------------------------------------
+ *
+ * Utilities
+ *
+ * This file is just a clearing-house.
+ * Make partials (start with an underscore) for any actual css code.
+ *
+ * ----------------------------------------------------------------------------- */
+/* Variables - needed everywhere. */
+/* -----------------------------------------------------------------------------
+ * SVG - Arrow Right
+ * ----------------------------------------------------------------------------- */
+/* -----------------------------------------------------------------------------
+ * SVG - Arrow (light, left)
+ * ----------------------------------------------------------------------------- */
+/* -----------------------------------------------------------------------------
+ * SVG - Caret Down
+ * ----------------------------------------------------------------------------- */
+/* -----------------------------------------------------------------------------
+ * SVG - Caret Left
+ * ----------------------------------------------------------------------------- */
+/* -----------------------------------------------------------------------------
+ * SVG - Caret Right
+ * ----------------------------------------------------------------------------- */
+/* -----------------------------------------------------------------------------
+ * SVG - Caret Up
+ * ----------------------------------------------------------------------------- */
+/* -----------------------------------------------------------------------------
+ * SVG - Check
+ * ----------------------------------------------------------------------------- */
+/* -----------------------------------------------------------------------------
+ * SVG - Close
+ * ----------------------------------------------------------------------------- */
+/* -----------------------------------------------------------------------------
+ * SVG - Day
+ * ----------------------------------------------------------------------------- */
+/* -----------------------------------------------------------------------------
+ * SVG - Dropdown
+ * ----------------------------------------------------------------------------- */
+/* -----------------------------------------------------------------------------
+ * SVG - Error
+ * ----------------------------------------------------------------------------- */
+/* -----------------------------------------------------------------------------
+ * SVG - Featured
+ * ----------------------------------------------------------------------------- */
+/* -----------------------------------------------------------------------------
+ * SVG - Filters
+ * ----------------------------------------------------------------------------- */
+/* -----------------------------------------------------------------------------
+ * SVG - Link
+ * ----------------------------------------------------------------------------- */
+/* -----------------------------------------------------------------------------
+ * SVG - Guest
+ * ----------------------------------------------------------------------------- */
+/* -----------------------------------------------------------------------------
+ * SVG - List
+ * ----------------------------------------------------------------------------- */
+/* -----------------------------------------------------------------------------
+ * SVG - Location
+ * ----------------------------------------------------------------------------- */
+/* -----------------------------------------------------------------------------
+ * SVG - Mail
+ * ----------------------------------------------------------------------------- */
+/* -----------------------------------------------------------------------------
+ * SVG - Map
+ * ----------------------------------------------------------------------------- */
+/* -----------------------------------------------------------------------------
+ * SVG - Map pin
+ * ----------------------------------------------------------------------------- */
+/* -----------------------------------------------------------------------------
+ * SVG - Messages
+ * ----------------------------------------------------------------------------- */
+/* stylelint-disable-line block-no-empty */
+/* -----------------------------------------------------------------------------
+ * SVG - Month
+ * ----------------------------------------------------------------------------- */
+/* -----------------------------------------------------------------------------
+ * SVG - No Map
+ * ----------------------------------------------------------------------------- */
+/* stylelint-disable-line block-no-empty */
+/* -----------------------------------------------------------------------------
+ * SVG - Paper Plane
+ * ----------------------------------------------------------------------------- */
+/* -----------------------------------------------------------------------------
+ * SVG - Phone
+ * ----------------------------------------------------------------------------- */
+/* -----------------------------------------------------------------------------
+ * SVG - Photo
+ * ----------------------------------------------------------------------------- */
+/* -----------------------------------------------------------------------------
+ * SVG - Plus
+ * ----------------------------------------------------------------------------- */
+/* -----------------------------------------------------------------------------
+ * SVG - Recurring
+ * ----------------------------------------------------------------------------- */
+/* -----------------------------------------------------------------------------
+ * SVG - Remove
+ * ----------------------------------------------------------------------------- */
+/* -----------------------------------------------------------------------------
+ * SVG - Reset
+ * ----------------------------------------------------------------------------- */
+/* -----------------------------------------------------------------------------
+ * SVG - Search
+ * ----------------------------------------------------------------------------- */
+/* -----------------------------------------------------------------------------
+ * SVG - Search Filter
+ * ----------------------------------------------------------------------------- */
+/* -----------------------------------------------------------------------------
+ * SVG - Week
+ * ----------------------------------------------------------------------------- */
+/* -----------------------------------------------------------------------------
+ * SVG - Cal Export
+ * ----------------------------------------------------------------------------- */
+/* stylelint-disable-line block-no-empty */
+/* Mixins */
+/* -----------------------------------------------------------------------------
+ * Body
+ * ----------------------------------------------------------------------------- */
+/* -----------------------------------------------------------------------------
+ * Desktop Body 1
+ * ----------------------------------------------------------------------------- */
+/* -----------------------------------------------------------------------------
+ * Desktop Body 2
+ * ----------------------------------------------------------------------------- */
+/* -----------------------------------------------------------------------------
+ * Desktop Body 3
+ * ----------------------------------------------------------------------------- */
+/* -----------------------------------------------------------------------------
+ * Mobile Body 1
+ * ----------------------------------------------------------------------------- */
+/* -----------------------------------------------------------------------------
+ * Mobile Body 2
+ * ----------------------------------------------------------------------------- */
+/* -----------------------------------------------------------------------------
+ * Mobile Body 3
+ * ----------------------------------------------------------------------------- */
+/* -----------------------------------------------------------------------------
+ * Heading
+ * ----------------------------------------------------------------------------- */
+/* -----------------------------------------------------------------------------
+ * Heading 1
+ * ----------------------------------------------------------------------------- */
+/* -----------------------------------------------------------------------------
+ * Heading 2
+ * ----------------------------------------------------------------------------- */
+/* -----------------------------------------------------------------------------
+ * Heading 3
+ * ----------------------------------------------------------------------------- */
+/* -----------------------------------------------------------------------------
+ * Heading 4
+ * ----------------------------------------------------------------------------- */
+/* -----------------------------------------------------------------------------
+ * Heading 5
+ * ----------------------------------------------------------------------------- */
+/* -----------------------------------------------------------------------------
+ * Heading 6
+ * ----------------------------------------------------------------------------- */
+/* -----------------------------------------------------------------------------
+ * Heading 7
+ * ----------------------------------------------------------------------------- */
+/* -----------------------------------------------------------------------------
+ * Heading 8
+ * ----------------------------------------------------------------------------- */
+/* -----------------------------------------------------------------------------
+ * Anchor - Default
+ * ----------------------------------------------------------------------------- */
+/* -----------------------------------------------------------------------------
+ * Anchor - Alt
+ * ----------------------------------------------------------------------------- */
+/* -----------------------------------------------------------------------------
+ * Anchor - Thin
+ * ----------------------------------------------------------------------------- */
+/* -----------------------------------------------------------------------------
+ * Anchor - Thin
+ * ----------------------------------------------------------------------------- */
+/* -----------------------------------------------------------------------------
+ * Anchor - Event Title
+ *
+ * This mixin intentionally only affects the text and border _colors_
+ * to make sure they all follow the Customizer overrides.
+ * ----------------------------------------------------------------------------- */
+/* -----------------------------------------------------------------------------
+ * Button - Global
+ * ----------------------------------------------------------------------------- */
+/* -----------------------------------------------------------------------------
+ * Button - Solid
+ * ----------------------------------------------------------------------------- */
+/* -----------------------------------------------------------------------------
+ * Button - Link
+ * ----------------------------------------------------------------------------- */
+/* -----------------------------------------------------------------------------
+ * Button - Border
+ * ----------------------------------------------------------------------------- */
+/* -----------------------------------------------------------------------------
+ * Button - Border Small
+ * ----------------------------------------------------------------------------- */
+/* -----------------------------------------------------------------------------
+ * Button - Icon Border
+ * ----------------------------------------------------------------------------- */
+/* -----------------------------------------------------------------------------
+ * Sliders & Toggles
+ * ----------------------------------------------------------------------------- */
+/* -----------------------------------------------------------------------------
+ * Sliders
+ * ----------------------------------------------------------------------------- */
+/* -----------------------------------------------------------------------------
+ * Hidden: Hide from both screenreaders and browsers
+ * @author: h5bp.com/u
+ * ----------------------------------------------------------------------------- */
+/* -----------------------------------------------------------------------------
+ * Visually Hide: Hide only visually, but have it available for screenreaders
+ * @author: h5bp.com/v
+ * ----------------------------------------------------------------------------- */
+/* -----------------------------------------------------------------------------
+ * Visually Show: Show element after has been hidden with %visually-hide
+ * ----------------------------------------------------------------------------- */
+/**
+ * Community Events Stylesheet
+ * The stylesheet for Community Events.
+ *
+ * Override this stylesheet in your own theme by creating a file at
+ * [your-theme]/tribe-events/community/tribe-events-community.css
+ *
+ * @package Tribe__Events__Community__Community_Events
+ * @since  1.0
+ * @TODO refactor single media query to nested contextual queries
+ * @author The Events Calendar
+ *
+ */
+/**
+ * TABLE OF CONTENTS
+ *
+ *  Global
+		Buttons
+ *  Event Title
+ *  Event Description
+ *  Event Categories
+ *  Event Tags
+ *  Event Image
+ *  Event Time & Date
+ *  Event Venue
+ *  Event Organizer
+ *  Event Website
+ *  Event Cost
+ *  Events List
+ *  Additional Fields
+ *  Utilities & Theme Specific Hacks
+		Twenty Fourteen
+		Twenty Fifteen
+		Twenty Sixteen
+		Twenty Seventeen
+		Avada
+ *  Mobile Styles
+ */
+/* ------------------------------------ *\
+		Select2 Global Drop/Mask
+	\* ------------------------------------ */
+.tribe_community_edit .select2-drop .select2-results, .tribe_community_list .select2-drop .select2-results {
+			font-size: var(--tec-font-size-1);
+		}
+.tribe_community_edit .select2-drop input[type="text"], .tribe_community_list .select2-drop input[type="text"] {
+			font-size: var(--tec-font-size-1);
+			padding: 0 var(--tec-spacer-0);
+		}
+/* ------------------------------------ *\
+		jQuery UI Dialog
+	\* ------------------------------------ */
+.tribe_community_edit .ui-dialog, .tribe_community_list .ui-dialog {
+		background-color: var(--tec-color-background);
+		box-shadow: 0 0 var(--tec-spacer-1) var(--tec-color-box-shadow-light);
+		font-size: var(--tec-font-size-1);
+	}
+.tribe_community_edit .ui-dialog .button, .tribe_community_list .ui-dialog .button {
+			font-size: var(--tec-font-size-1);
+		}
+/* ------------------------------------ *\
+		jQuery UI Datepicker
+	\* ------------------------------------ */
+.tribe_community_edit .ui-datepicker a, .tribe_community_list .ui-datepicker a {
+			text-decoration: none;
+		}
+.tribe_community_edit .ui-datepicker input,
+		.tribe_community_edit .ui-datepicker select,
+		.tribe_community_edit .ui-datepicker textarea,
+		.tribe_community_list .ui-datepicker input,
+		.tribe_community_list .ui-datepicker select,
+		.tribe_community_list .ui-datepicker textarea {
+			padding: 0.125em;
+		}
+/* -------------------- *\
+		#BUTTONS
+	\* -------------------- */
+.tribe_community_edit .button,
+	.tribe_community_edit #tribe-add-exclusion,
+	.tribe_community_edit .tribe-add-recurrence.tribe-button,
+	.tribe_community_edit .tribe-button,
+	.tribe_community_edit .button-secondary,
+	.tribe_community_edit .button-primary,
+	.tribe_community_list .button,
+	.tribe_community_list #tribe-add-exclusion,
+	.tribe_community_list .tribe-add-recurrence.tribe-button,
+	.tribe_community_list .tribe-button,
+	.tribe_community_list .button-secondary,
+	.tribe_community_list .button-primary {
+		background: var(--tec-color-button-secondary);
+		border-radius: var(--tec-border-radius-default);
+		color: var(--tec-color-background);
+		cursor: pointer;
+		display: inline-block;
+		font-family: var(--tec-font-family-sans-serif);
+		font-size: var(--tec-font-size-1);
+		-webkit-font-smoothing: subpixel-antialiased;
+		font-weight: var(--tec-font-weight-regular);
+		height: auto;
+		letter-spacing: 1px;
+		line-height: 1;
+		padding: var(--tec-spacer-2);
+		text-align: center;
+		text-decoration: none;
+		text-transform: uppercase;
+	}
+.tribe_community_edit .button:hover,
+		.tribe_community_edit .button:focus,
+		.tribe_community_edit #tribe-add-exclusion:hover,
+		.tribe_community_edit #tribe-add-exclusion:focus,
+		.tribe_community_edit .tribe-add-recurrence.tribe-button:hover,
+		.tribe_community_edit .tribe-add-recurrence.tribe-button:focus,
+		.tribe_community_edit .tribe-button:hover,
+		.tribe_community_edit .tribe-button:focus,
+		.tribe_community_edit .button-secondary:hover,
+		.tribe_community_edit .button-secondary:focus,
+		.tribe_community_edit .button-primary:hover,
+		.tribe_community_edit .button-primary:focus,
+		.tribe_community_list .button:hover,
+		.tribe_community_list .button:focus,
+		.tribe_community_list #tribe-add-exclusion:hover,
+		.tribe_community_list #tribe-add-exclusion:focus,
+		.tribe_community_list .tribe-add-recurrence.tribe-button:hover,
+		.tribe_community_list .tribe-add-recurrence.tribe-button:focus,
+		.tribe_community_list .tribe-button:hover,
+		.tribe_community_list .tribe-button:focus,
+		.tribe_community_list .button-secondary:hover,
+		.tribe_community_list .button-secondary:focus,
+		.tribe_community_list .button-primary:hover,
+		.tribe_community_list .button-primary:focus {
+			background: var(--tec-color-button-secondary-hover);
+			box-shadow: none;
+			color: var(--tec-color-background);
+			text-decoration: none;
+		}
+.tribe_community_edit .button:active, .tribe_community_edit #tribe-add-exclusion:active, .tribe_community_edit .tribe-add-recurrence.tribe-button:active, .tribe_community_edit .tribe-button:active, .tribe_community_edit .button-secondary:active, .tribe_community_edit .button-primary:active, .tribe_community_list .button:active, .tribe_community_list #tribe-add-exclusion:active, .tribe_community_list .tribe-add-recurrence.tribe-button:active, .tribe_community_list .tribe-button:active, .tribe_community_list .button-secondary:active, .tribe_community_list .button-primary:active {
+			background: var(--tec-color-button-secondary-active);
+		}
+.tribe_community_edit .button span, .tribe_community_edit #tribe-add-exclusion span, .tribe_community_edit .tribe-add-recurrence.tribe-button span, .tribe_community_edit .tribe-button span, .tribe_community_edit .button-secondary span, .tribe_community_edit .button-primary span, .tribe_community_list .button span, .tribe_community_list #tribe-add-exclusion span, .tribe_community_list .tribe-add-recurrence.tribe-button span, .tribe_community_list .tribe-button span, .tribe_community_list .button-secondary span, .tribe_community_list .button-primary span {
+			font-size: inherit;
+			line-height: inherit;
+		}
+.tribe_community_edit .button-primary.tribe-delete-this.tribe-confirm-delete-this, .tribe_community_list .button-primary.tribe-delete-this.tribe-confirm-delete-this {
+		display: none;
+	}
+.tribe_community_edit .tribe-button.tribe-button-primary,
+	.tribe_community_edit .button-primary,
+	.tribe_community_list .tribe-button.tribe-button-primary,
+	.tribe_community_list .button-primary {
+		background: var(--tec-color-button-primary);
+	}
+.tribe_community_edit .tribe-button.tribe-button-primary:hover,
+		.tribe_community_edit .tribe-button.tribe-button-primary:focus,
+		.tribe_community_edit .button-primary:hover,
+		.tribe_community_edit .button-primary:focus,
+		.tribe_community_list .tribe-button.tribe-button-primary:hover,
+		.tribe_community_list .tribe-button.tribe-button-primary:focus,
+		.tribe_community_list .button-primary:hover,
+		.tribe_community_list .button-primary:focus {
+			background: var(--tec-color-button-primary-hover);
+		}
+.tribe_community_edit .tribe-button.tribe-button-primary:active, .tribe_community_edit .button-primary:active, .tribe_community_list .tribe-button.tribe-button-primary:active, .tribe_community_list .button-primary:active {
+			background: var(--tec-color-button-primary-active);
+		}
+.tribe_community_edit .tribe-button.submit, .tribe_community_list .tribe-button.submit {
+		background: var(--tec-color-button-primary);
+		margin: var(--tec-spacer-7) auto;
+		min-width: 200px;
+		padding: 1.5em;
+		text-transform: uppercase;
+		width: 30%;
+	}
+.tribe_community_edit .tribe-button.submit:hover,
+		.tribe_community_edit .tribe-button.submit:focus,
+		.tribe_community_list .tribe-button.submit:hover,
+		.tribe_community_list .tribe-button.submit:focus {
+			background: var(--tec-color-button-primary-hover);
+		}
+.tribe_community_edit .tribe-button.submit:active, .tribe_community_list .tribe-button.submit:active {
+			background: var(--tec-color-button-primary-active);
+		}
+.tribe_community_edit .tribe-button-secondary, .tribe_community_list .tribe-button-secondary {
+		margin: 0;
+	}
+.tribe_community_edit .tribe-button-tertiary, .tribe_community_list .tribe-button-tertiary {
+		background: var(--tec-color-background);
+		border: 1px solid var(--tec-color-border-secondary);
+		color: var(--tec-color-text-secondary);
+		font-weight: var(--tec-font-weight-bold);
+	}
+.tribe_community_edit .tribe-button-tertiary:hover,
+		.tribe_community_edit .tribe-button-tertiary:focus,
+		.tribe_community_list .tribe-button-tertiary:hover,
+		.tribe_community_list .tribe-button-tertiary:focus {
+			background: var(--tec-color-border-secondary);
+			border: 1px solid var(--tec-color-border-default);
+			color: var(--tec-color-accent-primary);
+		}
+.tribe_community_edit .tribe-button-tertiary:active, .tribe_community_list .tribe-button-tertiary:active {
+			background: var(--tec-color-text-disabled);
+			border: 1px solid var(--tec-color-border-default);
+			color: var(--tec-color-accent-primary);
+		}
+.tribe_community_edit .tribe-button-large, .tribe_community_list .tribe-button-large {
+		padding: var(--tec-spacer-3) var(--tec-spacer-4);
+	}
+.tribe_community_edit .tribe-button-activate, .tribe_community_list .tribe-button-activate {
+		padding: var(--tec-spacer-2) var(--tec-spacer-6) var(--tec-spacer-2) var(--tec-spacer-3);
+		position: relative;
+	}
+.tribe_community_edit .tribe-button-activate:after, .tribe_community_list .tribe-button-activate:after {
+			color: var(--tec-color-text-secondary);
+			content: '\25BC';
+			font-size: var(--tec-font-size-0);
+			position: absolute;
+			right: var(--tec-spacer-3);
+			top: 50%;
+			transform: translateY(-50%);
+		}
+.tribe_community_edit .tribe-button-activate.menu-open:after, .tribe_community_list .tribe-button-activate.menu-open:after {
+			content: '\25B2';
+		}
+/* ------------------------------------ *\
+	Page Contents
+\* ------------------------------------ */
+.tribe-community-events {
+	background: var(--tec-color-background);
+	border: 1px solid var(--tec-color-border-tertiary);
+	box-sizing: border-box;
+	color: var(--tec-color-border-hover);
+	font-size: 100%;
+	padding: var(--tec-spacer-8) var(--tec-spacer-2);
+}
+.tribe-community-events * {
+		box-sizing: border-box;
+		font-size: var(--tec-font-size-2);
+	}
+.tribe-community-events table,
+	.tribe-community-events tbody,
+	.tribe-community-events th,
+	.tribe-community-events tr,
+	.tribe-community-events td {
+		border: none;
+		border-collapse: collapse;
+		font-size: 100%;
+		word-break: unset;
+	}
+/* fixes some themes' insistance on break-all */
+.tribe-community-events .tribe-recurrence-exclusion-row,
+	.tribe-community-events .tribe-recurrence-description {
+		display: none;
+	}
+.tribe-community-events .tribe-has-recurrence-rule .tribe-recurrence-exclusion-row,
+		.tribe-community-events .tribe-has-recurrence-rule .tribe-recurrence-description {
+			display: table-row;
+			transition: opacity 0.35s ease-in;
+		}
+.tribe-community-events form:before,
+		.tribe-community-events form:after {
+			clear: both;
+			content: '';
+			display: table;
+		}
+/* Include margin and padding in the width calculation of input and textarea. */
+.tribe-community-events input,
+	.tribe-community-events select {
+		line-height: 20px;
+		margin: 1px;
+		padding: var(--tec-spacer-0);
+	}
+.tribe-community-events select {
+		min-width: 200px;
+	}
+.tribe-community-events input[type="text"],
+	.tribe-community-events input[type="password"],
+	.tribe-community-events input[type="color"],
+	.tribe-community-events input[type="date"],
+	.tribe-community-events input[type="datetime"],
+	.tribe-community-events input[type="datetime-local"],
+	.tribe-community-events input[type="email"],
+	.tribe-community-events input[type="month"],
+	.tribe-community-events input[type="number"],
+	.tribe-community-events input[type="search"],
+	.tribe-community-events input[type="tel"],
+	.tribe-community-events input[type="time"],
+	.tribe-community-events input[type="url"],
+	.tribe-community-events input[type="week"],
+	.tribe-community-events textarea {
+		background-color: var(--tec-color-background);
+		border: 1px solid var(--tec-color-border-default);
+		box-shadow: inset 0 1px 2px var(--tec-color-box-shadow);
+		color: var(--tec-color-text-primary);
+		outline: none;
+		transition: 0.05s border-color ease-in-out;
+		width: auto;
+	}
+.tribe-community-events .current {
+		background-color: var(--tec-color-icon-primary-alt);
+		color: var(--tec-color-background);
+		padding: 6em 9em 5em;
+	}
+.tribe-community-events .tribe-community-notice {
+		background: var(--tec-color-background);
+		border-left: 4px solid var(--tec-color-background);
+		box-shadow: 0 1px 1px 0 var(--tec-color-box-shadow-secondary);
+		margin: var(--tec-spacer-0) 0 var(--tec-spacer-5);
+		padding: var(--tec-spacer-2);
+	}
+.tribe-community-events .tribe-community-notice.tribe-community-notice-error {
+			border-left-color: var(--tec-color-icon-error);
+		}
+.tribe-community-events .tribe-community-notice p {
+			margin-bottom: var(--tec-spacer-2);
+		}
+.tribe-community-events .tribe-community-notice p:last-child {
+				margin: 0;
+			}
+.tribe-community-events .req {
+		color: var(--tec-color-text-secondary);
+		font-size: var(--tec-font-size-1);
+		font-style: italic;
+		text-transform: none;
+	}
+.tribe-community-events .login .message {
+		background-color: var(--tec-color-background-secondary);
+		border-color: var(--tec-color-border-secondary);
+	}
+.tribe-community-events #loginform p {
+		margin: auto;
+		width: 40%;
+	}
+.tribe-community-events .dashicons {
+		margin-top: 2px;
+	}
+.tribe-community-events .dashicons-trash {
+		font-size: var(--tec-font-size-7);
+		height: 28px;
+		margin-top: 0;
+		width: 28px;
+	}
+/* ------------------------------------ *\
+		#Event-Title
+		#Event-Description
+	\* ------------------------------------ */
+.tribe-community-events .events-community-post-title,
+	.tribe-community-events .events-community-post-content {
+		position: relative;
+	}
+.tribe-community-events .events-community-post-title label, .tribe-community-events .events-community-post-content label {
+			color: var(--tec-color-text-primary);
+			font-size: var(--tec-font-size-3);
+			font-weight: var(--tec-font-weight-bold);
+			text-transform: uppercase;
+		}
+.tribe-community-events .events-community-post-title label.error, .tribe-community-events .events-community-post-content label.error {
+				border-bottom: 1px solid var(--tec-color-icon-error);
+				padding-bottom: 2px;
+			}
+.tribe-community-events .events-community-post-title > input, .tribe-community-events .events-community-post-content > input {
+			font-size: 1.7em;
+			height: 1.7em;
+			line-height: 100%;
+			margin: var(--tec-spacer-2) 0 var(--tec-spacer-4);
+			padding: var(--tec-spacer-0) var(--tec-spacer-1);
+		}
+.tribe-community-events .events-community-post-title > input,
+		.tribe-community-events .events-community-post-title > textarea,
+		.tribe-community-events .events-community-post-content > input,
+		.tribe-community-events .events-community-post-content > textarea {
+			border: 1px solid var(--tec-color-border-default);
+			width: 100%;
+		}
+.tribe-community-events .events-community-post-title > textarea, .tribe-community-events .events-community-post-content > textarea {
+			height: 200px;
+			margin: var(--tec-spacer-3) 0;
+		}
+/* ------------------------------------ *\
+		Content Editor
+	\* ------------------------------------ */
+.tribe-community-events .wp-editor-wrap {
+		margin-top: calc(var(--tec-spacer-4)*-1);
+	}
+.tribe-community-events .wp-editor-container {
+		border: 1px solid var(--tec-color-border-secondary);
+	}
+/* ------------------------------------ *\
+		Sections of Edit pages
+	\* ------------------------------------ */
+.tribe-community-events .tribe-section {
+		background: var(--tec-color-background);
+		border: 1px solid var(--tec-color-border-secondary);
+		border-radius: var(--tec-border-radius-default);
+		font-size: var(--tec-font-size-1);
+		margin: var(--tec-spacer-5) 0;
+		padding-bottom: var(--tec-spacer-7);
+	}
+.tribe-community-events .tribe-section .tribe-section-header {
+			border-bottom: 1px solid var(--tec-color-border-default);
+			margin-bottom: var(--tec-spacer-7);
+			padding: var(--tec-spacer-3);
+		}
+.tribe-community-events .tribe-section .tribe-section-header h3 {
+				color: var(--tec-color-text-primary);
+				font-size: var(--tec-font-size-3);
+				font-weight: var(--tec-font-weight-bold);
+				line-height: 1;
+				margin: 0;
+				text-transform: uppercase;
+			}
+.tribe-community-events .tribe-section .tribe-section-header h3 label {
+					font-size: inherit;
+				}
+.tribe-community-events .tribe-section p {
+			display: block;
+			padding: var(--tec-spacer-0) 0;
+		}
+.tribe-community-events .tribe-section p .description {
+				font-style: italic;
+			}
+.tribe-community-events .tribe-section table.tribe-section-content,
+		.tribe-community-events .tribe-section table.virtual-event-wrapper {
+			margin: 0;
+			table-layout: auto;
+			width: 100%;
+		}
+.tribe-community-events .tribe-section table.tribe-section-content ul, .tribe-community-events .tribe-section table.virtual-event-wrapper ul {
+				list-style: none;
+			}
+.tribe-community-events .tribe-section table.tribe-section-content .tribe-section-content-row, .tribe-community-events .tribe-section table.virtual-event-wrapper .tribe-section-content-row {
+				line-height: 28px;
+			}
+.tribe-community-events .tribe-section table.tribe-section-content col.tribe-colgroup-label, .tribe-community-events .tribe-section table.virtual-event-wrapper col.tribe-colgroup-label {
+				width: 20%;
+			}
+.tribe-community-events .tribe-section table.tribe-section-content col.tribe-colgroup-field, .tribe-community-events .tribe-section table.virtual-event-wrapper col.tribe-colgroup-field {
+				width: 80%;
+			}
+.tribe-community-events .tribe-section table.tribe-section-content .tribe-section-content-row,
+			.tribe-community-events .tribe-section table.tribe-section-content tr,
+			.tribe-community-events .tribe-section table.virtual-event-wrapper .tribe-section-content-row,
+			.tribe-community-events .tribe-section table.virtual-event-wrapper tr {
+				border-bottom: var(--tec-spacer-0) solid transparent;
+				border-top: var(--tec-spacer-0) solid transparent;
+			}
+.tribe-community-events .tribe-section table.tribe-section-content label, .tribe-community-events .tribe-section table.virtual-event-wrapper label {
+				margin-bottom: var(--tec-spacer-2);
+			}
+.tribe-community-events .tribe-section table.tribe-section-content .tribe-section-content-label,
+			.tribe-community-events .tribe-section table.tribe-section-content td:first-child,
+			.tribe-community-events .tribe-section table.virtual-event-wrapper .tribe-section-content-label,
+			.tribe-community-events .tribe-section table.virtual-event-wrapper td:first-child {
+				padding-left: var(--tec-spacer-7);
+				vertical-align: top;
+			}
+.tribe-community-events .tribe-section table.tribe-section-content .tribe-section-content-field,
+			.tribe-community-events .tribe-section table.tribe-section-content td:last-child,
+			.tribe-community-events .tribe-section table.virtual-event-wrapper .tribe-section-content-field,
+			.tribe-community-events .tribe-section table.virtual-event-wrapper td:last-child {
+				padding-right: var(--tec-spacer-7);
+			}
+.tribe-community-events .tribe-section div.tribe-section-content {
+			margin-left: var(--tec-spacer-7);
+			margin-right: var(--tec-spacer-7);
+		}
+/* ------------------------------------ *\
+			Event Taxonomies
+		\* ------------------------------------ */
+.tribe-community-events .tribe-section.tribe-section-taxonomy .tribe-dropdown {
+				width: 100%;
+			}
+.tribe-community-events .tribe-section.tribe-section-taxonomy .tribe-dropdown .select2-choices .select2-selection__rendered, .tribe-community-events .tribe-section.tribe-section-taxonomy .tribe-dropdown .select2-selection--multiple .select2-selection__rendered {
+						border: 0;
+					}
+.tribe-community-events .tribe-section.tribe-section-taxonomy .tribe-dropdown .select2-choices .select2-search-field,
+					.tribe-community-events .tribe-section.tribe-section-taxonomy .tribe-dropdown .select2-choices .select2-search--inline,
+					.tribe-community-events .tribe-section.tribe-section-taxonomy .tribe-dropdown .select2-selection--multiple .select2-search-field,
+					.tribe-community-events .tribe-section.tribe-section-taxonomy .tribe-dropdown .select2-selection--multiple .select2-search--inline {
+						line-height: var(--tec-line-height-2);
+						padding-bottom: var(--tec-spacer-2);
+						padding-top: var(--tec-spacer-2);
+					}
+.tribe-community-events .tribe-section.tribe-section-taxonomy .tribe-dropdown .select2-choices .select2-input,
+					.tribe-community-events .tribe-section.tribe-section-taxonomy .tribe-dropdown .select2-choices .select2-search__field,
+					.tribe-community-events .tribe-section.tribe-section-taxonomy .tribe-dropdown .select2-selection--multiple .select2-input,
+					.tribe-community-events .tribe-section.tribe-section-taxonomy .tribe-dropdown .select2-selection--multiple .select2-search__field {
+						padding-left: var(--tec-spacer-2);
+						padding-right: var(--tec-spacer-2);
+					}
+.tribe-community-events .tribe-section.tribe-section-taxonomy .tribe-dropdown .select2-choices .select2-search-choice,
+					.tribe-community-events .tribe-section.tribe-section-taxonomy .tribe-dropdown .select2-choices .select2-selection__choice,
+					.tribe-community-events .tribe-section.tribe-section-taxonomy .tribe-dropdown .select2-selection--multiple .select2-search-choice,
+					.tribe-community-events .tribe-section.tribe-section-taxonomy .tribe-dropdown .select2-selection--multiple .select2-selection__choice {
+						letter-spacing: 1px;
+						line-height: var(--tec-line-height-2);
+						margin-bottom: var(--tec-spacer-0);
+						margin-top: var(--tec-spacer-0);
+						padding: var(--tec-spacer-1) var(--tec-spacer-3) var(--tec-spacer-1) var(--tec-spacer-7);
+					}
+.tribe-community-events .tribe-section.tribe-section-taxonomy .tribe-dropdown .select2-choices .select2-search-choice-close,
+					.tribe-community-events .tribe-section.tribe-section-taxonomy .tribe-dropdown .select2-choices .select2-selection__choice__remove,
+					.tribe-community-events .tribe-section.tribe-section-taxonomy .tribe-dropdown .select2-selection--multiple .select2-search-choice-close,
+					.tribe-community-events .tribe-section.tribe-section-taxonomy .tribe-dropdown .select2-selection--multiple .select2-selection__choice__remove {
+						left: var(--tec-spacer-2);
+						margin-top: calc(var(--tec-spacer-0)*-1);
+						top: 50%;
+					}
+/* ------------------------------------ *\
+			Image Uploader
+		\* ------------------------------------ */
+.tribe-community-events .tribe-section.tribe-section-image-uploader .tribe-section-header label {
+				color: var(--tec-color-text-primary);
+				font-size: var(--tec-font-size-3);
+				font-weight: var(--tec-font-weight-bold);
+				text-transform: uppercase;
+			}
+.tribe-community-events .tribe-section.tribe-section-image-uploader .tribe-section-header label.error {
+					border-bottom: 1px solid var(--tec-color-icon-error);
+					padding-bottom: 2px;
+				}
+.tribe-community-events .tribe-section.tribe-section-image-uploader .tribe-image-upload-area {
+				background: var(--tec-color-background) url('../images/image-icon.png') no-repeat center 5px;
+				text-align: center;
+			}
+.tribe-community-events .tribe-section.tribe-section-image-uploader .tribe-image-upload-area .tribe-community-events-preview-image {
+					display: none;
+				}
+.tribe-community-events .tribe-section.tribe-section-image-uploader .tribe-image-upload-area .note {
+					padding-top: var(--tec-spacer-12);
+					text-align: center;
+				}
+.tribe-community-events .tribe-section.tribe-section-image-uploader .tribe-image-upload-area .note p {
+						color: var(--tec-color-text-secondary);
+						margin-bottom: 0;
+					}
+.tribe-community-events .tribe-section.tribe-section-image-uploader .tribe-image-upload-area .form-controls {
+					margin: 0 auto;
+					max-width: 250px;
+					position: relative;
+					width: 100%;
+				}
+.tribe-community-events .tribe-section.tribe-section-image-uploader .tribe-image-upload-area .button[disabled],
+				.tribe-community-events .tribe-section.tribe-section-image-uploader .tribe-image-upload-area input[disabled] {
+					display: block;
+					margin: 0 auto;
+					text-align: center;
+					width: 100%;
+				}
+.tribe-community-events .tribe-section.tribe-section-image-uploader .tribe-image-upload-area .tribe-remove-upload,
+				.tribe-community-events .tribe-section.tribe-section-image-uploader .tribe-image-upload-area .current-image,
+				.tribe-community-events .tribe-section.tribe-section-image-uploader .tribe-image-upload-area .selected-msg,
+				.tribe-community-events .tribe-section.tribe-section-image-uploader .tribe-image-upload-area .uploaded-msg {
+					display: none;
+				}
+.tribe-community-events .tribe-section.tribe-section-image-uploader .tribe-image-upload-area .current-image,
+				.tribe-community-events .tribe-section.tribe-section-image-uploader .tribe-image-upload-area input[disabled].uploadFile {
+					border: 0;
+					display: none;
+					margin: 0;
+					padding: 0;
+				}
+.tribe-community-events .tribe-section.tribe-section-image-uploader .tribe-image-upload-area .choose-file {
+					margin: var(--tec-spacer-5) auto 0;
+					padding: 1.5em;
+					text-transform: uppercase;
+					width: 100%;
+				}
+.tribe-community-events .tribe-section.tribe-section-image-uploader .tribe-image-upload-area .event_image {
+					height: 48px;
+					left: 0;
+					margin: var(--tec-spacer-5) 0 0 0;
+					position: absolute;
+					top: 0;
+					width: 100%;
+				}
+.tribe-community-events .tribe-section.tribe-section-image-uploader .tribe-image-upload-area input#event_image {
+					cursor: pointer;
+					filter: alpha(opacity=0);
+					opacity: 0;
+					width: 100%;
+				}
+.tribe-community-events .tribe-section.tribe-section-image-uploader .tribe-image-upload-area .submitdelete {
+					display: block;
+				}
+.tribe-community-events .tribe-section.tribe-section-image-uploader .tribe-image-upload-area.uploaded .note {
+						margin-top: var(--tec-spacer-10);
+					}
+.tribe-community-events .tribe-section.tribe-section-image-uploader .tribe-image-upload-area.uploaded .note p,
+					.tribe-community-events .tribe-section.tribe-section-image-uploader .tribe-image-upload-area.uploaded .form-controls .choose-file,
+					.tribe-community-events .tribe-section.tribe-section-image-uploader .tribe-image-upload-area.uploaded .form-controls .event_image {
+						display: none;
+					}
+.tribe-community-events .tribe-section.tribe-section-image-uploader .tribe-image-upload-area.uploaded .tribe-remove-upload {
+						display: block;
+					}
+.tribe-community-events .tribe-section.tribe-section-image-uploader .tribe-image-upload-area.uploaded .tribe-remove-upload a { /* stylelint-disable-line max-nesting-depth */
+							font-size: var(--tec-font-size-1);
+						}
+.tribe-community-events .tribe-section.tribe-section-image-uploader .tribe-image-upload-area.uploaded input[disabled].uploadFile,
+					.tribe-community-events .tribe-section.tribe-section-image-uploader .tribe-image-upload-area.uploaded .selected-msg {
+						display: inline-block;
+						font-size: var(--tec-font-size-2);
+						width: auto;
+					}
+.tribe-community-events .tribe-section.tribe-section-image-uploader .tribe-image-upload-area.uploaded .selected-msg {
+						font-weight: var(--tec-font-wieght-bold);
+					}
+.tribe-community-events .tribe-section.tribe-section-image-uploader .tribe-image-upload-area.has-image {
+					background-color: var(--tec-color-background);
+					background-image: none;
+				}
+.tribe-community-events .tribe-section.tribe-section-image-uploader .tribe-image-upload-area.has-image .tribe-community-events-preview-image {
+						display: block;
+					}
+.tribe-community-events .tribe-section.tribe-section-image-uploader .tribe-image-upload-area.has-image .tribe-community-events-preview-image img { /* stylelint-disable-line max-nesting-depth */
+							margin-bottom: var(--tec-spacer-0);
+						}
+.tribe-community-events .tribe-section.tribe-section-image-uploader .tribe-image-upload-area.has-image .tribe-community-events-preview-image a { /* stylelint-disable-line max-nesting-depth */
+							font-size: var(--tec-font-size-1);
+						}
+.tribe-community-events .tribe-section.tribe-section-image-uploader .tribe-image-upload-area.has-image .note,
+					.tribe-community-events .tribe-section.tribe-section-image-uploader .tribe-image-upload-area.has-image .form-controls {
+						display: none;
+					}
+.tribe-community-events .tribe-section.tribe-section-image-uploader .tribe-image-upload-area.has-image .uploaded-msg,
+					.tribe-community-events .tribe-section.tribe-section-image-uploader .tribe-image-upload-area.has-image .current-image {
+						display: inline-block;
+						font-size: var(--tec-font-size-2);
+						width: auto;
+					}
+.tribe-community-events .tribe-section.tribe-section-image-uploader .tribe-image-upload-area.has-image .uploaded-msg {
+						font-weight: var(--tec-font-wieght-bold);
+					}
+/* ------------------------------------ *\
+			Linked Post Types
+		\* ------------------------------------ */
+.tribe-community-events .tribe-section.tribe-section-venue .move-linked-post-group {
+				display: none;
+			}
+.tribe-community-events .tribe-section.tribe-section-venue .tribe-dropdown, .tribe-community-events .tribe-section.tribe-section-organizer .tribe-dropdown {
+				margin-top: -2px;
+			}
+.tribe-community-events .tribe-section.tribe-single-geo-mode .tribe-linked-type-venue-country,
+			.tribe-community-events .tribe-section.tribe-single-geo-mode .tribe-linked-type-venue-state-province {
+				/* We need this to avoid having problems with inline css that is added */
+				display: none !important;
+			}
+.tribe-community-events .tribe-section .linked-post-dropdown {
+			margin-bottom: var(--tec-spacer-2);
+		}
+.tribe-community-events .tribe-section .edit-venue-link {
+			display: inline-block;
+			float: right;
+			padding-top: var(--tec-spacer-3);
+		}
+.tribe-community-events .tribe-section .tribe-delete-this:hover:hover, .tribe-community-events .tribe-section .tribe-delete-this.hover-state:hover {
+				color: var(--tec-color-accent-primary);
+			}
+/* ------------------------------------ *\
+			Event Website Section
+		\* ------------------------------------ */
+.tribe-community-events .tribe-section.tribe-section-website input {
+				width: 80%;
+			}
+/* ------------------------------------ *\
+			#Event-Cost
+		\* ------------------------------------ */
+.tribe-community-events .tribe-section.tribe-section-cost .event-currency-symbol {
+				margin-right: var(--tec-spacer-0);
+				width: 60px;
+			}
+.tribe-community-events .tribe-section.tribe-section-cost .cost-input-field {
+				display: block;
+				width: 175px;
+			}
+/* --------------------------------------- *\
+			#Additional-Fields
+		\* --------------------------------------- */
+.tribe-community-events .tribe-section .tribe-field-type-checkbox label, .tribe-community-events .tribe-section .tribe-field-type-radio label {
+				display: block;
+			}
+.tribe-community-events .tribe-section .tribe-field-type-checkbox label input[type="checkbox"], .tribe-community-events .tribe-section .tribe-field-type-radio label input[type="checkbox"] {
+					width: auto;
+				}
+/* ------------------------------------ *\
+	#Header
+\* ------------------------------------ */
+.my-events-header {
+	align-items: center;
+	border-bottom: 1px solid var(--tec-color-border-tertiary);
+	display: flex;
+	justify-content: space-between;
+	margin-bottom: var(--tec-spacer-7);
+	padding-bottom: var(--tec-spacer-7);
+}
+.my-events-header h2.my-events {
+		color: var(--tec-color-text-primary);
+		font-size: 1.5em;
+		font-weight: var(--tec-font-weight-regular);
+		line-height: 1;
+		margin: 0;
+	}
+/* ------------------------------------ *\
+	#Event-Time-Date
+\* ------------------------------------ */
+.ui-timepicker-wrapper {
+	background: var(--tec-color-background);
+	border: 1px solid var(--tec-color-border-default);
+	border-bottom-left-radius: var(--tec-border-radius-default);
+	border-bottom-right-radius: var(--tec-border-radius-default);
+	box-shadow: 1px 1px 5px var(--tec-color-box-shadow);
+	font-size: var(--tec-font-size-1);
+	margin: 0;
+	outline: none;
+	overflow-y: auto;
+	width: 80px;
+	z-index: 10001;
+}
+.ui-timepicker-wrapper .ui-timepicker-list li {
+			color: var(--tec-color-text-secondary);
+			cursor: pointer;
+			font-size: 85%;
+			list-style: none;
+			margin: 0;
+			padding: 0.25em;
+			white-space: nowrap;
+		}
+.ui-timepicker-wrapper .ui-timepicker-list li:hover {
+				color: var(--tec-color-background);
+			}
+.ui-timepicker-wrapper .ui-timepicker-list .ui-timepicker-selected {
+			background: var(--tec-color-accent-primary);
+			color: var(--tec-color-background);
+			font-weight: var(--tec-font-weight-regular);
+		}
+/* Some styles repurposed from WP Core's dashicons styles. */
+a.tribe-change-timezone:after {
+		color: var(--tec-color-text-secondary);
+		content: '\f464'; /* The dashicons "Edit" icon. */
+		display: inline-block;
+		font-family: dashicons;
+		-moz-osx-font-smoothing: grayscale;
+		-webkit-font-smoothing: antialiased;
+		font-style: normal;
+		font-weight: var(--tec-font-weight-regular);
+		margin-left: var(--tec-spacer-0);
+		text-align: center;
+		text-decoration: inherit;
+		transition: color 0.1s ease-in 0;
+		vertical-align: baseline;
+	}
+/* ------------------------------------ *\
+	#Login Form
+\* ------------------------------------ */
+.tribe-ce-register {
+	display: inline;
+	width: auto;
+}
+/* ------------------------------------ *\
+	jQuery UI Elements
+\* ------------------------------------ */
+.tribe_community_edit .ui-datepicker .ui-datepicker-title {
+	margin: 0 1.5em;
+}
+.tribe_community_edit .ui-datepicker select.ui-datepicker-month {
+	width: 55%;
+}
+.tribe_community_edit .ui-datepicker select.ui-datepicker-year {
+	width: 34%;
+}
+.custom-recurrence-years td {
+		padding: 0;
+	}
+/* stylelint-disable-line no-duplicate-selectors */
+.tribe-community-events .tribe-event-recurrence-description {
+		color: var(--tec-color-text-secondary);
+	}
+.tribe-community-events .tribe-event-recurrence .tribe-handle,
+	.tribe-community-events .tribe-event-exclusion .tribe-handle {
+		color: var(--tec-color-text-secondary);
+	}
+.tribe-community-events .tribe-field-inline-text {
+		color: var(--tec-color-text-secondary);
+		font-size: var(--tec-font-size-1);
+	}
+/* The reason we're using a `.class #id` type selector here is because the
+	 * ID is sufficiently generic that there's a pretty strong chance a duplicate
+	 * ID generated by the theme or some other component will be present. */
+.tribe-community-events #message {
+		clear: both;
+	}
+.month-label.first-label-in-line {
+	color: var(--tec-color-text-secondary);
+}
+/* Preserve layout of date- and time-pickers in smaller screens. */
+/* --------------------------------------- *\
+	#Footer
+\* --------------------------------------- */
+.tribe-events-community-footer {
+	margin-top: var(--tec-spacer-7);
+	text-align: center;
+}
+/* --------------------------------------- *\
+	#Additional-Fields
+\* --------------------------------------- */
+.tribe-field-type-checkbox label {
+		display: block;
+	}
+.tribe-field-type-checkbox label input[type="checkbox"] {
+			width: auto;
+		}
+/* ------------------------------------ *\
+	#Utilities
+\* ------------------------------------ */
+#tribe-community-events .aes,
+#tribe-community-events .aes * {
+	height: 1px;
+	margin: 0;
+	overflow: hidden;
+	padding: 0;
+	visibility: hidden;
+}
+.screen-reader-text {
+	clip: rect(1px, 1px, 1px, 1px);
+	height: 1px;
+	overflow: hidden;
+	position: absolute !important;
+	width: 1px;
+	word-wrap: normal !important;
+}
+.hidden {
+	display: none;
+}
+.tribe-dropdown.select2-container .select2-results ul {
+				margin: 0;
+				padding: 0;
+			}
+.tribe-dropdown.select2-container .select2-results ul .select2-results__option {
+					font-size: var(--tec-font-size-2);
+					margin: 0;
+					padding: var(--tec-spacer-1);
+				}
+/* Twenty Fourteen Styles */
+.tribe-2014.tribe_community_edit .ui-widget.ui-datepicker {
+	font-size: var(--tec-font-size-1);
+}
+.tribe-theme-twentyfourteen .events-community-post-title label {
+			display: block;
+		}
+.tribe-theme-twentyfourteen .events-community-post-title input {
+			width: 100%;
+		}
+/* Twenty Fifteen Styles */
+.tribe-theme-twentyfifteen #tribe-events-pg-template #tribe-community-events, .tribe-theme-child-twentyfifteen #tribe-events-pg-template #tribe-community-events {
+		margin: 8.3333%;
+	}
+.tribe-theme-twentyfifteen #tribe-community-events .pagination {
+		margin: 0 0 1.68em;
+	}
+.tribe-theme-twentyfifteen #tribe-community-events input.tribe-datepicker {
+		width: auto;
+	}
+.tribe-theme-twentyfifteen #tribe-community-events thead th {
+		background-color: var(--tec-color-background);
+		font-size: var(--tec-font-size-1);
+		line-height: 1;
+		padding: var(--tec-spacer-2) var(--tec-spacer-0);
+		text-align: center;
+	}
+.tribe-theme-twentyfifteen #tribe-community-events #the-list td {
+		font-size: var(--tec-font-size-1);
+		line-height: var(--tec-line-height-0);
+		text-align: center;
+	}
+.tribe-theme-twentyfifteen #tribe-community-events p label {
+		display: block;
+		font-size: var(--tec-font-size-2);
+	}
+.tribe-theme-twentyfifteen #tribe-community-events #loginform p.remember label {
+		display: inline;
+	}
+.tribe-theme-twentyfifteen #tribe-community-events #loginform p input[type=text],
+	.tribe-theme-twentyfifteen #tribe-community-events p input[type=password] {
+		margin-bottom: 1em;
+		width: 100%;
+	}
+.tribe-theme-twentyfifteen #tribe-community-events .register {
+		font-size: var(--tec-font-size-2);
+		text-align: center;
+	}
+/* Recaptcha for 2015 */
+.recaptchatable {
+	table-layout: auto;
+}
+/* Twenty Sixteen Styles  */
+.tribe-theme-twentysixteen .pagination, .tribe-theme-child-twentysixteen .pagination {
+		border-top: none;
+		margin: 0;
+	}
+.tribe-theme-twentysixteen .pagination:before,
+		.tribe-theme-twentysixteen .pagination:after,
+		.tribe-theme-child-twentysixteen .pagination:before,
+		.tribe-theme-child-twentysixteen .pagination:after {
+			background-color: white;
+			height: auto;
+			width: auto;
+		}
+/* Twenty Seventeen Styles  */
+.tribe-theme-twentyseventeen input[type="text"],
+	.tribe-theme-twentyseventeen input[type="email"],
+	.tribe-theme-twentyseventeen input[type="url"],
+	.tribe-theme-twentyseventeen input[type="password"],
+	.tribe-theme-twentyseventeen input[type="search"],
+	.tribe-theme-twentyseventeen input[type="number"],
+	.tribe-theme-twentyseventeen input[type="tel"],
+	.tribe-theme-twentyseventeen input[type="range"],
+	.tribe-theme-twentyseventeen input[type="date"],
+	.tribe-theme-twentyseventeen input[type="month"],
+	.tribe-theme-twentyseventeen input[type="week"],
+	.tribe-theme-twentyseventeen input[type="time"],
+	.tribe-theme-twentyseventeen input[type="datetime"],
+	.tribe-theme-twentyseventeen input[type="datetime-local"],
+	.tribe-theme-twentyseventeen input[type="color"],
+	.tribe-theme-twentyseventeen textarea,
+	.tribe-theme-twentyseventeen label,
+	.tribe-theme-child-twentyseventeen input[type="text"],
+	.tribe-theme-child-twentyseventeen input[type="email"],
+	.tribe-theme-child-twentyseventeen input[type="url"],
+	.tribe-theme-child-twentyseventeen input[type="password"],
+	.tribe-theme-child-twentyseventeen input[type="search"],
+	.tribe-theme-child-twentyseventeen input[type="number"],
+	.tribe-theme-child-twentyseventeen input[type="tel"],
+	.tribe-theme-child-twentyseventeen input[type="range"],
+	.tribe-theme-child-twentyseventeen input[type="date"],
+	.tribe-theme-child-twentyseventeen input[type="month"],
+	.tribe-theme-child-twentyseventeen input[type="week"],
+	.tribe-theme-child-twentyseventeen input[type="time"],
+	.tribe-theme-child-twentyseventeen input[type="datetime"],
+	.tribe-theme-child-twentyseventeen input[type="datetime-local"],
+	.tribe-theme-child-twentyseventeen input[type="color"],
+	.tribe-theme-child-twentyseventeen textarea,
+	.tribe-theme-child-twentyseventeen label {
+		display: inline-block;
+	}
+.tribe-theme-twentyseventeen .tribe-community-events label, .tribe-theme-child-twentyseventeen .tribe-community-events label {
+			font-weight: var(--tec-font-weight-regular);
+		}
+/*
+	Select2 bug fix
+	Fixes an issue where the wp-admin bar was adding padding to the HTML tag. This code offsets that so select2 containers display properly.
+	Based off of https://gist.github.com/tripflex/7f4a10fb27c7e8c95c86010f93ac250b
+*/
+.admin-bar.tribe_community_edit > span.select2-container {
+	padding-top: 32px !important;
+}
+/* -------------------------------------------------------------------------
+* Theme Overrides - Twenty twenty
+* ------------------------------------------------------------------------- */
+.tribe-theme-twentytwenty .tribe-community-events section {
+			padding: 0;
+		}
+.tribe-theme-twentytwenty .tribe-community-events input[type="text"] {
+			display: initial;
+		}
+.tribe-theme-twentytwenty .tribe-community-events input[type="checkbox"] {
+			height: 1.7rem;
+			padding: 0;
+			width: 1.7rem;
+		}
+.tribe-theme-twentytwenty .tribe-community-events label {
+			display: inline;
+		}
+/**
+	 * Virtual Events adds the `--float` to turn the Zoom Meeting details into a 2 column look, but its layout logic
+	 * isn't quite right for some browser widths with Twenty Twenty front-end, so we force it to stay a single column.
+	 */
+.tribe-theme-twentytwenty.tribe_community_edit .tribe-events-virtual-meetings-zoom-details--float {
+		margin-top: var(--tec-spacer-1);
+		position: static;
+	}
+/* -------------------------------------------------------------------------
+* Theme Overrides - Twenty Twenty-One
+* ------------------------------------------------------------------------- */
+.tribe-theme-twentytwentyone .tribe-community-events .tribe-field-type-radio label input[type="radio"] {
+			vertical-align: middle;
+		}
+.tribe-theme-twentytwentyone .tribe-community-events .tribe-field-type-checkbox label input[type="checkbox"] {
+			height: 1.7rem;
+			padding: 0;
+			vertical-align: middle;
+			width: 1.7rem;
+		}
+@media (min-width: 782px) {
+.tribe-community-events {
+		padding: var(--tec-spacer-10)
+}
+	}
+@media (max-width: 500px) {
+.tribe-community-events table,
+	.tribe-community-events tbody,
+	.tribe-community-events th,
+	.tribe-community-events tr,
+	.tribe-community-events td {
+			display: block
+	}
+.tribe-community-events input[type="text"],
+	.tribe-community-events input[type="password"],
+	.tribe-community-events input[type="color"],
+	.tribe-community-events input[type="date"],
+	.tribe-community-events input[type="datetime"],
+	.tribe-community-events input[type="datetime-local"],
+	.tribe-community-events input[type="email"],
+	.tribe-community-events input[type="month"],
+	.tribe-community-events input[type="number"],
+	.tribe-community-events input[type="search"],
+	.tribe-community-events input[type="tel"],
+	.tribe-community-events input[type="time"],
+	.tribe-community-events input[type="url"],
+	.tribe-community-events input[type="week"],
+	.tribe-community-events textarea {
+			display: block
+	}
+				.tribe-community-events .tribe-section table.tribe-section-content col.tribe-colgroup-label,
+				.tribe-community-events .tribe-section table.tribe-section-content col.tribe-colgroup-field,
+				.tribe-community-events .tribe-section table.virtual-event-wrapper col.tribe-colgroup-label,
+				.tribe-community-events .tribe-section table.virtual-event-wrapper col.tribe-colgroup-field {
+					width: 100%;
+				}
+		}
+@media (max-width: 782px) {
+.tribe-community-events input[type="text"],
+	.tribe-community-events input[type="password"],
+	.tribe-community-events input[type="color"],
+	.tribe-community-events input[type="date"],
+	.tribe-community-events input[type="datetime"],
+	.tribe-community-events input[type="datetime-local"],
+	.tribe-community-events input[type="email"],
+	.tribe-community-events input[type="month"],
+	.tribe-community-events input[type="number"],
+	.tribe-community-events input[type="search"],
+	.tribe-community-events input[type="tel"],
+	.tribe-community-events input[type="time"],
+	.tribe-community-events input[type="url"],
+	.tribe-community-events input[type="week"],
+	.tribe-community-events textarea {
+			font-size: var(--tec-font-size-3);
+			height: auto;
+			line-height: var(--tec-line-height-2);
+			max-width: none;
+			padding: var(--tec-spacer-1) var(--tec-spacer-2);
+			width: 100%
+	}
+.tribe-community-events .tribe-event-recurrence input[type="text"],
+		.tribe-community-events .tribe-event-recurrence input[type="password"],
+		.tribe-community-events .tribe-event-recurrence input[type="color"],
+		.tribe-community-events .tribe-event-recurrence input[type="date"],
+		.tribe-community-events .tribe-event-recurrence input[type="datetime"],
+		.tribe-community-events .tribe-event-recurrence input[type="datetime-local"],
+		.tribe-community-events .tribe-event-recurrence input[type="email"],
+		.tribe-community-events .tribe-event-recurrence input[type="month"],
+		.tribe-community-events .tribe-event-recurrence input[type="number"],
+		.tribe-community-events .tribe-event-recurrence input[type="search"],
+		.tribe-community-events .tribe-event-recurrence input[type="tel"],
+		.tribe-community-events .tribe-event-recurrence input[type="time"],
+		.tribe-community-events .tribe-event-recurrence input[type="url"],
+		.tribe-community-events .tribe-event-recurrence input[type="week"],
+		.tribe-community-events .tribe-event-recurrence textarea {
+				display: inline-block;
+				font-size: inherit;
+				line-height: 20px;
+				max-width: none;
+				padding: 3px 5px;
+				width: auto
+		}
+.tribe-community-events .tribe-section table.tribe-section-content td, .tribe-community-events .tribe-section table.virtual-event-wrapper td {
+					padding: 0 var(--tec-spacer-7);
+					vertical-align: middle;
+					width: auto
+			}
+.tribe-community-events .tribe-section table.tribe-section-content .tribe-section-content-label,
+			.tribe-community-events .tribe-section table.tribe-section-content td:first-child,
+			.tribe-community-events .tribe-section table.virtual-event-wrapper .tribe-section-content-label,
+			.tribe-community-events .tribe-section table.virtual-event-wrapper td:first-child {
+					padding-bottom: var(--tec-spacer-2)
+			}
+		}
+@media (max-width: 400px) {
+			.tribe-community-events .tribe-ticket-control-wrap > * {
+				width: 100%;
+			}
+		}
+@media (max-width: 560px) {
+.tribe-community-events .tribe-ticket-control-wrap {
+			display: flex;
+			flex-wrap: wrap;
+			justify-content: flex-start
+	}
+
+			.tribe-community-events .tribe-ticket-control-wrap > * {
+				margin-bottom: 1em;
+				margin-right: 0.5em;
+			}
+
+			.tribe-community-events .tribe-ticket-control-wrap #settings_form_toggle {
+				margin-top: 0;
+			}
+		}
+@media screen and (min-width: 500px) {
+				.tribe-community-events .tribe-section.tribe-section-venue input[type="text"], .tribe-community-events .tribe-section.tribe-section-organizer input[type="text"] {
+					width: 50%;
+				}
+			}
+@media screen and (max-width: 782px) {
+.tribe-community-events .tribe-section.tribe-section-website input {
+					width: 100%
+			}
+.tribe-community-events .tribe-section.tribe-section-cost .cost-input-field {
+					width: 100%
+			}
+.admin-bar.tribe_community_edit > span.select2-container {
+		padding-top: 46px !important
+}
+				}
+@media only screen and (max-width: 568px) {
+	#tribe-event-datepickers td ~ td,
+	#tribe-event-datepickers ~ tr td ~ td {
+		padding-bottom: var(--tec-spacer-2);
+	}
+
+	#tribe-event-datepickers #EventStartDate,
+	#tribe-event-datepickers ~ tr #EventEndDate {
+		margin-bottom: var(--tec-spacer-1);
+		width: 100%;
+	}
+
+	.timeofdayoptions {
+		clear: both;
+		display: block;
+		padding-bottom: var(--tec-spacer-2);
+		white-space: nowrap;
+		width: 100%;
+	}
+
+	td.datetime-label {
+		vertical-align: top;
+	}
+
+	.eventForm .tribe-datetime-block .tribe-field-start_date,
+	.eventForm .tribe-datetime-block .tribe-field-start_time,
+	.eventForm .tribe-datetime-block .tribe-field-end_date,
+	.eventForm .tribe-datetime-block .tribe-field-end_time {
+		margin-bottom: var(--tec-spacer-0);
+		width: 100%;
+	}
+}
+@media screen and (min-width: 61.5625em) {
+				body.tribe-theme-twentysixteen.tribe_community_edit:not(.search-results) article:not(.type-page) .entry-content, body.tribe-theme-twentysixteen.tribe_community_list:not(.search-results) article:not(.type-page) .entry-content {
+					margin-left: 0;
+					margin-right: 0;
+					width: 100%;
+				}
+}

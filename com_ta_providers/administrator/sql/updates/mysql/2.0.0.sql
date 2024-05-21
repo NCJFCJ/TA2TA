@@ -1,1 +1,0 @@
-ALTER TABLE `#__ta_providers` ADD logo VARCHAR(50) AFTER `website`;

@@ -1,0 +1,38 @@
+{
+    "name": "wp-sheet-editor-frontend-editor",
+    "version": "2.4.33",
+    "vgDistName": "bulk-edit-posts-on-frontend",
+    "vgPreviousVersion": "2.4.33-beta.1",
+    "sheetEditorModules": {
+        "free": [
+            "autofill-cells",
+            "columns-resizing",
+            "filters",
+            "wp-sheet-editor",
+            "user-path",
+            "columns-renaming",
+            "columns-visibility"
+        ],
+        "pro": [
+            "acf",
+            "advanced-filters",
+            "formulas",
+            "custom-columns",
+            "custom-post-types",
+            "woocommerce",
+            "universal-sheet",
+            "yoast-seo",
+            "wpml",
+            "posts-templates",
+            "columns-manager"
+        ]
+    },
+    "package_file_path": "C:\\VegaCorp\\dev\\wp-sheet-editor\/frontend-sheet\/package.json",
+    "vgEditorKeys": [
+        "post",
+        "page",
+        "product"
+    ],
+    "wpOrgRepo": "https:\/\/plugins.svn.wordpress.org\/bulk-edit-posts-on-frontend\/",
+    "textName": "vg_sheet_editor_frontend"
+}

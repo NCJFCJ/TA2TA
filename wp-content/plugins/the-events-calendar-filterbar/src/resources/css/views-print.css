@@ -1,0 +1,30 @@
+/**
+ * This CSS file was auto-generated via PostCSS
+ *
+ * Contributors should avoid editing this file, but instead edit the associated
+ * src/resources/postcss/ file. For more information, check out our engineering
+ * docs on how we handle CSS in our engineering docs.
+ *
+ * @see: https://the-events-calendar.github.io/products-engineering/docs/code-standards/css/
+ */
+
+/**
+ * View print styles.
+ *
+ * @since 5.3.2
+ */
+
+.single-tribe_events .tribe-filter-bar, .single-tribe_events.tribe-common--breakpoint-medium .tribe-filter-bar, .tribe-events .tribe-filter-bar, .tribe-events.tribe-common--breakpoint-medium .tribe-filter-bar {
+		display: none !important;
+	}
+
+.single-tribe_events .tribe-filter-bar--open ~ [class*="tribe-events-calendar"],
+	.single-tribe_events .tribe-filter-bar--open ~ [class*="tribe-events-pro"],
+	.single-tribe_events.tribe-common--breakpoint-medium .tribe-filter-bar--open ~ [class*="tribe-events-calendar"],
+	.single-tribe_events.tribe-common--breakpoint-medium .tribe-filter-bar--open ~ [class*="tribe-events-pro"],
+	.tribe-events .tribe-filter-bar--open ~ [class*="tribe-events-calendar"],
+	.tribe-events .tribe-filter-bar--open ~ [class*="tribe-events-pro"],
+	.tribe-events.tribe-common--breakpoint-medium .tribe-filter-bar--open ~ [class*="tribe-events-calendar"],
+	.tribe-events.tribe-common--breakpoint-medium .tribe-filter-bar--open ~ [class*="tribe-events-pro"] {
+		width: 100% !important;
+	}

@@ -1,0 +1,173 @@
+/* -----------------------------------------------------------------------------
+ *
+ * Filter
+ *
+ * ----------------------------------------------------------------------------- */
+
+.tribe-filter-bar {
+
+	.tribe-filter-bar-c-filter {
+		border-top: 1px solid var(--tec-color-border-secondary);
+	}
+
+	.tribe-filter-bar-c-filter__toggle,
+	.tribe-filter-bar-c-filter--accordion .tribe-filter-bar-c-filter__toggle,
+	button.tribe-filter-bar-c-filter__toggle,
+	.tribe-filter-bar-c-filter--accordion button.tribe-filter-bar-c-filter__toggle {
+		background-color: transparent;
+		background-image: none;
+		border: none;
+		color: var(--tec-color-text-primary);
+		font-weight: var(--tec-font-weight-bold);
+		outline: none;
+		transition: var(--tec-transition-opacity);
+
+		&:hover,
+		&:focus {
+			border: none;
+			opacity: var(--tec-opacity-icon-hover);
+			outline: none;
+		}
+
+		&:focus {
+			outline: auto;
+		}
+	}
+
+	.tribe-filter-bar-c-filter__toggle-minus-icon,
+	.tribe-filter-bar-c-filter__toggle-plus-icon {
+
+		path {
+			stroke: var(--tec-color-icon-primary);
+		}
+	}
+
+	/* These styles mirror the styles in `_pill.pcss` and override the mobile styles. */
+	.tribe-common--breakpoint-medium & .tribe-filter-bar-c-filter--pill {
+		border-top: none;
+
+		.tribe-filter-bar-c-filter__toggle,
+		button.tribe-filter-bar-c-filter__toggle {
+			@mixin desktop-body-3-sup;
+
+			background-color: var(--tec-color-background);
+			border: 1px solid var(--tec-color-icon-disabled);
+			border-radius: 18px;
+			font-weight: var(--tec-font-weight-regular);
+
+			&:hover,
+			&:focus {
+				background-color: var(--tec-color-background-secondary);
+				border-color: var(--tec-color-icon-primary);
+			}
+
+			&:active {
+				background-color: var(--tec-color-background);
+				border-color: var(--tec-color-border-tertiary);
+			}
+		}
+
+		&.tribe-filter-bar-c-filter--has-selections .tribe-filter-bar-c-filter__toggle,
+		&.tribe-filter-bar-c-filter--has-selections button.tribe-filter-bar-c-filter__toggle {
+			background-color: var(--tec-color-background-secondary);
+			border: 1px solid var(--tec-color-icon-primary);
+			font-weight: var(--tec-font-weight-bold);
+
+			&:hover,
+			&:focus {
+				background-color: var(--tec-color-background-secondary-hover);
+			}
+
+			&:active {
+				background-color: var(--tec-color-background);
+				border-color: var(--tec-color-border-tertiary);
+			}
+		}
+
+		.tribe-filter-bar-c-filter__remove-button {
+
+			path {
+				transition: var(--tec-transition-opacity);
+			}
+
+			&:hover,
+			&:focus {
+
+				path {
+					opacity: var(--tec-opacity-icon-hover);
+				}
+			}
+		}
+
+		.tribe-filter-bar-c-filter__remove-button-icon {
+
+			path {
+				stroke: var(--tec-color-icon-active);
+			}
+		}
+
+		.tribe-filter-bar-c-filter__container {
+			border: 1px solid var(--tec-color-border-secondary);
+			border-radius: var(--tec-border-radius-default);
+			box-shadow: var(--tec-box-shadow-tooltip);
+		}
+
+		.tribe-filter-bar-c-filter__filters-close {
+
+			&:hover,
+			&:focus {
+
+				.tribe-filter-bar-c-filter__filters-close-icon path {
+					stroke: var(--tec-color-icon-active);
+				}
+			}
+		}
+
+		.tribe-filter-bar-c-filter__filters-close-icon path {
+			stroke: var(--tec-color-icon-primary);
+		}
+	}
+
+	/* -------------------------------------------------------------------------
+	 *
+	 * Filter: Theme Overrides
+	 *
+	 * ------------------------------------------------------------------------- */
+
+	/* -------------------------------------------------------------------------
+	 * Theme Overrides - Twenty Seventeen
+	 * ------------------------------------------------------------------------- */
+
+	.tribe-theme-twentyseventeen & {
+
+		.tribe-filter-bar-c-filter__toggle {
+
+			&,
+			&:hover,
+			&:focus {
+				background-color: transparent;
+			}
+		}
+
+		.tribe-filter-bar-c-filter__filters-fieldset {
+			background-color: transparent;
+		}
+	}
+
+	/* -----------------------------------------------------------------------------
+	 * Theme Overrides - Twenty Twenty One
+	 * ----------------------------------------------------------------------------- */
+
+	.tribe-theme-twentytwentyone & {
+		.tribe-filter-bar-c-filter__toggle-wrapper {
+			button:focus {
+				outline-offset: 0;
+			}
+		}
+
+		button.tribe-filter-bar-c-pill__pill:focus {
+			outline: auto;
+			outline-offset: 0;
+		}
+	}
+}

@@ -1,0 +1,95 @@
+/* -----------------------------------------------------------------------------
+ *
+ * Filter Button
+ *
+ * ----------------------------------------------------------------------------- */
+
+.tribe-events {
+
+	.tribe-events-c-events-bar__filter-button-container {
+		margin-right: var(--tec-spacer-1);
+
+		.tribe-common--breakpoint-medium.tribe-events--filter-bar-vertical& {
+			@mixin hidden;
+		}
+	}
+
+	.tribe-events-c-events-bar__filter-button,
+	.tribe-filter-bar__filters-slider-nav-button,
+	.tribe-filter-bar-c-pill__pill,
+	.tribe-filter-bar-c-filter__filters-close {
+		background-color: transparent;
+		background-image: none;
+		border: none;
+		outline: none;
+	}
+
+	.tribe-filter-bar-c-pill__pill:hover {
+		color: var(--tec-color-text-primary);
+	}
+
+	.tribe-events-header--has-event-search .tribe-events-c-events-bar__filter-button-container {
+
+		.tribe-common--breakpoint-medium.tribe-events--filter-bar-horizontal& {
+			flex: none;
+			margin: var(--tec-spacer-2) 0;
+		}
+	}
+
+	.tribe-events-c-events-bar__filter-button {
+		display: block;
+		padding: var(--tec-spacer-0);
+		position: relative;
+
+		.tribe-common--breakpoint-medium.tribe-events--filter-bar-horizontal& {
+			padding: var(--tec-spacer-1);
+		}
+	}
+
+	.tribe-events-header--has-event-search .tribe-events-c-events-bar__filter-button {
+
+		.tribe-common--breakpoint-medium.tribe-events--filter-bar-horizontal& {
+			align-items: center;
+			display: flex;
+			margin: calc(var(--tec-spacer-2) * -1) 0;
+			padding: var(--tec-spacer-4) var(--tec-spacer-5);
+		}
+	}
+
+	.tribe-events-c-events-bar__filter-button-icon {
+		display: block;
+		height: 21px;
+		width: 21px;
+
+		path {
+			fill: currentColor;
+		}
+
+		.tribe-common--breakpoint-medium.tribe-events--filter-bar-horizontal& {
+			flex: none;
+			height: 23px;
+			padding: 1px;
+			width: 23px;
+		}
+	}
+
+	.tribe-events-header--has-event-search .tribe-events-c-events-bar__filter-button-icon {
+
+		.tribe-common--breakpoint-medium.tribe-events--filter-bar-horizontal& {
+			flex: none;
+			height: 14px;
+			width: 14px;
+		}
+	}
+
+	.tribe-events-header--has-event-search .tribe-events-c-events-bar__filter-button-text {
+		color: var(--tec-color-text-events-bar-input);
+
+		.tribe-common--breakpoint-medium.tribe-events--filter-bar-horizontal& {
+			@mixin visually-show;
+
+			flex: none;
+			margin-left: var(--tec-spacer-1);
+		}
+	}
+}

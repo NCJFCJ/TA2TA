@@ -1,0 +1,16 @@
+{
+  "files": [
+	  "posts-data-table-pro.php",
+	  "readme.txt",
+	  "license.txt"
+  ],
+  "folders": [
+	  "dependencies",
+	  "lib",
+	  "src",
+	  "vendor",
+	  "assets",
+	  "templates",
+	  "languages"
+  ]
+}

@@ -1,0 +1,502 @@
+# Copyright (C) 2020 WP Sheet Editor
+# This file is distributed under the same license as the WP Sheet Editor - Editable Frontend Tables plugin.
+msgid ""
+msgstr ""
+"Project-Id-Version: WP Sheet Editor - Editable Frontend Tables 2.3.2.3\n"
+"Report-Msgid-Bugs-To: https://wordpress.org/support/plugin/frontend-sheet\n"
+"Language-Team: Hanno Bolte IT Consulting <info@bsoft.de>\n"
+"MIME-Version: 1.0\n"
+"Content-Type: text/plain; charset=UTF-8\n"
+"Content-Transfer-Encoding: 8bit\n"
+"POT-Creation-Date: 2020-10-20T18:03:45+00:00\n"
+"PO-Revision-Date: 2020-11-17 11:35+0100\n"
+"X-Generator: Poedit 2.4.2\n"
+"Last-Translator: Hanno Bolte <xlate@bsoft.de>\n"
+"Plural-Forms: nplurals=2; plural=(n != 1);\n"
+"Language: de_DE\n"
+
+#. Plugin Name of the plugin
+msgid "WP Sheet Editor - Editable Frontend Tables"
+msgstr "WP Sheet Editor - Editierbare Frontend-Tabellen"
+
+#. Plugin URI of the plugin
+msgid ""
+"https://wpsheeteditor.com/extensions/frontend-spreadsheet-editor/?"
+"utm_source=wp-admin&utm_medium=plugins-list&utm_campaign=frontend"
+msgstr ""
+"https://wpsheeteditor.com/extensions/frontend-spreadsheet-editor/?"
+"utm_source=wp-admin&utm_medium=plugins-list&utm_campaign=frontend"
+
+#. Description of the plugin
+msgid ""
+"Display spreadsheet editor on the frontend or custom admin pages, create "
+"custom spreadsheets as dashboards for apps."
+msgstr ""
+"Zeig den Arbeitsblatt-Editor im Frontend oder auf benutzerdefinierten Admin-"
+"Seiten an, erstelle benutzerdefinierte Arbeitsblätter als Dashboards für "
+"Anwendungen."
+
+#. Author of the plugin
+msgid "WP Sheet Editor"
+msgstr "WP Sheet Editor"
+
+#. Author URI of the plugin
+msgid ""
+"https://wpsheeteditor.com/?utm_source=wp-admin&utm_medium=plugins-"
+"list&utm_campaign=frontend"
+msgstr ""
+"https://wpsheeteditor.com/?utm_source=wp-admin&utm_medium=plugins-"
+"list&utm_campaign=frontend"
+
+#: frontend-editor.php:92
+msgid "Edit posts"
+msgstr "Beiträge bearbeiten"
+
+#: frontend-editor.php:122
+msgid ""
+"Please update the WP Sheet Editor plugin and all its extensions to the "
+"latest version. The features of the plugin \""
+msgstr ""
+"Bitte aktualisiere das WP Sheet Editor Plugin und alle seine Erweiterungen "
+"auf die neueste Version. Die Eigenschaften des Plugins \""
+
+#: frontend-editor.php:145
+msgid "Try premium plugin for FREE"
+msgstr "Premium-Plugin KOSTENLOS ausprobieren"
+
+#: frontend-editor.php:295
+msgid "Frontend Spreadsheets"
+msgstr "Frontend-Arbeitsblätter"
+
+#: frontend-editor.php:300
+msgid "Login message"
+msgstr "Login-Meldung"
+
+#: frontend-editor.php:301
+msgid "You need to login to view this page."
+msgstr "Du musst dich anmelden, um diese Seite anzuzeigen."
+
+#: frontend-editor.php:302
+msgid ""
+"This will be displayed when the current user is not logged in and tries to "
+"see a spreadsheet page. We will display a login form after your message."
+msgstr ""
+"Dies wird angezeigt, wenn der aktuelle Benutzer nicht eingeloggt ist und "
+"versucht, ein Arbeitsblatt zu sehen. Wir zeigen nach deiner Nachricht ein "
+"Anmeldeformular an."
+
+#: frontend-editor.php:307
+msgid "Hide admin bar on the frontend"
+msgstr "Admin-Leiste im Frontend ausblenden"
+
+#: frontend-editor.php:308
+msgid ""
+"By default WordPress shows a black bar at the top of the page when a logged "
+"in user views a frontend page. The bar lets you access the wp-admin, log "
+"out, edit the current page, etc. If you enable this option we will hide that "
+"bar and you can use the shortcode: [vg_display_logout_link] to display the "
+"logout link."
+msgstr ""
+"Standardmäßig zeigt WordPress einen schwarzen Balken oben auf der Seite an, "
+"wenn ein angemeldeter Benutzer eine Frontend-Seite aufruft. Über den Balken "
+"kannst du auf WP-Admin zugreifen, dich abmelden, die aktuelle Seite "
+"bearbeiten usw. Wenn du diese Option aktivierst, wird dieser Balken "
+"ausgeblendet, und du kannst den Shortcode [vg_display_logout_link] "
+"verwenden, um den Logout-Link anzuzeigen."
+
+#: frontend-editor.php:315
+msgid "Logo"
+msgstr "Logo"
+
+#: frontend-editor.php:316
+msgid "This logo will be displayed above the spreadsheet in the frontend"
+msgstr "Dieses Logo wird über dem Arbeitsblatt im Frontend angezeigt"
+
+#: frontend-editor.php:321
+msgid "Menu"
+msgstr "Menü"
+
+#: frontend-editor.php:322
+msgid ""
+"This menu will be displayed at the top right section above the spreadsheet."
+msgstr ""
+"Dieses Menü wird im oberen rechten Abschnitt über dem Arbeitsblatt angezeigt."
+
+#: frontend-editor.php:328
+msgid "Main Color"
+msgstr "Hauptfarbe"
+
+#: frontend-editor.php:329
+msgid "This color will be used as background for the header and footer."
+msgstr "Diese Farbe wird als Hintergrund für die Kopf- und Fußzeile verwendet."
+
+#: frontend-editor.php:336
+msgid "Links Color"
+msgstr "Linkfarbe"
+
+#: frontend-editor.php:337
+msgid ""
+"This color will be used for the menu links, it should be the opposite of the "
+"background color. i.e. dark background with light text, or light background "
+"with dark text"
+msgstr ""
+"Diese Farbe wird für die Menü-Links verwendet, sie sollte das Gegenteil der "
+"Hintergrundfarbe sein, d.h. dunkler Hintergrund mit hellem Text oder heller "
+"Hintergrund mit dunklem Text"
+
+#: frontend-editor.php:351
+msgid "All spreadsheets"
+msgstr "Alle Arbeitsblätter"
+
+#: frontend-editor.php:354
+msgid "Custom columns"
+msgstr "Benutzerdefinierte Spalten"
+
+#: frontend-editor.php:398
+msgid "Posts"
+msgstr "Beiträge"
+
+#: frontend-editor.php:399
+msgid "Pages"
+msgstr "Seiten"
+
+#: frontend-editor.php:437
+msgid "Quick settings"
+msgstr "Schnelle Einstellungen"
+
+#: frontend-editor.php:544 views/backend/metabox.php:47
+msgid ""
+" <small>(Premium. <a href=\"%s\" target=\"_blank\">Try for Free for 7 Days</"
+"a>)</small>"
+msgstr ""
+" <small>(Premium. <a href=\"%s\" target=\"_blank\">7 Tage lang kostenlos "
+"testen</a>)</small>"
+
+#: frontend-editor.php:676
+msgctxt "Post Type General Name"
+msgid "Spreadsheets"
+msgstr "Arbeitsblätter"
+
+#: frontend-editor.php:677
+msgctxt "Post Type Singular Name"
+msgid "Spreadsheet"
+msgstr "Arbeitsblatt"
+
+#: frontend-editor.php:679
+msgid "Post Type"
+msgstr "Beitragstyp"
+
+#: frontend-editor.php:680
+msgid "Spreadsheet Archives"
+msgstr "Arbeitsblatt-Archiv"
+
+#: frontend-editor.php:681
+msgid "Spreadsheet Attributes"
+msgstr "Arbeitsblatt-Attribute"
+
+#: frontend-editor.php:682
+msgid "Parent Spreadsheet:"
+msgstr "Übergeordnetes Arbeitsblatt:"
+
+#: frontend-editor.php:683
+msgid "All Spreadsheets"
+msgstr "Alle Arbeitsblätter"
+
+#: frontend-editor.php:684
+msgid "Add New Spreadsheet"
+msgstr "Neues Arbeitsblatt hinzufügen"
+
+#: frontend-editor.php:685
+msgid "Add New"
+msgstr "Neu hinzufügen"
+
+#: frontend-editor.php:686
+msgid "New Spreadsheet"
+msgstr "Neues Arbeitsblatt"
+
+#: frontend-editor.php:687
+msgid "Edit settings"
+msgstr "Einstellungen bearbeiten"
+
+#: frontend-editor.php:688
+msgid "Update settings"
+msgstr "Einstellungen aktualisieren"
+
+#: frontend-editor.php:689
+msgid "View Spreadsheet"
+msgstr "Arbeitsblatt anzeigen"
+
+#: frontend-editor.php:690
+msgid "View Spreadsheets"
+msgstr "Arbeitsblätter anzeigen"
+
+#: frontend-editor.php:691
+msgid "Search Spreadsheet"
+msgstr "Arbeitsblatt durchsuchen"
+
+#: frontend-editor.php:692
+msgid "Not found"
+msgstr "Nicht gefunden"
+
+#: frontend-editor.php:693
+msgid "Not found in Trash"
+msgstr "Nicht im Papierkorb gefunden"
+
+#: frontend-editor.php:694
+msgid "Featured Image"
+msgstr "Beitragsbild"
+
+#: frontend-editor.php:695
+msgid "Set featured image"
+msgstr "Beitragsbild festlegen"
+
+#: frontend-editor.php:696
+msgid "Remove featured image"
+msgstr "Beitragsbild entfernen"
+
+#: frontend-editor.php:697
+msgid "Use as featured image"
+msgstr "Als Beitragsbild verwenden"
+
+#: frontend-editor.php:698
+msgid "Insert into item"
+msgstr "In Element einfügen"
+
+#: frontend-editor.php:699
+msgid "Uploaded to this item"
+msgstr "Zu diesem Element hochgeladen"
+
+#: frontend-editor.php:700
+msgid "Spreadsheets list"
+msgstr "Arbeitsblätter-Liste"
+
+#: frontend-editor.php:701
+msgid "Spreadsheets list navigation"
+msgstr "Navigation in der Arbeitsblätter-Liste"
+
+#: frontend-editor.php:702
+msgid "Filter items list"
+msgstr "Element-Liste filtern"
+
+#: integrations/dokan/views/metabox.php:3
+msgid "Dokan"
+msgstr "Dokan"
+
+#: integrations/dokan/views/metabox.php:6
+msgid ""
+"If you fill the options below, we will add a link in the Dokan dashboard, so "
+"the vendors can open the spreadsheet from that menu."
+msgstr ""
+"Wenn du die unten stehenden Optionen ausfüllst, fügen wir einen Link in das "
+"Dokan-Dashboard ein, so dass die Anbieter das Arbeitsblatt von diesem Menü "
+"aus öffnen können."
+
+#: integrations/dokan/views/metabox.php:9 integrations/wcfm/views/metabox.php:9
+#: integrations/wcmp/views/metabox.php:9
+msgid "Menu title"
+msgstr "Menütitel"
+
+#: integrations/dokan/views/metabox.php:13
+msgid "Menu position"
+msgstr "Menü-Position"
+
+#: integrations/dokan/views/metabox.php:17
+msgid "Menu icon"
+msgstr "Menü Icon"
+
+#: integrations/dokan/views/metabox.php:18
+msgid ""
+"Enter the name of a fontawesome icon. You can view the <a href=\"https://"
+"fontawesome.com/cheatsheet\" target=\"_blank\">icons list here</a>. Example: "
+"edit"
+msgstr ""
+"Gib den Namen eines fontawesome-Symbols ein. Die Symbolliste kannst du <a "
+"href=\"https://fontawesome.com/cheatsheet\" target=\"_blank\">hier ansehen</"
+"a>. Beispiel: Bearbeiten"
+
+#: integrations/wcfm/views/metabox.php:3
+msgid "WCFM Marketplace"
+msgstr "WCFM-Marktplatz"
+
+#: integrations/wcfm/views/metabox.php:6 integrations/wcmp/views/metabox.php:6
+msgid ""
+"If you fill the options below, we will add a link in the WCMP dashboard, so "
+"the vendors can open the spreadsheet from that menu."
+msgstr ""
+"Wenn du die untenstehenden Optionen ausfüllst, fügen wir einen Link in das "
+"WCMP-Dashboard ein, so dass die Anbieter das Arbeitsblatt von diesem Menü "
+"aus öffnen können."
+
+#: integrations/wcmp/views/metabox.php:3
+msgid "WCMP Marketplace"
+msgstr "WCMP-Marktplatz"
+
+#: views/backend/metabox.php:5
+msgid "Need help?"
+msgstr "Brauchst du Hilfe?"
+
+#: views/backend/metabox.php:6
+msgid "Watch tutorial"
+msgstr "Tutorial ansehen"
+
+#: views/backend/metabox.php:8
+msgid "My account and license"
+msgstr "Mein Konto und meine Lizenz"
+
+#: views/backend/metabox.php:13
+msgid "1. What information do you want to edit on the frontend?"
+msgstr "1. Welche Informationen möchtest du im Frontend bearbeiten?"
+
+#: views/backend/metabox.php:31 views/backend/metabox.php:93
+#: views/backend/metabox.php:128
+msgid "Save changes"
+msgstr "Änderungen speichern"
+
+#: views/backend/metabox.php:37
+msgid ""
+"Please select the post type and save changes. After you save changes you "
+"will be able to see the rest of the settings and instructions."
+msgstr ""
+"Bitte wähle den Beitragstyp aus, und speichere die Änderungen. Nachdem du "
+"die Änderungen gespeichert hast, kannst du die restlichen Einstellungen und "
+"Anweisungen sehen."
+
+#: views/backend/metabox.php:51
+msgid "2. Setup page in the frontend"
+msgstr "2. Einrichtungsseite im Frontend"
+
+#: views/backend/metabox.php:53
+msgid ""
+"You need to set a logo in the settings page. Optionally you can change the "
+"background color, links color, and set a header menu."
+msgstr ""
+"Du musst ein Logo auf der Einstellungsseite festlegen. Optional kannst du "
+"die Hintergrundfarbe oder die Farbe der Links ändern und ein Kopfzeilenmenü "
+"festlegen."
+
+#: views/backend/metabox.php:55
+msgid "Open Settings Page"
+msgstr "Einstellungs-Seite öffnen"
+
+#: views/backend/metabox.php:55
+msgid "Preview Frontend Editor"
+msgstr "Vorschau des Frontend-Editors"
+
+#: views/backend/metabox.php:57
+msgid ""
+"When you finish this step you can start using the frontend editor. You can "
+"add the frontend page to a menu or share the link with your users."
+msgstr ""
+"Wenn du diesen Schritt abgeschlossen hast, kannst du den Frontend-Editor "
+"verwenden. Du kannst die Frontend-Seite zu einem Menü hinzufügen oder den "
+"Link mit deinen Benutzern teilen."
+
+#: views/backend/metabox.php:61
+msgid "Add this shortcode to a full-width page: %s"
+msgstr "Füge diesen Shortcode zu einer Seite in voller Breite hinzu: %s"
+
+#: views/backend/metabox.php:63
+msgid ""
+"Page detected: This page contains the shortcode: <b>%s</b> (<a href=\"%s\" "
+"target=\"_blank\">Preview</a> - <a href=\"%s\" target=\"_blank\">Edit</a>)"
+msgstr ""
+"Seite gefunden: Diese Seite enthält den Shortcode <b>%s</b> (<a href=\"%s\" "
+"target=\"_blank\">Vorschau</a> - <a href=\"%s\" target=\"_blank"
+"\">Bearbeiten</a>)"
+
+#: views/backend/metabox.php:67
+msgid "3. Available tools (optional)"
+msgstr "3. Verfügbare Werkzeuge (optional)"
+
+#: views/backend/metabox.php:95
+msgid "4. Columns visibility and Custom Fields (optional)"
+msgstr "4. Sichtbarkeit der Spalten und benutzerdefinierte Felder (optional)"
+
+#: views/backend/metabox.php:132
+msgid "5. Learn more about security and user roles (optional)"
+msgstr "5. Erfahre mehr über Sicherheit und Benutzerrollen (optional)"
+
+#: views/backend/metabox.php:135
+msgid ""
+"The editor is available only for logged in users. Unknown users will see a "
+"login form automatically."
+msgstr ""
+"Der Editor ist nur für angemeldete Benutzer verfügbar. Unbekannte Benutzer "
+"sehen automatisch ein Anmeldeformular."
+
+#: views/backend/metabox.php:137
+msgid "User roles"
+msgstr "Benutzerrollen"
+
+#: views/backend/metabox.php:140
+msgid "Subscriber role is not allowed to use the editor."
+msgstr "Abonnenten dürfen den Editor nicht verwenden."
+
+#: views/backend/metabox.php:141
+msgid ""
+"Contributor role can view and edit their own posts only, but they can´t "
+"upload images."
+msgstr ""
+"Beitragende können nur die eigenen Beiträge anzeigen und bearbeiten, und sie "
+"können keine Bilder hochladen."
+
+#: views/backend/metabox.php:142
+msgid ""
+"Author role can view and edit their own posts only, they can upload images."
+msgstr ""
+"Autoren können nur die eigenen Beiträge anzeigen und bearbeiten, sie können "
+"Bilder hochladen."
+
+#: views/backend/metabox.php:143
+msgid "Editor role can view and edit all posts and pages."
+msgstr "Editoren können alle Beiträge und Seiten anzeigen und bearbeiten."
+
+#: views/backend/metabox.php:148
+msgid "<li>Shop manager role can view and edit WooCommerce products.</li>"
+msgstr ""
+"<li>Shop-Manager können WooCommerce-Produkte anzeigen und bearbeiten.</li>"
+
+#: views/backend/metabox.php:153
+msgid "Administrator role can view and edit everything."
+msgstr "Administratoren können alles anzeigen und bearbeiten."
+
+#: views/frontend/page-template.php:64
+msgid "Primary Menu"
+msgstr "Hauptmenü"
+
+#. translators: %s: Name of current post
+#: views/frontend/page-template.php:112
+msgid "Edit<span class=\"screen-reader-text\"> \"%s\"</span>"
+msgstr "<span class=\"screen-reader-text\">\"%s\"</span> bearbeiten"
+
+#: views/welcome-page-content.php:16
+msgid ""
+"Thank you for installing our plugin. You can start using it in 5 minutes. "
+"Please follow these steps:"
+msgstr ""
+"Vielen Dank für die Installation unseres Plugins. Du kannst es in 5 Minuten "
+"benutzen. Bitte folge diesen Schritten:"
+
+#: views/welcome-page-content.php:28
+msgid ""
+"Add this shortcode to a full-width page: [vg_sheet_editor editor_id=\"%s\"] "
+"and it works automatically."
+msgstr ""
+"Füge diesen Shortcode zu einer Seite in voller Breite hinzu: "
+"[vg_sheet_editor editor_id=\"%s\"] und es funktioniert automatisch."
+
+#: views/welcome-page-content.php:29
+msgid ""
+"<a href=\"%s\" target=\"_blank\" class=\"button quick-settings-button"
+"\">Quick Settings</a>"
+msgstr ""
+"<a href=\"%s\" target=\"_blank\" class=\"button quick-settings-button"
+"\">Schnell-Einstellungen</a>"
+
+#: views/welcome-page-content.php:31
+msgid ""
+"Fill the settings. <a href=\"%s\" target=\"_blank\" class=\"button\">Click "
+"here</a>"
+msgstr ""
+"Füll die Einstellungen aus. <a href=\"%s\" target=\"_blank\" class=\"button"
+"\">Hier klicken</a>"

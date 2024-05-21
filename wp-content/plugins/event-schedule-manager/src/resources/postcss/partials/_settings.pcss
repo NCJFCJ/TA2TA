@@ -1,0 +1,77 @@
+/*
+ * Settings
+ * -------------------------------------------------------------
+ */
+
+.tec-conference-settings-top-section__wrap {
+	background-color: var(--tec-color-gray-lightest);
+	border: 1px solid var(--tec-color-white);
+	border-radius: 4px;
+	margin: 20px 0;
+	padding: 8px 20px 12px;
+
+	.tec-conference-settings-header-links-sections__wrap {
+		display: flex;
+		flex-wrap: wrap;
+	}
+
+	.tec-conference-settings-header-links-section__wrap {
+		flex: 0 0 100%;
+		width: 100%;
+
+		@mixin breakpoint-sm {
+			flex: 0 0 25%;
+			width: 25%;
+
+			&:nth-child(1) {
+				flex: 0 0 calc(25% - 20px);
+				margin-right: 20px;
+			}
+
+			&:nth-child(3) {
+				flex: 0 0 100%;
+				width: 100%;
+			}
+		}
+
+		/* When compiled the order is incorrect and tablet overwrites desktop unless we use !important */
+		@mixin breakpoint-md {
+			flex: 0 0 calc(20% - 20px) !important;
+			width: 20% !important;
+
+			&:nth-child(2) {
+				margin-right: 20px;
+			}
+
+			&:nth-child(3) {
+				flex: 0 0 60% !important;
+				width: 60% !important;
+			}
+		}
+
+		ul {
+			list-style-type: none;
+			margin: 0 0 15px 0;
+			padding: 0;
+
+			li {
+				margin-bottom: 8px;
+			}
+		}
+	}
+}
+
+.schedule_page_event-schedule-manager-settings {
+	#tec_field_telemetry_optin {
+		margin-top: 4px !important;
+		vertical-align: top;
+	}
+
+	p.tec-conference-description {
+		display: inline-block;
+		margin-left: 0;
+		margin-top: 0;
+		max-width: 450px;
+		width: calc(100% - 35px);
+	}
+}

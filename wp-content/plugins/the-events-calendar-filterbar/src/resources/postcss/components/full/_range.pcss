@@ -1,0 +1,43 @@
+/* -----------------------------------------------------------------------------
+ *
+ * Radio
+ *
+ * ----------------------------------------------------------------------------- */
+
+.tribe-filter-bar {
+
+	.tribe-filter-bar-c-range__label {
+		@mixin desktop-body-2;
+
+		color: var(--tec-color-text-secondary);
+	}
+
+	.tribe-filter-bar-c-range__slider {
+		background: var(--tec-color-border-default);
+		border-radius: 2px;
+		height: 4px;
+		margin: var(--tec-spacer-1) 10px;
+
+		.ui-slider-range {
+			background: var(--tec-color-accent-secondary);
+		}
+
+		.ui-slider-handle {
+			@mixin form-control-slider-thumb;
+
+			background: var(--tec-form-color-background);
+			margin: 0 0 0 -10px;
+			top: 50%;
+			transform: translateY(-50%);
+
+			&.ui-state-active {
+				background-color: var(--tec-color-background-secondary);
+			}
+
+			&:before,
+			&:after {
+				content: none;
+			}
+		}
+	}
+}

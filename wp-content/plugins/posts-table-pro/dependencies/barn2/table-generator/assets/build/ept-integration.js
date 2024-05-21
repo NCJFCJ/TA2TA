@@ -1,0 +1,1 @@
+sessionStorage.removeItem(Barn2TableGenerator.pluginSlug+":routeData");

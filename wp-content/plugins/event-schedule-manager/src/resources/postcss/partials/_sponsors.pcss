@@ -1,0 +1,115 @@
+/*
+ * Sponsors
+ * -------------------------------------------------------------
+ */
+.tec-sponsors {
+	.tec-sponsor-level {
+		.tec-sponsor-level-heading {
+			position: relative;
+			text-align: center;
+
+			&:before,
+			&:after {
+				display: none;
+			}
+
+			&:before {
+				background-color: var(--tec-color-gray-light);
+				display: block;
+				height: 1px;
+				margin: 0;
+				padding: 0;
+				position: absolute;
+				top: 50%;
+				width: 100%;
+				z-index: -1;
+			}
+
+			span {
+				background-color: #fff;
+				padding: 0 20px;
+			}
+		}
+
+		.tec-sponsor-list {
+			list-style-type: none;
+			padding-left: 0;
+			text-align: center;
+
+			.tec-sponsor {
+				display: inline-block;
+				margin: 10px;
+
+				@mixin breakpoint-sm {
+					margin: 20px;
+				}
+
+				.tec-sponsor-image {
+					max-width: 100%;
+				}
+			}
+		}
+	}
+}
+
+.tec-sponsor-single {
+	&-row {
+		@mixin breakpoint-sm {
+			align-content: center;
+			column-gap: 30px;
+			display: flex;
+			justify-content: left;
+		}
+	}
+
+	&-image {
+		text-align: center;
+
+		img {
+			max-height: 75px;
+		}
+	}
+}
+
+.single-tec_sponsor {
+	.entry .entry-content > * {
+		max-width: 100%;
+	}
+
+	.entry {
+		h2 {
+			font-size: 1.2em;
+		}
+
+		&-title {
+			font-size: 2em;
+		}
+	}
+
+	.has-post-thumbnail {
+		.tec-sponsor-grid {
+			@mixin breakpoint-sm {
+				display: grid;
+				grid-column-gap: 30px;
+				grid-template-columns: 1fr 2fr;
+			}
+
+			@mixin breakpoint-lg {
+				grid-column-gap: 50px;
+			}
+
+			.wp-post-image {
+				max-width: 100%;
+
+				@mixin breakpoint-sm {
+					height: auto;
+					max-width: 350px;
+				}
+			}
+		}
+
+		.tec-sponsor-level {
+			font-size: 1.5em;
+		}
+	}
+}

@@ -1,0 +1,15 @@
+[t�e<?php exit; ?>a:1:{s:7:"content";O:8:"stdClass":24:{s:2:"ID";i:95;s:11:"post_author";s:1:"2";s:9:"post_date";s:19:"2016-03-04 19:09:41";s:13:"post_date_gmt";s:19:"2016-03-04 19:09:41";s:12:"post_content";s:2004:"<div align="center">
+<div style="text-align: left;"><strong>SAVE THE DATE!</strong></div>
+<div style="text-align: left;"><strong>August 2 - 4, 2016</strong></div>
+<div style="text-align: left;"><strong>Minnesota </strong></div>
+<div style="text-align: left;"><strong>Hosted by the Vera Institute of Justice</strong></div>
+<div style="text-align: left;"> </div>
+<div style="text-align: left;">The next Creating Accessible In-Person Events Training is tentatively scheduled to take place August 2 through August 4 in Minnesota. This FREE three day training is designed exclusively for OVW-funded technical assistance providers to create in-person events (conferences, trainings, and roundtables)that are accessible and welcoming to people with disabilities and Deaf people.Training topics include budgeting for access, working with American Sign Language Interpreters, and much more!</div>
+<div style="text-align: left;"> </div>
+<div style="text-align: left;">We are awaiting OVW Conference approval, please feel free to save the date on your calendar but please do not make travel arrangements. Once details are confirmed, we will be in touch with additional information. In the meantime, we ask that if you are interested in attending the training that you take a moment to complete a brief pre-registration survey so we can secure an appropriate number of sleeping rooms. </div>
+<div style="text-align: left;"> </div>
+<p style="text-align: left;"><strong>Please complete by Thursday, March 17th.</strong> Space will be limited, and once registration officially opens, participation will be on a first come, first serve basis.    </p>
+<p style="text-align: left;"> </p>
+<h4 style="text-align: center;">Pre-Register for Creating Accessible In-Person Events: </h4>
+<h4 style="text-align: center;"><strong><a title="Vera Training Registration" href="https://www.surveymonkey.com/r/GQWYR5B" target="_blank" rel="noopener">https://www.surveymonkey.com/r/GQWYR5B</a></strong></h4>
+</div>";s:10:"post_title";s:58:"Creating Accessible In-Person Events Training Announcement";s:12:"post_excerpt";s:0:"";s:11:"post_status";s:7:"publish";s:14:"comment_status";s:6:"closed";s:11:"ping_status";s:6:"closed";s:13:"post_password";s:0:"";s:9:"post_name";s:58:"creating-accessible-in-person-events-training-announcement";s:7:"to_ping";s:0:"";s:6:"pinged";s:0:"";s:13:"post_modified";s:19:"2016-03-04 19:09:41";s:17:"post_modified_gmt";s:19:"2016-03-04 19:09:41";s:21:"post_content_filtered";s:0:"";s:11:"post_parent";i:0;s:4:"guid";s:82:"https://ldev.ta2ta.org/creating-accessible-in-person-events-training-announcement/";s:10:"menu_order";i:6;s:9:"post_type";s:4:"page";s:14:"post_mime_type";s:0:"";s:13:"comment_count";s:1:"0";s:6:"filter";s:3:"raw";}}

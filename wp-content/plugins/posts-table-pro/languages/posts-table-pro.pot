@@ -1,0 +1,1288 @@
+# Copyright (C) 2023 Barn2 Plugins
+# This file is distributed under the GNU General Public License v3.0.
+msgid ""
+msgstr ""
+"Project-Id-Version: Posts Table Pro 3.1.1\n"
+"Report-Msgid-Bugs-To: https://wordpress.org/support/plugin/posts-table-pro\n"
+"Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
+"Language-Team: LANGUAGE <LL@li.org>\n"
+"MIME-Version: 1.0\n"
+"Content-Type: text/plain; charset=UTF-8\n"
+"Content-Transfer-Encoding: 8bit\n"
+"POT-Creation-Date: 2023-09-07T13:17:15+02:00\n"
+"PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
+"X-Generator: WP-CLI 2.7.1\n"
+"X-Domain: posts-table-pro\n"
+
+#. Plugin Name of the plugin
+#: dependencies/barn2/table-generator/src/Table_Generator.php:569
+#: src/Admin/Settings_Page.php:72
+msgid "Posts Table Pro"
+msgstr ""
+
+#. Plugin URI of the plugin
+msgid "https://barn2.com/wordpress-plugins/posts-table-pro/"
+msgstr ""
+
+#. Description of the plugin
+msgid "Display any WordPress content in an instant data table with powerful search, sort and filter capabilities."
+msgstr ""
+
+#. Author of the plugin
+msgid "Barn2 Plugins"
+msgstr ""
+
+#. Author URI of the plugin
+msgid "https://barn2.com"
+msgstr ""
+
+#: dependencies/barn2/barn2-lib/src/Admin/Settings_API_Helper.php:507
+#: dependencies/barn2/barn2-lib/src/WooCommerce/Admin/Custom_Settings_Fields.php:138
+msgid "Size"
+msgstr ""
+
+#: dependencies/barn2/barn2-lib/src/Admin/Settings_Util.php:62
+#: dependencies/barn2/table-generator/src/Table_Generator.php:569
+#: src/Admin/Settings_Page.php:833
+msgid "Documentation"
+msgstr ""
+
+#: dependencies/barn2/barn2-lib/src/Admin/Settings_Util.php:62
+#: dependencies/barn2/table-generator/src/Table_Generator.php:569
+#: src/Admin/Settings_Page.php:834
+msgid "Support"
+msgstr ""
+
+#: dependencies/barn2/barn2-lib/src/Plugin/Admin/Admin_Links.php:47
+#: src/Admin/Settings_Page.php:60
+msgid "Settings"
+msgstr ""
+
+#. translators: %s: The plugin name
+#: dependencies/barn2/barn2-lib/src/Plugin/Admin/Admin_Links.php:63
+msgid "View %s documentation"
+msgstr ""
+
+#: dependencies/barn2/barn2-lib/src/Plugin/Admin/Admin_Links.php:64
+msgid "Docs"
+msgstr ""
+
+#. translators: 1: licence key link start, 2: license key link end
+#: dependencies/barn2/barn2-lib/src/Plugin/Admin/Plugin_Updater.php:156
+msgid "Activate %1$syour license key%2$s to enable updates."
+msgstr ""
+
+#: dependencies/barn2/barn2-lib/src/Plugin/Admin/Plugin_Updater.php:211
+msgid "Auto-updates unavailable."
+msgstr ""
+
+#: dependencies/barn2/barn2-lib/src/Plugin/License/Admin/License_Key_Setting.php:58
+msgid "License key successfully activated."
+msgstr ""
+
+#: dependencies/barn2/barn2-lib/src/Plugin/License/Admin/License_Key_Setting.php:58
+msgid "There was an error activating your license key."
+msgstr ""
+
+#: dependencies/barn2/barn2-lib/src/Plugin/License/Admin/License_Key_Setting.php:62
+msgid "License key successfully deactivated."
+msgstr ""
+
+#: dependencies/barn2/barn2-lib/src/Plugin/License/Admin/License_Key_Setting.php:62
+msgid "There was an error deactivating your license key, please try again."
+msgstr ""
+
+#: dependencies/barn2/barn2-lib/src/Plugin/License/Admin/License_Key_Setting.php:65
+msgid "The license key looks good!"
+msgstr ""
+
+#: dependencies/barn2/barn2-lib/src/Plugin/License/Admin/License_Key_Setting.php:65
+msgid "There's a problem with your license key."
+msgstr ""
+
+#: dependencies/barn2/barn2-lib/src/Plugin/License/Admin/License_Key_Setting.php:107
+#: dependencies/barn2/table-generator/src/Steps/Welcome.php:41
+msgid "License key"
+msgstr ""
+
+#: dependencies/barn2/barn2-lib/src/Plugin/License/Admin/License_Key_Setting.php:109
+msgid "The licence key is contained in your order confirmation email."
+msgstr ""
+
+#: dependencies/barn2/barn2-lib/src/Plugin/License/Admin/License_Key_Setting.php:112
+msgid "License Key"
+msgstr ""
+
+#: dependencies/barn2/barn2-lib/src/Plugin/License/Admin/License_Key_Setting.php:131
+msgid "Check"
+msgstr ""
+
+#: dependencies/barn2/barn2-lib/src/Plugin/License/Admin/License_Key_Setting.php:131
+msgid "Activate"
+msgstr ""
+
+#: dependencies/barn2/barn2-lib/src/Plugin/License/Admin/License_Key_Setting.php:131
+msgid "Deactivate"
+msgstr ""
+
+#: dependencies/barn2/barn2-lib/src/Plugin/License/Admin/License_Key_Setting.php:139
+msgid "License key deactivated."
+msgstr ""
+
+#. translators: 1: the plugin name, 2: settings link start, 3: settings link end.
+#: dependencies/barn2/barn2-lib/src/Plugin/License/Admin/License_Notices.php:82
+msgid "Thank you for installing %1$s. To get started, please %2$s enter your license key%3$s."
+msgstr ""
+
+#. translators: 1: the plugin name, 2: renewal link start, 3: renewal link end.
+#: dependencies/barn2/barn2-lib/src/Plugin/License/Admin/License_Notices.php:107
+msgid "Your license key for %1$s has expired. %2$sClick here to renew for 20%% discount%3$s."
+msgstr ""
+
+#. translators: 1: the plugin name, 2: renewal link start, 3: renewal link end.
+#: dependencies/barn2/barn2-lib/src/Plugin/License/Admin/License_Notices.php:132
+msgid "You no longer have a valid license for %1$s. Please %2$spurchase a new license key%3$s to continue using the plugin."
+msgstr ""
+
+#. translators: 1: the plugin name, 2: settings link start, 3: settings link end.
+#: dependencies/barn2/barn2-lib/src/Plugin/License/Admin/License_Notices.php:160
+msgid "%1$s - your site has moved to a new domain. Please %2$sreactivate your license key%3$s."
+msgstr ""
+
+#: dependencies/barn2/barn2-lib/src/Plugin/License/EDD_Licensing.php:147
+msgid "An error has occurred, please try again."
+msgstr ""
+
+#: dependencies/barn2/barn2-lib/src/Plugin/License/Plugin_License.php:90
+msgid "Your license key is active."
+msgstr ""
+
+#: dependencies/barn2/barn2-lib/src/Plugin/License/Plugin_License.php:110
+msgid "Please enter your license key."
+msgstr ""
+
+#: dependencies/barn2/barn2-lib/src/Plugin/License/Plugin_License.php:112
+#: dependencies/barn2/barn2-lib/src/Plugin/License/Plugin_License.php:332
+msgid "Your license key is invalid."
+msgstr ""
+
+#. translators: 1: account page link start, 2: account page link end
+#: dependencies/barn2/barn2-lib/src/Plugin/License/Plugin_License.php:276
+msgid "Invalid license key - please check your order confirmation email or %1$sAccount%2$s."
+msgstr ""
+
+#: dependencies/barn2/barn2-lib/src/Plugin/License/Plugin_License.php:282
+msgid "No URL was supplied for activation, please contact support."
+msgstr ""
+
+#: dependencies/barn2/barn2-lib/src/Plugin/License/Plugin_License.php:285
+msgid "License key mismatch, please contact support."
+msgstr ""
+
+#: dependencies/barn2/barn2-lib/src/Plugin/License/Plugin_License.php:288
+msgid "This license is for a bundled product and cannot be activated."
+msgstr ""
+
+#: dependencies/barn2/barn2-lib/src/Plugin/License/Plugin_License.php:292
+msgid "Your license key is not valid for this plugin."
+msgstr ""
+
+#. translators: %s: The sites active description, e.g. '2 sites active'
+#: dependencies/barn2/barn2-lib/src/Plugin/License/Plugin_License.php:301
+msgid "Your license key has reached its activation limit (%s)."
+msgstr ""
+
+#: dependencies/barn2/barn2-lib/src/Plugin/License/Plugin_License.php:302
+#: dependencies/barn2/barn2-lib/src/Util.php:32
+msgid "Read more"
+msgstr ""
+
+#. translators: support for RTL, 1: the license error, 2: a link
+#: dependencies/barn2/barn2-lib/src/Plugin/License/Plugin_License.php:304
+#: dependencies/barn2/barn2-lib/src/Plugin/License/Plugin_License.php:322
+msgid "%1$s %2$s"
+msgstr ""
+
+#. translators: %s: The license expiry date
+#: dependencies/barn2/barn2-lib/src/Plugin/License/Plugin_License.php:317
+msgid "Your license key expired on %s."
+msgstr ""
+
+#: dependencies/barn2/barn2-lib/src/Plugin/License/Plugin_License.php:320
+msgid "Renew now for 20% discount."
+msgstr ""
+
+#: dependencies/barn2/barn2-lib/src/Plugin/License/Plugin_License.php:523
+msgid "Your license key is not active. Please reactivate or save the settings."
+msgstr ""
+
+#: dependencies/barn2/barn2-lib/src/Plugin/License/Plugin_License.php:527
+msgid "Your license key has expired."
+msgstr ""
+
+#. translators: 1: purchase link start, 2: purchase link end.
+#: dependencies/barn2/barn2-lib/src/Plugin/License/Plugin_License.php:533
+msgid "Your license key has been disabled. Please %1$spurchase a new license key%2$s to continue using the plugin."
+msgstr ""
+
+#. translators: %1$s: Plugin name. %2$s: Update Core <a> tag open. %3$s: <a> tag close. %4$s: WP Version required.
+#: dependencies/barn2/barn2-lib/src/Traits/Check_WP_Requirements.php:34
+msgid "The %1$s plugin requires WordPress %4$s or greater. Please %2$supdate%3$s your WordPress installation."
+msgstr ""
+
+#. translators: %1$s: Install WooCommerce <a> tag open. %2$s: <a> tag close. %3$s: Plugin name
+#: dependencies/barn2/barn2-lib/src/Traits/Check_WP_Requirements.php:62
+msgid "Please %1$sinstall WooCommerce%2$s in order to use %3$s."
+msgstr ""
+
+#. translators: %1$s: Plugin name. %2$s: Version required.
+#: dependencies/barn2/barn2-lib/src/Traits/Check_WP_Requirements.php:77
+msgid "The %1$s plugin requires WooCommerce %2$s or greater. Please update your WooCommerce setup first."
+msgstr ""
+
+#: dependencies/barn2/barn2-lib/src/WooCommerce/Admin/Plugin_Promo.php:95
+#: dependencies/barn2/barn2-lib/src/WooCommerce/Admin/Plugin_Promo.php:97
+msgid "Save changes"
+msgstr ""
+
+#: dependencies/barn2/setup-wizard/src/Api.php:151
+msgid "Could not find the appropriate step."
+msgstr ""
+
+#: dependencies/barn2/setup-wizard/src/Api.php:195
+#: dependencies/barn2/table-generator/src/Routes/License.php:54
+msgid "Please enter a license key."
+msgstr ""
+
+#: dependencies/barn2/setup-wizard/src/Api.php:198
+#: dependencies/barn2/table-generator/src/Routes/License.php:57
+msgid "Invalid action requested."
+msgstr ""
+
+#. translators: %s: The name of the plugin.
+#: dependencies/barn2/setup-wizard/src/Setup_Wizard.php:333
+msgid "%s setup wizard"
+msgstr ""
+
+#: dependencies/barn2/setup-wizard/src/Setup_Wizard.php:423
+#: dependencies/barn2/setup-wizard/src/Setup_Wizard.php:496
+msgid "Warning: This will overwrite your existing settings for %s. Are you sure you want to continue?"
+msgstr ""
+
+#: dependencies/barn2/setup-wizard/src/Setup_Wizard.php:473
+#: dependencies/barn2/setup-wizard/src/Setup_Wizard.php:481
+#: dependencies/barn2/setup-wizard/src/Setup_Wizard.php:531
+#: dependencies/barn2/table-generator/src/Table_Generator.php:569
+#: src/Admin/Settings_Page.php:838
+msgid "Setup wizard"
+msgstr ""
+
+#: dependencies/barn2/setup-wizard/src/Setup_Wizard.php:476
+msgid "If you need to access the setup wizard again, please click on the button below."
+msgstr ""
+
+#: dependencies/barn2/setup-wizard/src/Steps/Cross_Selling.php:23
+msgid "More"
+msgstr ""
+
+#: dependencies/barn2/setup-wizard/src/Steps/Cross_Selling.php:24
+msgid "Extra features"
+msgstr ""
+
+#: dependencies/barn2/setup-wizard/src/Steps/Cross_Selling.php:25
+msgid "Enhance your site with these fantastic plugins from Barn2."
+msgstr ""
+
+#: dependencies/barn2/setup-wizard/src/Steps/Ready.php:23
+msgid "Ready"
+msgstr ""
+
+#: dependencies/barn2/setup-wizard/src/Steps/Ready.php:24
+msgid "Setup Complete"
+msgstr ""
+
+#: dependencies/barn2/setup-wizard/src/Steps/Welcome.php:25
+#: dependencies/barn2/setup-wizard/src/Steps/Welcome_Free.php:24
+#: dependencies/barn2/table-generator/src/Steps/Welcome.php:29
+msgid "Welcome"
+msgstr ""
+
+#: dependencies/barn2/setup-wizard/src/Util.php:28
+msgid "Select an option"
+msgstr ""
+
+#: dependencies/barn2/table-generator/src/Content_Table.php:191
+#: dependencies/barn2/table-generator/src/Routes/Supports.php:53
+#: src/Util/Columns_Util.php:70
+msgid "Status"
+msgstr ""
+
+#: dependencies/barn2/table-generator/src/Content_Table.php:194
+#: dependencies/barn2/table-generator/src/Routes/Supports.php:52
+msgid "Custom fields"
+msgstr ""
+
+#: dependencies/barn2/table-generator/src/Content_Table.php:201
+#: src/Util/Columns_Util.php:50
+msgid "Date"
+msgstr ""
+
+#: dependencies/barn2/table-generator/src/Demo_Extra_Fields.php:16
+#: src/Admin/Table_Generator_Extras.php:19
+msgid "%s per page"
+msgstr ""
+
+#: dependencies/barn2/table-generator/src/Demo_Extra_Fields.php:16
+#: src/Admin/Table_Generator_Extras.php:24
+msgid "%s limit"
+msgstr ""
+
+#: dependencies/barn2/table-generator/src/Demo_Extra_Fields.php:16
+#: src/Admin/Table_Generator_Extras.php:25
+msgid "The maximum number of %contentType% in one table."
+msgstr ""
+
+#: dependencies/barn2/table-generator/src/Demo_Extra_Fields.php:16
+#: src/Admin/Settings_Page.php:365
+#: src/Admin/Table_Generator_Extras.php:30
+msgid "Search box"
+msgstr ""
+
+#: dependencies/barn2/table-generator/src/Demo_Extra_Fields.php:16
+#: src/Admin/Settings_Page.php:369
+#: src/Admin/Settings_Page.php:381
+#: src/Admin/Settings_Page.php:485
+#: src/Admin/Settings_Page.php:498
+#: src/Admin/Table_Generator_Extras.php:34
+msgid "Above table"
+msgstr ""
+
+#: dependencies/barn2/table-generator/src/Demo_Extra_Fields.php:16
+#: src/Admin/Settings_Page.php:370
+#: src/Admin/Settings_Page.php:382
+#: src/Admin/Settings_Page.php:486
+#: src/Admin/Settings_Page.php:499
+#: src/Admin/Table_Generator_Extras.php:35
+msgid "Below table"
+msgstr ""
+
+#: dependencies/barn2/table-generator/src/Demo_Extra_Fields.php:16
+#: src/Admin/Settings_Page.php:371
+#: src/Admin/Settings_Page.php:383
+#: src/Admin/Settings_Page.php:487
+#: src/Admin/Settings_Page.php:500
+#: src/Admin/Table_Generator_Extras.php:36
+msgid "Above and below table"
+msgstr ""
+
+#: dependencies/barn2/table-generator/src/Demo_Extra_Fields.php:16
+#: src/Admin/Settings_Page.php:372
+#: src/Admin/Settings_Page.php:384
+#: src/Admin/Settings_Page.php:488
+#: src/Admin/Settings_Page.php:501
+#: src/Admin/Table_Generator_Extras.php:37
+msgid "Hidden"
+msgstr ""
+
+#: dependencies/barn2/table-generator/src/Demo_Extra_Fields.php:16
+#: src/Admin/Settings_Page.php:640
+#: src/Admin/Table_Generator_Extras.php:43
+msgid "Caching"
+msgstr ""
+
+#: dependencies/barn2/table-generator/src/Demo_Extra_Fields.php:16
+#: src/Admin/Table_Generator_Extras.php:44
+msgid "Cache table contents to improve load times."
+msgstr ""
+
+#: dependencies/barn2/table-generator/src/Demo_Extra_Fields.php:16
+#: src/Admin/Settings_Page.php:284
+#: src/Admin/Table_Generator_Extras.php:49
+msgid "Button text"
+msgstr ""
+
+#: dependencies/barn2/table-generator/src/Demo_Extra_Fields.php:16
+#: src/Admin/Table_Generator_Extras.php:50
+msgid "If your table uses the \"button\" column. <a href=\"%s\" target=\"_blank\">Read more</a>"
+msgstr ""
+
+#: dependencies/barn2/table-generator/src/Plugin_Installer.php:42
+msgid "Plugin parameter is missing from the request."
+msgstr ""
+
+#: dependencies/barn2/table-generator/src/Plugin_Installer.php:68
+msgid "Plugin successfully activated."
+msgstr ""
+
+#: dependencies/barn2/table-generator/src/Plugin_Installer.php:70
+msgid "Something went wrong while downloading or installing the plugin."
+msgstr ""
+
+#: dependencies/barn2/table-generator/src/Routes/Filters.php:31
+#: src/Util/Columns_Util.php:62
+msgid "Categories"
+msgstr ""
+
+#: dependencies/barn2/table-generator/src/Routes/Filters.php:31
+#: src/Util/Columns_Util.php:66
+msgid "Tags"
+msgstr ""
+
+#: dependencies/barn2/table-generator/src/Routes/Supports.php:54
+#: src/Admin/Settings_Page.php:429
+#: src/Util/Columns_Util.php:58
+msgid "Author"
+msgstr ""
+
+#: dependencies/barn2/table-generator/src/Routes/Supports.php:55
+msgid "Individual %contentType%"
+msgstr ""
+
+#: dependencies/barn2/table-generator/src/Routes/Supports.php:57
+msgid "MIME type"
+msgstr ""
+
+#: dependencies/barn2/table-generator/src/Routes/Tables.php:94
+#: dependencies/barn2/table-generator/src/Routes/Tables.php:110
+#: dependencies/barn2/table-generator/src/Routes/Tables.php:141
+msgid "The table_id parameter is required."
+msgstr ""
+
+#: dependencies/barn2/table-generator/src/Routes/Tables.php:98
+msgid "Table successfully deleted"
+msgstr ""
+
+#: dependencies/barn2/table-generator/src/Routes/Tables.php:155
+#: dependencies/barn2/table-generator/src/Routes/Tables.php:255
+#: dependencies/barn2/table-generator/src/Steps/Columns.php:96
+msgid "You must add at least one column."
+msgstr ""
+
+#: dependencies/barn2/table-generator/src/Routes/Tables.php:199
+msgid " - Copy"
+msgstr ""
+
+#: dependencies/barn2/table-generator/src/Routes/Tables.php:201
+msgid "Table successfully duplicated."
+msgstr ""
+
+#: dependencies/barn2/table-generator/src/Routes/Tables.php:203
+msgid "Error while duplicating table."
+msgstr ""
+
+#: dependencies/barn2/table-generator/src/Routes/Taxonomies.php:42
+msgid "The post_type parameter was empty."
+msgstr ""
+
+#: dependencies/barn2/table-generator/src/Routes/Terms.php:40
+msgid "The taxonomy parameter was empty."
+msgstr ""
+
+#: dependencies/barn2/table-generator/src/Steps/Columns.php:31
+#: dependencies/barn2/table-generator/src/Steps/Columns.php:43
+#: src/Admin/Settings_Page.php:236
+msgid "Columns"
+msgstr ""
+
+#: dependencies/barn2/table-generator/src/Steps/Columns.php:32
+msgid "Table columns"
+msgstr ""
+
+#: dependencies/barn2/table-generator/src/Steps/Columns.php:33
+msgid "Next, choose which columns to display in the table."
+msgstr ""
+
+#: dependencies/barn2/table-generator/src/Steps/Columns.php:92
+#: dependencies/barn2/table-generator/src/Steps/Filters.php:97
+#: dependencies/barn2/table-generator/src/Steps/Performance.php:66
+#: dependencies/barn2/table-generator/src/Steps/Refine.php:64
+#: dependencies/barn2/table-generator/src/Steps/Sort.php:68
+msgid "The table_id parameter is missing."
+msgstr ""
+
+#: dependencies/barn2/table-generator/src/Steps/Create.php:29
+msgid "Create"
+msgstr ""
+
+#: dependencies/barn2/table-generator/src/Steps/Create.php:30
+msgid "Create a table"
+msgstr ""
+
+#: dependencies/barn2/table-generator/src/Steps/Create.php:40
+msgid "Select a content type"
+msgstr ""
+
+#: dependencies/barn2/table-generator/src/Steps/Create.php:44
+msgid "Table name"
+msgstr ""
+
+#: dependencies/barn2/table-generator/src/Steps/Create.php:44
+msgid "Give your table a friendly name to help you identify it later (e.g. “Posts in the Weddings category”)"
+msgstr ""
+
+#: dependencies/barn2/table-generator/src/Steps/Create.php:44
+msgid "Name"
+msgstr ""
+
+#: dependencies/barn2/table-generator/src/Steps/Create.php:44
+msgid "What type of content do you want to display?"
+msgstr ""
+
+#: dependencies/barn2/table-generator/src/Steps/Create.php:74
+msgid "Please enter a name for the table and select a content type."
+msgstr ""
+
+#: dependencies/barn2/table-generator/src/Steps/Filters.php:29
+#: dependencies/barn2/table-generator/src/Steps/Filters.php:30
+msgid "Filters"
+msgstr ""
+
+#: dependencies/barn2/table-generator/src/Steps/Filters.php:31
+msgid "Filters are displayed above the table, and help users to search and refine the %contentType%."
+msgstr ""
+
+#: dependencies/barn2/table-generator/src/Steps/Filters.php:41
+msgid "Which filters do you want to display?"
+msgstr ""
+
+#: dependencies/barn2/table-generator/src/Steps/Performance.php:28
+#: dependencies/barn2/table-generator/src/Steps/Performance.php:29
+msgid "Performance"
+msgstr ""
+
+#: dependencies/barn2/table-generator/src/Steps/Performance.php:30
+msgid "Optimize your table load times."
+msgstr ""
+
+#: dependencies/barn2/table-generator/src/Steps/Performance.php:40
+#: src/Admin/Settings_Page.php:298
+msgid "Lazy load"
+msgstr ""
+
+#: dependencies/barn2/table-generator/src/Steps/Performance.php:40
+msgid "Load table one page at a time"
+msgstr ""
+
+#: dependencies/barn2/table-generator/src/Steps/Performance.php:40
+msgid "Enable this if the table will contain a large number of %contentType%."
+msgstr ""
+
+#: dependencies/barn2/table-generator/src/Steps/Refine.php:29
+msgid "Refine"
+msgstr ""
+
+#: dependencies/barn2/table-generator/src/Steps/Refine.php:30
+msgid "Select your %contentType%"
+msgstr ""
+
+#: dependencies/barn2/table-generator/src/Steps/Refine.php:40
+msgid "Which %s do you want to display?"
+msgstr ""
+
+#: dependencies/barn2/table-generator/src/Steps/Refine.php:145
+msgid "Custom field must contain both the name and value."
+msgstr ""
+
+#: dependencies/barn2/table-generator/src/Steps/Sort.php:29
+#: dependencies/barn2/table-generator/src/Steps/Sort.php:30
+msgid "Sort"
+msgstr ""
+
+#: dependencies/barn2/table-generator/src/Steps/Sort.php:31
+msgid "How do you want to sort your %contentType%?"
+msgstr ""
+
+#: dependencies/barn2/table-generator/src/Steps/Sort.php:41
+#: src/Admin/Settings_Page.php:419
+msgid "Sort by"
+msgstr ""
+
+#: dependencies/barn2/table-generator/src/Steps/Sort.php:41
+#: src/Admin/Settings_Page.php:450
+msgid "Sort direction"
+msgstr ""
+
+#: dependencies/barn2/table-generator/src/Steps/Sort.php:41
+#: src/Admin/Settings_Page.php:454
+msgid "Automatic"
+msgstr ""
+
+#: dependencies/barn2/table-generator/src/Steps/Sort.php:41
+#: src/Admin/Settings_Page.php:455
+msgid "Ascending (A to Z, old to new)"
+msgstr ""
+
+#: dependencies/barn2/table-generator/src/Steps/Sort.php:41
+#: src/Admin/Settings_Page.php:456
+msgid "Descending (Z to A, new to old)"
+msgstr ""
+
+#: dependencies/barn2/table-generator/src/Steps/Welcome.php:30
+msgid "Welcome to Posts Table Pro"
+msgstr ""
+
+#: dependencies/barn2/table-generator/src/Steps/Welcome.php:31
+msgid "Create and display beautiful tables of your website content"
+msgstr ""
+
+#: dependencies/barn2/table-generator/src/Steps/Welcome.php:63
+msgid "No license details provided. Please enter a license."
+msgstr ""
+
+#: dependencies/barn2/table-generator/src/Steps/Welcome.php:67
+msgid "Please validate your license."
+msgstr ""
+
+#: dependencies/barn2/table-generator/src/Table_Generator.php:265
+msgid "Add New"
+msgstr ""
+
+#: dependencies/barn2/table-generator/src/Table_Generator.php:269
+msgid "Tables"
+msgstr ""
+
+#: dependencies/barn2/table-generator/src/Traits/Columns_Aware.php:40
+msgid "Button"
+msgstr ""
+
+#: dependencies/barn2/table-generator/src/Traits/Columns_Aware.php:43
+msgid "Last modified date"
+msgstr ""
+
+#: dependencies/barn2/table-generator/src/Traits/Columns_Aware.php:72
+msgid "Additional custom field"
+msgstr ""
+
+#: dependencies/barn2/table-generator/table-generator.php:64
+#: src/Admin/Table_Generator.php:107
+msgid "Welcome to %s"
+msgstr ""
+
+#: dependencies/barn2/table-generator/table-generator.php:64
+#: src/Admin/Table_Generator.php:108
+msgid "Create and display beautiful tables of your website content."
+msgstr ""
+
+#: dependencies/barn2/table-generator/table-generator.php:64
+#: src/Admin/Table_Generator.php:110
+msgid "Create and manage your post tables on this page. Display them using the Post Table block or shortcode."
+msgstr ""
+
+#: dependencies/barn2/table-generator/table-generator.php:71
+msgid "Select a pre-saved posts table. Go to the <a href=\"#\" target=\"_blank\">Post Tables section</a> of the Dashboard to create or edit your tables."
+msgstr ""
+
+#: dependencies/barn2/table-generator/table-generator.php:72
+#: src/Admin/Table_Generator.php:140
+msgid "An interactive table of your posts, pages, or any custom post type."
+msgstr ""
+
+#: src/Admin/Page_List.php:44
+msgid "Posts Table Pro Search Page"
+msgstr ""
+
+#: src/Admin/Plugin_Setup.php:74
+msgctxt "Page slug"
+msgid "posts-search"
+msgstr ""
+
+#: src/Admin/Plugin_Setup.php:76
+msgctxt "Page title"
+msgid "Search"
+msgstr ""
+
+#: src/Admin/Settings_Page.php:59
+#: src/Admin/Settings_Page.php:81
+msgid "Posts Table Pro Settings"
+msgstr ""
+
+#: src/Admin/Settings_Page.php:84
+msgid "Use the following options to configure the default settings for your tables. Most of these can be overridden in <a href=\"%s\">each individual table</a>. There are also <a href=\"%s\">shortcode options</a> if you need even more flexibility."
+msgstr ""
+
+#: src/Admin/Settings_Page.php:98
+msgid "Save Changes"
+msgstr ""
+
+#: src/Admin/Settings_Page.php:156
+msgid "Table content"
+msgstr ""
+
+#: src/Admin/Settings_Page.php:165
+msgid "Loading"
+msgstr ""
+
+#: src/Admin/Settings_Page.php:174
+msgid "Sorting"
+msgstr ""
+
+#: src/Admin/Settings_Page.php:183
+msgid "Search and filter"
+msgstr ""
+
+#: src/Admin/Settings_Page.php:192
+msgid "Pagination"
+msgstr ""
+
+#: src/Admin/Settings_Page.php:201
+#: src/Admin/Settings_Page.php:529
+msgid "Design"
+msgstr ""
+
+#: src/Admin/Settings_Page.php:210
+msgid "Advanced"
+msgstr ""
+
+#: src/Admin/Settings_Page.php:224
+msgid "Post type"
+msgstr ""
+
+#: src/Admin/Settings_Page.php:227
+msgid "To restrict the post type by custom field, taxonomy, categories, tags, etc. add the relevant %1$sshortcode option%2$s."
+msgstr ""
+
+#: src/Admin/Settings_Page.php:238
+msgid "Enter the columns for your posts tables."
+msgstr ""
+
+#: src/Admin/Settings_Page.php:243
+msgid "Content length"
+msgstr ""
+
+#: src/Admin/Settings_Page.php:246
+#: src/Admin/Settings_Page.php:258
+msgid "words"
+msgstr ""
+
+#: src/Admin/Settings_Page.php:247
+msgid "Enter -1 to show the full post content."
+msgstr ""
+
+#: src/Admin/Settings_Page.php:255
+msgid "Excerpt length"
+msgstr ""
+
+#: src/Admin/Settings_Page.php:259
+msgid "Enter -1 to show the full excerpt."
+msgstr ""
+
+#: src/Admin/Settings_Page.php:267
+msgid "Post links"
+msgstr ""
+
+#: src/Admin/Settings_Page.php:269
+msgid "Include links to the post, author, category, tag and term pages."
+msgstr ""
+
+#: src/Admin/Settings_Page.php:274
+msgid "Image size"
+msgstr ""
+
+#: src/Admin/Settings_Page.php:276
+msgid "Enter a size in pixels, e.g. 70x50, or a standard image size such as 'thumbnail'"
+msgstr ""
+
+#: src/Admin/Settings_Page.php:286
+msgid "If your table uses the 'button' column."
+msgstr ""
+
+#: src/Admin/Settings_Page.php:301
+msgid "Load posts one page at a time"
+msgstr ""
+
+#: src/Admin/Settings_Page.php:302
+msgid "Enable this if you have many posts or experience slow page load times."
+msgstr ""
+
+#. translators: 1: link to help article, 2: end of help link
+#: src/Admin/Settings_Page.php:305
+msgid "Warning: Lazy load has %1$ssome limitations%2$s &mdash; it limits the search, sorting and dropdown filters."
+msgstr ""
+
+#: src/Admin/Settings_Page.php:317
+msgid "Post limit"
+msgstr ""
+
+#: src/Admin/Settings_Page.php:320
+msgid "The maximum number of posts in one table."
+msgstr ""
+
+#: src/Admin/Settings_Page.php:321
+msgid " Enter -1 to show all posts."
+msgstr ""
+
+#: src/Admin/Settings_Page.php:333
+msgid "How users search and filter posts in the table."
+msgstr ""
+
+#: src/Admin/Settings_Page.php:339
+msgid "Search filters"
+msgstr ""
+
+#: src/Admin/Settings_Page.php:343
+msgid "Disabled"
+msgstr ""
+
+#: src/Admin/Settings_Page.php:344
+msgid "Show based on columns in table"
+msgstr ""
+
+#: src/Admin/Settings_Page.php:345
+#: src/Admin/Settings_Page.php:533
+msgid "Custom"
+msgstr ""
+
+#: src/Admin/Settings_Page.php:347
+msgid "Dropdown lists to filter the table by category, tag, or custom taxonomy."
+msgstr ""
+
+#: src/Admin/Settings_Page.php:356
+msgid "Custom filters"
+msgstr ""
+
+#: src/Admin/Settings_Page.php:359
+msgid "Enter the filters as a comma-separated list."
+msgstr ""
+
+#: src/Admin/Settings_Page.php:360
+msgid "E.g. categories,tax:location"
+msgstr ""
+
+#: src/Admin/Settings_Page.php:377
+msgid "Post totals"
+msgstr ""
+
+#: src/Admin/Settings_Page.php:389
+msgid "Reset search"
+msgstr ""
+
+#: src/Admin/Settings_Page.php:392
+msgid "Show a link to reset the search"
+msgstr ""
+
+#: src/Admin/Settings_Page.php:397
+msgid "Search page"
+msgstr ""
+
+#. translators: 1: link to search article, 2: end of link
+#: src/Admin/Settings_Page.php:401
+msgid "When using the %1$sglobal search%2$s, this page will display your search results."
+msgstr ""
+
+#: src/Admin/Settings_Page.php:405
+msgid "Use the widget or shortcode to perform a search from anywhere on your site."
+msgstr ""
+
+#: src/Admin/Settings_Page.php:413
+msgid "How to sort posts when the table is first loaded."
+msgstr ""
+
+#: src/Admin/Settings_Page.php:423
+#: src/Util/Columns_Util.php:38
+msgid "Title"
+msgstr ""
+
+#: src/Admin/Settings_Page.php:424
+#: src/Util/Columns_Util.php:34
+msgid "ID"
+msgstr ""
+
+#: src/Admin/Settings_Page.php:425
+msgid "Date published"
+msgstr ""
+
+#: src/Admin/Settings_Page.php:426
+msgid "Date modified"
+msgstr ""
+
+#: src/Admin/Settings_Page.php:427
+msgid "Page order (menu order)"
+msgstr ""
+
+#: src/Admin/Settings_Page.php:428
+msgid "Post slug"
+msgstr ""
+
+#: src/Admin/Settings_Page.php:430
+msgid "Number of comments"
+msgstr ""
+
+#: src/Admin/Settings_Page.php:431
+msgid "Random"
+msgstr ""
+
+#: src/Admin/Settings_Page.php:432
+msgid "Other"
+msgstr ""
+
+#: src/Admin/Settings_Page.php:442
+msgid "Sort column"
+msgstr ""
+
+#: src/Admin/Settings_Page.php:447
+msgid "Enter any column in your table. Only supported when lazy load is disabled."
+msgstr ""
+
+#: src/Admin/Settings_Page.php:464
+msgid "How to paginate posts when there are multiple pages of results."
+msgstr ""
+
+#: src/Admin/Settings_Page.php:470
+msgid "Posts per page"
+msgstr ""
+
+#: src/Admin/Settings_Page.php:473
+msgid "The number of posts per page of results."
+msgstr ""
+
+#: src/Admin/Settings_Page.php:474
+msgid "Enter -1 to show all posts on one page."
+msgstr ""
+
+#: src/Admin/Settings_Page.php:481
+msgid "Posts per page selector"
+msgstr ""
+
+#: src/Admin/Settings_Page.php:490
+msgid "Allows users to adjust the number of posts per page of results."
+msgstr ""
+
+#: src/Admin/Settings_Page.php:494
+msgid "Pagination buttons"
+msgstr ""
+
+#: src/Admin/Settings_Page.php:506
+msgid "Pagination type"
+msgstr ""
+
+#: src/Admin/Settings_Page.php:510
+msgid "Page numbers"
+msgstr ""
+
+#: src/Admin/Settings_Page.php:511
+msgid "Prev - Next"
+msgstr ""
+
+#: src/Admin/Settings_Page.php:512
+msgid "Prev - Page numbers - Next"
+msgstr ""
+
+#: src/Admin/Settings_Page.php:513
+msgid "First - Prev - Next - Last"
+msgstr ""
+
+#: src/Admin/Settings_Page.php:514
+msgid "First - Prev - Page numbers - Next - Last"
+msgstr ""
+
+#: src/Admin/Settings_Page.php:522
+msgid "Customize the design of the table."
+msgstr ""
+
+#: src/Admin/Settings_Page.php:532
+msgid "Default"
+msgstr ""
+
+#: src/Admin/Settings_Page.php:543
+msgid "Borders"
+msgstr ""
+
+#: src/Admin/Settings_Page.php:546
+msgid "External border"
+msgstr ""
+
+#: src/Admin/Settings_Page.php:546
+msgid "External"
+msgstr ""
+
+#: src/Admin/Settings_Page.php:547
+#: src/Admin/Settings_Page.php:556
+#: src/Admin/Settings_Page.php:565
+msgid "Width"
+msgstr ""
+
+#. translators: 'Header' in this context refers to the headings in the table.
+#: src/Admin/Settings_Page.php:555
+msgid "Header border"
+msgstr ""
+
+#. translators: 'Header' in this context refers to the headings in the table.
+#: src/Admin/Settings_Page.php:555
+msgid "Header"
+msgstr ""
+
+#. translators: 'Body' in this context refers to the main table content.
+#: src/Admin/Settings_Page.php:564
+msgid "Body border"
+msgstr ""
+
+#. translators: 'Body' in this context refers to the main table content.
+#: src/Admin/Settings_Page.php:564
+msgid "Body"
+msgstr ""
+
+#: src/Admin/Settings_Page.php:570
+msgid "Header background color"
+msgstr ""
+
+#: src/Admin/Settings_Page.php:576
+msgid "Header text"
+msgstr ""
+
+#: src/Admin/Settings_Page.php:586
+msgid "Body background color"
+msgstr ""
+
+#: src/Admin/Settings_Page.php:592
+msgid "Alternating background color"
+msgstr ""
+
+#: src/Admin/Settings_Page.php:598
+msgid "Body text"
+msgstr ""
+
+#: src/Admin/Settings_Page.php:608
+msgid "Spacing"
+msgstr ""
+
+#: src/Admin/Settings_Page.php:612
+msgid "Theme default"
+msgstr ""
+
+#: src/Admin/Settings_Page.php:613
+msgid "Compact"
+msgstr ""
+
+#: src/Admin/Settings_Page.php:614
+msgid "Normal"
+msgstr ""
+
+#: src/Admin/Settings_Page.php:615
+msgid "Spacious"
+msgstr ""
+
+#: src/Admin/Settings_Page.php:626
+msgid "Shortcodes"
+msgstr ""
+
+#: src/Admin/Settings_Page.php:629
+msgid "Show shortcodes, HTML and other formatting in the table"
+msgstr ""
+
+#: src/Admin/Settings_Page.php:634
+msgid "Image lightbox"
+msgstr ""
+
+#: src/Admin/Settings_Page.php:636
+msgid "Show featured images in a lightbox"
+msgstr ""
+
+#: src/Admin/Settings_Page.php:643
+msgid "Cache table contents to improve load times"
+msgstr ""
+
+#: src/Admin/Settings_Page.php:651
+msgid "Cache expiration"
+msgstr ""
+
+#: src/Admin/Settings_Page.php:654
+msgid "hours"
+msgstr ""
+
+#: src/Admin/Settings_Page.php:655
+msgid "Your data will be refreshed after this length of time."
+msgstr ""
+
+#: src/Admin/Table_Generator.php:136
+msgid "Select a pre-saved posts table. Go to the <a href=\"%s\" target=\"_blank\">Post Tables section</a> of the Dashboard to create or edit your tables."
+msgstr ""
+
+#: src/Config_Builder.php:70
+msgctxt "show all posts option"
+msgid "All"
+msgstr ""
+
+#: src/Data/Post_Custom_Field.php:126
+msgid "True"
+msgstr ""
+
+#: src/Data/Post_Custom_Field.php:126
+msgid "False"
+msgstr ""
+
+#: src/Frontend_Scripts.php:104
+msgid "(_MAX_ in total)"
+msgstr ""
+
+#: src/Frontend_Scripts.php:105
+msgid "Show _MENU_ per page"
+msgstr ""
+
+#: src/Frontend_Scripts.php:106
+msgid "Search:"
+msgstr ""
+
+#: src/Frontend_Scripts.php:108
+msgid "First"
+msgstr ""
+
+#: src/Frontend_Scripts.php:109
+msgid "Last"
+msgstr ""
+
+#: src/Frontend_Scripts.php:110
+msgid "Next"
+msgstr ""
+
+#: src/Frontend_Scripts.php:111
+msgid "Previous"
+msgstr ""
+
+#: src/Frontend_Scripts.php:113
+msgctxt "thousands separator"
+msgid ","
+msgstr ""
+
+#: src/Frontend_Scripts.php:114
+msgctxt "decimal mark"
+msgid "."
+msgstr ""
+
+#. translators: ARIA text for sorting column in ascending order
+#: src/Frontend_Scripts.php:117
+msgid ": activate to sort column ascending"
+msgstr ""
+
+#. translators: ARIA text for sorting column in descending order
+#: src/Frontend_Scripts.php:119
+msgid ": activate to sort column descending"
+msgstr ""
+
+#: src/Frontend_Scripts.php:122
+msgid "No results found"
+msgstr ""
+
+#: src/Frontend_Scripts.php:123
+msgid "Reset"
+msgstr ""
+
+#: src/Search_Handler.php:68
+#: src/Search_Shortcode.php:49
+#: src/Search_Widget.php:56
+msgid "Search posts..."
+msgstr ""
+
+#: src/Search_Handler.php:68
+#: src/Search_Handler.php:141
+#: src/Search_Shortcode.php:50
+#: src/Search_Widget.php:57
+msgid "Search"
+msgstr ""
+
+#: src/Search_Handler.php:82
+msgid "No matching results for your search term."
+msgstr ""
+
+#: src/Search_Widget.php:20
+msgid "A global search box for your posts table."
+msgstr ""
+
+#: src/Search_Widget.php:23
+msgid "Posts Table Pro: Search Box"
+msgstr ""
+
+#: src/Search_Widget.php:55
+msgid "Posts search"
+msgstr ""
+
+#: src/Search_Widget.php:62
+msgid "Title:"
+msgstr ""
+
+#: src/Search_Widget.php:66
+msgid "Placeholder:"
+msgstr ""
+
+#: src/Search_Widget.php:70
+msgid "Button Text:"
+msgstr ""
+
+#: src/Util/Columns_Util.php:42
+msgid "Content"
+msgstr ""
+
+#: src/Util/Columns_Util.php:46
+msgid "Summary"
+msgstr ""
+
+#: src/Util/Columns_Util.php:54
+msgid "Last Modified"
+msgstr ""
+
+#: src/Util/Columns_Util.php:74
+msgid "Image"
+msgstr ""
+
+#: src/Util/Util.php:494
+msgctxt "table results count (single)"
+msgid "result"
+msgstr ""
+
+#: src/Util/Util.php:495
+msgctxt "table results count (multiple)"
+msgid "results"
+msgstr ""
+
+#: src/Util/Util.php:507
+msgctxt "table attachment count (single)"
+msgid "file"
+msgstr ""
+
+#: src/Util/Util.php:508
+msgctxt "table attachment count (multiple)"
+msgid "files"
+msgstr ""
+
+#. translators: _TOTAL_: the total number of posts; _POSTS_: the content type (e.g. "posts")
+#: src/Util/Util.php:521
+msgid "_TOTAL_ _POSTS_"
+msgstr ""
+
+#. translators: _POSTS_: the content type (e.g. "posts")
+#: src/Util/Util.php:523
+msgid "0 _POSTS_"
+msgstr ""
+
+#. translators: _POSTS_: the content type (e.g. "posts")
+#: src/Util/Util.php:525
+#: src/Util/Util.php:527
+msgid "No matching _POSTS_."
+msgstr ""
+
+#: src/Util/Util.php:558
+msgid "— Select —"
+msgstr ""
+
+#: templates/photoswipe.php:47
+msgid "Close (Esc)"
+msgstr ""
+
+#: templates/photoswipe.php:49
+msgid "Share"
+msgstr ""
+
+#: templates/photoswipe.php:51
+msgid "Toggle fullscreen"
+msgstr ""
+
+#: templates/photoswipe.php:53
+msgid "Zoom in/out"
+msgstr ""
+
+#: templates/photoswipe.php:70
+msgid "Previous (arrow left)"
+msgstr ""
+
+#: templates/photoswipe.php:72
+msgid "Next (arrow right)"
+msgstr ""

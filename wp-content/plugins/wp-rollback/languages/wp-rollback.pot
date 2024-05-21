@@ -1,0 +1,197 @@
+# Copyright (C) 2024 WP Rollback
+# This file is distributed under the same license as the WP Rollback plugin.
+msgid ""
+msgstr ""
+"Project-Id-Version: WP Rollback 2.0.6\n"
+"Report-Msgid-Bugs-To: https://wordpress.org/support/plugin/wp-rollback\n"
+"Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
+"Language-Team: LANGUAGE <LL@li.org>\n"
+"MIME-Version: 1.0\n"
+"Content-Type: text/plain; charset=UTF-8\n"
+"Content-Transfer-Encoding: 8bit\n"
+"POT-Creation-Date: 2024-01-27T03:10:57+00:00\n"
+"PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
+"X-Generator: WP-CLI 2.9.0\n"
+"X-Domain: wp-rollback\n"
+
+#. Plugin Name of the plugin
+#. Author of the plugin
+#: build/admin.js:1
+msgid "WP Rollback"
+msgstr ""
+
+#. Plugin URI of the plugin
+#. Author URI of the plugin
+msgid "https://wprollback.com/"
+msgstr ""
+
+#. Description of the plugin
+msgid "Rollback (or forward) any WordPress.org plugin, theme or block like a boss."
+msgstr ""
+
+#: src/class-rollback-multisite-compatibility.php:83
+#: wp-rollback.php:241
+#: wp-rollback.php:403
+#: wp-rollback.php:404
+#: wp-rollback.php:514
+#: build/admin.js:1
+#: build/admin.js:4
+msgid "Rollback"
+msgstr ""
+
+#: src/rollback-action.php:49
+msgid "This rollback request is missing a proper query string. Please contact support."
+msgstr ""
+
+#: wp-rollback.php:142
+#: wp-rollback.php:154
+msgid "Cheatin&#8217; huh?"
+msgstr ""
+
+#: wp-rollback.php:242
+msgid "No Rollback Available: This is a non-WordPress.org theme."
+msgstr ""
+
+#: wp-rollback.php:246
+#: build/admin.js:1
+msgid "Loading..."
+msgstr ""
+
+#. translators: %s Link.
+#: wp-rollback.php:278
+msgid "Sorry, we couldn't find a changelog entry found for this version. Try checking the <a href=\"%s\" target=\"_blank\">developer log</a> on WP.org."
+msgstr ""
+
+#: wp-rollback.php:284
+msgid "Please select a version number to perform a rollback."
+msgstr ""
+
+#: wp-rollback.php:359
+msgid "You do not have sufficient permissions to perform rollbacks for this site."
+msgstr ""
+
+#: wp-rollback.php:631
+msgid "An unexpected error occurred. Something may be wrong with WordPress.org or this server&#8217;s configuration. If you continue to have problems, please try the <a href=\"https://wordpress.org/support/\">support forums</a>."
+msgstr ""
+
+#: wp-rollback.php:634
+msgid "(WordPress could not establish a secure connection to WordPress.org. Please contact your server administrator.)"
+msgstr ""
+
+#: build/admin.js:1
+msgid "Read less"
+msgstr ""
+
+#: build/admin.js:1
+msgid "Read more"
+msgstr ""
+
+#: build/admin.js:1
+msgid "Trunk is where the most current revisions of the code should be stored, often representing the development version of the software. This is particularly relevant for developers and testers who are working with the very latest code changes that have not yet been released to the public."
+msgstr ""
+
+#: build/admin.js:1
+msgid "Select which version you would like to rollback to from the releases listed below."
+msgstr ""
+
+#: build/admin.js:1
+msgid "View %s on WordPress.org"
+msgstr ""
+
+#: build/admin.js:1
+msgid "Installed version:"
+msgstr ""
+
+#: build/admin.js:1
+msgid "Plugin author:"
+msgstr ""
+
+#: build/admin.js:1
+msgid "Theme Author"
+msgstr ""
+
+#: build/admin.js:1
+msgid "View Changelog"
+msgstr ""
+
+#: build/admin.js:1
+msgid "Last Updated"
+msgstr ""
+
+#: build/admin.js:1
+msgid "%s second ago"
+msgid_plural "%s seconds ago"
+msgstr[0] ""
+msgstr[1] ""
+
+#: build/admin.js:1
+msgid "%s minute ago"
+msgid_plural "%s minutes ago"
+msgstr[0] ""
+msgstr[1] ""
+
+#: build/admin.js:1
+msgid "%s hour ago"
+msgid_plural "%s hours ago"
+msgstr[0] ""
+msgstr[1] ""
+
+#: build/admin.js:1
+msgid "%s day ago"
+msgid_plural "%s days ago"
+msgstr[0] ""
+msgstr[1] ""
+
+#: build/admin.js:1
+msgid "%s month ago"
+msgid_plural "%s months ago"
+msgstr[0] ""
+msgstr[1] ""
+
+#: build/admin.js:1
+msgid "%s year ago"
+msgid_plural "%s years ago"
+msgstr[0] ""
+msgstr[1] ""
+
+#: build/admin.js:1
+msgid "Currently Installed"
+msgstr ""
+
+#: build/admin.js:1
+#: build/admin.js:4
+msgid "Cancel"
+msgstr ""
+
+#: build/admin.js:1
+msgid "Plugin Changelog"
+msgstr ""
+
+#: build/admin.js:1
+msgid "Are you sure you want to proceed?"
+msgstr ""
+
+#. Translators: %1$s: Plugin name, %2$s: Rollback version
+#: build/admin.js:4
+msgid "You are about to rollback %1$s to version %2$s. Please confirm you would like to proceed."
+msgstr ""
+
+#: build/admin.js:4
+msgid "Plugin Name:"
+msgstr ""
+
+#: build/admin.js:4
+msgid "Theme Name:"
+msgstr ""
+
+#: build/admin.js:4
+msgid "Installed Version:"
+msgstr ""
+
+#: build/admin.js:4
+msgid "New Version:"
+msgstr ""
+
+#: build/admin.js:4
+msgid "<p><strong>Notice:</strong> We strongly recommend you <strong>create a complete backup</strong> of your WordPress files and database prior to performing a rollback. We are not responsible for any misuse, deletions, white screens, fatal errors, or any other issue resulting from the use of this plugin.</p>"
+msgstr ""

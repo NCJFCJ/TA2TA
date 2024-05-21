@@ -1,0 +1,110 @@
+body,
+div#page {
+    overflow: visible;
+}
+
+.vgse-modal-form.be-formulas .use-slower-execution-field, 
+.vgse-modal-form.be-formulas .posts-query, 
+.vgse-modal-form.be-formulas .formulas-action-tip-link {
+    display: none;
+}
+#vgse-wrapper button, 
+#vgse-wrapper .button {
+	font-size: 13px;
+}
+
+.remodal #action_name option[value="custom"] {
+    display: none;
+}
+
+.remodal #be-filters .advanced-filters li.post--in,
+.remodal #be-filters .advanced-filters li.post-name--in {
+    display: none;
+}
+#vgse-wrapper .vg-header-toolbar-inner {
+    /*overflow: auto;*/
+}
+#vgse-wrapper div#vg-header-toolbar.sticky {
+	padding: 0 !important;
+}
+/*Fix cell alignment issue on firefox. No longer needed because the editor.php adds inline css based on the image preview size settings*/
+/*#vgse-wrapper .htCore tbody th{
+    height: 35px !important;
+}*/
+/*Make the toolbar mobile friendly*/
+#vgse-wrapper .vg-header-toolbar-inner {
+    min-width: 100% !important;
+}
+
+/*Remove the left padding that we added for the wp-admin left menu because
+The frontend sheet doesn't have wp-admin menus*/
+#vgse-wrapper div#vg-header-toolbar.sticky .vg-header-toolbar-inner {
+    padding-left: 10px !important;
+}
+.clear {
+    clear: both;
+}
+#vgse-wrapper .sheet-header,
+#vgse-wrapper {
+    width: 100% !important;
+    min-width: 100% !important;
+}
+#vgse-wrapper .handsontable .ht_master .wtHider {
+	padding-top: 0 !important;
+	top: 0 !important;
+}
+#vgse-wrapper #vg-header-toolbar .vgse-current-filters,
+#vgse-wrapper div#responseConsole {
+    color: black;
+}
+.wpse-full-screen div#vgse-wrapper {
+    position: fixed;
+    top: 0;
+    z-index: 99;
+    height: 100%;
+    background: white;
+	left: 0;
+}
+.wpse-full-screen-notice-content {
+    padding: 4px;
+}
+.wpse-full-screen-notice {
+	text-align: right;
+}
+.wpse-full-screen-notice-content {
+    float: none;
+    border: 0;
+    width: auto;
+    padding: 0;
+    color: black;
+}
+#vgse-wrapper .vg-secondary-toolbar .button-container .wpse-full-screen-notice-content a {
+    text-decoration: underline;
+    color: black;
+    float: none;
+}
+.select2-container--open .select2-dropdown--below {
+    margin-top: 30px;
+}
+/*FIX - CSS conflict with blocksy theme*/
+#vgse-wrapper select:focus, 
+#vgse-wrapper textarea:focus, 
+#vgse-wrapper input[type=url]:focus, 
+#vgse-wrapper input[type=tel]:focus, 
+#vgse-wrapper input[type=text]:focus, 
+#vgse-wrapper input[type=time]:focus, 
+#vgse-wrapper input[type=date]:focus, 
+#vgse-wrapper input[type=datetime]:focus, 
+#vgse-wrapper input[type=datetime-local]:focus, 
+#vgse-wrapper input[type=email]:focus, 
+#vgse-wrapper input[type=number]:focus, 
+#vgse-wrapper input[type=search]:focus, 
+#vgse-wrapper input[type=password]:focus {    
+    background-color: #fff;    
+}
+
+/*Add scrollbars to the wrapper when full screen is on, because it uses fixed position and the scroll bars of the page aren't visible here*/
+.wpse-full-screen div#vgse-wrapper {
+    overflow-y: scroll;
+    overflow-x: hidden;
+}

@@ -1,0 +1,938 @@
+msgid ""
+msgstr ""
+"Project-Id-Version: Posts Table Pro\n"
+"POT-Creation-Date: 2021-01-13 11:56+0000\n"
+"PO-Revision-Date: 2021-01-13 12:05+0000\n"
+"Last-Translator: Andrew Keith <andy@barn2.co.uk>\n"
+"Language-Team: \n"
+"Language: es_ES\n"
+"MIME-Version: 1.0\n"
+"Content-Type: text/plain; charset=UTF-8\n"
+"Content-Transfer-Encoding: 8bit\n"
+"X-Generator: Poedit 2.4.2\n"
+"X-Poedit-Basepath: ..\n"
+"X-Poedit-WPHeader: posts-data-table-pro.php\n"
+"Plural-Forms: nplurals=2; plural=(n != 1);\n"
+"X-Poedit-SourceCharset: UTF-8\n"
+"X-Poedit-KeywordsList: __;_e;_n:1,2;_x:1,2c;_ex:1,2c;_nx:4c,1,2;esc_attr__;"
+"esc_attr_e;esc_attr_x:1,2c;esc_html__;esc_html_e;esc_html_x:1,2c;_n_noop:1,2;"
+"_nx_noop:3c,1,2;__ngettext_noop:1,2\n"
+"X-Poedit-SearchPath-0: .\n"
+"X-Poedit-SearchPathExcluded-0: *.js\n"
+
+#: includes/Admin/Settings_Page.php:46 includes/Admin/Settings_Page.php:115
+msgid "Posts Table Pro Settings"
+msgstr "Ajustes de Posts Table Pro"
+
+#. Plugin Name of the plugin/theme
+#: includes/Admin/Settings_Page.php:47
+msgid "Posts Table Pro"
+msgstr "Posts Table Pro"
+
+#: includes/Admin/Settings_Page.php:78
+#, fuzzy
+#| msgid "Settings"
+msgid "Getting started"
+msgstr "Ajustes"
+
+#: includes/Admin/Settings_Page.php:83
+msgid "Table content"
+msgstr "Contenido de la tabla"
+
+#: includes/Admin/Settings_Page.php:88
+msgid "Loading"
+msgstr "Cargando"
+
+#: includes/Admin/Settings_Page.php:93
+msgid "Sorting"
+msgstr "Orden"
+
+#: includes/Admin/Settings_Page.php:98
+#, fuzzy
+#| msgid "Table controls"
+msgid "Controls"
+msgstr "Controles de la tabla"
+
+#: includes/Admin/Settings_Page.php:103 includes/Admin/Settings_Page.php:492
+msgid "Design"
+msgstr ""
+
+#: includes/Admin/Settings_Page.php:108
+msgid "Advanced"
+msgstr "Avanzado"
+
+#: includes/Admin/Settings_Page.php:125
+msgid "Save Changes"
+msgstr "Guardar cambios"
+
+#: includes/Admin/Settings_Page.php:134
+msgid "Documentation"
+msgstr "Documentación"
+
+#: includes/Admin/Settings_Page.php:135
+msgid "Support"
+msgstr "Soporte"
+
+#: includes/Admin/Settings_Page.php:144
+#, php-format
+msgid ""
+"To create a table, simply add the shortcode %1$s[posts_table]%2$s to any "
+"post or page. Then configure your tables using the settings below. You can "
+"override any of the settings for individual tables by adding options to the "
+"[posts_table] %3$sshortcode%4$s."
+msgstr ""
+
+#: includes/Admin/Settings_Page.php:157
+msgid "Customize the design of the table."
+msgstr ""
+
+#: includes/Admin/Settings_Page.php:234
+msgid "Post type"
+msgstr "Tipo de publicación"
+
+#: includes/Admin/Settings_Page.php:237
+#, fuzzy, php-format
+#| msgid ""
+#| "Displays all published posts by default. To restrict posts by category, "
+#| "tag, date, custom field, status or author, add the %1$srelevant option"
+#| "%2$s to your shortcode."
+msgid ""
+"Displays all published posts for this post type. To restrict posts by "
+"category, tag, custom field, etc. add the relevant %1$sshortcode option%2$s."
+msgstr ""
+"Muestra todas las publicaciones publicadas de forma predeterminada. Para "
+"restringir las publicaciones por categoría, etiqueta, fecha, campo "
+"personalizado, estado o autor, agregue la %1$sopción relevant%2$s a su "
+"shortcode."
+
+#: includes/Admin/Settings_Page.php:246
+msgid "Columns"
+msgstr "Columnas"
+
+#: includes/Admin/Settings_Page.php:248
+msgid "Enter the columns for your posts tables."
+msgstr "Introduzca las columnas de las tablas de mensajes."
+
+#: includes/Admin/Settings_Page.php:253
+msgid "Image size"
+msgstr "Tamaño de imagen"
+
+#: includes/Admin/Settings_Page.php:255
+msgid "W x H in pixels, e.g. 80x80."
+msgstr "An x H en píxeles, por ejemplo, 80x80."
+
+#: includes/Admin/Settings_Page.php:260
+msgid "Image lightbox"
+msgstr "Lightbox de la imagen"
+
+#: includes/Admin/Settings_Page.php:262
+msgid "Show the featured image in a lightbox"
+msgstr "Mostrar la imagen destacada en una caja de luz"
+
+#: includes/Admin/Settings_Page.php:267
+msgid "Content length"
+msgstr "Longitud de contenido"
+
+#: includes/Admin/Settings_Page.php:270 includes/Admin/Settings_Page.php:282
+msgid "words"
+msgstr "palabras"
+
+#: includes/Admin/Settings_Page.php:271
+msgid "Enter -1 to show the full post content."
+msgstr "Escriba -1 para mostrar el contenido completo de la publicación."
+
+#: includes/Admin/Settings_Page.php:279
+msgid "Excerpt length"
+msgstr "Longitud del extracto"
+
+#: includes/Admin/Settings_Page.php:283
+msgid "Enter -1 to show the full excerpt."
+msgstr "Escriba -1 para mostrar el extracto completo."
+
+#: includes/Admin/Settings_Page.php:291
+msgid "Post links"
+msgstr "Bağlantıları gönder"
+
+#: includes/Admin/Settings_Page.php:293
+msgid "Link table data to the relevant post, author, category, tag or term."
+msgstr ""
+"Vincule los datos de la tabla a la publicación, el autor, la categoría, la "
+"etiqueta o el término pertinentes."
+
+#: includes/Admin/Settings_Page.php:298
+msgid "Button text"
+msgstr "Texto del botón"
+
+#: includes/Admin/Settings_Page.php:300
+msgid "The button text when showing the 'button' column."
+msgstr "El texto del botón al mostrar la columna 'botón'."
+
+#: includes/Admin/Settings_Page.php:309
+msgid "Search filters"
+msgstr "Filtros de búsqueda"
+
+#: includes/Admin/Settings_Page.php:313
+msgid "Disabled"
+msgstr "Deshabilitado"
+
+#: includes/Admin/Settings_Page.php:314
+msgid "Show based on columns in table"
+msgstr "Mostrar como las columnas de tabla"
+
+#: includes/Admin/Settings_Page.php:315 includes/Admin/Settings_Page.php:496
+msgid "Custom"
+msgstr "Personalizado"
+
+#: includes/Admin/Settings_Page.php:317
+msgid ""
+"Dropdown lists to filter the table by category, tag, or custom taxonomy."
+msgstr ""
+"Listas desplegables para filtrar la tabla por categoría, etiqueta o "
+"taxonomía personalizada."
+
+#: includes/Admin/Settings_Page.php:326
+msgid "Custom filters"
+msgstr "Filtros personalizados"
+
+#: includes/Admin/Settings_Page.php:329
+msgid ""
+"Enter the filters as a comma-separated list, e.g. categories,tags,tax:"
+"location"
+msgstr ""
+"Introduzca los filtros como una lista separada por comas, por ejemplo: "
+"categories,tags,tax:location"
+
+#: includes/Admin/Settings_Page.php:330
+msgid "E.g. categories,tags,tax:location"
+msgstr "Por ejemplo: categories,tags,tax:location"
+
+#: includes/Admin/Settings_Page.php:335
+msgid "Search box"
+msgstr "Campo de búsqueda"
+
+#: includes/Admin/Settings_Page.php:339 includes/Admin/Settings_Page.php:358
+#: includes/Admin/Settings_Page.php:371 includes/Admin/Settings_Page.php:383
+msgid "Above table"
+msgstr "Sobre la tabla"
+
+#: includes/Admin/Settings_Page.php:340 includes/Admin/Settings_Page.php:359
+#: includes/Admin/Settings_Page.php:372 includes/Admin/Settings_Page.php:384
+msgid "Below table"
+msgstr "Bajo la tabla"
+
+#: includes/Admin/Settings_Page.php:341 includes/Admin/Settings_Page.php:360
+#: includes/Admin/Settings_Page.php:373 includes/Admin/Settings_Page.php:385
+msgid "Above and below table"
+msgstr "Por encima y por debajo de la tabla"
+
+#: includes/Admin/Settings_Page.php:342 includes/Admin/Settings_Page.php:361
+#: includes/Admin/Settings_Page.php:374 includes/Admin/Settings_Page.php:386
+msgid "Hidden"
+msgstr "Oculto"
+
+#: includes/Admin/Settings_Page.php:347
+msgid "Table reset"
+msgstr "Reinicio de la tabla"
+
+#: includes/Admin/Settings_Page.php:350
+#, fuzzy
+#| msgid "Show the reset button above the table"
+msgid "Show the reset link above the table"
+msgstr "Mostrar el botón de reinicio por encima de la tabla"
+
+#: includes/Admin/Settings_Page.php:354
+msgid "Page length"
+msgstr "Ubicación en la página"
+
+#: includes/Admin/Settings_Page.php:363
+msgid "The position of the 'Show [x] per page' dropdown list."
+msgstr "La posición de la lista desplegable 'Mostrar [x] por página'."
+
+#: includes/Admin/Settings_Page.php:367
+#, fuzzy
+#| msgid "Post links"
+msgid "Post totals"
+msgstr "Bağlantıları gönder"
+
+#: includes/Admin/Settings_Page.php:379
+msgid "Pagination buttons"
+msgstr "Botones de paginación"
+
+#: includes/Admin/Settings_Page.php:388
+msgid "The position of the paging buttons which scroll between results."
+msgstr ""
+"Ubicación de los botones de paginación para pasar de una a otra página de "
+"resultados."
+
+#: includes/Admin/Settings_Page.php:397
+msgid "Lazy load"
+msgstr "Lazy load"
+
+#: includes/Admin/Settings_Page.php:400
+msgid "Load posts one page at a time"
+msgstr "Cargar publicaciones de una página a la vez"
+
+#: includes/Admin/Settings_Page.php:401
+msgid "Enable this if you have many posts or experience slow page load times."
+msgstr ""
+"Habilite esta opción si tiene muchas publicaciones o experimenta tiempos de "
+"carga de página lentos."
+
+#: includes/Admin/Settings_Page.php:404
+#, php-format
+msgid ""
+"Warning: Lazy load has %1$ssome limitations%2$s &mdash; it limits the "
+"search, sorting and dropdown filters."
+msgstr ""
+"Advertencia: La carga diferida tiene %1$salgunas limitaciones%2$s: limita "
+"los filtros de búsqueda, clasificación y desplegables."
+
+#: includes/Admin/Settings_Page.php:416
+msgid "Post limit"
+msgstr "Límite de publicación"
+
+#: includes/Admin/Settings_Page.php:419
+#, fuzzy
+#| msgid ""
+#| "The maximum number of posts to display in one table. Enter -1 to show all "
+#| "posts."
+msgid "The maximum number of posts in one table. Enter -1 to show all posts."
+msgstr ""
+"El número máximo de mensajes que se mostrarán en una tabla. Escriba -1 para "
+"mostrar todos los mensajes."
+
+#: includes/Admin/Settings_Page.php:428
+msgid "Posts per page"
+msgstr "Entradas por página"
+
+#: includes/Admin/Settings_Page.php:431
+msgid ""
+"The number of posts per page of results. Enter -1 to show all posts on one "
+"page."
+msgstr ""
+"El número de publicaciones por página de resultados. Escriba -1 para mostrar "
+"todas las publicaciones en una página."
+
+#: includes/Admin/Settings_Page.php:443
+msgid "Sort by"
+msgstr "Ordenar por"
+
+#: includes/Admin/Settings_Page.php:447 includes/Util/Columns_Util.php:25
+msgid "Title"
+msgstr "Título"
+
+#: includes/Admin/Settings_Page.php:448 includes/Util/Columns_Util.php:24
+msgid "ID"
+msgstr "ID"
+
+#: includes/Admin/Settings_Page.php:449
+msgid "Date published"
+msgstr "Fecha de publicación"
+
+#: includes/Admin/Settings_Page.php:450
+msgid "Date modified"
+msgstr "Fecha modificada"
+
+#: includes/Admin/Settings_Page.php:451
+msgid "Page order (menu order)"
+msgstr "Orden de página (orden de menú)"
+
+#: includes/Admin/Settings_Page.php:452
+msgid "Post slug"
+msgstr "Slug del Contenido"
+
+#: includes/Admin/Settings_Page.php:453 includes/Util/Columns_Util.php:30
+msgid "Author"
+msgstr "Autor"
+
+#: includes/Admin/Settings_Page.php:454
+msgid "Number of comments"
+msgstr "Número de comentarios"
+
+#: includes/Admin/Settings_Page.php:455
+msgid "Random"
+msgstr "Aleatorio"
+
+#: includes/Admin/Settings_Page.php:456
+msgid "Other"
+msgstr "Otro"
+
+#: includes/Admin/Settings_Page.php:458
+msgid "The initial sort order applied to the table."
+msgstr "Orden inicial que será aplicado a la tabla."
+
+#: includes/Admin/Settings_Page.php:467
+msgid "Sort column"
+msgstr "Ordenar según columna"
+
+#: includes/Admin/Settings_Page.php:472
+msgid ""
+"Enter any column in your table. Only supported when lazy load is disabled."
+msgstr ""
+"Introduzca cualquier columna de la tabla. Solo se admite cuando la carga "
+"diferida está deshabilitada."
+
+#: includes/Admin/Settings_Page.php:475
+msgid "Sort direction"
+msgstr "Dirección de ordenación"
+
+#: includes/Admin/Settings_Page.php:479
+msgid "Automatic"
+msgstr "Automático"
+
+#: includes/Admin/Settings_Page.php:480
+msgid "Ascending (A to Z, old to new)"
+msgstr "Ascendente (de la A a la Z, de viejo a nuevo)"
+
+#: includes/Admin/Settings_Page.php:481
+msgid "Descending (Z to A, new to old)"
+msgstr "Descendente (de Z a A, nuevo a antiguo)"
+
+#: includes/Admin/Settings_Page.php:495
+msgid "Default"
+msgstr ""
+
+#: includes/Admin/Settings_Page.php:506
+msgid "Borders"
+msgstr ""
+
+#: includes/Admin/Settings_Page.php:509
+msgid "External border"
+msgstr ""
+
+#: includes/Admin/Settings_Page.php:509
+msgid "External"
+msgstr ""
+
+#: includes/Admin/Settings_Page.php:510 includes/Admin/Settings_Page.php:519
+#: includes/Admin/Settings_Page.php:528
+msgid "Width"
+msgstr ""
+
+#: includes/Admin/Settings_Page.php:518
+msgid "Header border"
+msgstr ""
+
+#: includes/Admin/Settings_Page.php:518
+msgid "Header"
+msgstr ""
+
+#: includes/Admin/Settings_Page.php:527
+msgid "Body border"
+msgstr ""
+
+#: includes/Admin/Settings_Page.php:527
+msgid "Body"
+msgstr ""
+
+#: includes/Admin/Settings_Page.php:533
+msgid "Header background color"
+msgstr ""
+
+#: includes/Admin/Settings_Page.php:539
+msgid "Header text"
+msgstr ""
+
+#: includes/Admin/Settings_Page.php:546
+msgid "Main background color"
+msgstr ""
+
+#: includes/Admin/Settings_Page.php:552
+msgid "Alternating background color (optional)"
+msgstr ""
+
+#: includes/Admin/Settings_Page.php:558
+#, fuzzy
+#| msgid "Button text"
+msgid "Body text"
+msgstr "Texto del botón"
+
+#: includes/Admin/Settings_Page.php:565
+msgid "Spacing"
+msgstr ""
+
+#: includes/Admin/Settings_Page.php:569
+msgid "Theme default"
+msgstr ""
+
+#: includes/Admin/Settings_Page.php:570
+msgid "Compact"
+msgstr ""
+
+#: includes/Admin/Settings_Page.php:571
+msgid "Normal"
+msgstr ""
+
+#: includes/Admin/Settings_Page.php:572
+msgid "Spacious"
+msgstr ""
+
+#: includes/Admin/Settings_Page.php:583
+msgid "Pagination type"
+msgstr "Tipo de paginación"
+
+#: includes/Admin/Settings_Page.php:587
+msgid "Page numbers"
+msgstr "Número de página"
+
+#: includes/Admin/Settings_Page.php:588
+msgid "Prev - Next"
+msgstr "Previo - Siguiente"
+
+#: includes/Admin/Settings_Page.php:589
+msgid "Prev - Page numbers - Next"
+msgstr "Anterior - Números de página - Siguiente"
+
+#: includes/Admin/Settings_Page.php:590
+msgid "First - Prev - Next - Last"
+msgstr "Primero - Previo - Siguiente - Ultimo"
+
+#: includes/Admin/Settings_Page.php:591
+msgid "First - Prev - Page numbers - Next - Last"
+msgstr "Primero - Previo - Números de página - Siguiente - Ultimo"
+
+#: includes/Admin/Settings_Page.php:596
+msgid "Shortcodes"
+msgstr "Shortcodes"
+
+#: includes/Admin/Settings_Page.php:599
+msgid "Show shortcodes, HTML and other formatting in the table"
+msgstr "Mostrar shortcodes, HTML y otros formatos en la tabla"
+
+#: includes/Admin/Settings_Page.php:603
+msgid "Caching"
+msgstr "Caching"
+
+#: includes/Admin/Settings_Page.php:606
+msgid "Cache table contents to improve load times"
+msgstr "Contenido de la tabla de caché para mejorar los tiempos de carga"
+
+#: includes/Admin/Settings_Page.php:614
+msgid "Cache expiration"
+msgstr "Caducidad de la caché"
+
+#: includes/Admin/Settings_Page.php:617
+msgid "hours"
+msgstr "horas"
+
+#: includes/Admin/Settings_Page.php:618
+msgid "Your data will be refreshed after this length of time."
+msgstr "Sus datos se actualizarán después de este período de tiempo."
+
+#: includes/Config_Builder.php:72
+msgctxt "show all posts option"
+msgid "All"
+msgstr "Todo"
+
+#: includes/Data/Post_Categories.php:25
+msgid "Uncategorized"
+msgstr "Sin categoría"
+
+#: includes/Data/Post_Custom_Field.php:151
+msgid "True"
+msgstr "Cierto"
+
+#: includes/Data/Post_Custom_Field.php:151
+msgid "False"
+msgstr "Falso"
+
+#: includes/Frontend_Scripts.php:104
+msgid "_TOTAL_ _POSTS_"
+msgstr "_TOTAL_ _POSTS_"
+
+#: includes/Frontend_Scripts.php:106
+msgid "0 _POSTS_"
+msgstr "0 _POSTS_"
+
+#: includes/Frontend_Scripts.php:107
+msgid "(_MAX_ in total)"
+msgstr "(_MAX_ en total)"
+
+#: includes/Frontend_Scripts.php:108
+msgid "Show _MENU_ per page"
+msgstr "Mostrar _MENU_ por página"
+
+#: includes/Frontend_Scripts.php:110 includes/Frontend_Scripts.php:112
+msgid "No matching _POSTS_."
+msgstr "No coincide con _POSTS_."
+
+#: includes/Frontend_Scripts.php:113
+msgid "Search:"
+msgstr "Buscar:"
+
+#: includes/Frontend_Scripts.php:115
+msgid "First"
+msgstr "Primero"
+
+#: includes/Frontend_Scripts.php:116
+msgid "Last"
+msgstr "Último"
+
+#: includes/Frontend_Scripts.php:117
+msgid "Next"
+msgstr "Siguiente"
+
+#: includes/Frontend_Scripts.php:118
+msgid "Previous"
+msgstr "Anterior"
+
+#: includes/Frontend_Scripts.php:120
+msgctxt "thousands separator"
+msgid ","
+msgstr "&#8201;"
+
+#: includes/Frontend_Scripts.php:121
+msgctxt "decimal mark"
+msgid "."
+msgstr ","
+
+#: includes/Frontend_Scripts.php:124
+msgid ": activate to sort column ascending"
+msgstr ": activar para ordenar la columna de manera ascendente"
+
+#: includes/Frontend_Scripts.php:126
+msgid ": activate to sort column descending"
+msgstr ": activar para ordenar la columna de manera descendente"
+
+#: includes/Frontend_Scripts.php:130
+msgid "Reset"
+msgstr "Reiniciar"
+
+#: includes/Frontend_Scripts.php:142
+msgctxt "posts total text - singular"
+msgid "post"
+msgstr "entrada"
+
+#: includes/Frontend_Scripts.php:143
+msgctxt "posts total text - plural"
+msgid "posts"
+msgstr "entradas"
+
+#: includes/Util/Columns_Util.php:26
+msgid "Content"
+msgstr "Contenido"
+
+#: includes/Util/Columns_Util.php:27
+msgid "Summary"
+msgstr "Resumen"
+
+#: includes/Util/Columns_Util.php:28
+msgid "Date"
+msgstr "Fecha"
+
+#: includes/Util/Columns_Util.php:29
+msgid "Last Modified"
+msgstr "Última modificación"
+
+#: includes/Util/Columns_Util.php:31
+msgid "Categories"
+msgstr "Categorías"
+
+#: includes/Util/Columns_Util.php:32
+msgid "Tags"
+msgstr "Etiquetas"
+
+#: includes/Util/Columns_Util.php:33
+msgid "Status"
+msgstr "Estado"
+
+#: includes/Util/Columns_Util.php:34
+msgid "Image"
+msgstr "Imagen"
+
+#: lib/Admin/Settings_API_Helper.php:151
+msgid "Size"
+msgstr ""
+
+#: lib/Plugin/Admin/Admin_Links.php:52
+msgid "Settings"
+msgstr "Ajustes"
+
+#: lib/Plugin/Admin/Admin_Links.php:70
+#, php-format
+msgid "View %s documentation"
+msgstr "Ver %s documentación"
+
+#: lib/Plugin/Admin/Admin_Links.php:71
+msgid "Docs"
+msgstr "Documentos"
+
+#: lib/Plugin/Admin/Plugin_Updater.php:122
+#, php-format
+msgid "Activate %1$syour license key%2$s to enable updates."
+msgstr ""
+"Active %1$sla clave de licencia%2$s para habilitar las actualizaciones."
+
+#: lib/Plugin/License/Admin/License_Key_Setting.php:63
+msgid "License key successfully activated."
+msgstr "Licencia correctamente activada."
+
+#: lib/Plugin/License/Admin/License_Key_Setting.php:64
+msgid "There was an error activating your license key."
+msgstr "Ocurrió un error cuando guardaste tu clave de licencia."
+
+#: lib/Plugin/License/Admin/License_Key_Setting.php:72
+msgid "License key successfully deactivated."
+msgstr "La clave de licencia se activó con éxito."
+
+#: lib/Plugin/License/Admin/License_Key_Setting.php:73
+msgid "There was an error deactivating your license key, please try again."
+msgstr ""
+"Ocurrió un error cuando guardaste tu clave de licencia. Por favor, inténtalo "
+"de nuevo."
+
+#: lib/Plugin/License/Admin/License_Key_Setting.php:80
+msgid "The license key looks good!"
+msgstr "¡La clave de licencia se ve bien!"
+
+#: lib/Plugin/License/Admin/License_Key_Setting.php:81
+msgid "There's a problem with your license key."
+msgstr "Por favor, introduce la clave de tu licencia."
+
+#: lib/Plugin/License/Admin/License_Key_Setting.php:89
+msgid "License key"
+msgstr "Clave de licencia"
+
+#: lib/Plugin/License/Admin/License_Key_Setting.php:97
+msgid "The licence key is contained in your order confirmation email."
+msgstr ""
+"La clave de licencia está incluida en el correo electrónico de confirmación "
+"de tu pedido."
+
+#: lib/Plugin/License/Admin/License_Key_Setting.php:100
+msgid "License Key"
+msgstr "Clave de Licencia"
+
+#: lib/Plugin/License/Admin/License_Key_Setting.php:241
+msgid "Activate"
+msgstr "Activar"
+
+#: lib/Plugin/License/Admin/License_Key_Setting.php:242
+msgid "Deactivate"
+msgstr "Desactivar"
+
+#: lib/Plugin/License/Admin/License_Key_Setting.php:253
+msgid "License key deactivated."
+msgstr "Clave de licencia desactivada."
+
+#: lib/Plugin/License/Admin/License_Notices.php:90
+#, php-format
+msgid ""
+"Thank you for installing %1$s. To get started, please %2$senter your license "
+"key%3$s."
+msgstr ""
+"Gracias por instalar %1$s. Para empezar, %2$sintroduzca su clave de licencia"
+"%3$s."
+
+#: lib/Plugin/License/Admin/License_Notices.php:107
+#, php-format
+msgid ""
+"Your license key for %1$s has expired. %2$sClick here to renew for 20%% "
+"discount%3$s."
+msgstr ""
+"La clave de licencia de %1$s ha caducado. %2$sHaga clic aquí para renovar "
+"por 20%% descuento%3$s."
+
+#: lib/Plugin/License/Admin/License_Notices.php:124
+#, php-format
+msgid ""
+"You no longer have a valid license for %1$s. Please %2$spurchase a new "
+"license key%3$s to continue using the plugin."
+msgstr ""
+"Ya no tiene una licencia válida para %1$s. Por favor, %2$scomprar una nueva "
+"clave de licencia%3$s para continuar usando el plugin."
+
+#: lib/Plugin/License/Admin/License_Notices.php:145
+#, php-format
+msgid ""
+"%1$s - your site has moved to a new domain. Please %2$sreactivate your "
+"license key%3$s."
+msgstr ""
+"%1$s - su sitio se ha movido a un nuevo dominio. %2$sreactivar la clave de "
+"licencia%3$s."
+
+#: lib/Plugin/License/EDD_Licensing.php:185
+msgid "An error has occurred, please try again."
+msgstr "Ha ocurrido un error. Por favor, vuelva a intentarlo."
+
+#: lib/Plugin/License/Plugin_License.php:93
+msgid "Your license key is active."
+msgstr "La clave de licencia está activa."
+
+#: lib/Plugin/License/Plugin_License.php:113
+msgid "Please enter your license key."
+msgstr "Por favor, introduce la clave de tu licencia."
+
+#: lib/Plugin/License/Plugin_License.php:115
+#: lib/Plugin/License/Plugin_License.php:380
+msgid "Your license key is invalid."
+msgstr "Su clave de licencia no es válida."
+
+#: lib/Plugin/License/Plugin_License.php:319
+#, php-format
+msgid ""
+"Invalid license key - please check your order confirmation email or "
+"%1$sAccount%2$s."
+msgstr ""
+"Clave de licencia no válida: compruebe el correo electrónico de confirmación "
+"de su pedido o %1$sAccount%2$s."
+
+#: lib/Plugin/License/Plugin_License.php:325
+msgid "No URL was supplied for activation, please contact support."
+msgstr ""
+"No se proporcionó ninguna URL para la activación, póngase en contacto con el "
+"soporte técnico."
+
+#: lib/Plugin/License/Plugin_License.php:328
+msgid "License key mismatch, please contact support."
+msgstr ""
+"Desajuste de la clave de licencia, póngase en contacto con el soporte "
+"técnico."
+
+#: lib/Plugin/License/Plugin_License.php:331
+msgid "This license is for a bundled product and cannot be activated."
+msgstr "Esta licencia es para un producto incluido y no se puede activar."
+
+#: lib/Plugin/License/Plugin_License.php:335
+msgid "Your license key is not valid for this plugin."
+msgstr "Su clave de licencia no es válida para este plugin."
+
+#: lib/Plugin/License/Plugin_License.php:341
+#, php-format
+msgid "%s site active"
+msgid_plural "%s sites active"
+msgstr[0] "%s sitio activo"
+msgstr[1] "%s sitios activos"
+
+#: lib/Plugin/License/Plugin_License.php:344
+#, php-format
+msgid "Your license key has reached its activation limit (%s)."
+msgstr "La clave de licencia ha alcanzado su límite de activación (%s)."
+
+#: lib/Plugin/License/Plugin_License.php:345 lib/Util.php:30
+msgid "Read more"
+msgstr "Leer más"
+
+#: lib/Plugin/License/Plugin_License.php:348
+#: lib/Plugin/License/Plugin_License.php:369
+#, php-format
+msgid "%1$s %2$s"
+msgstr "%1$s %2$s"
+
+#: lib/Plugin/License/Plugin_License.php:362
+#, php-format
+msgid "Your license key expired on %s."
+msgstr "Su clave de licencia expiró el %s."
+
+#: lib/Plugin/License/Plugin_License.php:366
+#, php-format
+msgid "Renew now for 20% discount."
+msgstr "Renueve ahora por 20% descuánto."
+
+#: lib/Plugin/License/Plugin_License.php:617
+msgid "Your license key is not active. Please reactivate or save the settings."
+msgstr ""
+"La clave de licencia no está activa. Por favor, reactive o guarde la "
+"configuración."
+
+#: lib/Plugin/License/Plugin_License.php:621
+msgid "Your license key expired has expired."
+msgstr "La clave de licencia caducada ha caducado."
+
+#: lib/Plugin/License/Plugin_License.php:626
+#, php-format
+msgid ""
+"Your license key has been disabled. Please %1$spurchase a new license key"
+"%2$s to continue using the plugin."
+msgstr ""
+"La clave de licencia se ha deshabilitado. Por favor, %1$scomprar una nueva "
+"clave de licencia%2$s para continuar usando el plugin."
+
+#: templates/photoswipe.php:46
+msgid "Close (Esc)"
+msgstr "Cerrar (Esc)"
+
+#: templates/photoswipe.php:48
+msgid "Share"
+msgstr "Compartir"
+
+#: templates/photoswipe.php:50
+msgid "Toggle fullscreen"
+msgstr "Cambiar a pantalla completa"
+
+#: templates/photoswipe.php:52
+msgid "Zoom in/out"
+msgstr "Zoom acercar/alejar"
+
+#: templates/photoswipe.php:69
+msgid "Previous (arrow left)"
+msgstr "Anterior (flecha izquierda)"
+
+#: templates/photoswipe.php:71
+msgid "Next (arrow right)"
+msgstr "Siguiente (flecha derecha)"
+
+#. Plugin URI of the plugin/theme
+msgid "https://barn2.co.uk/wordpress-plugins/posts-table-pro/"
+msgstr "https://barn2.co.uk/wordpress-plugins/posts-table-pro/"
+
+#. Description of the plugin/theme
+msgid ""
+"Display your site's posts, pages, and custom post types in a sortable, "
+"searchable and filterable data table."
+msgstr ""
+"Proporciona un código para mostrar una lista de su sitio web contenido "
+"(entradas, páginas, tipos de post personalizados, etc.) en una tabla de "
+"búsqueda y ordenar."
+
+#. Author of the plugin/theme
+msgid "Barn2 Plugins"
+msgstr "Barn2 Plugins"
+
+#. Author URI of the plugin/theme
+msgid "https://barn2.co.uk"
+msgstr "https://barn2.co.uk"
+
+#~ msgid "Totals"
+#~ msgstr "Totales"
+
+#, php-format
+#~ msgid ""
+#~ "All options on this page can be overridden by entering the corresponding "
+#~ "option in the [posts_table] shortcode. See the full list of %1$sshortcode "
+#~ "options%2$s for details."
+#~ msgstr ""
+#~ "Todas las opciones de esta página se pueden invalidar introduciendo la "
+#~ "opción correspondiente en el código corto [posts_table]. Consulte la "
+#~ "lista completa de %1$sshortcode options%2$s para obtener más información."
+
+#~ msgid "Showing _START_ to _END_ of _TOTAL_ entries"
+#~ msgstr ""
+#~ "Mostrando registros del _START_ al _END_ de un total de _TOTAL_ registros"
+
+#~ msgid "Showing 0 entries"
+#~ msgstr "Mostrando 0 registros"
+
+#~ msgid "No data available in table."
+#~ msgstr "“Ningún dato disponible en esta tabla."
+
+#~ msgid "Filter:"
+#~ msgstr "Filtrar:"
+
+#~ msgid "Error"
+#~ msgstr "Error"
+
+#~ msgid "Your license key has been disabled."
+#~ msgstr "Su clave de licencia ha sido desactivada."
+
+#, fuzzy
+#~| msgid "License key successfully deactivated."
+#~ msgid "License key successfully deactivated. Click Save to reactivate."
+#~ msgstr "Licencia correctamente deactivada."
+
+#~ msgid "Barn2 Media"
+#~ msgstr "Barn2 Media"
+
+#~ msgctxt "license key error message"
+#~ msgid "Error: %s"
+#~ msgstr "Error: %s"

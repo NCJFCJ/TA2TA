@@ -1,0 +1,70 @@
+.tec-site-main {
+	margin: 0 auto;
+	max-width: 100%;
+	padding: 0 20px;
+	width: 1100px;
+
+	.tec-return-link {
+		font-size: 20px;
+		font-weight: 700;
+		line-height: 26px;
+		margin-bottom: 18px;
+	}
+
+	.tec-entry-header {
+		margin-bottom: 40px;
+	}
+
+	.tec-single-title {
+		font-size: 42px;
+		font-weight: 700;
+		line-height: 48px;
+		margin-bottom: 25px;
+	}
+
+	.tec-single-session-time {
+		font-size: 16px;
+		font-weight: 400;
+		margin-bottom: 25px;
+		text-align: left;
+	}
+
+	.tec-single-session-taxonomies {
+		list-style-type: none;
+		margin: 10px 0 10px 0;
+		padding: 0;
+
+		.tec-single-session-taxonomy-term {
+			display: inline;
+			font-size: 16px;
+			font-weight: 400;
+			line-height: 26px;
+
+			i {
+				margin-right: 8px;
+			}
+		}
+	}
+
+	.tec-single-session-heading {
+		font-size: 16px;
+		font-weight: 700;
+		line-height: 26px;
+		margin-bottom: 8px;
+
+		@mixin breakpoint-sm {
+			font-size: 22px;
+			line-height: 33px;
+		}
+	}
+
+	.tec-single-session-speakers,
+	.tec-single-entry-content {
+		border-bottom: 1px solid var(--tec-color-gray-lighter);
+		font-size: 18px;
+		font-weight: 400;
+		line-height: 18px;
+		margin-bottom: 32px;
+		padding-bottom: 40px;
+	}
+}

@@ -1,0 +1,1246 @@
+# Copyright (C) 2024 The Events Calendar
+# This file is distributed under the GPL-2.0+.
+msgid ""
+msgstr ""
+"Project-Id-Version: Event Schedule Manager 1.1.0\n"
+"Report-Msgid-Bugs-To: https://evnt.is/191x\n"
+"Last-Translator: \n"
+"Language-Team: \n"
+"MIME-Version: 1.0\n"
+"Content-Type: text/plain; charset=UTF-8\n"
+"Content-Transfer-Encoding: 8bit\n"
+"POT-Creation-Date: 2024-01-23T14:23:36-08:00\n"
+"PO-Revision-Date: 2024-01-23 22:23\n"
+"X-Generator: WP-CLI 2.7.1\n"
+"X-Domain: event-schedule-manager\n"
+
+#. Plugin Name of the plugin
+#: event-schedule-manager.php:38
+msgid "Event Schedule Manager"
+msgstr ""
+
+#. Plugin URI of the plugin
+#. Author URI of the plugin
+msgid "https://theeventscalendar.com"
+msgstr ""
+
+#. Description of the plugin
+msgid "Creates session post types for conference websites. Includes a shortcode and custom block for fully-responsive conference schedules in table format."
+msgstr ""
+
+#. Author of the plugin
+msgid "The Events Calendar"
+msgstr ""
+
+#: src/Conference/Admin/Columns.php:142
+msgid "Date & Time"
+msgstr ""
+
+#: src/Conference/Admin/Columns.php:144
+msgid "Session Type"
+msgstr ""
+
+#: src/Conference/Admin/Columns.php:145
+msgid "Speakers"
+msgstr ""
+
+#: src/Conference/Admin/Columns.php:146
+msgid "Sponsors"
+msgstr ""
+
+#: src/Conference/Admin/Menu.php:36
+msgctxt "Admin menu page title."
+msgid "Event Schedule Manager"
+msgstr ""
+
+#: src/Conference/Admin/Menu.php:37
+msgctxt "Admin menu title."
+msgid "Schedule"
+msgstr ""
+
+#: src/Conference/Admin/Menu.php:55
+msgctxt "Submenu page title for Sessions."
+msgid "Sessions"
+msgstr ""
+
+#: src/Conference/Admin/Menu.php:56
+msgctxt "Admin submenu title for Sessions."
+msgid "Sessions"
+msgstr ""
+
+#: src/Conference/Admin/Menu.php:63
+msgctxt "Submenu page title for Tracks."
+msgid "Tracks"
+msgstr ""
+
+#: src/Conference/Admin/Menu.php:64
+msgctxt "Admin submenu title for Tracks."
+msgid "Tracks"
+msgstr ""
+
+#: src/Conference/Admin/Menu.php:71
+msgctxt "Submenu page title for Locations."
+msgid "Locations"
+msgstr ""
+
+#: src/Conference/Admin/Menu.php:72
+msgctxt "Admin submenu title for Locations."
+msgid "Locations"
+msgstr ""
+
+#: src/Conference/Admin/Menu.php:104
+msgctxt "Submenu page title for Speakers."
+msgid "Speakers"
+msgstr ""
+
+#: src/Conference/Admin/Menu.php:105
+msgctxt "Admin submenu title for Speakers."
+msgid "Speakers"
+msgstr ""
+
+#: src/Conference/Admin/Menu.php:112
+msgctxt "Submenu page title for Groups."
+msgid "Speaker Groups"
+msgstr ""
+
+#: src/Conference/Admin/Menu.php:113
+msgctxt "Admin submenu title for Groups."
+msgid "Speaker Groups"
+msgstr ""
+
+#: src/Conference/Admin/Menu.php:130
+msgctxt "Submenu page title for Sponsors."
+msgid "Sponsors"
+msgstr ""
+
+#: src/Conference/Admin/Menu.php:131
+msgctxt "Admin submenu title for Sponsors."
+msgid "Sponsors"
+msgstr ""
+
+#: src/Conference/Admin/Menu.php:138
+msgctxt "Submenu page title for Sponsor Levels."
+msgid "Sponsor Levels"
+msgstr ""
+
+#: src/Conference/Admin/Menu.php:139
+msgctxt "Admin submenu title for Sponsor Levels."
+msgid "Sponsor Levels"
+msgstr ""
+
+#: src/Conference/Admin/Meta/Session.php:76
+msgctxt "Metabox title"
+msgid "Session Information"
+msgstr ""
+
+#: src/Conference/Admin/Meta/Session.php:95
+msgctxt "Metabox field"
+msgid "Speaker name(s)"
+msgstr ""
+
+#: src/Conference/Admin/Meta/Session.php:110
+msgctxt "Session Metabox Name."
+msgid "Session Info"
+msgstr ""
+
+#: src/Conference/Admin/Meta/Session.php:140
+msgctxt "Session date label"
+msgid "Date:"
+msgstr ""
+
+#: src/Conference/Admin/Meta/Session.php:142
+msgctxt "Session time label"
+msgid "Time:"
+msgstr ""
+
+#: src/Conference/Admin/Meta/Session.php:144
+msgctxt "Aria label for session start hour"
+msgid "Session Start Hour"
+msgstr ""
+
+#: src/Conference/Admin/Meta/Session.php:152
+msgctxt "Aria label for session start minutes"
+msgid "Session start minutes"
+msgstr ""
+
+#: src/Conference/Admin/Meta/Session.php:160
+msgctxt "Aria label for session meridiem"
+msgid "Session meridiem"
+msgstr ""
+
+#: src/Conference/Admin/Meta/Session.php:167
+msgctxt "Session end time label"
+msgid "End time:"
+msgstr ""
+
+#: src/Conference/Admin/Meta/Session.php:169
+msgctxt "Aria label for session end hour"
+msgid "Session end hour"
+msgstr ""
+
+#: src/Conference/Admin/Meta/Session.php:177
+msgctxt "Aria label for session end minutes"
+msgid "Session end minutes"
+msgstr ""
+
+#: src/Conference/Admin/Meta/Session.php:185
+msgctxt "Aria label for session end meridiem"
+msgid "Session end meridiem"
+msgstr ""
+
+#: src/Conference/Admin/Meta/Session.php:192
+msgctxt "Session type label"
+msgid "Type:"
+msgstr ""
+
+#: src/Conference/Admin/Meta/Session.php:194
+msgctxt "Session type"
+msgid "Regular Session"
+msgstr ""
+
+#: src/Conference/Admin/Meta/Session.php:195
+msgctxt "Session type"
+msgid "Mainstage"
+msgstr ""
+
+#: src/Conference/Admin/Meta/Session.php:196
+msgctxt "Session type"
+msgid "Break, Lunch, etc."
+msgstr ""
+
+#: src/Conference/Admin/Meta/Speaker.php:31
+msgctxt "speaker meta box title"
+msgid "Speaker Information"
+msgstr ""
+
+#: src/Conference/Admin/Meta/Speaker.php:40
+msgctxt "speaker meta box field"
+msgid "First name"
+msgstr ""
+
+#: src/Conference/Admin/Meta/Speaker.php:47
+msgctxt "speaker meta box field"
+msgid "Last name"
+msgstr ""
+
+#: src/Conference/Admin/Meta/Speaker.php:54
+msgctxt "speaker meta box field"
+msgid "Title"
+msgstr ""
+
+#: src/Conference/Admin/Meta/Speaker.php:61
+msgctxt "speaker meta box field"
+msgid "Organization"
+msgstr ""
+
+#: src/Conference/Admin/Meta/Speaker.php:68
+msgctxt "speaker meta box field"
+msgid "Facebook URL"
+msgstr ""
+
+#: src/Conference/Admin/Meta/Speaker.php:76
+msgctxt "speaker meta box field"
+msgid "Twitter URL"
+msgstr ""
+
+#: src/Conference/Admin/Meta/Speaker.php:84
+msgctxt "speaker meta box field"
+msgid "Instagram URL"
+msgstr ""
+
+#: src/Conference/Admin/Meta/Speaker.php:92
+msgctxt "speaker meta box field"
+msgid "LinkedIn URL"
+msgstr ""
+
+#: src/Conference/Admin/Meta/Speaker.php:100
+msgctxt "speaker meta box field"
+msgid "YouTube URL"
+msgstr ""
+
+#: src/Conference/Admin/Meta/Speaker.php:108
+msgctxt "speaker meta box field"
+msgid "Website URL"
+msgstr ""
+
+#: src/Conference/Admin/Meta/Speaker.php:125
+msgctxt "session meta field"
+msgid "Speaker display"
+msgstr ""
+
+#: src/Conference/Admin/Meta/Speaker.php:130
+msgctxt "session meta field option"
+msgid "Speaker Names (Typed)"
+msgstr ""
+
+#: src/Conference/Admin/Meta/Speaker.php:131
+msgctxt "session meta field option"
+msgid "Speaker Select (from Speakers Custom Post Type)"
+msgstr ""
+
+#: src/Conference/Admin/Meta/Speaker.php:146
+msgctxt "session meta field"
+msgid "Speakers"
+msgstr ""
+
+#: src/Conference/Admin/Meta/Speaker.php:148
+msgctxt "session meta field description"
+msgid "Select speakers. Drag to reorder."
+msgstr ""
+
+#: src/Conference/Admin/Meta/Speaker.php:159
+msgctxt "session meta field"
+msgid "Speaker Name(s)"
+msgstr ""
+
+#: src/Conference/Admin/Meta/Speaker.php:178
+msgctxt "session meta field"
+msgid "Sponsors"
+msgstr ""
+
+#: src/Conference/Admin/Meta/Speaker.php:180
+msgctxt "session meta field description"
+msgid "Select sponsor. Drag to reorder."
+msgstr ""
+
+#: src/Conference/Admin/Meta/Sponsor.php:33
+msgctxt "sponsor meta box title"
+msgid "Sponsor Information"
+msgstr ""
+
+#: src/Conference/Admin/Meta/Sponsor.php:42
+msgctxt "sponsor meta box field"
+msgid "Website URL"
+msgstr ""
+
+#: src/Conference/Admin/Meta/Sponsor.php:57
+msgctxt "sponsor level meta box title"
+msgid "Category Metabox"
+msgstr ""
+
+#: src/Conference/Admin/Meta/Sponsor.php:64
+msgctxt "sponsor level meta box field"
+msgid "Logo Height"
+msgstr ""
+
+#: src/Conference/Admin/Meta/Sponsor.php:65
+msgctxt "sponsor level meta box field description"
+msgid "Pixels"
+msgstr ""
+
+#: src/Conference/Admin/Settings.php:56
+msgctxt "submenu page title"
+msgid "Settings"
+msgstr ""
+
+#: src/Conference/Admin/Settings.php:57
+msgctxt "submenu menu title"
+msgid "Settings"
+msgstr ""
+
+#: src/Conference/Admin/Settings.php:82
+msgctxt "settings section title"
+msgid "General Settings"
+msgstr ""
+
+#: src/Conference/Admin/Settings.php:88
+msgctxt "settings field title"
+msgid "Schedule page URL"
+msgstr ""
+
+#: src/Conference/Admin/Settings.php:94
+msgctxt "settings field title"
+msgid "Speakers page URL"
+msgstr ""
+
+#: src/Conference/Admin/Settings.php:100
+msgctxt "settings field title"
+msgid "Sponsor URL redirect"
+msgstr ""
+
+#: src/Conference/Admin/Settings.php:106
+msgctxt "settings field title"
+msgid "Sponsor level order"
+msgstr ""
+
+#: src/Conference/Admin/Settings.php:119
+msgctxt "settings field title"
+msgid "Speaker group order"
+msgstr ""
+
+#: src/Conference/Admin/Settings.php:131
+msgctxt "Settings label for opting out to Telemetry."
+msgid "Opt out of Telemetry"
+msgstr ""
+
+#: src/Conference/Admin/Settings.php:133
+msgctxt "Settings label for opting in to Telemetry."
+msgid "Opt in to Telemetry"
+msgstr ""
+
+#: src/Conference/Admin/Settings.php:152
+msgctxt "settings section title"
+msgid "License Settings"
+msgstr ""
+
+#: src/Conference/Admin/Settings.php:159
+msgctxt "settings license field title"
+msgid "License"
+msgstr ""
+
+#: src/Conference/Admin/Settings.php:184
+msgctxt "Header title on the Settings page."
+msgid "Creating and displaying your event schedule."
+msgstr ""
+
+#: src/Conference/Admin/Settings.php:188
+msgctxt "Section header for documentation links on the Settings page."
+msgid "Documentation"
+msgstr ""
+
+#: src/Conference/Admin/Settings.php:190
+msgctxt "Documentation link on the Settings page."
+msgid "Getting Started Guide"
+msgstr ""
+
+#: src/Conference/Admin/Settings.php:193
+msgctxt "Documentation link on the Settings page."
+msgid "Event Schedule Creation Guide"
+msgstr ""
+
+#: src/Conference/Admin/Settings.php:196
+msgctxt "Documentation link on the Settings page."
+msgid "Shortcode KB"
+msgstr ""
+
+#: src/Conference/Admin/Settings.php:202
+msgctxt "Section header for help links on the Settings page."
+msgid "Having trouble?"
+msgstr ""
+
+#: src/Conference/Admin/Settings.php:203
+msgctxt "Help link on the Settings page."
+msgid "Help"
+msgstr ""
+
+#: src/Conference/Admin/Settings.php:208
+msgctxt "Section header for help links on the Settings page."
+msgid "Shortcodes"
+msgstr ""
+
+#: src/Conference/Admin/Settings.php:210
+msgctxt "Explanation of [tec_schedule] shortcode on the Settings page."
+msgid "(Displays the Schedule using date, tracks, session_link, color_scheme, align, layout, row_height, and content parameters)"
+msgstr ""
+
+#: src/Conference/Admin/Settings.php:213
+msgctxt "Explanation of [tec_speakers] shortcode on the Settings page."
+msgid "(Displays the Speakers page using show_image, image_size, show_content, posts_per_page, orderby, order, speaker_link, track, group, columns, gap and align parameters)"
+msgstr ""
+
+#: src/Conference/Admin/Settings.php:216
+msgctxt "Explanation of [tec_sponsors] shortcode on the Settings page."
+msgid "(Displays the Sponsors page using link, title, content, excerpt_length, and heading_level)"
+msgstr ""
+
+#: src/Conference/Admin/Settings.php:234
+msgctxt "description for the Schedule Page URL,= field."
+msgid "The URL of the page that your conference schedule is embedded on."
+msgstr ""
+
+#: src/Conference/Admin/Settings.php:248
+msgctxt "The description for the speaker page url."
+msgid "The URL of the page that your speakers are embedded on."
+msgstr ""
+
+#: src/Conference/Admin/Settings.php:279
+msgctxt "Sponsor url redirect option for the sponsor internal page."
+msgid "Redirect to Sponsor Page"
+msgstr ""
+
+#: src/Conference/Admin/Settings.php:285
+msgctxt "Sponsor url redirect option to send to the sponsor url."
+msgid "Redirect to Sponsor Site"
+msgstr ""
+
+#: src/Conference/Admin/Settings.php:289
+msgctxt "description for sponsor url redirect options."
+msgid "The location to redirect sponsor links to on the session single page."
+msgstr ""
+
+#: src/Conference/Admin/Settings.php:328
+msgctxt "Settings saved message."
+msgid "Settings Saved"
+msgstr ""
+
+#: src/Conference/Admin/Settings.php:352
+msgctxt "settings tab title."
+msgid "General"
+msgstr ""
+
+#: src/Conference/Admin/Settings.php:358
+msgctxt "settings tab title."
+msgid "License"
+msgstr ""
+
+#: src/Conference/Admin/Settings.php:373
+msgctxt "Settings saved button text."
+msgid "Save Settings"
+msgstr ""
+
+#: src/Conference/Admin/Settings.php:426
+msgctxt "Directions for ordering of sponsor levels in the settings."
+msgid "Change the order of sponsor levels displayed in the sponsors page template. Create Sponsor Levels to unlock this feature."
+msgstr ""
+
+#: src/Conference/Admin/Settings.php:439
+msgctxt "Directions for ordering of speaker groups in the settings."
+msgid "Change the order of speaker groups displayed in the speaker page template. Create Groups to unlock this feature."
+msgstr ""
+
+#: src/Conference/Editor/Block.php:155
+msgctxt "The heading for the Event Schedule block."
+msgid "Event Schedule"
+msgstr ""
+
+#. Translators: %1$s - open link tag, %2$s - close link tag.
+#: src/Conference/Editor/Block.php:161
+msgctxt "No sessions found message for Event Schedule block."
+msgid "Select a date(s) with at least one session to display the schedule. %1$sLearn more%2$s."
+msgstr ""
+
+#: src/Conference/Post_Types/Sessions.php:30
+msgctxt "Session post type label"
+msgid "Sessions"
+msgstr ""
+
+#: src/Conference/Post_Types/Sessions.php:31
+msgctxt "Session post type label"
+msgid "Session"
+msgstr ""
+
+#: src/Conference/Post_Types/Sessions.php:32
+msgctxt "Session post type label"
+msgid "Add New"
+msgstr ""
+
+#: src/Conference/Post_Types/Sessions.php:33
+msgctxt "Session post type label"
+msgid "Create New Session"
+msgstr ""
+
+#: src/Conference/Post_Types/Sessions.php:34
+msgctxt "Session post type label"
+msgid "Edit"
+msgstr ""
+
+#: src/Conference/Post_Types/Sessions.php:35
+msgctxt "Session post type label"
+msgid "Edit Session"
+msgstr ""
+
+#: src/Conference/Post_Types/Sessions.php:36
+msgctxt "Session post type label"
+msgid "New Session"
+msgstr ""
+
+#: src/Conference/Post_Types/Sessions.php:37
+#: src/Conference/Post_Types/Sessions.php:38
+msgctxt "Session post type label"
+msgid "View Session"
+msgstr ""
+
+#: src/Conference/Post_Types/Sessions.php:39
+msgctxt "Session post type label"
+msgid "Search Sessions"
+msgstr ""
+
+#: src/Conference/Post_Types/Sessions.php:40
+msgctxt "Session post type label"
+msgid "No sessions found"
+msgstr ""
+
+#: src/Conference/Post_Types/Sessions.php:41
+msgctxt "Session post type label"
+msgid "No sessions found in Trash"
+msgstr ""
+
+#: src/Conference/Post_Types/Sessions.php:42
+msgctxt "Session post type label"
+msgid "Parent Session:"
+msgstr ""
+
+#: src/Conference/Post_Types/Sessions.php:84
+msgctxt "Session title placeholder"
+msgid "Enter Session Title Here"
+msgstr ""
+
+#: src/Conference/Post_Types/Speakers.php:30
+msgctxt "Speaker post type label"
+msgid "Speakers"
+msgstr ""
+
+#: src/Conference/Post_Types/Speakers.php:31
+msgctxt "Speaker post type label"
+msgid "Speaker"
+msgstr ""
+
+#: src/Conference/Post_Types/Speakers.php:32
+msgctxt "Speaker post type label"
+msgid "Add New"
+msgstr ""
+
+#: src/Conference/Post_Types/Speakers.php:33
+msgctxt "Speaker post type label"
+msgid "Create New Speaker"
+msgstr ""
+
+#: src/Conference/Post_Types/Speakers.php:34
+msgctxt "Speaker post type label"
+msgid "Edit"
+msgstr ""
+
+#: src/Conference/Post_Types/Speakers.php:35
+msgctxt "Speaker post type label"
+msgid "Edit Speaker"
+msgstr ""
+
+#: src/Conference/Post_Types/Speakers.php:36
+msgctxt "Speaker post type label"
+msgid "New Speaker"
+msgstr ""
+
+#: src/Conference/Post_Types/Speakers.php:37
+#: src/Conference/Post_Types/Speakers.php:38
+msgctxt "Speaker post type label"
+msgid "View Speaker"
+msgstr ""
+
+#: src/Conference/Post_Types/Speakers.php:39
+msgctxt "Speaker post type label"
+msgid "Search Speakers"
+msgstr ""
+
+#: src/Conference/Post_Types/Speakers.php:40
+msgctxt "Speaker post type label"
+msgid "No speakers found"
+msgstr ""
+
+#: src/Conference/Post_Types/Speakers.php:41
+msgctxt "Speaker post type label"
+msgid "No speakers found in Trash"
+msgstr ""
+
+#: src/Conference/Post_Types/Speakers.php:42
+msgctxt "Speaker post type label"
+msgid "Parent Speaker:"
+msgstr ""
+
+#: src/Conference/Post_Types/Speakers.php:81
+msgctxt "Speaker title placeholder"
+msgid "Enter Speaker Full Name Here"
+msgstr ""
+
+#: src/Conference/Post_Types/Sponsors.php:30
+msgctxt "Sponsor post type label"
+msgid "Sponsors"
+msgstr ""
+
+#: src/Conference/Post_Types/Sponsors.php:31
+msgctxt "Sponsor post type label"
+msgid "Sponsor"
+msgstr ""
+
+#: src/Conference/Post_Types/Sponsors.php:32
+msgctxt "Sponsor post type label"
+msgid "Add New"
+msgstr ""
+
+#: src/Conference/Post_Types/Sponsors.php:33
+msgctxt "Sponsor post type label"
+msgid "Create New Sponsor"
+msgstr ""
+
+#: src/Conference/Post_Types/Sponsors.php:34
+msgctxt "Sponsor post type label"
+msgid "Edit"
+msgstr ""
+
+#: src/Conference/Post_Types/Sponsors.php:35
+msgctxt "Sponsor post type label"
+msgid "Edit Sponsor"
+msgstr ""
+
+#: src/Conference/Post_Types/Sponsors.php:36
+msgctxt "Sponsor post type label"
+msgid "New Sponsor"
+msgstr ""
+
+#: src/Conference/Post_Types/Sponsors.php:37
+#: src/Conference/Post_Types/Sponsors.php:38
+msgctxt "Sponsor post type label"
+msgid "View Sponsor"
+msgstr ""
+
+#: src/Conference/Post_Types/Sponsors.php:39
+msgctxt "Sponsor post type label"
+msgid "Search Sponsors"
+msgstr ""
+
+#: src/Conference/Post_Types/Sponsors.php:40
+msgctxt "Sponsor post type label"
+msgid "No sponsors found"
+msgstr ""
+
+#: src/Conference/Post_Types/Sponsors.php:41
+msgctxt "Sponsor post type label"
+msgid "No sponsors found in Trash"
+msgstr ""
+
+#: src/Conference/Post_Types/Sponsors.php:42
+msgctxt "Sponsor post type label"
+msgid "Parent Sponsor:"
+msgstr ""
+
+#: src/Conference/Post_Types/Sponsors.php:79
+msgctxt "Sponsor title placeholder"
+msgid "Enter Sponsoring Company Name Here"
+msgstr ""
+
+#: src/Conference/Site_Health/Info_Section.php:73
+msgctxt "Site Health Info Title."
+msgid "Event Schedule Manager"
+msgstr ""
+
+#: src/Conference/Site_Health/Info_Section.php:74
+msgctxt "Site Health Info Description."
+msgid "This section contains information on the Event Schedule Manager Plugin."
+msgstr ""
+
+#: src/Conference/Site_Health/Info_Section.php:99
+msgctxt "Site Health Info Title for Track terms."
+msgid "Track Terms"
+msgstr ""
+
+#: src/Conference/Site_Health/Info_Section.php:108
+msgctxt "Site Health Info Title for average number of tracks per session."
+msgid "Average number of Tracks per Session"
+msgstr ""
+
+#: src/Conference/Site_Health/Info_Section.php:117
+msgctxt "Site Health Info Title for Location terms."
+msgid "Location Terms"
+msgstr ""
+
+#: src/Conference/Site_Health/Info_Section.php:126
+msgctxt "Site Health Info Title for average number of locations per session."
+msgid "Average number of Locations per Session"
+msgstr ""
+
+#: src/Conference/Site_Health/Info_Section.php:143
+msgctxt "Site Health Info Title for Group terms."
+msgid "Group Terms"
+msgstr ""
+
+#: src/Conference/Site_Health/Info_Section.php:152
+msgctxt "Site Health Info Title for average number of groups per speaker."
+msgid "Average number of Groups per Speaker"
+msgstr ""
+
+#: src/Conference/Site_Health/Info_Section.php:161
+msgctxt "Site Health Info Title for Sessions using Typed Speaker Names."
+msgid "Sessions using Typed Speaker Names"
+msgstr ""
+
+#: src/Conference/Site_Health/Info_Section.php:170
+msgctxt "Site Health Info Title for Sessions using Speaker Post Type."
+msgid "Sessions using Speaker Post Type"
+msgstr ""
+
+#: src/Conference/Site_Health/Info_Section.php:187
+msgctxt "Site Health Info Title for SponsorLevel terms."
+msgid "Sponsor Level Terms"
+msgstr ""
+
+#: src/Conference/Site_Health/Info_Section.php:196
+msgctxt "Site Health Info Title for average number of sponsor levels per sponsor."
+msgid "Average number of Sponsor Levels per Sponsor"
+msgstr ""
+
+#: src/Conference/Taxonomies/Groups.php:33
+msgctxt "Groups taxonomy label"
+msgid "Speaker Groups"
+msgstr ""
+
+#: src/Conference/Taxonomies/Groups.php:34
+msgctxt "Groups taxonomy label"
+msgid "Speaker Group"
+msgstr ""
+
+#: src/Conference/Taxonomies/Groups.php:35
+msgctxt "Groups taxonomy label"
+msgid "Search Groups"
+msgstr ""
+
+#: src/Conference/Taxonomies/Groups.php:36
+msgctxt "Groups taxonomy label"
+msgid "Popular Groups"
+msgstr ""
+
+#: src/Conference/Taxonomies/Groups.php:37
+msgctxt "Groups taxonomy label"
+msgid "All Groups"
+msgstr ""
+
+#: src/Conference/Taxonomies/Groups.php:38
+msgctxt "Groups taxonomy label"
+msgid "Parent Group Category"
+msgstr ""
+
+#: src/Conference/Taxonomies/Groups.php:39
+msgctxt "Groups taxonomy label"
+msgid "Parent Group Category:"
+msgstr ""
+
+#: src/Conference/Taxonomies/Groups.php:40
+msgctxt "Groups taxonomy label"
+msgid "Edit Group"
+msgstr ""
+
+#: src/Conference/Taxonomies/Groups.php:41
+msgctxt "Groups taxonomy label"
+msgid "Update Group"
+msgstr ""
+
+#: src/Conference/Taxonomies/Groups.php:42
+msgctxt "Groups taxonomy label"
+msgid "Add Group"
+msgstr ""
+
+#: src/Conference/Taxonomies/Groups.php:43
+msgctxt "Groups taxonomy label"
+msgid "New Group"
+msgstr ""
+
+#: src/Conference/Taxonomies/Locations.php:33
+msgctxt "Locations taxonomy label"
+msgid "Locations"
+msgstr ""
+
+#: src/Conference/Taxonomies/Locations.php:34
+msgctxt "Locations taxonomy label"
+msgid "Location"
+msgstr ""
+
+#: src/Conference/Taxonomies/Locations.php:35
+msgctxt "Locations taxonomy label"
+msgid "Search Locations"
+msgstr ""
+
+#: src/Conference/Taxonomies/Locations.php:36
+msgctxt "Locations taxonomy label"
+msgid "Popular Locations"
+msgstr ""
+
+#: src/Conference/Taxonomies/Locations.php:37
+msgctxt "Locations taxonomy label"
+msgid "All Locations"
+msgstr ""
+
+#: src/Conference/Taxonomies/Locations.php:38
+msgctxt "Locations taxonomy label"
+msgid "Parent Location Category"
+msgstr ""
+
+#: src/Conference/Taxonomies/Locations.php:39
+msgctxt "Locations taxonomy label"
+msgid "Parent Location Category:"
+msgstr ""
+
+#: src/Conference/Taxonomies/Locations.php:40
+msgctxt "Locations taxonomy label"
+msgid "Edit Location"
+msgstr ""
+
+#: src/Conference/Taxonomies/Locations.php:41
+msgctxt "Locations taxonomy label"
+msgid "Update Location"
+msgstr ""
+
+#: src/Conference/Taxonomies/Locations.php:42
+msgctxt "Locations taxonomy label"
+msgid "Add Location"
+msgstr ""
+
+#: src/Conference/Taxonomies/Locations.php:43
+msgctxt "Locations taxonomy label"
+msgid "New Location"
+msgstr ""
+
+#: src/Conference/Taxonomies/Sponsor_Levels.php:33
+msgctxt "Sponsor Levels taxonomy label"
+msgid "Sponsor Levels"
+msgstr ""
+
+#: src/Conference/Taxonomies/Sponsor_Levels.php:34
+msgctxt "Sponsor Levels taxonomy label"
+msgid "Sponsor Level"
+msgstr ""
+
+#: src/Conference/Taxonomies/Sponsor_Levels.php:35
+msgctxt "Sponsor Levels taxonomy label"
+msgid "Search Sponsor Levels"
+msgstr ""
+
+#: src/Conference/Taxonomies/Sponsor_Levels.php:36
+msgctxt "Sponsor Levels taxonomy label"
+msgid "Popular Sponsor Levels"
+msgstr ""
+
+#: src/Conference/Taxonomies/Sponsor_Levels.php:37
+msgctxt "Sponsor Levels taxonomy label"
+msgid "All Sponsor Levels"
+msgstr ""
+
+#: src/Conference/Taxonomies/Sponsor_Levels.php:38
+msgctxt "Sponsor Levels taxonomy label"
+msgid "Parent Sponsor Levels Category"
+msgstr ""
+
+#: src/Conference/Taxonomies/Sponsor_Levels.php:39
+msgctxt "Sponsor Levels taxonomy label"
+msgid "Parent Sponsor Levels Category:"
+msgstr ""
+
+#: src/Conference/Taxonomies/Sponsor_Levels.php:40
+msgctxt "Sponsor Levels taxonomy label"
+msgid "Edit Sponsor Level"
+msgstr ""
+
+#: src/Conference/Taxonomies/Sponsor_Levels.php:41
+msgctxt "Sponsor Levels taxonomy label"
+msgid "Update Sponsor Level"
+msgstr ""
+
+#: src/Conference/Taxonomies/Sponsor_Levels.php:42
+msgctxt "Sponsor Levels taxonomy label"
+msgid "Add Sponsor Level"
+msgstr ""
+
+#: src/Conference/Taxonomies/Sponsor_Levels.php:43
+msgctxt "Sponsor Levels taxonomy label"
+msgid "New Sponsor Level"
+msgstr ""
+
+#: src/Conference/Taxonomies/Tags.php:33
+msgctxt "Tags taxonomy label"
+msgid "Tags"
+msgstr ""
+
+#: src/Conference/Taxonomies/Tags.php:34
+msgctxt "Tags taxonomy label"
+msgid "Tag"
+msgstr ""
+
+#: src/Conference/Taxonomies/Tags.php:35
+msgctxt "Tags taxonomy label"
+msgid "Search Tags"
+msgstr ""
+
+#: src/Conference/Taxonomies/Tags.php:36
+msgctxt "Tags taxonomy label"
+msgid "Popular Tags"
+msgstr ""
+
+#: src/Conference/Taxonomies/Tags.php:37
+msgctxt "Tags taxonomy label"
+msgid "All Tags"
+msgstr ""
+
+#: src/Conference/Taxonomies/Tags.php:38
+msgctxt "Tags taxonomy label"
+msgid "Parent Tag Category"
+msgstr ""
+
+#: src/Conference/Taxonomies/Tags.php:39
+msgctxt "Tags taxonomy label"
+msgid "Parent Tag Category:"
+msgstr ""
+
+#: src/Conference/Taxonomies/Tags.php:40
+msgctxt "Tags taxonomy label"
+msgid "Edit Tag"
+msgstr ""
+
+#: src/Conference/Taxonomies/Tags.php:41
+msgctxt "Tags taxonomy label"
+msgid "Update Tag"
+msgstr ""
+
+#: src/Conference/Taxonomies/Tags.php:42
+msgctxt "Tags taxonomy label"
+msgid "Add Tag"
+msgstr ""
+
+#: src/Conference/Taxonomies/Tags.php:43
+msgctxt "Tags taxonomy label"
+msgid "New Tag"
+msgstr ""
+
+#: src/Conference/Taxonomies/Tracks.php:33
+msgctxt "Tracks taxonomy label"
+msgid "Tracks"
+msgstr ""
+
+#: src/Conference/Taxonomies/Tracks.php:34
+msgctxt "Tracks taxonomy label"
+msgid "Track"
+msgstr ""
+
+#: src/Conference/Taxonomies/Tracks.php:35
+msgctxt "Tracks taxonomy label"
+msgid "Search Tracks"
+msgstr ""
+
+#: src/Conference/Taxonomies/Tracks.php:36
+msgctxt "Tracks taxonomy label"
+msgid "Popular Tracks"
+msgstr ""
+
+#: src/Conference/Taxonomies/Tracks.php:37
+msgctxt "Tracks taxonomy label"
+msgid "All Tracks"
+msgstr ""
+
+#: src/Conference/Taxonomies/Tracks.php:38
+msgctxt "Tracks taxonomy label"
+msgid "Parent Track Category"
+msgstr ""
+
+#: src/Conference/Taxonomies/Tracks.php:39
+msgctxt "Tracks taxonomy label"
+msgid "Parent Track Category:"
+msgstr ""
+
+#: src/Conference/Taxonomies/Tracks.php:40
+msgctxt "Tracks taxonomy label"
+msgid "Edit Track"
+msgstr ""
+
+#: src/Conference/Taxonomies/Tracks.php:41
+msgctxt "Tracks taxonomy label"
+msgid "Update Track"
+msgstr ""
+
+#: src/Conference/Taxonomies/Tracks.php:42
+msgctxt "Tracks taxonomy label"
+msgid "Add Track"
+msgstr ""
+
+#: src/Conference/Taxonomies/Tracks.php:43
+msgctxt "Tracks taxonomy label"
+msgid "New Track"
+msgstr ""
+
+#. Translators: %1$s - the user name.
+#: src/Conference/Telemetry/Telemetry.php:76
+msgid "Hi, %1$s! This is an invitation to help our StellarWP community."
+msgstr ""
+
+#: src/Conference/Telemetry/Telemetry.php:80
+msgid "If you opt-in, some data about your usage of Event Schedule Manager and future StellarWP Products will be shared with our teams (so they can work their butts off to improve)."
+msgstr ""
+
+#: src/Conference/Telemetry/Telemetry.php:81
+msgid "We will also share some helpful info on WordPress, and our products from time to time."
+msgstr ""
+
+#: src/Conference/Telemetry/Telemetry.php:82
+msgid "And if you skip this, that’s okay! Our products still work just fine."
+msgstr ""
+
+#: src/Conference/Telemetry/Telemetry.php:91
+msgid "We hope you love Event Schedule Manager!"
+msgstr ""
+
+#: src/Conference/Telemetry/Telemetry.php:144
+msgid "Help us improve Event Schedule Manager by sharing usage data."
+msgstr ""
+
+#. Translators: Description of the Telemetry optin setting. %1$s: opening anchor tag for permissions link. %2$s: opening anchor tag for terms of service link. %3$s: opening anchor tag for privacy policy link. %4$s: closing anchor tags.
+#: src/Conference/Telemetry/Telemetry.php:156
+msgctxt "Description of optin setting."
+msgid "Share usage data with Event Schedule Manager and StellarWP. Disregard this setting if you already opted in when you installed the plugin. %1$sWhat permissions are being granted?%4$s %2$sRead our terms of service%4$s. %3$sRead our privacy policy%4$s."
+msgstr ""
+
+#: src/Conference/Views/Filter_Modifications.php:189
+msgctxt "Speakers heading title for single sessions."
+msgid "Speakers"
+msgstr ""
+
+#: src/Conference/Views/Shortcode/Schedule.php:171
+msgid "Time"
+msgstr ""
+
+#: src/functions/php-min-version.php:50
+msgctxt "Plugin A \"and\" Plugin B"
+msgid " and "
+msgstr ""
+
+#: src/functions/php-min-version.php:51
+msgctxt "Plugin A\",\" Plugin B"
+msgid ", "
+msgstr ""
+
+#: src/functions/php-min-version.php:65
+msgid "<b>%1$s</b> requires <b>PHP %2$s</b> or higher."
+msgid_plural "<b>%1$s</b> require <b>PHP %2$s</b> or higher."
+msgstr[0] ""
+msgstr[1] ""
+
+#: src/functions/php-min-version.php:76
+msgid "To allow better control over dates, advanced security improvements and performance gain."
+msgstr ""
+
+#: src/functions/php-min-version.php:78
+msgid "Contact your Host or your system administrator and ask to upgrade to the latest version of PHP."
+msgstr ""
+
+#: templates/session-template.php:26
+msgctxt "Speaker heading title for single sessions."
+msgid "Speaker"
+msgstr ""
+
+#: templates/session-template.php:34
+msgctxt "Return to schedule page link text on single session template."
+msgid "Return to schedule"
+msgstr ""
+
+#: templates/session-template.php:83
+msgctxt "Session content title on single session template."
+msgid "About Session"
+msgstr ""
+
+#: templates/session-template.php:99
+msgctxt "Sponsor title on single session template."
+msgid "Presented by"
+msgstr ""
+
+#: templates/speaker-template.php:87
+msgctxt "Speaker single template prefix text for name."
+msgid "About"
+msgstr ""
+
+#: templates/speaker-template.php:92
+msgctxt "Speaker single template session heading."
+msgid "Sessions"
+msgstr ""
+
+#: templates/speaker-template.php:105
+msgctxt "Speaker single template link to speaker list."
+msgid "Go to Speakers List"
+msgstr ""
+
+#: templates/speaker-template.php:109
+msgctxt "Speaker single template link to conference home."
+msgid "Go to Conference Home"
+msgstr ""
+
+#: templates/sponsor-template.php:45
+msgctxt "Sponsor single template website field label."
+msgid "Website"
+msgstr ""
+
+#: src/resources/js/event-schedule-manager-block.js:48
+msgid "Displays sessions in a schedule."
+msgstr ""
+
+#: src/resources/js/event-schedule-manager-block.js:109
+msgid "All"
+msgstr ""
+
+#: src/resources/js/event-schedule-manager-block.js:170
+msgid "Date(s)"
+msgstr ""
+
+#: src/resources/js/event-schedule-manager-block.js:181
+msgid "Date(s) of sessions"
+msgstr ""
+
+#: src/resources/js/event-schedule-manager-block.js:183
+msgid "Color Scheme"
+msgstr ""
+
+#: src/resources/js/event-schedule-manager-block.js:187
+msgid "Light"
+msgstr ""
+
+#: src/resources/js/event-schedule-manager-block.js:188
+msgid "Dark"
+msgstr ""
+
+#: src/resources/js/event-schedule-manager-block.js:194
+msgid "Layout"
+msgstr ""
+
+#: src/resources/js/event-schedule-manager-block.js:197
+msgid "Table"
+msgstr ""
+
+#: src/resources/js/event-schedule-manager-block.js:198
+msgid "Grid"
+msgstr ""
+
+#: src/resources/js/event-schedule-manager-block.js:204
+msgid "Row height"
+msgstr ""
+
+#: src/resources/js/event-schedule-manager-block.js:207
+msgid "Match"
+msgstr ""
+
+#: src/resources/js/event-schedule-manager-block.js:208
+msgid "Auto"
+msgstr ""
+
+#: src/resources/js/event-schedule-manager-block.js:214
+msgid "Session link"
+msgstr ""
+
+#: src/resources/js/event-schedule-manager-block.js:217
+msgid "Permalink"
+msgstr ""
+
+#: src/resources/js/event-schedule-manager-block.js:218
+msgid "Anchor"
+msgstr ""
+
+#: src/resources/js/event-schedule-manager-block.js:219
+#: src/resources/js/event-schedule-manager-block.js:239
+msgid "None"
+msgstr ""
+
+#: src/resources/js/event-schedule-manager-block.js:225
+msgid "Align"
+msgstr ""
+
+#: src/resources/js/event-schedule-manager-block.js:228
+msgid "Standard"
+msgstr ""
+
+#: src/resources/js/event-schedule-manager-block.js:229
+msgid "Wide"
+msgstr ""
+
+#: src/resources/js/event-schedule-manager-block.js:230
+#: src/resources/js/event-schedule-manager-block.js:240
+msgid "Full"
+msgstr ""
+
+#: src/resources/js/event-schedule-manager-block.js:236
+msgid "Content"
+msgstr ""
+
+#: src/resources/js/event-schedule-manager-block.js:241
+msgid "Excerpt"
+msgstr ""

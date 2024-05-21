@@ -1,0 +1,1811 @@
+#, fuzzy
+msgid ""
+msgstr ""
+"Project-Id-Version: WP Fulltext Search Pro\n"
+"Report-Msgid-Bugs-To: \n"
+"POT-Creation-Date: 2023-05-19 16:19+0000\n"
+"PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
+"Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
+"Language-Team: \n"
+"Language: \n"
+"Plural-Forms: nplurals=INTEGER; plural=EXPRESSION;\n"
+"MIME-Version: 1.0\n"
+"Content-Type: text/plain; charset=UTF-8\n"
+"Content-Transfer-Encoding: 8bit\n"
+"X-Generator: Loco https://localise.biz/\n"
+"X-Loco-Version: 2.5.2; wp-5.7.1\n"
+"X-Domain: fulltext-search"
+
+#: includes/wpfts_output.php:893
+msgid ""
+"\"Cluster\" is a part of post (either title, content or even specific part "
+"which you can define using <b>wpfts_index_post</b> filter). You can assign "
+"some relevance weight to each of them."
+msgstr ""
+
+#: includes/wpfts_output.php:1057
+msgid "\"Not Found\" words"
+msgstr ""
+
+#: includes/wpfts_core.php:1429
+msgid "#"
+msgstr ""
+
+#: includes/wpfts_output.php:1665
+#, php-format
+msgid "%s days left"
+msgstr ""
+
+#: includes/wpfts_output.php:1220
+msgid "(Available in Pro only)"
+msgstr ""
+
+#: includes/wpfts_output.php:1408 includes/wpfts_output.php:1422
+msgid "* (Any)"
+msgstr ""
+
+#: includes/widgets/wpfts_widget.class.php:146
+msgid "-- No Preset --"
+msgstr ""
+
+#: includes/wpfts_core.php:811
+#, php-format
+msgid ""
+"<a href=\"%s\" target=\"_blank\">Click here</a> to learn how to make them "
+"searchable by their <b>text content</b> and improve your website usability."
+msgstr ""
+
+#: includes/wpfts_output.php:1647
+msgid ""
+"<a href=\"https://textmill.io\" target=\"_blank\">TextMill.io</a> License "
+"Information"
+msgstr ""
+
+#: includes/wpfts_output.php:1322
+msgid ""
+"<a href=\"https://textmill.io/\">TextMill.io</a> is an external processing "
+"service, which supports a wide range of formats. Native PHP means local "
+"processing of attachments. We recommend <a href=\"https://textmill.io/\">"
+"TextMill.io</a> at the moment."
+msgstr ""
+
+#: includes/wpfts_core.php:291
+msgid ""
+"<b style=\"color: red;\">Attention!</b> <b>WP Fast Total Search</b> plugin "
+"requires your attention.<br><br>Please <a href=\"admin.php?page=wpfts-"
+"options\">click HERE</a> to go to WPFTS Settings page."
+msgstr ""
+
+#: includes/wpfts_core.php:440
+msgid ""
+"<b style=\"color: red;\">Congratulations!</b> <b>WP Fast Total Search "
+"plugin</b> has just been installed and successfully activated!<br><br>To "
+"complete the installation, we need to create the Search Index of your "
+"existing WP posts data. To start this process, simply go to the <a "
+"href=\"admin.php?page=wpfts-options\">WPFTS Settings Page</a>"
+msgstr ""
+
+#: includes/wpfts_core.php:348
+msgid ""
+"<b style=\"color: red;\">Congratulations!</b> <b>WP Fast Total Search Pro "
+"plugin</b> has just been installed!<br><br>To complete the installation, "
+"please follow some steps on the <a href=\"admin.php?page=wpfts-options\">"
+"WPFTS Settings Page</a>"
+msgstr ""
+
+#: includes/wpfts_core.php:286
+msgid ""
+"<b style=\"color: red;\">The plugin's database requires update.</b><br>It is "
+"necessary to rebuild the index to ensure the correct operation of the search "
+"engine. This may take some time.<br><br>Click <a href=\"#\" "
+"class=\"btn_notify_start_indexing\">here</a> to rebuild the search index now."
+msgstr ""
+
+#: includes/updater/classes/wpfts_updater.php:767
+#, php-format
+msgid ""
+"<b style=\"color:red;\">Attention!</b> Less than 15 days are left before the "
+"license expires.<br>After the end, the plugin will stop receiving updates, "
+"and the contents of newly added files will not be indexed by the Textmill.io "
+"service.<br><br>To preserve all functions of the WPFTS Pro and avoid the "
+"presence of unindexed files, we recommend updating the license <b>right "
+"now</b>. In addition, you will get a 15%% discount.<br><br><a href=\"%s\">"
+"Renew now with 15%% discount</a>"
+msgstr ""
+
+#: includes/updater/classes/wpfts_updater.php:769
+#, php-format
+msgid ""
+"<b><span style=\"color:red;\">Attention! The WPFTS Pro license has expired."
+"</span></b><br>Therefore, your copy of the plugin will no longer receive "
+"updates; technical support and indexing of the contents of new files by the "
+"Textmill.io service are also disabled.<br><br>To restore the plugin to full "
+"functionality, please, renew the license. Today you will additionally "
+"receive a <b>15%% discount</b>.<br><br><a href=\"%s\">Renew now with 15%% "
+"discount</a>"
+msgstr ""
+
+#: includes/wpfts_core.php:806
+#, php-format
+msgid ""
+"<b>Important Notice:</b> WP Fast Total Search plugin has detected <b>%s</b> "
+"files of the type <b>%s</b>"
+msgstr ""
+
+#: includes/wpfts_core.php:845
+msgid ""
+"<b>Important Notice:</b> WP Fast Total Search plugin is optimized for x64 "
+"platforms, however your website is currently using 32-bit version of PHP."
+msgstr ""
+
+#: includes/updater/classes/wpfts_updater.php:755
+#, php-format
+msgid ""
+"<b>License key has not been installed.</b><br>Thus, your copy of the plugin "
+"will <b style=\"color:red;\">not index the contents of files</b> and will "
+"not receive regular updates. Please enter a license key to ensure the plugin "
+"works properly!<br><br><a href=\"%s\">Licensing page</a>."
+msgstr ""
+
+#: includes/updater/classes/wpfts_updater.php:757
+#, php-format
+msgid ""
+"<b>The evaluation period for WPFTS Pro has ended.</b><br>Thus, most of the "
+"functions of the plugin were disabled. This is a great time to purchase a "
+"Pro license!<br><br>Do you still have questions about plugin functionality "
+"or pre-sale questions? Please let us know.<br><br><a href=\"%1s\">Purchase "
+"license</a> <a href=\"%2s\" style=\"margin-left: 20px;\">Contact us</a>"
+msgstr ""
+
+#: includes/updater/classes/wpfts_updater.php:761
+#, php-format
+msgid ""
+"<b>The evaluation version of WPFTS Pro is currently active.</b><br>It "
+"expires in <b style=\"color:red;\">%1s</b> days.<br><br>Do you have any "
+"questions? Please note that you can always contact us.<br><br><a "
+"href=\"%2s\">Purchase license</a> <a href=\"%3s\" style=\"margin-left: 20px;"
+"\">Contact us</a>"
+msgstr ""
+
+#: includes/wpfts_output.php:1546
+msgid ""
+"<b>UPDATES UNAVAILABLE!</b> Please enter your License Key below to enable "
+"automatic updates."
+msgstr ""
+
+#: includes/wpfts_core.php:269
+msgid "<b>WP Fast Total Search</b> new changes:"
+msgstr ""
+
+#: includes/updater/classes/wpfts_updater.php:763
+#, php-format
+msgid ""
+"<b>Your license is active</b> and there is still a lot of time left until it "
+"expires.<br>But if you plan to continue to use the full version of the WPFTS "
+"Pro after the end of this period, you may want to renew the license now and "
+"get a <b style=\"color:red;\">25%% discount</b>. Sounds good, right?<br><br>"
+"<a href=\"%s\">Renew now with 25%% discount</a>"
+msgstr ""
+
+#: includes/updater/classes/wpfts_updater.php:759
+#, php-format
+msgid ""
+"<b>Your license key is <span style=\"color:red;\">NOT VALID</span></b>.<br>"
+"Please enter a valid key to ensure the correct operation of the plugin!<br>"
+"<br><a href=\"%s\">Licensing page</a>"
+msgstr ""
+
+#: includes/updater/classes/wpfts_updater.php:765
+#, php-format
+msgid ""
+"<b>Your license will expire soon</b> and now is a good time to renew it.<br>"
+"If you renew the license no later than 15 days before the expiration, you "
+"will get an additional <b style=\"color:red;\">discount of 20%%</b>. Thank "
+"you for support!<br><br><a href=\"%s\">Renew now with 20%% discount</a>"
+msgstr ""
+
+#: includes/templates/admin_page.php:83
+#, php-format
+msgid ""
+"<h2>Important Notice Before You Start</h2>\n"
+"\t\t\t<p>Everything is ready to index the contents of your site. When "
+"creating a Search Index, the plugin will use its own tables in the database, "
+"no your data will be affected.</p>\n"
+"\t\t\t<p>The process may take a long time (it depends on the amount of data "
+"on the site) and the site may work a little slower. There is no reason to "
+"worry - this slowness will end with the end of the indexing process. To "
+"reduce the time to build the index, please <b>do not close</b> the plugin "
+"settings page.</p>\n"
+"\t\t\t<p>If you didn’t install WPFTS Add-ons and didn’t set up your own "
+"<code>wpfts_index_post</code> hook, then this time only the Titles and the "
+"main Content of the publications will be included in the index. If you want "
+"other data to participate in the search (such as <b>post meta data</b>), now "
+"is the time to read the <a href=\"%s\" target=\"_blank\">WPFTS "
+"Documentation</a> and make the necessary changes.</p>\n"
+"\t\n"
+"\t\t\t<p>We wish you a pleasant work with the WP Fast Total Search plugin."
+"</p>\n"
+"\t\t\t<p>We also thank you for your <a href=\"%s\" target=\"_blank\">"
+"comments and suggestions</a>.</p>\n"
+"\t\t\t<p><i>WPFTS plugin development team.</i></p>"
+msgstr ""
+
+#: includes/templates/admin_page.php:61
+#, php-format
+msgid ""
+"<h2>Important Notice Before You Start</h2>\n"
+"\t\t\t<p>First of all, thank you for your support by purchasing the copy of "
+"the WPFTS plugin. Thus you are supporting the plugin development and the "
+"whole Open Source code movement!</p>\n"
+"\t\n"
+"\t\t\t<p>Before the first launch, please do the following:</p>\n"
+"\t\t\t<ul>\n"
+"\t\t\t\t<li>1. <span style=\"color:red;\"><b>Enter your license number</b>"
+"</span> in the \"<a href=\"/wp-admin/admin.php?page=wpfts-options-"
+"licensing\">Licensing</a>\" tab to ensure that you receive the latest "
+"updates and the correct processing of files for placement from the search "
+"index.</li>\n"
+"\t\t\t\t<li>2. Check the indexing settings in the \"<a href=\"/wp-"
+"admin/admin.php?page=wpfts-options-indexing-engine\">Indexing</a>\" tab. You "
+"can configure something, but if you don’t understand how to do it right, "
+"leave it as it is for now.</li>\n"
+"\t\t\t\t<li>3. Start building the index by clicking the big button below."
+"</li>\n"
+"\t\t\t</ul>\n"
+"\t\t\t\t\n"
+"\t\t\t<p>Usually, building an index is required only once, because the "
+"plugin will automatically update it after the changes that you make on the "
+"site.</p>\n"
+"\t\t\t<p>The indexing process may take a long time (it depends on the amount "
+"of data on the site) and the site may work a little slower. There is no "
+"reason to worry - this slowness will end with the end of the indexing "
+"process. To reduce the time to build the index, please <b>do not close</b> "
+"the plugin settings page.</p>\n"
+"\t\n"
+"\t\t\t<p>If you didn’t install WPFTS Add-ons and didn’t set up your own "
+"<code>wpfts_index_post</code> hook, then this time only the Titles and the "
+"main Content of the publications will be included in the index. If you want "
+"other data to participate in the search (such as <b>post meta data</b>), now "
+"is the time to read the <a href=\"%s\" target=\"_blank\">WPFTS "
+"Documentation</a> and make the necessary changes.</p>\n"
+"\t\n"
+"\t\t\t<p>We wish you a pleasant work with the WP Fast Total Search plugin."
+"</p>\n"
+"\t\t\t<p>We also open for your <a href=\"%s\" target=\"_blank\">comments and "
+"suggestions</a>.</p>\n"
+"\t\t\t<p><i>WPFTS plugin development team.</i></p>"
+msgstr ""
+
+#: includes/wpfts_core.php:341
+msgid ""
+"<h2>Initial Configuration Wizard</h2> First of all, thank you for your "
+"support by purchasing the copy of the WPFTS Pro plugin. Thus you are "
+"supporting the plugin development and the whole Open Source code idea."
+msgstr ""
+
+#: includes/updater/classes/wpfts_updater.php:557
+msgid "<strong>UPDATE UNAVAILABLE!</strong>"
+msgstr ""
+
+#: includes/wpfts_output.php:461
+msgid "<strong>WARNING</strong>: Disabling this option is NOT recommended!"
+msgstr ""
+
+#: includes/version/2_27_85.php:4
+msgid ""
+"<ul><li>Added new parameters: \"word_logic\", \"wpfts_disable\", "
+"\"cluster_weights\", \"display_attachments\" to the WP_Query()</li>\n"
+"\t\t\t\t</ul>"
+msgstr ""
+
+#: includes/version/1_14_22.php:4
+msgid ""
+"<ul><li>Big update: lots of functions was moved from the Pro version to the "
+"Free WPFTS Version</li>\n"
+"\t\t\t\t\t<li>Some interface bugs were fixed</li>\n"
+"\t\t\t\t\t<li>Relevance formula was completely rebuilt</li>\n"
+"\t\t\t\t\t<li>Reindex algorithm was sufficiently improved (now 5 times "
+"faster!)</li>\n"
+"\t\t\t\t\t<li>Word max length was increased to 255 characters</li>\n"
+"\t\t\t\t</ul>"
+msgstr ""
+
+#: includes/version/1_30_85.php:4
+msgid ""
+"<ul><li>Big update: the new search algorithm and key improvements!</li>\n"
+"\t\t\t\t\t<li>New algorithm that <b>supports sentences</b></li>\n"
+"\t\t\t\t\t<li>Deep search is now faster</li>\n"
+"\t\t\t\t\t<li>Character limit was removed</li>\n"
+"\t\t\t\t\t<li>MyISAM support was dropped</li>\n"
+"\t\t\t\t\t<li>Faster index rebuilding</li>\n"
+"\t\t\t\t</ul><br>\n"
+"\t\t\t\t<p>Read the <a href=\"https://fulltextsearch."
+"org/forum/topic/18/version-1-30-85-big-improvements-and-fixes\" "
+"target=\"_blank\">official announcement</a> on the WPFTS forum.</p>"
+msgstr ""
+
+#: includes/version/2_40_146.php:4
+msgid ""
+"<ul><li>Big update: the new search algorithm and key improvements!</li>\n"
+"\t\t\t\t<li>New algorithm that <b>supports sentences</b></li>\n"
+"\t\t\t\t<li>Deep search is now faster</li>\n"
+"\t\t\t\t<li>Character limit was removed</li>\n"
+"\t\t\t\t<li>MyISAM support was dropped</li>\n"
+"\t\t\t\t<li>Faster index rebuilding</li>\n"
+"\t\t\t\t</ul><br>\n"
+"\t\t\t\t<p>To get more, please read the <a href=\"https://fulltextsearch."
+"org/wp-fulltext-search-pro-2-45-170-new-search-algorithm/\" "
+"target=\"_blank\">official announcement</a> on the WPFTS Pro blog.</p>"
+msgstr ""
+
+#: includes/version/1_22_46.php:4
+msgid ""
+"<ul><li>Introducing <b>Live Search</b>! You can switch Live Search ON with "
+"<b>WP Fast Total Search</b> by replacing standard Search Widget by special "
+"one provided by the plugin (go to Appearance / Widgets and select <b>WPFTS ::"
+" Live Search</b>)</li></ul>"
+msgstr ""
+
+#: includes/version/2_27_83.php:4
+msgid ""
+"<ul><li>The big WPFTS Pro update: lots of improvements of the database and "
+"the code</li>\n"
+"\t\t\t\t\t<li>Some interface bugs were fixed</li>\n"
+"\t\t\t\t\t<li>Relevance formula was completely rebuilt</li>\n"
+"\t\t\t\t\t<li>Reindex algorithm was sufficiently improved (now 5 times "
+"faster!)</li>\n"
+"\t\t\t\t\t<li>Attachment mimetypes replaced with file extensions</li>\n"
+"\t\t\t\t\t<li>Startup Wizard was rebuilt</li>\n"
+"\t\t\t\t</ul>"
+msgstr ""
+
+#: includes/wpfts_output.php:76 includes/templates/admin_page.php:132
+msgid "Active"
+msgstr ""
+
+#: includes/wpfts_output.php:1659
+msgid "Active Till"
+msgstr ""
+
+#: includes/updater/includes/form.php:44
+msgid "Active!"
+msgstr ""
+
+#: includes/wpfts_output.php:150
+msgid "Actual"
+msgstr ""
+
+#: includes/wpfts_index.php:469
+#, php-format
+msgid "Add document: bad index \"%s\" given."
+msgstr ""
+
+#: includes/wpfts_index.php:458
+msgid "Add document: parameter should be an array"
+msgstr ""
+
+#: includes/wpfts_output.php:1471
+msgid "Additional Options"
+msgstr ""
+
+#: includes/templates/addons.php:36
+msgid "Addons"
+msgstr ""
+
+#: includes/templates/addons.php:43
+msgid ""
+"Addons are special small plugins that can significantly extend the "
+"functionality of WPFTS and increase compatibility with your theme and other "
+"plugins."
+msgstr ""
+
+#: includes/templates/addons.php:51
+msgid "All Addons"
+msgstr ""
+
+#: includes/wpfts_output.php:772
+msgid "Allow All"
+msgstr ""
+
+#: includes/wpfts_output.php:1229
+msgid ""
+"Allow for posts to be searchable by the content of their attached files. "
+"When enabled, this option will include attachments' index to their parent "
+"post indexes."
+msgstr ""
+
+#: includes/wpfts_output.php:779
+msgid ""
+"Alternatively, you can allow to show attachments with these file types only"
+msgstr ""
+
+#: includes/templates/analytics.php:43
+msgid ""
+"Analysis of the information accumulated during use will help to identify "
+"long-term problems and optimize the search."
+msgstr ""
+
+#: fulltext-search.php:354 includes/templates/admin_page.php:180
+#: includes/templates/analytics.php:36
+msgid "Analytics"
+msgstr ""
+
+#: includes/wpfts_core.php:808
+msgid "and other supported files"
+msgstr ""
+
+#: includes/wpfts_core.php:847
+msgid ""
+"As a result, we are forced to use x64 software emulation, which decreases "
+"performance and increases search time."
+msgstr ""
+
+#: includes/wpfts_output.php:573
+msgid ""
+"At the very first step, the plugin removes too short words, stop words and "
+"punctuation marks from the search phrase. After that, the phrase is broken "
+"into words."
+msgstr ""
+
+#: includes/wpfts_output.php:1066
+msgid "Attachments Only:"
+msgstr ""
+
+#: includes/wpfts_output.php:43
+msgid "Audio"
+msgstr ""
+
+#: includes/wpfts_output.php:935
+msgid "Author"
+msgstr ""
+
+#: includes/wpfts_output.php:1415
+msgid "auto-draft (Auto-Draft)"
+msgstr ""
+
+#: includes/wpfts_output.php:449
+msgid "Auto-Index"
+msgstr ""
+
+#: includes/wpfts_output.php:79 includes/templates/admin_page.php:135
+msgid "Awaiting"
+msgstr ""
+
+#: includes/wpfts_output.php:1353
+msgid ""
+"Before the data from your posts (pages, meta-fields, etc.) gets into the "
+"Search Index, they go through a number of built-in WPFTS filters, including "
+"a custom hook <code>wpfts_index_post</code>. Enter the ID of any WordPress "
+"record to see what data will come to the Search Index."
+msgstr ""
+
+#: includes/widgets/wpfts_widget.class.php:186
+msgid "Button Text:"
+msgstr ""
+
+#: fulltext-search.php:214
+msgid "Changes was not saved - an error occured!"
+msgstr ""
+
+#: includes/wpfts_output.php:593
+msgid ""
+"Cleans up the query string before using it for search. Uncheck this only if "
+"you are using own text splitting algorithm."
+msgstr ""
+
+#: includes/wpfts_core.php:1271
+msgid "Cluster"
+msgstr ""
+
+#: includes/wpfts_output.php:852
+msgid "Cluster Name"
+msgstr ""
+
+#: includes/wpfts_output.php:845
+msgid "Cluster Weights"
+msgstr ""
+
+#: includes/wpfts_output.php:943
+msgid "Comment Count"
+msgstr ""
+
+#: includes/wpfts_output.php:132 includes/wpfts_output.php:290
+msgid "Continue Indexing"
+msgstr ""
+
+#: includes/wpfts_output.php:428
+msgid "Control Panel"
+msgstr ""
+
+#: includes/wpfts_output.php:368
+msgid "Counting..."
+msgstr ""
+
+#: includes/wpfts_output.php:939
+msgid "Created Date"
+msgstr ""
+
+#: includes/widgets/wpfts_widget.class.php:197
+msgid "CSS Class:"
+msgstr ""
+
+#: includes/wpfts_output.php:1655
+msgid "Current Plan"
+msgstr ""
+
+#: includes/wpfts_output.php:396
+#, php-format
+msgid "Current Version v%s"
+msgstr ""
+
+#: includes/wpfts_output.php:782
+msgid "Currently used file types (amount of files found)"
+msgstr ""
+
+#: includes/wpfts_output.php:1105
+msgid "Custom CSS Styling"
+msgstr ""
+
+#: includes/wpfts_output.php:651
+msgid "Deeper Search"
+msgstr ""
+
+#: includes/wpfts_output.php:632
+msgid "Default Search Logic"
+msgstr ""
+
+#: includes/wpfts_output.php:1085
+msgid "Demo Output:"
+msgstr ""
+
+#: includes/wpfts_output.php:1072
+msgid "Direct Download Link"
+msgstr ""
+
+#: includes/wpfts_output.php:1478
+msgid "Disable SQL cache"
+msgstr ""
+
+#: includes/wpfts_output.php:1475
+msgid "Disable WPFTS"
+msgstr ""
+
+#: includes/wpfts_output.php:73 includes/wpfts_output.php:330
+#: includes/wpfts_output.php:1652 includes/templates/admin_page.php:129
+msgid "Disabled"
+msgstr ""
+
+#: includes/templates/search-relevance.php:62
+msgid "Display"
+msgstr ""
+
+#: includes/templates/support.php:45
+msgid ""
+"Do you have any questions or difficulties using the plugin? You can find a "
+"solution yourself or contact the community.\n"
+msgstr ""
+
+#: includes/wpfts_output.php:401
+msgid "Do you need a feature?"
+msgstr ""
+
+#: includes/wpfts_output.php:398 includes/templates/support.php:64
+msgid "Documentation"
+msgstr ""
+
+#: includes/templates/support.php:47
+#, php-format
+msgid ""
+"Don't forget to specify the current version of the plugin %s when you ask "
+"questions."
+msgstr ""
+
+#: includes/templates/licensing.php:14
+msgid ""
+"Don't have a license code? <a href=\"https://fulltextsearch.org/?"
+"utm_source=extwp&utm_medium=wpfts&utm_campaign=licensinghint\" "
+"target=\"_blank\">Get yours here</a>."
+msgstr ""
+
+#: includes/wpfts_core.php:814 includes/wpfts_core.php:852
+msgid "Don't Show Again"
+msgstr ""
+
+#: includes/wpfts_result_item.php:633
+msgid "Download"
+msgstr ""
+
+#: includes/wpfts_output.php:1411
+msgid "draft (Draft)"
+msgstr ""
+
+#: includes/widgets/wpfts_widget.class.php:166
+msgid "Edit Presets"
+msgstr ""
+
+#: includes/wpfts_output.php:432
+msgid "Enable Fast Total Search"
+msgstr ""
+
+#: includes/wpfts_output.php:540
+msgid "Enable Index Optimizer"
+msgstr ""
+
+#: includes/wpfts_output.php:1006
+msgid "Enable Smart Excerpts"
+msgstr ""
+
+#: includes/wpfts_output.php:436 includes/wpfts_output.php:453
+#: includes/wpfts_output.php:493 includes/wpfts_output.php:510
+#: includes/wpfts_output.php:527 includes/wpfts_output.php:544
+#: includes/wpfts_output.php:586 includes/wpfts_output.php:656
+#: includes/wpfts_output.php:682 includes/wpfts_output.php:1011
+#: includes/wpfts_output.php:1166 includes/wpfts_output.php:1184
+#: includes/wpfts_output.php:1202 includes/wpfts_output.php:1223
+msgid "Enabled"
+msgstr ""
+
+#: includes/wpfts_output.php:663
+msgid ""
+"Enables searching substrings in the middle of words. This is much slower "
+"than usual search, so use it with care. Keep it disabled if you have any "
+"issues with MySQL performance."
+msgstr ""
+
+#: includes/updater/includes/form.php:57
+#, php-format
+msgid "Enter your <a%s>license key</a> to enable remote updates and support."
+msgstr ""
+
+#. Author of the plugin
+msgid "Epsiloncool"
+msgstr ""
+
+#: includes/wpfts_core.php:2221
+msgid "Error"
+msgstr ""
+
+#: includes/wpfts_core.php:503
+msgid "Error: "
+msgstr ""
+
+#: includes/wpfts_output.php:160
+msgid "Est. time left: "
+msgstr ""
+
+#: includes/wpfts_output.php:365
+msgid "Est. Time: "
+msgstr ""
+
+#. Description of the plugin
+msgid ""
+"Extends the default search with relevance, jet speed and ability to search "
+"any posts, metadata, taxonomy, shortcode content and any piece of the "
+"wordpress data. No external software/service required."
+msgstr ""
+
+#: includes/wpfts_output.php:1309
+msgid "Extraction Engine"
+msgstr ""
+
+#: fulltext-search.php:347
+msgid "Fast Total Search"
+msgstr ""
+
+#: includes/wpfts_output.php:1068
+msgid "File Extension"
+msgstr ""
+
+#: includes/wpfts_output.php:1298 includes/templates/indexing-engine.php:55
+msgid "File Extraction Rules"
+msgstr ""
+
+#: includes/wpfts_result_item.php:636
+msgid "File Size"
+msgstr ""
+
+#: includes/wpfts_output.php:1070
+msgid "Filesize"
+msgstr ""
+
+#: includes/templates/search-relevance.php:53
+msgid "Filter"
+msgstr ""
+
+#: includes/wpfts_core.php:1291
+#, php-format
+msgid ""
+"Filter result is not array. Please read <a href=\"%s\" target=\"_blank\">"
+"documentation</a> to fix this error."
+msgstr ""
+
+#: includes/wpfts_output.php:523
+msgid "Fix MariaDB bug"
+msgstr ""
+
+#: includes/wpfts_output.php:1303
+msgid ""
+"For a number of reasons, you can refuse to use this service, but in this "
+"case, the conversion quality and the number of supported file types will be "
+"significantly less."
+msgstr ""
+
+#: includes/wpfts_output.php:1153
+msgid ""
+"For maximum compatibility with the standard WordPress search, by default, we "
+"always index the title and the content of all posts, pages, and custom posts "
+"and put them in clusters \"post_title\" and \"post_content\", respectively. "
+"But this can be modified if required."
+msgstr ""
+
+#: includes/templates/support.php:72
+msgid "Forum"
+msgstr ""
+
+#: includes/wpfts_core.php:1462
+#, php-format
+msgid "Found: <b>%d</b> posts"
+msgstr ""
+
+#: includes/wpfts_output.php:1410
+msgid "future (Future)"
+msgstr ""
+
+#: includes/updater/classes/wpfts_updater.php:563
+msgid "Get PRO Now"
+msgstr ""
+
+#: includes/wpfts_output.php:402
+msgid "Get WPFTS Pro"
+msgstr ""
+
+#: includes/templates/sandbox-area.php:43
+msgid ""
+"Here you can test different parts of the WPFTS engine to find the reason of "
+"possible issue."
+msgstr ""
+
+#: includes/widgets/wpfts_widget.class.php:191
+msgid "Hide Button"
+msgstr ""
+
+#: includes/wpfts_output.php:1677
+msgid "Hint"
+msgstr ""
+
+#. Author URI of the plugin
+msgid "https://e-wm.org"
+msgstr ""
+
+#: includes/wpfts_core.php:1430
+msgid "ID"
+msgstr ""
+
+#: includes/wpfts_output.php:324
+msgid "Idle"
+msgstr ""
+
+#: includes/wpfts_output.php:443
+msgid ""
+"If not enabled, the regular integrated \"not indexed\" WordPress search will "
+"be used"
+msgstr ""
+
+#: includes/wpfts_output.php:40
+msgid "Image"
+msgstr ""
+
+#: includes/wpfts_output.php:82
+msgid "In Index"
+msgstr ""
+
+#: includes/wpfts_core.php:272
+#, php-format
+msgid "In the version <b>%s</b>:"
+msgstr ""
+
+#: includes/wpfts_output.php:1220
+msgid "Include Attachments"
+msgstr ""
+
+#: includes/wpfts_output.php:1041
+msgid "Include to excerpt:"
+msgstr ""
+
+#: fulltext-search.php:153
+msgid "Index"
+msgstr ""
+
+#: includes/templates/analytics.php:54
+msgid "Index Browser"
+msgstr ""
+
+#: includes/wpfts_output.php:1351
+msgid "Index Engine Tester"
+msgstr ""
+
+#: includes/wpfts_output.php:183
+msgid "Index is OK"
+msgstr ""
+
+#: includes/wpfts_output.php:186
+msgid "Index is PAUSED"
+msgstr ""
+
+#: includes/wpfts_output.php:1161
+msgid "Index Shortcodes Content"
+msgstr ""
+
+#: includes/wpfts_output.php:333
+msgid "Indexing"
+msgstr ""
+
+#: includes/wpfts_output.php:1150 includes/templates/indexing-engine.php:52
+msgid "Indexing Defaults"
+msgstr ""
+
+#: fulltext-search.php:351
+msgid "Indexing Engine"
+msgstr ""
+
+#: fulltext-search.php:351 includes/templates/admin_page.php:177
+#: includes/templates/indexing-engine.php:36
+msgid "Indexing Engine Settings"
+msgstr ""
+
+#: includes/wpfts_output.php:225
+msgid "Indexing Engine Status"
+msgstr ""
+
+#: includes/wpfts_output.php:191
+msgid "Indexing is disabled"
+msgstr ""
+
+#: includes/wpfts_output.php:154 includes/wpfts_output.php:333
+msgid "Indexing is in progress"
+msgstr ""
+
+#: includes/wpfts_output.php:147
+msgid "Indexing is PAUSED"
+msgstr ""
+
+#: includes/wpfts_output.php:336
+msgid "Indexing is paused"
+msgstr ""
+
+#: includes/wpfts_output.php:336
+msgid "Indexing is temporary stopped"
+msgstr ""
+
+#: includes/wpfts_output.php:1416
+msgid "inherit (Inherit)"
+msgstr ""
+
+#: includes/templates/indexing-engine.php:42
+msgid ""
+"Initially, the plugin collects data from the database of your website (posts,"
+" pages, custom type posts, file contents, taxonometry, meta fields etc) and "
+"places them in a special structure called the <b>Search Index</b>."
+msgstr ""
+
+#: includes/wpfts_output.php:581
+msgid "Internal Query Filter"
+msgstr ""
+
+#: includes/templates/search-relevance.php:43
+msgid ""
+"It is important to remember that site data is not used directly for search, "
+"instead, all actions are performed on the Search Index."
+msgstr ""
+
+#: includes/wpfts_output.php:48
+msgid "iWork"
+msgstr ""
+
+#: includes/wpfts_core.php:814
+msgid "Learn More"
+msgstr ""
+
+#: includes/templates/licensing.php:28 includes/updater/includes/form.php:52
+msgid "License key saved!"
+msgstr ""
+
+#: fulltext-search.php:360 includes/wpfts_output.php:1538
+#: includes/templates/admin_page.php:186
+msgid "Licensing"
+msgstr ""
+
+#: includes/templates/licensing.php:13
+msgid ""
+"Licensing your copy of the WPFTS Pro is necessary for the normal operation "
+"of Textmill.io, receiving regular product updates and first-class technical "
+"support. Make sure that the license code is entered correctly and that it is "
+"in Active state."
+msgstr ""
+
+#: includes/wpfts_output.php:769
+msgid "Limit File Types"
+msgstr ""
+
+#: includes/wpfts_output.php:1074
+msgid "Link Title to File Download"
+msgstr ""
+
+#: includes/templates/support.php:88
+msgid "Live Chat"
+msgstr ""
+
+#: fulltext-search.php:350 includes/templates/admin_page.php:176
+#: includes/templates/main-configuration.php:36
+msgid "Main Configuration"
+msgstr ""
+
+#: includes/wpfts_output.php:45
+msgid "Microsoft Office"
+msgstr ""
+
+#: includes/wpfts_output.php:44
+msgid "Misc App"
+msgstr ""
+
+#: includes/wpfts_output.php:940
+msgid "Modified Date"
+msgstr ""
+
+#: includes/wpfts_output.php:1315
+msgid "Native PHP only"
+msgstr ""
+
+#: includes/wpfts_output.php:460
+msgid ""
+"Normally, WP Fast Total Search will auto index any new post or post changes "
+"even if you disabled the previous option. Disabling this option will "
+"completely stop all plugin functions. However, you probably have to do a "
+"full index rebuild, if you activate the plugin again."
+msgstr ""
+
+#: includes/updater/includes/form.php:46
+msgid "Not Active!"
+msgstr ""
+
+#: includes/wpfts_result_item.php:622
+msgid "Not found"
+msgstr ""
+
+#: includes/wpfts_core.php:2211
+msgid "Not Indexed"
+msgstr ""
+
+#: includes/wpfts_output.php:50
+msgid "Not Registered"
+msgstr ""
+
+#: includes/wpfts_output.php:1550 includes/updater/includes/form.php:61
+msgid "NOTE:"
+msgstr ""
+
+#: includes/wpfts_output.php:1323
+msgid ""
+"Note: Native PHP only supports medium-quality PDF parsing at the moment. "
+"Plain-text based formats (TXT, CSS, HTML, HTM etc) are always processing by "
+"Native PHP."
+msgstr ""
+
+#: includes/templates/indexing-engine.php:44
+msgid ""
+"Note: These changes <b>will not update</b> the current Search Index "
+"automatically, you need to start reindex manually."
+msgstr ""
+
+#: includes/wpfts_output.php:1126
+msgid ""
+"Notice: this is a <b>beta version</b> of the Smart Excerpt function. In case "
+"it does not work for your theme/site, please do not hesistate to send us "
+"some information with screenshots and theme name <a href=\"https:"
+"//fulltextsearch.org/contact/\" target=\"_blank\">here</a>."
+msgstr ""
+
+#: includes/wpfts_output.php:352
+msgid "of"
+msgstr ""
+
+#: includes/wpfts_core.php:2226
+msgid "Ok"
+msgstr ""
+
+#: includes/templates/indexing-engine.php:43
+msgid ""
+"On this page, you indicate what data the plugin should collect, how to "
+"convert it, and in which index sections (clusters) to place."
+msgstr ""
+
+#: includes/wpfts_output.php:1376
+msgid ""
+"Open any Edit Post page, check the URL and find <code>post=<b>&lt;number&gt;"
+"</b></code> part there. The <b>&lt;number&gt;</b> is an actual Post ID"
+msgstr ""
+
+#: includes/wpfts_output.php:46
+msgid "OpenOffice"
+msgstr ""
+
+#: includes/wpfts_output.php:1023
+msgid "Optimal Length"
+msgstr ""
+
+#: includes/wpfts_output.php:1087
+msgid "Optimal Length is ignored here"
+msgstr ""
+
+#: includes/wpfts_core.php:1942
+msgid "Optimal Length should be a number from 10 to 10240"
+msgstr ""
+
+#: includes/wpfts_output.php:339
+msgid "Optimizing"
+msgstr ""
+
+#: includes/wpfts_output.php:167
+msgid "Optimizing Index"
+msgstr ""
+
+#: includes/wpfts_output.php:170
+msgid "Optimizing is PAUSED"
+msgstr ""
+
+#: includes/wpfts_output.php:342
+msgid "Optimizing is paused"
+msgstr ""
+
+#: includes/wpfts_output.php:342
+msgid "Optimizing is temporary stopped"
+msgstr ""
+
+#: includes/wpfts_output.php:339
+msgid "Optimizing the index"
+msgstr ""
+
+#: includes/wpfts_output.php:673
+#, php-format
+msgid "Options below available in %s Pro version %s only"
+msgstr ""
+
+#: includes/wpfts_output.php:795
+msgid "Other File Formats (not used yet on this website)"
+msgstr ""
+
+#: includes/wpfts_output.php:941
+msgid "Parent Post ID"
+msgstr ""
+
+#: includes/wpfts_output.php:131 includes/wpfts_output.php:289
+msgid "Pause"
+msgstr ""
+
+#: includes/wpfts_output.php:327 includes/wpfts_output.php:367
+msgid "Paused"
+msgstr ""
+
+#: includes/wpfts_core.php:2207 includes/wpfts_output.php:151
+#: includes/wpfts_output.php:352
+msgid "Pending"
+msgstr ""
+
+#: includes/wpfts_output.php:1412
+msgid "pending (Pending)"
+msgstr ""
+
+#: includes/widgets/wpfts_widget.class.php:179
+msgid "Placeholder Text:"
+msgstr ""
+
+#: includes/wpfts_core.php:849
+msgid ""
+"Please contact your hosting provider to migrate your website to a modern <b>"
+"x64</b> server. This will speed up the search by 20-30%, and possibly even "
+"more."
+msgstr ""
+
+#: includes/updater/classes/wpfts_updater.php:559
+msgid "Please get PRO license to enable automatic updates for this plugin."
+msgstr ""
+
+#: includes/wpfts_core.php:1239
+msgid "Please specify a number"
+msgstr ""
+
+#: includes/wpfts_core.php:1236
+msgid "Please specify post ID"
+msgstr ""
+
+#: includes/wpfts_core.php:1338
+msgid "Please specify search query"
+msgstr ""
+
+#: includes/wpfts_output.php:934 includes/wpfts_output.php:1359
+msgid "Post ID"
+msgstr ""
+
+#: includes/wpfts_output.php:164
+msgid "post records done"
+msgstr ""
+
+#: includes/wpfts_output.php:937
+msgid "Post Slug"
+msgstr ""
+
+#: includes/wpfts_output.php:1492
+msgid "Post Status:"
+msgstr ""
+
+#: includes/wpfts_output.php:938
+msgid "Post Type"
+msgstr ""
+
+#: includes/wpfts_output.php:1486
+msgid "Post Type:"
+msgstr ""
+
+#: includes/wpfts_core.php:1620
+msgid "posts per page"
+msgstr ""
+
+#: includes/widgets/wpfts_widget.class.php:165
+msgid "Preset:"
+msgstr ""
+
+#: includes/wpfts_output.php:1108
+msgid "Preview Styles"
+msgstr ""
+
+#: includes/wpfts_output.php:1413
+msgid "private (Private)"
+msgstr ""
+
+#: includes/wpfts_core.php:2217
+msgid "Processing"
+msgstr ""
+
+#: includes/wpfts_output.php:144
+msgid "Processing post records"
+msgstr ""
+
+#: includes/wpfts_output.php:1409
+msgid "publish (Published)"
+msgstr ""
+
+#: includes/wpfts_output.php:1441 includes/templates/search-relevance.php:50
+msgid "Query"
+msgstr ""
+
+#: includes/templates/analytics.php:51
+msgid "Query Log"
+msgstr ""
+
+#: includes/wpfts_output.php:942
+msgid "Random"
+msgstr ""
+
+#: includes/wpfts_output.php:370
+msgid "Ready for changes"
+msgstr ""
+
+#: includes/wpfts_output.php:469
+msgid "Rebuild Index"
+msgstr ""
+
+#: includes/templates/addons.php:54
+msgid "Recommended"
+msgstr ""
+
+#: includes/wpfts_output.php:355
+msgid "Records"
+msgstr ""
+
+#: includes/wpfts_output.php:82 includes/wpfts_output.php:150
+#: includes/wpfts_output.php:151
+msgid "records"
+msgstr ""
+
+#: includes/wpfts_index.php:111
+msgid "Reindex: wrong chunks format"
+msgstr ""
+
+#: includes/wpfts_core.php:1434 includes/templates/search-relevance.php:56
+msgid "Relevance"
+msgstr ""
+
+#: includes/wpfts_output.php:933
+msgid "Relevance (WP default)"
+msgstr ""
+
+#: includes/wpfts_output.php:1179
+msgid "Remove Non-Text HTML Nodes"
+msgstr ""
+
+#: includes/wpfts_output.php:1191
+msgid ""
+"Removes <code>style</code> and <code>script</code> HTML nodes with their "
+"content."
+msgstr ""
+
+#: includes/wpfts_output.php:1209
+msgid ""
+"Removes HTML tags and comments from the <code>post_content</code> while "
+"indexing (useful for Gutenberg-driven sites)."
+msgstr ""
+
+#: includes/wpfts_output.php:1173
+msgid ""
+"Renders registered shortcodes in the <code>post_content</code> before "
+"indexing."
+msgstr ""
+
+#: includes/wpfts_output.php:1018
+msgid "Replaces Wordpress excerpts by WPFTS Smart Excerpts in search results"
+msgstr ""
+
+#: includes/wpfts_output.php:401
+msgid "Request here."
+msgstr ""
+
+#: includes/wpfts_output.php:1109
+msgid "Reset to Default"
+msgstr ""
+
+#: includes/wpfts_output.php:470 includes/templates/admin_page.php:97
+msgid "Resetting"
+msgstr ""
+
+#: includes/wpfts_core.php:1255
+#, php-format
+msgid "Results of Pre-indexing Filter Tester for Post ID = %s"
+msgstr ""
+
+#: includes/wpfts_core.php:1351
+#, php-format
+msgid "Results of search for query = \"%s\""
+msgstr ""
+
+#: fulltext-search.php:353 includes/templates/admin_page.php:179
+#: includes/templates/sandbox-area.php:36
+msgid "Sandbox Area"
+msgstr ""
+
+#: includes/wpfts_output.php:1623
+msgid "Save"
+msgstr ""
+
+#: fulltext-search.php:213
+msgid "Save Changes"
+msgstr ""
+
+#: includes/updater/includes/form.php:69
+msgid "Save Subscription Settings"
+msgstr ""
+
+#: includes/wpfts_result_item.php:626
+msgid "Score"
+msgstr ""
+
+#: includes/wpfts_output.php:1052
+msgid "Score/Relevance"
+msgstr ""
+
+#: includes/wpfts_shortcodes.php:36 includes/widgets/wpfts_widget.class.php:134
+msgid "Search"
+msgstr ""
+
+#: fulltext-search.php:352 includes/templates/admin_page.php:178
+#: includes/templates/search-relevance.php:36
+msgid "Search & Output"
+msgstr ""
+
+#: includes/wpfts_shortcodes.php:35 includes/widgets/wpfts_widget.class.php:133
+msgid "Search &hellip;"
+msgstr ""
+
+#: includes/wpfts_output.php:69
+msgid "Search Engine Status"
+msgstr ""
+
+#: includes/wpfts_shortcodes.php:70 includes/widgets/wpfts_widget.class.php:102
+msgid "Search for:"
+msgstr ""
+
+#: includes/wpfts_output.php:679
+msgid "Search in File Contents"
+msgstr ""
+
+#: includes/wpfts_output.php:957
+msgid "Search Order"
+msgstr ""
+
+#: includes/wpfts_output.php:927
+msgid "Search Order By"
+msgstr ""
+
+#: includes/wpfts_output.php:952
+msgid "Search results will be ordered by selected field."
+msgstr ""
+
+#: includes/wpfts_output.php:1431
+msgid "Search Tester"
+msgstr ""
+
+#: fulltext-search.php:334 fulltext-search.php:412
+msgid "Settings"
+msgstr ""
+
+#: includes/wpfts_output.php:792
+msgid "Show All File Types &gt;&gt;"
+msgstr ""
+
+#: includes/wpfts_core.php:1608
+#, php-format
+msgid "Shown <span>%1s</span> from <b>%2s</b>"
+msgstr ""
+
+#: includes/wpfts_output.php:1047
+msgid "Smart Excerpt text"
+msgstr ""
+
+#: includes/wpfts_output.php:517
+msgid ""
+"Some modern (block) themes are using Gutenberg \"wp:query\" blocks to render "
+"search results. This checkbox should be ON to let WPFTS work with them."
+msgstr ""
+
+#: fulltext-search.php:422
+msgid "Sorry, but you do not have permissions to change settings."
+msgstr ""
+
+#: includes/templates/search-relevance.php:59
+msgid "Sort Results"
+msgstr ""
+
+#: includes/templates/admin_page.php:97
+msgid "Start Indexing"
+msgstr ""
+
+#: includes/wpfts_core.php:1432 includes/wpfts_output.php:1651
+msgid "Status"
+msgstr ""
+
+#: includes/wpfts_output.php:570
+msgid "STEP #1: Query Preprocessing"
+msgstr ""
+
+#: includes/wpfts_output.php:622
+msgid "STEP #2: Find Records"
+msgstr ""
+
+#: includes/wpfts_output.php:834
+msgid "STEP #3: Calculate Relevance"
+msgstr ""
+
+#: includes/wpfts_output.php:916
+msgid "STEP #4: Sort Results"
+msgstr ""
+
+#: includes/wpfts_output.php:995
+msgid "STEP #5: Show Results"
+msgstr ""
+
+#: includes/wpfts_output.php:1197
+msgid "Strip HTML Tags From Post Contents"
+msgstr ""
+
+#: includes/wpfts_output.php:399
+msgid "Stucked? Get a solution or ask your question on"
+msgstr ""
+
+#: includes/updater/includes/form.php:36
+msgid "Subscribe Now"
+msgstr ""
+
+#: fulltext-search.php:356 includes/templates/admin_page.php:182
+#: includes/templates/support.php:38
+msgid "Support & Docs"
+msgstr ""
+
+#: includes/wpfts_output.php:371
+msgid "Temporary stopped"
+msgstr ""
+
+#: includes/wpfts_output.php:1367
+msgid "Test Filter"
+msgstr ""
+
+#: includes/templates/sandbox-area.php:51
+msgid "Test Indexing Engine"
+msgstr ""
+
+#: includes/wpfts_output.php:1449 includes/templates/sandbox-area.php:54
+msgid "Test Search"
+msgstr ""
+
+#: includes/wpfts_output.php:42
+msgid "Text"
+msgstr ""
+
+#: includes/wpfts_core.php:1272
+msgid "Text Content"
+msgstr ""
+
+#: includes/wpfts_output.php:1314
+msgid "TextMill.io then Native PHP"
+msgstr ""
+
+#: includes/templates/support.php:75
+#, php-format
+msgid ""
+"The Community Forum where you can find a solution, ask any question, get the "
+"answer and discuss, 100% free for all users."
+msgstr ""
+
+#: fulltext-search.php:223
+msgid ""
+"The conversion process will take some time,\n"
+"during which you should stay on this page of the browser.\n"
+"\n"
+"If the progress value does not change for more than 2 minutes,\n"
+"refresh the page manually."
+msgstr ""
+
+#: includes/wpfts_core.php:1310 includes/wpfts_core.php:1480
+#: includes/wpfts_core.php:1757 includes/wpfts_core.php:1781
+#: includes/wpfts_core.php:1797 includes/wpfts_core.php:1817
+#: includes/wpfts_core.php:1839 includes/wpfts_core.php:1894
+#: includes/wpfts_core.php:1916 includes/wpfts_core.php:1976
+msgid "The form is outdated. Please refresh the page and try again."
+msgstr ""
+
+#: includes/widgets/wpfts_widget.class.php:43
+msgid "The highly configurable widget for WPFTS search"
+msgstr ""
+
+#: includes/wpfts_output.php:551
+msgid ""
+"The Index Optimizer may increase search speed by 30-50%, but it takes "
+"additional time for indexing and consumes an essential part of DB space, CPU,"
+" and RAM. If you have any hosting limitations on those resources, do not "
+"enable this option."
+msgstr ""
+
+#: includes/templates/support.php:83
+msgid ""
+"The official Wordpress.org support page for the WP Fast Total Search plugin "
+"(only for free version)"
+msgstr ""
+
+#: includes/wpfts_core.php:1296
+msgid "The post with specified ID is not found."
+msgstr ""
+
+#: includes/templates/support.php:91
+#, php-format
+msgid ""
+"The priority direct support that is available for %1sPro license%2s owners"
+msgstr ""
+
+#: includes/wpfts_output.php:837
+msgid ""
+"The relevance formula is based on the classic <a href=\"https://en.wikipedia."
+"org/wiki/Tf-idf\" target=\"_blank\">TF-IDF</a> equation. You can justify the "
+"value by assigning some weights to specific clusters, post types or date "
+"ranges (*in development*) which will give you additional flexibility."
+msgstr ""
+
+#: includes/templates/search-relevance.php:42
+#, php-format
+msgid ""
+"The search algorithm is a sequence of 5 simple steps. You can do some tweaks "
+"at every step. If you need deeper work, you can use hooks. Check out the <a "
+"href=\"%s\" target=\"_blank\">documentation</a>."
+msgstr ""
+
+#: includes/wpfts_output.php:73 includes/templates/admin_page.php:129
+msgid "The Search Index was disabled in configuration."
+msgstr ""
+
+#: includes/wpfts_output.php:79 includes/templates/admin_page.php:135
+msgid ""
+"The Search Index will be activated after the indexing process is complete."
+msgstr ""
+
+#: includes/wpfts_output.php:534
+msgid ""
+"The server MariaDB v10.3+ has a known bug <a href=\"https://jira.mariadb."
+"org/browse/MDEV-21614\" target=\"_blank\">#21614</a> where searches may "
+"sometimes give incorrect results or no results at all. This option fixes the "
+"problem by disabling the corresponding MariaDB algorithm. The option is "
+"irrelevant if your hosting uses a MySQL server."
+msgstr ""
+
+#: includes/wpfts_core.php:1860
+#, php-format
+msgid ""
+"The weight value of cluster \"%s\" should be numeric value from 0.0 to 1.0"
+msgstr ""
+
+#: includes/templates/support.php:59
+msgid "The WP Fast Total Search plugin website"
+msgstr ""
+
+#: includes/wpfts_output.php:399
+msgid "The WPFTS Community Forum"
+msgstr ""
+
+#: includes/wpfts_output.php:625
+msgid ""
+"Then, the algorithm effectively scans the index to find those entries in "
+"which the words (or parts of them) mentioned in the query are found."
+msgstr ""
+
+#: includes/wpfts_core.php:1248 includes/wpfts_core.php:1346
+#: includes/wpfts_core.php:1871 includes/wpfts_core.php:1964
+msgid "There are errors"
+msgstr ""
+
+#: includes/wpfts_output.php:469
+msgid ""
+"This action will completely rebuild the search index completely, which could "
+"take some time. Are you sure?"
+msgstr ""
+
+#: fulltext-search.php:216
+msgid "This action will reset your custom CSS styles, are you sure?"
+msgstr ""
+
+#: includes/wpfts_output.php:1550 includes/updater/includes/form.php:61
+msgid "This applies to all sites on the network."
+msgstr ""
+
+#: includes/wpfts_output.php:1117
+msgid ""
+"This CSS snippet will be automatically minimized upon usage with a frontend."
+msgstr ""
+
+#: includes/wpfts_output.php:1575
+#, php-format
+msgid "This evaluation key has expired. Get Pro key <a href=\"%s\">now</a>."
+msgstr ""
+
+#: includes/wpfts_output.php:1577
+#, php-format
+msgid "This key has expired. <a href=\"%s\">Renew now</a>"
+msgstr ""
+
+#: includes/wpfts_output.php:1580
+#, php-format
+msgid "This key is not valid. Get valid one <a href=\"%s\">here</a>."
+msgstr ""
+
+#: fulltext-search.php:215
+#, php-format
+msgid ""
+"This link follows to\n"
+"\n"
+"%s"
+msgstr ""
+
+#: includes/wpfts_output.php:1300
+msgid "This option is available in Pro version only"
+msgstr ""
+
+#: includes/wpfts_output.php:645
+msgid ""
+"This option tells the search engine whether all query words should contain "
+"in the found post (AND) or any of these words (OR)."
+msgstr ""
+
+#: includes/wpfts_core.php:496
+msgid ""
+"This plugin requires WordPress 3.0 or newer. Please update your WordPress "
+"installation to activate this plugin."
+msgstr ""
+
+#: includes/wpfts_core.php:1379
+#, php-format
+msgid "Time spent: <b>%.3f</b> sec"
+msgstr ""
+
+#: includes/wpfts_output.php:936
+msgid "Title"
+msgstr ""
+
+#: includes/wpfts_core.php:1433
+msgid "Title, Thumbnail, Excerpt"
+msgstr ""
+
+#: includes/widgets/wpfts_widget.class.php:158
+msgid "Title:"
+msgstr ""
+
+#: includes/wpfts_output.php:919
+msgid ""
+"To be useful, the results should be shown in the specified order. It's a "
+"good place to set it up."
+msgstr ""
+
+#: includes/wpfts_output.php:1302
+#, php-format
+msgid ""
+"To search for files by their contents, the plugin places the text extracted "
+"from them into the search index. Extracting text is quite a resource-"
+"intensive operation, and the power of your server may not be enough for most "
+"file types. Therefore, we developed an external service (%s) that produces "
+"this work efficiently and quickly."
+msgstr ""
+
+#: includes/wpfts_output.php:1414
+msgid "trash (Trash)"
+msgstr ""
+
+#: includes/wpfts_core.php:1431
+msgid "Type"
+msgstr ""
+
+#: includes/wpfts_core.php:881
+msgid "Unable to find default stylesheet file"
+msgstr ""
+
+#: includes/wpfts_core.php:2202
+msgid "Unknown"
+msgstr ""
+
+#: includes/updater/classes/wpfts_updater.php:341
+msgid "Unknown error happen while fetching addons list"
+msgstr ""
+
+#: includes/wpfts_output.php:1592
+msgid "Update API is not accessible"
+msgstr ""
+
+#: includes/updater/includes/form.php:41
+msgid "Updates &amp; Support Subscription"
+msgstr ""
+
+#: includes/wpfts_output.php:1562
+msgid ""
+"Updates and Support Subscription is <span class=\"text-danger\">"
+"Disabled</span>"
+msgstr ""
+
+#: includes/wpfts_output.php:1560
+msgid ""
+"Updates and Support Subscription is <span class=\"text-success\">"
+"Active</span>"
+msgstr ""
+
+#: includes/updater/includes/form.php:35
+msgid ""
+"UPDATES UNAVAILABLE! Please subscribe or enter your license key below to "
+"enable automatic updates."
+msgstr ""
+
+#: includes/wpfts_output.php:1547
+msgid "Upgrade Now"
+msgstr ""
+
+#: includes/templates/support.php:67
+msgid "Usage and API description"
+msgstr ""
+
+#: includes/wpfts_output.php:506
+msgid "Use for Blocks"
+msgstr ""
+
+#: includes/wpfts_output.php:489
+msgid "Use in WP Admin"
+msgstr ""
+
+#: includes/wpfts_output.php:476
+#, php-format
+msgid ""
+"Use this button when you need to completely rebuild search index database, "
+"for example, when you changed custom <b>wpfts_index_post</b> filter function."
+" Remember that this operation could take a long time. Please refer for <a "
+"href=\"%s\" target=\"_blank\">documentation</a> for more information."
+msgstr ""
+
+#: includes/wpfts_output.php:49
+msgid "Used-Defined"
+msgstr ""
+
+#: includes/wpfts_output.php:394
+msgid "Useful Information"
+msgstr ""
+
+#: includes/wpfts_output.php:41
+msgid "Video"
+msgstr ""
+
+#: includes/wpfts_output.php:1587
+msgid ""
+"Warning! We can not connect to WPFTS server. There can be some reasons: "
+"either your network connection is not active, or your server is behind the "
+"firewall or domain <b>fulltextsearch.org</b> or it's IP is blacklisted.<br>"
+"We recommend you to contact your server administrator to help you with this."
+msgstr ""
+
+#: includes/wpfts_output.php:851
+msgid "Weight"
+msgstr ""
+
+#: includes/wpfts_output.php:688
+msgid ""
+"When checked on, WPFTS will search attachments by contents and show them in "
+"search results like usual posts."
+msgstr ""
+
+#: includes/wpfts_output.php:1374
+msgid "Where do I get this Post ID?"
+msgstr ""
+
+#: includes/wpfts_output.php:47
+msgid "WordPerfect"
+msgstr ""
+
+#: includes/templates/support.php:80
+msgid "Wordpress.org Support"
+msgstr ""
+
+#. Name of the plugin
+msgid "WP Fast Total Search - The Power of Indexed Search"
+msgstr ""
+
+#: includes/templates/admin_page.php:42
+msgid "WP Fast Total Search Options"
+msgstr ""
+
+#. Base ID
+#: includes/widgets/wpfts_widget.class.php:40
+msgid "WPFTS :: Live Search"
+msgstr ""
+
+#: includes/wpfts_output.php:998
+#, php-format
+msgid ""
+"WPFTS can output search results in a Google-like way - showing only "
+"sentences which contains search words and highlighting them. Wordpress by "
+"default does not show any content for result items if the items are "
+"attachments. Smart Excerpts function can output attachment content too. <a "
+"href=\"%s\" target=\"_blank\">Read more</a>."
+msgstr ""
+
+#: includes/wpfts_output.php:397 includes/templates/support.php:56
+msgid "WPFTS Home"
+msgstr ""
+
+#: includes/wpfts_output.php:1035
+msgid ""
+"WPFTS will try to keep excerpt length between 90% and 110% of this value"
+msgstr ""
+
+#: includes/wpfts_output.php:500
+msgid ""
+"You can let the WPFTS plugin make searches inside WP Admin, however, this is "
+"an EXPERIMENTAL feature and can make some issues."
+msgstr ""
+
+#: includes/wpfts_output.php:973
+msgid "You can select the direction of sorting."
+msgstr ""
+
+#: includes/wpfts_output.php:1434
+msgid ""
+"You can test search with any query here. Standard wordpress <b>WP_Query</b> "
+"object with WPFTS features will be used."
+msgstr ""
+
+#: includes/wpfts_output.php:1616
+msgid "Your License Key"
+msgstr ""
+
+#: includes/wpfts_output.php:178
+msgid ""
+"Your site may run slower while indexing. It will go back to normal when the "
+"process is complete."
+msgstr ""

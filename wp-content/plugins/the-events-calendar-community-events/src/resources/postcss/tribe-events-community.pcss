@@ -1,0 +1,1333 @@
+/* Utilities */
+@import "utilities/_all.pcss";
+
+/**
+ * Community Events Stylesheet
+ * The stylesheet for Community Events.
+ *
+ * Override this stylesheet in your own theme by creating a file at
+ * [your-theme]/tribe-events/community/tribe-events-community.css
+ *
+ * @package Tribe__Events__Community__Community_Events
+ * @since  1.0
+ * @TODO refactor single media query to nested contextual queries
+ * @author The Events Calendar
+ *
+ */
+
+/**
+ * TABLE OF CONTENTS
+ *
+ *  Global
+		Buttons
+ *  Event Title
+ *  Event Description
+ *  Event Categories
+ *  Event Tags
+ *  Event Image
+ *  Event Time & Date
+ *  Event Venue
+ *  Event Organizer
+ *  Event Website
+ *  Event Cost
+ *  Events List
+ *  Additional Fields
+ *  Utilities & Theme Specific Hacks
+		Twenty Fourteen
+		Twenty Fifteen
+		Twenty Sixteen
+		Twenty Seventeen
+		Avada
+ *  Mobile Styles
+ */
+
+.tribe_community_edit,
+.tribe_community_list {
+	/* ------------------------------------ *\
+		Select2 Global Drop/Mask
+	\* ------------------------------------ */
+	.select2-drop {
+		.select2-results {
+			font-size: var(--tec-font-size-1);
+		}
+
+		input[type="text"] {
+			font-size: var(--tec-font-size-1);
+			padding: 0 var(--tec-spacer-0);
+		}
+	}
+
+	/* ------------------------------------ *\
+		jQuery UI Dialog
+	\* ------------------------------------ */
+	.ui-dialog {
+		background-color: var(--tec-color-background);
+		box-shadow: 0 0 var(--tec-spacer-1) var(--tec-color-box-shadow-light);
+		font-size: var(--tec-font-size-1);
+
+		.button {
+			font-size: var(--tec-font-size-1);
+		}
+	}
+
+	/* ------------------------------------ *\
+		jQuery UI Datepicker
+	\* ------------------------------------ */
+	.ui-datepicker {
+		a {
+			text-decoration: none;
+		}
+
+		input,
+		select,
+		textarea {
+			padding: 0.125em;
+		}
+	}
+
+	/* -------------------- *\
+		#BUTTONS
+	\* -------------------- */
+	.button,
+	#tribe-add-exclusion,
+	.tribe-add-recurrence.tribe-button,
+	.tribe-button,
+	.button-secondary,
+	.button-primary {
+		background: var(--tec-color-button-secondary);
+		border-radius: var(--tec-border-radius-default);
+		color: var(--tec-color-background);
+		cursor: pointer;
+		display: inline-block;
+		font-family: var(--tec-font-family-sans-serif);
+		font-size: var(--tec-font-size-1);
+		-webkit-font-smoothing: subpixel-antialiased;
+		font-weight: var(--tec-font-weight-regular);
+		height: auto;
+		letter-spacing: 1px;
+		line-height: 1;
+		padding: var(--tec-spacer-2);
+		text-align: center;
+		text-decoration: none;
+		text-transform: uppercase;
+
+		&:hover,
+		&:focus {
+			background: var(--tec-color-button-secondary-hover);
+			box-shadow: none;
+			color: var(--tec-color-background);
+			text-decoration: none;
+		}
+
+		&:active {
+			background: var(--tec-color-button-secondary-active);
+		}
+
+		span {
+			font-size: inherit;
+			line-height: inherit;
+		}
+	}
+
+	.button-primary.tribe-delete-this.tribe-confirm-delete-this {
+		display: none;
+	}
+
+	.tribe-button.tribe-button-primary,
+	.button-primary {
+		background: var(--tec-color-button-primary);
+
+		&:hover,
+		&:focus {
+			background: var(--tec-color-button-primary-hover);
+		}
+
+		&:active {
+			background: var(--tec-color-button-primary-active);
+		}
+	}
+
+	.tribe-button.submit {
+		background: var(--tec-color-button-primary);
+		margin: var(--tec-spacer-7) auto;
+		min-width: 200px;
+		padding: 1.5em;
+		text-transform: uppercase;
+		width: 30%;
+
+		&:hover,
+		&:focus {
+			background: var(--tec-color-button-primary-hover);
+		}
+
+		&:active {
+			background: var(--tec-color-button-primary-active);
+		}
+	}
+
+	.tribe-button-secondary {
+		margin: 0;
+	}
+
+	.tribe-button-tertiary {
+		background: var(--tec-color-background);
+		border: 1px solid var(--tec-color-border-secondary);
+		color: var(--tec-color-text-secondary);
+		font-weight: var(--tec-font-weight-bold);
+
+		&:hover,
+		&:focus {
+			background: var(--tec-color-border-secondary);
+			border: 1px solid var(--tec-color-border-default);
+			color: var(--tec-color-accent-primary);
+		}
+
+		&:active {
+			background: var(--tec-color-text-disabled);
+			border: 1px solid var(--tec-color-border-default);
+			color: var(--tec-color-accent-primary);
+		}
+	}
+
+	.tribe-button-large {
+		padding: var(--tec-spacer-3) var(--tec-spacer-4);
+	}
+
+	.tribe-button-activate {
+		padding: var(--tec-spacer-2) var(--tec-spacer-6) var(--tec-spacer-2) var(--tec-spacer-3);
+		position: relative;
+
+		&:after {
+			color: var(--tec-color-text-secondary);
+			content: '\25BC';
+			font-size: var(--tec-font-size-0);
+			position: absolute;
+			right: var(--tec-spacer-3);
+			top: 50%;
+			transform: translateY(-50%);
+		}
+
+		&.menu-open:after {
+			content: '\25B2';
+		}
+	}
+}
+
+/* ------------------------------------ *\
+	Page Contents
+\* ------------------------------------ */
+
+.tribe-community-events {
+	background: var(--tec-color-background);
+	border: 1px solid var(--tec-color-border-tertiary);
+	box-sizing: border-box;
+	color: var(--tec-color-border-hover);
+	font-size: 100%;
+	padding: var(--tec-spacer-8) var(--tec-spacer-2);
+
+	@media (min-width: 782px) {
+		padding: var(--tec-spacer-10);
+	}
+
+	* {
+		-moz-box-sizing: border-box;
+		-webkit-box-sizing: border-box;
+		box-sizing: border-box;
+		font-size: var(--tec-font-size-2);
+	}
+
+	table,
+	tbody,
+	th,
+	tr,
+	td {
+		border: none;
+		border-collapse: collapse;
+		font-size: 100%;
+		word-break: unset; /* fixes some themes' insistance on break-all */
+
+		@media (max-width: 500px) {
+			display: block;
+		}
+	}
+
+	.tribe-recurrence-exclusion-row,
+	.tribe-recurrence-description {
+		display: none;
+	}
+
+	.tribe-has-recurrence-rule {
+		.tribe-recurrence-exclusion-row,
+		.tribe-recurrence-description {
+			display: table-row;
+			transition: opacity 0.35s ease-in;
+		}
+	}
+
+	form {
+		&:before,
+		&:after {
+			clear: both;
+			content: '';
+			display: table;
+		}
+	}
+
+	/* Include margin and padding in the width calculation of input and textarea. */
+	input,
+	select {
+		line-height: 20px;
+		margin: 1px;
+		padding: var(--tec-spacer-0);
+	}
+
+	select {
+		min-width: 200px;
+	}
+
+	input[type="text"],
+	input[type="password"],
+	input[type="color"],
+	input[type="date"],
+	input[type="datetime"],
+	input[type="datetime-local"],
+	input[type="email"],
+	input[type="month"],
+	input[type="number"],
+	input[type="search"],
+	input[type="tel"],
+	input[type="time"],
+	input[type="url"],
+	input[type="week"],
+	textarea {
+		background-color: var(--tec-color-background);
+		border: 1px solid var(--tec-color-border-default);
+		-webkit-box-shadow: inset 0 1px 2px var(--tec-color-box-shadow);
+		box-shadow: inset 0 1px 2px var(--tec-color-box-shadow);
+		color: var(--tec-color-text-primary);
+		outline: none;
+		-webkit-transition: 0.05s border-color ease-in-out;
+		transition: 0.05s border-color ease-in-out;
+		width: auto;
+
+		@media (max-width: 500px) {
+			display: block;
+		}
+
+		@media (max-width: 782px) {
+			font-size: var(--tec-font-size-3);
+			height: auto;
+			line-height: var(--tec-line-height-2);
+			max-width: none;
+			padding: var(--tec-spacer-1) var(--tec-spacer-2);
+			width: 100%;
+		}
+	}
+
+	.tribe-event-recurrence {
+		input[type="text"],
+		input[type="password"],
+		input[type="color"],
+		input[type="date"],
+		input[type="datetime"],
+		input[type="datetime-local"],
+		input[type="email"],
+		input[type="month"],
+		input[type="number"],
+		input[type="search"],
+		input[type="tel"],
+		input[type="time"],
+		input[type="url"],
+		input[type="week"],
+		textarea {
+			@media (max-width: 782px) {
+				display: inline-block;
+				font-size: inherit;
+				line-height: 20px;
+				max-width: none;
+				padding: 3px 5px;
+				width: auto;
+			}
+		}
+	}
+
+	.current {
+		background-color: var(--tec-color-icon-primary-alt);
+		color: var(--tec-color-background);
+		padding: 6em 9em 5em;
+	}
+
+	.tribe-ticket-control-wrap {
+		@media (max-width: 400px) {
+			> * {
+				width: 100%;
+			}
+		}
+
+		@media (max-width: 560px) {
+			display: flex;
+			flex-wrap: wrap;
+			justify-content: flex-start;
+
+			> * {
+				margin-bottom: 1em;
+				margin-right: 0.5em;
+			}
+
+			#settings_form_toggle {
+				margin-top: 0;
+			}
+		}
+	}
+
+	.tribe-community-notice {
+		background: var(--tec-color-background);
+		border-left: 4px solid var(--tec-color-background);
+		-webkit-box-shadow: 0 1px 1px 0 var(--tec-color-box-shadow-secondary);
+		box-shadow: 0 1px 1px 0 var(--tec-color-box-shadow-secondary);
+		margin: var(--tec-spacer-0) 0 var(--tec-spacer-5);
+		padding: var(--tec-spacer-2);
+
+		&.tribe-community-notice-error {
+			border-left-color: var(--tec-color-icon-error);
+		}
+
+		p {
+			margin-bottom: var(--tec-spacer-2);
+
+			&:last-child {
+				margin: 0;
+			}
+		}
+	}
+
+	.req {
+		color: var(--tec-color-text-secondary);
+		font-size: var(--tec-font-size-1);
+		font-style: italic;
+		text-transform: none;
+	}
+
+	.login .message {
+		background-color: var(--tec-color-background-secondary);
+		border-color: var(--tec-color-border-secondary);
+	}
+
+	#loginform p {
+		margin: auto;
+		width: 40%;
+	}
+
+	.dashicons {
+		margin-top: 2px;
+	}
+
+	.dashicons-trash {
+		font-size: var(--tec-font-size-7);
+		height: 28px;
+		margin-top: 0;
+		width: 28px;
+	}
+
+	/* ------------------------------------ *\
+		#Event-Title
+		#Event-Description
+	\* ------------------------------------ */
+
+	.events-community-post-title,
+	.events-community-post-content {
+		position: relative;
+
+		label {
+			color: var(--tec-color-text-primary);
+			font-size: var(--tec-font-size-3);
+			font-weight: var(--tec-font-weight-bold);
+			text-transform: uppercase;
+
+			&.error {
+				border-bottom: 1px solid var(--tec-color-icon-error);
+				padding-bottom: 2px;
+			}
+		}
+
+		> input {
+			font-size: 1.7em;
+			height: 1.7em;
+			line-height: 100%;
+			margin: var(--tec-spacer-2) 0 var(--tec-spacer-4);
+			padding: var(--tec-spacer-0) var(--tec-spacer-1);
+		}
+
+		> input,
+		> textarea {
+			border: 1px solid var(--tec-color-border-default);
+			width: 100%;
+		}
+
+		> textarea {
+			height: 200px;
+			margin: var(--tec-spacer-3) 0;
+		}
+	}
+
+	/* ------------------------------------ *\
+		Content Editor
+	\* ------------------------------------ */
+
+	.wp-editor-wrap {
+		margin-top: calc(var(--tec-spacer-4) * -1);
+	}
+
+	.wp-editor-container {
+		border: 1px solid var(--tec-color-border-secondary);
+	}
+
+	/* ------------------------------------ *\
+		Sections of Edit pages
+	\* ------------------------------------ */
+	.tribe-section {
+		background: var(--tec-color-background);
+		border: 1px solid var(--tec-color-border-secondary);
+		border-radius: var(--tec-border-radius-default);
+		font-size: var(--tec-font-size-1);
+		margin: var(--tec-spacer-5) 0;
+		padding-bottom: var(--tec-spacer-7);
+
+		.tribe-section-header {
+			border-bottom: 1px solid var(--tec-color-border-default);
+			margin-bottom: var(--tec-spacer-7);
+			padding: var(--tec-spacer-3);
+
+			h3 {
+				color: var(--tec-color-text-primary);
+				font-size: var(--tec-font-size-3);
+				font-weight: var(--tec-font-weight-bold);
+				line-height: 1;
+				margin: 0;
+				text-transform: uppercase;
+
+				label {
+					font-size: inherit;
+				}
+			}
+		}
+
+		p {
+			display: block;
+			padding: var(--tec-spacer-0) 0;
+
+			.description {
+				font-style: italic;
+			}
+		}
+
+		table.tribe-section-content,
+		table.virtual-event-wrapper {
+			margin: 0;
+			table-layout: auto;
+			width: 100%;
+
+			ul {
+				list-style: none;
+			}
+
+			.tribe-section-content-row {
+				line-height: 28px;
+			}
+
+			col.tribe-colgroup-label {
+				width: 20%;
+			}
+
+			col.tribe-colgroup-field {
+				width: 80%;
+			}
+
+			@media (max-width: 500px) {
+				col.tribe-colgroup-label,
+				col.tribe-colgroup-field {
+					width: 100%;
+				}
+			}
+
+			td {
+				@media (max-width: 782px) {
+					padding: 0 var(--tec-spacer-7);
+					vertical-align: middle;
+					width: auto;
+				}
+			}
+
+			.tribe-section-content-row,
+			tr {
+				border-bottom: var(--tec-spacer-0) solid transparent;
+				border-top: var(--tec-spacer-0) solid transparent;
+			}
+
+			label {
+				margin-bottom: var(--tec-spacer-2);
+			}
+
+			.tribe-section-content-label,
+			td:first-child {
+				padding-left: var(--tec-spacer-7);
+				vertical-align: top;
+
+				@media (max-width: 782px) {
+					padding-bottom: var(--tec-spacer-2);
+				}
+			}
+
+			.tribe-section-content-field,
+			td:last-child {
+				padding-right: var(--tec-spacer-7);
+			}
+		}
+
+		div.tribe-section-content {
+			margin-left: var(--tec-spacer-7);
+			margin-right: var(--tec-spacer-7);
+		}
+
+		/* ------------------------------------ *\
+			Event Taxonomies
+		\* ------------------------------------ */
+		&.tribe-section-taxonomy {
+			.tribe-dropdown {
+				width: 100%;
+
+				.select2-choices,
+				.select2-selection--multiple {
+					.select2-selection__rendered {
+						border: 0;
+					}
+
+					.select2-search-field,
+					.select2-search--inline {
+						line-height: var(--tec-line-height-2);
+						padding-bottom: var(--tec-spacer-2);
+						padding-top: var(--tec-spacer-2);
+					}
+
+					.select2-input,
+					.select2-search__field {
+						padding-left: var(--tec-spacer-2);
+						padding-right: var(--tec-spacer-2);
+					}
+
+					.select2-search-choice,
+					.select2-selection__choice {
+						letter-spacing: 1px;
+						line-height: var(--tec-line-height-2);
+						margin-bottom: var(--tec-spacer-0);
+						margin-top: var(--tec-spacer-0);
+						padding: var(--tec-spacer-1) var(--tec-spacer-3) var(--tec-spacer-1) var(--tec-spacer-7);
+					}
+
+					.select2-search-choice-close,
+					.select2-selection__choice__remove {
+						left: var(--tec-spacer-2);
+						margin-top: calc(var(--tec-spacer-0) * -1);
+						top: 50%;
+					}
+				}
+			}
+		}
+
+		/* ------------------------------------ *\
+			Image Uploader
+		\* ------------------------------------ */
+		&.tribe-section-image-uploader {
+
+			.tribe-section-header label {
+				color: var(--tec-color-text-primary);
+				font-size: var(--tec-font-size-3);
+				font-weight: var(--tec-font-weight-bold);
+				text-transform: uppercase;
+
+				&.error {
+					border-bottom: 1px solid var(--tec-color-icon-error);
+					padding-bottom: 2px;
+				}
+			}
+
+			.tribe-image-upload-area {
+				background: var(--tec-color-background) url('../images/image-icon.png') no-repeat center 5px;
+				text-align: center;
+
+				.tribe-community-events-preview-image {
+					display: none;
+				}
+
+				.note {
+					padding-top: var(--tec-spacer-12);
+					text-align: center;
+
+					p {
+						color: var(--tec-color-text-secondary);
+						margin-bottom: 0;
+					}
+				}
+
+				.form-controls {
+					margin: 0 auto;
+					max-width: 250px;
+					position: relative;
+					width: 100%;
+				}
+
+				.button[disabled],
+				input[disabled] {
+					display: block;
+					margin: 0 auto;
+					text-align: center;
+					width: 100%;
+				}
+
+				.tribe-remove-upload,
+				.current-image,
+				.selected-msg,
+				.uploaded-msg {
+					display: none;
+				}
+
+				.current-image,
+				input[disabled].uploadFile {
+					border: 0;
+					display: none;
+					margin: 0;
+					padding: 0;
+				}
+
+				.choose-file {
+					margin: var(--tec-spacer-5) auto 0;
+					padding: 1.5em;
+					text-transform: uppercase;
+					width: 100%;
+				}
+
+				.event_image {
+					height: 48px;
+					left: 0;
+					margin: var(--tec-spacer-5) 0 0 0;
+					position: absolute;
+					top: 0;
+					width: 100%;
+				}
+
+				input#event_image {
+					cursor: pointer;
+					filter: alpha(opacity=0);
+					opacity: 0;
+					width: 100%;
+				}
+
+				.submitdelete {
+					display: block;
+				}
+
+				&.uploaded {
+					.note {
+						margin-top: var(--tec-spacer-10);
+					}
+
+					.note p,
+					.form-controls .choose-file,
+					.form-controls .event_image {
+						display: none;
+					}
+
+					.tribe-remove-upload {
+						display: block;
+
+						a { /* stylelint-disable-line max-nesting-depth */
+							font-size: var(--tec-font-size-1);
+						}
+					}
+
+					input[disabled].uploadFile,
+					.selected-msg {
+						display: inline-block;
+						font-size: var(--tec-font-size-2);
+						width: auto;
+					}
+
+					.selected-msg {
+						font-weight: var(--tec-font-wieght-bold);
+					}
+				}
+
+				&.has-image {
+					background-color: var(--tec-color-background);
+					background-image: none;
+
+					.tribe-community-events-preview-image {
+						display: block;
+
+						img { /* stylelint-disable-line max-nesting-depth */
+							margin-bottom: var(--tec-spacer-0);
+						}
+
+						a { /* stylelint-disable-line max-nesting-depth */
+							font-size: var(--tec-font-size-1);
+						}
+					}
+
+					.note,
+					.form-controls {
+						display: none;
+					}
+
+					.uploaded-msg,
+					.current-image {
+						display: inline-block;
+						font-size: var(--tec-font-size-2);
+						width: auto;
+					}
+
+					.uploaded-msg {
+						font-weight: var(--tec-font-wieght-bold);
+					}
+				}
+			}
+		}
+
+		/* ------------------------------------ *\
+			Linked Post Types
+		\* ------------------------------------ */
+
+		&.tribe-section-venue {
+			.move-linked-post-group {
+				display: none;
+			}
+		}
+
+		&.tribe-section-venue,
+		&.tribe-section-organizer {
+			.tribe-dropdown {
+				margin-top: -2px;
+			}
+
+			@media screen and (min-width: 500px) {
+				input[type="text"] {
+					width: 50%;
+				}
+			}
+		}
+
+		&.tribe-single-geo-mode {
+			.tribe-linked-type-venue-country,
+			.tribe-linked-type-venue-state-province {
+				/* We need this to avoid having problems with inline css that is added */
+				display: none !important;
+			}
+		}
+
+		.linked-post-dropdown {
+			margin-bottom: var(--tec-spacer-2);
+		}
+
+		.edit-venue-link {
+			display: inline-block;
+			float: right;
+			padding-top: var(--tec-spacer-3);
+		}
+
+		.tribe-delete-this:hover,
+		.tribe-delete-this.hover-state {
+			&:hover {
+				color: var(--tec-color-accent-primary);
+			}
+		}
+
+		/* ------------------------------------ *\
+			Event Website Section
+		\* ------------------------------------ */
+		&.tribe-section-website {
+			input {
+				width: 80%;
+
+				@media screen and (max-width: 782px) {
+					width: 100%;
+				}
+			}
+		}
+
+		/* ------------------------------------ *\
+			#Event-Cost
+		\* ------------------------------------ */
+		&.tribe-section-cost {
+			.event-currency-symbol {
+				margin-right: var(--tec-spacer-0);
+				width: 60px;
+			}
+
+			.cost-input-field {
+				display: block;
+				width: 175px;
+
+				@media screen and (max-width: 782px) {
+					width: 100%;
+				}
+			}
+		}
+
+		/* --------------------------------------- *\
+			#Additional-Fields
+		\* --------------------------------------- */
+		.tribe-field-type-checkbox,
+		.tribe-field-type-radio {
+			label {
+				display: block;
+
+				input[type="checkbox"] {
+					width: auto;
+				}
+			}
+		}
+	}
+}
+
+/* ------------------------------------ *\
+	#Header
+\* ------------------------------------ */
+
+.my-events-header {
+	align-items: center;
+	border-bottom: 1px solid var(--tec-color-border-tertiary);
+	display: flex;
+	justify-content: space-between;
+	margin-bottom: var(--tec-spacer-7);
+	padding-bottom: var(--tec-spacer-7);
+
+	h2.my-events {
+		color: var(--tec-color-text-primary);
+		font-size: 1.5em;
+		font-weight: var(--tec-font-weight-regular);
+		line-height: 1;
+		margin: 0;
+	}
+}
+
+/* ------------------------------------ *\
+	#Event-Time-Date
+\* ------------------------------------ */
+.ui-timepicker-wrapper {
+	background: var(--tec-color-background);
+	border: 1px solid var(--tec-color-border-default);
+	border-bottom-left-radius: var(--tec-border-radius-default);
+	border-bottom-right-radius: var(--tec-border-radius-default);
+	box-shadow: 1px 1px 5px var(--tec-color-box-shadow);
+	font-size: var(--tec-font-size-1);
+	margin: 0;
+	outline: none;
+	overflow-y: auto;
+	width: 80px;
+	z-index: 10001;
+
+	.ui-timepicker-list {
+
+		li {
+			color: var(--tec-color-text-secondary);
+			cursor: pointer;
+			font-size: 85%;
+			list-style: none;
+			margin: 0;
+			padding: 0.25em;
+			white-space: nowrap;
+
+			&:hover {
+				color: var(--tec-color-background);
+			}
+		}
+
+		.ui-timepicker-selected {
+			background: var(--tec-color-accent-primary);
+			color: var(--tec-color-background);
+			font-weight: var(--tec-font-weight-regular);
+		}
+	}
+}
+
+a.tribe-change-timezone {
+	/* Some styles repurposed from WP Core's dashicons styles. */
+	&:after {
+		color: var(--tec-color-text-secondary);
+		content: '\f464'; /* The dashicons "Edit" icon. */
+		display: inline-block;
+		font-family: dashicons;
+		-moz-osx-font-smoothing: grayscale;
+		-webkit-font-smoothing: antialiased;
+		font-style: normal;
+		font-weight: var(--tec-font-weight-regular);
+		margin-left: var(--tec-spacer-0);
+		text-align: center;
+		text-decoration: inherit;
+		transition: color 0.1s ease-in 0;
+		vertical-align: baseline;
+	}
+}
+
+/* ------------------------------------ *\
+	#Login Form
+\* ------------------------------------ */
+.tribe-ce-register {
+	display: inline;
+	width: auto;
+}
+
+/* ------------------------------------ *\
+	jQuery UI Elements
+\* ------------------------------------ */
+
+.tribe_community_edit .ui-datepicker .ui-datepicker-title {
+	margin: 0 1.5em;
+}
+
+.tribe_community_edit .ui-datepicker select.ui-datepicker-month {
+	width: 55%;
+}
+
+.tribe_community_edit .ui-datepicker select.ui-datepicker-year {
+	width: 34%;
+}
+
+.custom-recurrence-years {
+	td {
+		padding: 0;
+	}
+}
+
+.tribe-community-events { /* stylelint-disable-line no-duplicate-selectors */
+
+	.tribe-event-recurrence-description {
+		color: var(--tec-color-text-secondary);
+	}
+
+	.tribe-event-recurrence .tribe-handle,
+	.tribe-event-exclusion .tribe-handle {
+		color: var(--tec-color-text-secondary);
+	}
+
+	.tribe-field-inline-text {
+		color: var(--tec-color-text-secondary);
+		font-size: var(--tec-font-size-1);
+	}
+
+	/* The reason we're using a `.class #id` type selector here is because the
+	 * ID is sufficiently generic that there's a pretty strong chance a duplicate
+	 * ID generated by the theme or some other component will be present. */
+	#message {
+		clear: both;
+	}
+}
+
+.month-label.first-label-in-line {
+	color: var(--tec-color-text-secondary);
+}
+
+/* Preserve layout of date- and time-pickers in smaller screens. */
+@media only screen and (max-width: 568px) {
+	#tribe-event-datepickers td ~ td,
+	#tribe-event-datepickers ~ tr td ~ td {
+		padding-bottom: var(--tec-spacer-2);
+	}
+
+	#tribe-event-datepickers #EventStartDate,
+	#tribe-event-datepickers ~ tr #EventEndDate {
+		margin-bottom: var(--tec-spacer-1);
+		width: 100%;
+	}
+
+	.timeofdayoptions {
+		clear: both;
+		display: block;
+		padding-bottom: var(--tec-spacer-2);
+		white-space: nowrap;
+		width: 100%;
+	}
+
+	td.datetime-label {
+		vertical-align: top;
+	}
+
+	.eventForm .tribe-datetime-block .tribe-field-start_date,
+	.eventForm .tribe-datetime-block .tribe-field-start_time,
+	.eventForm .tribe-datetime-block .tribe-field-end_date,
+	.eventForm .tribe-datetime-block .tribe-field-end_time {
+		margin-bottom: var(--tec-spacer-0);
+		width: 100%;
+	}
+}
+
+/* --------------------------------------- *\
+	#Footer
+\* --------------------------------------- */
+
+.tribe-events-community-footer {
+	margin-top: var(--tec-spacer-7);
+	text-align: center;
+}
+
+/* --------------------------------------- *\
+	#Additional-Fields
+\* --------------------------------------- */
+
+.tribe-field-type-checkbox {
+
+	label {
+		display: block;
+
+		input[type="checkbox"] {
+			width: auto;
+		}
+	}
+}
+
+/* ------------------------------------ *\
+	#Utilities
+\* ------------------------------------ */
+
+#tribe-community-events .aes,
+#tribe-community-events .aes * {
+	height: 1px;
+	margin: 0;
+	overflow: hidden;
+	padding: 0;
+	visibility: hidden;
+}
+
+.screen-reader-text {
+	clip: rect(1px, 1px, 1px, 1px);
+	height: 1px;
+	overflow: hidden;
+	position: absolute !important;
+	width: 1px;
+	word-wrap: normal !important;
+}
+
+.hidden {
+	display: none;
+}
+
+.tribe-dropdown {
+	&.select2-container {
+		.select2-results {
+			ul {
+				margin: 0;
+				padding: 0;
+
+				.select2-results__option {
+					font-size: var(--tec-font-size-2);
+					margin: 0;
+					padding: var(--tec-spacer-1);
+				}
+			}
+		}
+	}
+}
+
+/* Twenty Fourteen Styles */
+.tribe-2014.tribe_community_edit .ui-widget.ui-datepicker {
+	font-size: var(--tec-font-size-1);
+}
+
+.tribe-theme-twentyfourteen {
+	.events-community-post-title {
+		label {
+			display: block;
+		}
+
+		input {
+			width: 100%;
+		}
+	}
+}
+
+/* Twenty Fifteen Styles */
+.tribe-theme-twentyfifteen,
+.tribe-theme-child-twentyfifteen {
+	#tribe-events-pg-template #tribe-community-events {
+		margin: 8.3333%;
+	}
+}
+
+.tribe-theme-twentyfifteen #tribe-community-events {
+	.pagination {
+		margin: 0 0 1.68em;
+	}
+
+	input.tribe-datepicker {
+		width: auto;
+	}
+
+	thead th {
+		background-color: var(--tec-color-background);
+		font-size: var(--tec-font-size-1);
+		line-height: 1;
+		padding: var(--tec-spacer-2) var(--tec-spacer-0);
+		text-align: center;
+	}
+
+	#the-list td {
+		font-size: var(--tec-font-size-1);
+		line-height: var(--tec-line-height-0);
+		text-align: center;
+	}
+
+	p label {
+		display: block;
+		font-size: var(--tec-font-size-2);
+	}
+
+	#loginform p.remember label {
+		display: inline;
+	}
+
+	#loginform p input[type=text],
+	p input[type=password] {
+		margin-bottom: 1em;
+		width: 100%;
+	}
+
+	.register {
+		font-size: var(--tec-font-size-2);
+		text-align: center;
+	}
+}
+
+/* Recaptcha for 2015 */
+.recaptchatable {
+	table-layout: auto;
+}
+
+/* Twenty Sixteen Styles  */
+.tribe-theme-twentysixteen,
+.tribe-theme-child-twentysixteen {
+	.pagination {
+		border-top: none;
+		margin: 0;
+
+		&:before,
+		&:after {
+			background-color: white;
+			height: auto;
+			width: auto;
+		}
+	}
+}
+
+@media screen and (min-width: 61.5625em) {
+	body.tribe-theme-twentysixteen.tribe_community_edit,
+	body.tribe-theme-twentysixteen.tribe_community_list {
+		&:not(.search-results) {
+			article:not(.type-page) {
+				.entry-content {
+					margin-left: 0;
+					margin-right: 0;
+					width: 100%;
+				}
+			}
+		}
+	}
+}
+
+/* Twenty Seventeen Styles  */
+.tribe-theme-twentyseventeen,
+.tribe-theme-child-twentyseventeen {
+	input[type="text"],
+	input[type="email"],
+	input[type="url"],
+	input[type="password"],
+	input[type="search"],
+	input[type="number"],
+	input[type="tel"],
+	input[type="range"],
+	input[type="date"],
+	input[type="month"],
+	input[type="week"],
+	input[type="time"],
+	input[type="datetime"],
+	input[type="datetime-local"],
+	input[type="color"],
+	textarea,
+	label {
+		display: inline-block;
+	}
+
+	.tribe-community-events {
+		label {
+			font-weight: var(--tec-font-weight-regular);
+		}
+	}
+}
+
+/*
+	Select2 bug fix
+	Fixes an issue where the wp-admin bar was adding padding to the HTML tag. This code offsets that so select2 containers display properly.
+	Based off of https://gist.github.com/tripflex/7f4a10fb27c7e8c95c86010f93ac250b
+*/
+.admin-bar.tribe_community_edit > span.select2-container {
+	padding-top: 32px !important;
+
+	@media screen and (max-width: 782px) {
+		padding-top: 46px !important;
+	}
+}
+
+/* -------------------------------------------------------------------------
+* Theme Overrides - Twenty twenty
+* ------------------------------------------------------------------------- */
+.tribe-theme-twentytwenty {
+
+	.tribe-community-events {
+
+		section {
+			padding: 0;
+		}
+
+		input[type="text"] {
+			display: initial;
+		}
+
+		input[type="checkbox"] {
+			height: 1.7rem;
+			padding: 0;
+			width: 1.7rem;
+		}
+
+		label {
+			display: inline;
+		}
+	}
+
+	/**
+	 * Virtual Events adds the `--float` to turn the Zoom Meeting details into a 2 column look, but its layout logic
+	 * isn't quite right for some browser widths with Twenty Twenty front-end, so we force it to stay a single column.
+	 */
+	&.tribe_community_edit .tribe-events-virtual-meetings-zoom-details--float {
+		margin-top: var(--tec-spacer-1);
+		position: static;
+	}
+}
+
+/* -------------------------------------------------------------------------
+* Theme Overrides - Twenty Twenty-One
+* ------------------------------------------------------------------------- */
+
+.tribe-theme-twentytwentyone {
+
+	.tribe-community-events {
+
+		.tribe-field-type-radio label input[type="radio"] {
+			vertical-align: middle;
+		}
+
+		.tribe-field-type-checkbox label input[type="checkbox"] {
+			height: 1.7rem;
+			padding: 0;
+			vertical-align: middle;
+			width: 1.7rem;
+		}
+	}
+}

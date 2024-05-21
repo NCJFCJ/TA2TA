@@ -1,0 +1,113 @@
+# Copyright (C) 2022 Andrew Lima
+# This file is distributed under the GPL2.
+msgid ""
+msgstr ""
+"Project-Id-Version: Import Users from CSV 1.1\n"
+"Report-Msgid-Bugs-To: support@yoohooplugins.com\n"
+"Last-Translator: Yoohoo Plugins <support@yoohooplugins.com>\n"
+"Language-Team: Yoohoo Plugins <support@yoohooplugins.com>\n"
+"MIME-Version: 1.0\n"
+"Content-Type: text/plain; charset=UTF-8\n"
+"Content-Transfer-Encoding: 8bit\n"
+"POT-Creation-Date: 2022-03-08T13:32:51+00:00\n"
+"PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
+"X-Generator: WP-CLI 2.6.0\n"
+"X-Domain: import-users-from-csv\n"
+
+#. Plugin Name of the plugin
+msgid "Import Users from CSV"
+msgstr ""
+
+#. Plugin URI of the plugin
+msgid "http://wordpress.org/extend/plugins/import-users-from-csv/"
+msgstr ""
+
+#. Description of the plugin
+msgid "Import Users data and metadata from a csv file."
+msgstr ""
+
+#. Author of the plugin
+msgid "Andrew Lima"
+msgstr ""
+
+#. Author URI of the plugin
+msgid "https://andrewlima.co.za"
+msgstr ""
+
+#: import-users-from-csv.php:76
+msgid "Import From CSV"
+msgstr ""
+
+#: import-users-from-csv.php:124
+msgid "You do not have sufficient permissions to access this page."
+msgstr ""
+
+#: import-users-from-csv.php:130
+msgid "Import users from a CSV file"
+msgstr ""
+
+#: import-users-from-csv.php:137
+msgid "Notice: please make the directory %s writable so that you can see the error log."
+msgstr ""
+
+#: import-users-from-csv.php:147
+msgid ", please <a href='%s' target='_blank'>check the error log</a>"
+msgstr ""
+
+#: import-users-from-csv.php:152
+msgid "Error during file upload."
+msgstr ""
+
+#: import-users-from-csv.php:156
+msgid "Cannot extract data from uploaded file or no file was uploaded."
+msgstr ""
+
+#: import-users-from-csv.php:160
+msgid "No user was successfully imported%s."
+msgstr ""
+
+#: import-users-from-csv.php:164
+msgid "Some users were successfully imported but some were not%s."
+msgstr ""
+
+#: import-users-from-csv.php:168
+msgid "Users import was successful."
+msgstr ""
+
+#: import-users-from-csv.php:187
+msgid "CSV file"
+msgstr ""
+
+#: import-users-from-csv.php:194
+msgid "You may want to see <a href=\"%s\">the example of the CSV file</a>."
+msgstr ""
+
+#: import-users-from-csv.php:202
+#: import-users-from-csv.php:207
+msgid "Notification"
+msgstr ""
+
+#: import-users-from-csv.php:211
+msgid "Send to new users"
+msgstr ""
+
+#: import-users-from-csv.php:217
+#: import-users-from-csv.php:220
+msgid "Users update"
+msgstr ""
+
+#: import-users-from-csv.php:224
+msgid "Update user when a username or email exists"
+msgstr ""
+
+#: import-users-from-csv.php:237
+msgid "Import"
+msgstr ""
+
+#: import-users-from-csv.php:481
+msgid "BEGIN %s"
+msgstr ""
+
+#: import-users-from-csv.php:486
+msgid "[Line %1$s] %2$s"
+msgstr ""

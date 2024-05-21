@@ -1,0 +1,112 @@
+/* -----------------------------------------------------------------------------
+ *
+ * Multiselect
+ *
+ * ----------------------------------------------------------------------------- */
+
+.tribe-filter-bar {
+
+	.tribe-filter-bar-c-multiselect {
+
+		.select2-selection {
+			background-color: transparent;
+			border: none;
+			cursor: default;
+		}
+
+		.select2-selection__rendered {
+			border: none;
+		}
+
+		.select2-dropdown {
+			background-color: transparent;
+		}
+
+		.select2-search__field {
+			@mixin desktop-body-1;
+
+			background: svg-inline(search) var(--tec-color-background) 12px center / 14px no-repeat;
+			border: 1px solid var(--tec-color-border-default);
+			border-radius: var(--tec-border-radius-default);
+
+			&::placeholder {
+				color: var(--tec-color-text-secondary);
+			}
+		}
+
+		.select2-selection__choice {
+			@mixin desktop-body-3-bold;
+
+			background-color: var(--tec-color-accent-secondary);
+			border: 1px solid var(--tec-color-accent-secondary);
+			border-radius: 14px;
+			color: var(--tec-color-background);
+			transition: var(--tec-transition-background-color);
+
+			&:hover {
+				background-color: var(--tec-color-accent-secondary-hover);
+			}
+		}
+
+		.select2-selection__choice__remove {
+			color: var(--tec-color-background);
+			font-size: 16px;
+			font-weight: 600;
+
+			&:hover {
+				color: var(--tec-color-background);
+				opacity: var(--tec-opacity-icon-hover);
+			}
+		}
+
+		.select2-results__option {
+			@mixin desktop-body-2;
+
+			&:focus {
+				outline: auto;
+			}
+		}
+
+		.select2-results__option--highlighted {
+			background-color: transparent;
+			opacity: var(--tec-opacity-select-highlighted);
+			transition: var(--tec-transition-opacity);
+		}
+	}
+
+	/* -------------------------------------------------------------------------
+	 *
+	 * Multiselect: Theme Overrides
+	 *
+	 * ------------------------------------------------------------------------- */
+
+	/* -------------------------------------------------------------------------
+	 * Theme Overrides - Twenty Seventeen
+	 * ------------------------------------------------------------------------- */
+
+	.tribe-theme-twentyseventeen & {
+
+		.tribe-filter-bar-c-multiselect {
+
+			.select2-search__field {
+				border-radius: var(--tec-border-radius-default);
+				color: var(--tec-color-text-primary);
+			}
+		}
+	}
+
+	/* -------------------------------------------------------------------------
+	 * Theme Overrides - Enfold
+	 * ------------------------------------------------------------------------- */
+
+	#top.tribe-theme-enfold & {
+
+		.tribe-filter-bar-c-multiselect {
+
+			.select2-search__field {
+				background: svg-inline(search) var(--tec-color-background) 12px center / 14px no-repeat;
+				padding: 0 20px 0 34px;
+			}
+		}
+	}
+}

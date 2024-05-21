@@ -1,0 +1,1206 @@
+[
+    {
+        "className": "WPSE_BBPress",
+        "freemiusFunctionName": "vgse_freemius",
+        "requiredWPSEPlugin": [
+            1010
+        ],
+        "dependencyClasses": [
+            "bbPress",
+            "WP_Sheet_Editor_CPTs"
+        ],
+        "dependencyFunctions": [],
+        "dependencyConstants": [],
+        "status": "publish",
+        "requiresThirdPartyPlugin": true,
+        "version": "1.0.1",
+        "description": "Enable the spreadsheet for editing replies, topics, and forums; also handle the relationship between topic ids, reply ids, forum ids for import and export workflows.",
+        "name": "WP Sheet Editor - BBPress",
+        "file_name": "wp-sheet-editor-bbpress"
+    },
+    {
+        "className": "WPSE_BestWebSofts_Profile_Extra_Fields",
+        "freemiusFunctionName": "beupis_fs",
+        "requiredWPSEPlugin": [
+            1124
+        ],
+        "dependencyClasses": [],
+        "dependencyFunctions": [
+            "prflxtrflds_admin_menu"
+        ],
+        "dependencyConstants": [],
+        "status": "publish",
+        "requiresThirdPartyPlugin": true,
+        "version": "1.0.1",
+        "description": "Add columns to edit fields created with the plugin BestWebSoft's Profile Extra Fields",
+        "name": "WP Sheet Editor - BestWebSoft's Profile Extra Fields",
+        "file_name": "wp-sheet-editor-bestwebsoft-profile-extra-fields"
+    },
+    {
+        "className": "WPSE_CMB2",
+        "freemiusFunctionName": "",
+        "requiredWPSEPlugin": [
+            3165
+        ],
+        "dependencyClasses": [],
+        "dependencyFunctions": [
+            "new_cmb2_box"
+        ],
+        "dependencyConstants": [],
+        "status": "publish",
+        "requiresThirdPartyPlugin": true,
+        "version": "1.0.1",
+        "description": "Support for editing taxonomy term's meta fields created with the cmb2 library",
+        "name": "WP Sheet Editor - CMB2",
+        "file_name": "wp-sheet-editor-cmb2"
+    },
+    {
+        "className": "WPSE_WC_Custom_Order_Fields",
+        "freemiusFunctionName": "wpsewco_fs",
+        "requiredWPSEPlugin": [
+            4674
+        ],
+        "dependencyClasses": [
+            "WC_Admin_Customer_Order_Fields_Loader",
+            "WP_Sheet_Editor_Custom_Columns"
+        ],
+        "dependencyFunctions": [
+            "WC"
+        ],
+        "dependencyConstants": [],
+        "status": "publish",
+        "requiresThirdPartyPlugin": true,
+        "version": "1.0.1",
+        "description": "Add support for the select field added by the plugin WC Custom Order Fields",
+        "name": "WP Sheet Editor - WC Custom Order Fields",
+        "file_name": "wp-sheet-editor-custom-order-fields"
+    },
+    {
+        "className": "WPSE_EDD_MailChimp",
+        "freemiusFunctionName": "wpseedd_fs",
+        "requiredWPSEPlugin": [
+            3004
+        ],
+        "dependencyClasses": [
+            "EDD_MailChimp_List",
+            "WP_Sheet_Editor_EDD_Downloads"
+        ],
+        "dependencyFunctions": [],
+        "dependencyConstants": [],
+        "status": "publish",
+        "requiresThirdPartyPlugin": true,
+        "version": "1.0.1",
+        "description": "Add columns to the EDD spreadsheet to edit the mailchimp lists and interests fields added by the official plugin \"EDD Mailchimp\"",
+        "name": "WP Sheet Editor - EDD MailChimp",
+        "file_name": "wp-sheet-editor-edd-mailchimp"
+    },
+    {
+        "className": "WPSE_Envira",
+        "freemiusFunctionName": "vgse_freemius",
+        "requiredWPSEPlugin": [
+            1010
+        ],
+        "dependencyClasses": [
+            [
+                "Envira_Gallery",
+                "Envira_Gallery_Lite"
+            ]
+        ],
+        "dependencyFunctions": [],
+        "dependencyConstants": [],
+        "status": "publish",
+        "requiresThirdPartyPlugin": true,
+        "version": "1.0.1",
+        "description": "Enable the spreadsheet for editing Envira galleries and add columns for editing the gallery fields with the proper formatting.",
+        "name": "WP Sheet Editor - Envira",
+        "file_name": "wp-sheet-editor-envira"
+    },
+    {
+        "className": "WPSE_EventOn",
+        "freemiusFunctionName": "wpsett_fs",
+        "requiredWPSEPlugin": [
+            3165
+        ],
+        "dependencyClasses": [
+            "WP_Sheet_Editor_Custom_Columns",
+            "EventON"
+        ],
+        "dependencyFunctions": [
+            "evo_get_term_meta"
+        ],
+        "dependencyConstants": [],
+        "status": "publish",
+        "requiresThirdPartyPlugin": true,
+        "version": "1.0.0",
+        "description": "Add columns for custom fields created with EventOn for the locations taxonomy.",
+        "name": "WP Sheet Editor - EventOn",
+        "file_name": "wp-sheet-editor-eventon"
+    },
+    {
+        "className": "WPSE_ExMage_Image_Links",
+        "freemiusFunctionName": "beupis_fs",
+        "requiredWPSEPlugin": [
+            4198
+        ],
+        "dependencyClasses": [
+            "WPSE_Media_Library_Sheet"
+        ],
+        "dependencyFunctions": [],
+        "dependencyConstants": [
+            "EXMAGE_WP_IMAGE_LINKS_VERSION"
+        ],
+        "status": "publish",
+        "requiresThirdPartyPlugin": true,
+        "version": "1.0.0",
+        "description": "Add the column \"Exmage External Url\" to the media spreadsheet and automatically update all the posts that use the image when you edit the external URL. Requires the plugin: https:\/\/wordpress.org\/plugins\/exmage-wp-image-links\/",
+        "name": "WP Sheet Editor - ExMage Image Links",
+        "file_name": "wp-sheet-editor-exmage-image-links"
+    },
+    {
+        "className": "WPSE_FB_WC",
+        "freemiusFunctionName": "",
+        "requiredWPSEPlugin": [
+            [
+                1010,
+                2812
+            ]
+        ],
+        "dependencyClasses": [
+            "WP_Sheet_Editor_WooCommerce"
+        ],
+        "dependencyFunctions": [
+            "facebook_for_woocommerce"
+        ],
+        "dependencyConstants": [],
+        "status": "publish",
+        "requiresThirdPartyPlugin": true,
+        "version": "1.0.1",
+        "description": "Add the column \"FB Sync Enabled\" to the products spreadsheet and trigger the synchronization done by the plugin \"Facebook for WooCommerce\" everytime that column is edited.",
+        "name": "WP Sheet Editor - Facebook for WooCommerce",
+        "file_name": "wp-sheet-editor-facebook-for-woocommerce"
+    },
+    {
+        "className": "WPSE_Featured_Image_From_Url",
+        "freemiusFunctionName": "",
+        "requiredWPSEPlugin": [
+            [
+                3004,
+                2830,
+                1010,
+                2812
+            ]
+        ],
+        "dependencyClasses": [
+            "WP_Sheet_Editor_Custom_Columns"
+        ],
+        "dependencyFunctions": [
+            "fifu_update_or_delete"
+        ],
+        "dependencyConstants": [],
+        "status": "publish",
+        "requiresThirdPartyPlugin": true,
+        "version": "1.0.1",
+        "description": "Add the column \"FIFU Image URL\" to all the post types spreadsheets and save it with the proper formatting.",
+        "name": "WP Sheet Editor - Featured Image from URL (FIFU)",
+        "file_name": "wp-sheet-editor-featured-image-from-external-url"
+    },
+    {
+        "className": "WPSE_Formidable_Entries",
+        "freemiusFunctionName": "",
+        "requiredWPSEPlugin": [
+            6996
+        ],
+        "dependencyClasses": [
+            "WP_Sheet_Editor_Custom_Columns"
+        ],
+        "dependencyFunctions": [
+            "load_formidable_pro"
+        ],
+        "dependencyConstants": [],
+        "status": "publish",
+        "requiresThirdPartyPlugin": true,
+        "version": "1.0.0",
+        "description": "This adds columns to display the form fields data in the spreadsheet in the Form Entries table provided by the plugin \"WP Sheet Editor - Custom Tables\", because the fields are stored by Formidable in a separate table so they don't appear in the spreadsheet by default",
+        "name": "WP Sheet Editor - Formidable Forms Entries",
+        "file_name": "wp-sheet-editor-formidable-forms-entries"
+    },
+    {
+        "className": "WPSE_USERS_Groups",
+        "freemiusFunctionName": "beupis_fs",
+        "requiredWPSEPlugin": [
+            1124
+        ],
+        "dependencyClasses": [
+            "WP_Sheet_Editor_Users"
+        ],
+        "dependencyFunctions": [],
+        "dependencyConstants": [
+            "GROUPS_CORE_VERSION"
+        ],
+        "status": "publish",
+        "requiresThirdPartyPlugin": true,
+        "version": "1.0.1",
+        "description": "Add the column \"SE Groups\" to the users spreadsheet and save the value correctly for the plugin https:\/\/wordpress.org\/plugins\/groups\/",
+        "name": "WP Sheet Editor - Groups",
+        "file_name": "wp-sheet-editor-groups"
+    },
+    {
+        "className": "WPSE_HivePress",
+        "freemiusFunctionName": "vgse_freemius",
+        "requiredWPSEPlugin": [
+            1010
+        ],
+        "dependencyClasses": [
+            "WP_Sheet_Editor_Custom_Columns"
+        ],
+        "dependencyFunctions": [
+            "hivepress"
+        ],
+        "dependencyConstants": [],
+        "status": "publish",
+        "requiresThirdPartyPlugin": true,
+        "version": "1.0.0",
+        "description": "Add columns for editing listing vendor, and vendor users",
+        "name": "WP Sheet Editor - HivePress",
+        "file_name": "wp-sheet-editor-hivepress"
+    },
+    {
+        "className": "WPSE_IconicWP_Attribute_Swatches",
+        "freemiusFunctionName": "",
+        "requiredWPSEPlugin": [
+            [
+                1010,
+                3165,
+                2812
+            ]
+        ],
+        "dependencyClasses": [
+            "Iconic_Woo_Attribute_Swatches",
+            [
+                "WP_Sheet_Editor_WooCommerce",
+                "WPSE_WC_Attributes_Sheet"
+            ]
+        ],
+        "dependencyFunctions": [
+            "WC"
+        ],
+        "dependencyConstants": [],
+        "status": "publish",
+        "requiresThirdPartyPlugin": true,
+        "version": "1.0.2",
+        "description": "Support for the Attribute Swatches plugin created by IconicWP",
+        "name": "WP Sheet Editor - IconicWP Attribute Swatches",
+        "file_name": "wp-sheet-editor-iconic-attribute-swatches"
+    },
+    {
+        "className": "WPSE_IconicWP_Linked_Variations",
+        "freemiusFunctionName": "vgse_freemius",
+        "requiredWPSEPlugin": [
+            1010
+        ],
+        "dependencyClasses": [
+            "Iconic_Woo_Linked_Variations",
+            "WP_Sheet_Editor_CPTs"
+        ],
+        "dependencyFunctions": [],
+        "dependencyConstants": [],
+        "status": "publish",
+        "requiresThirdPartyPlugin": true,
+        "version": "1.0.2",
+        "description": "Support for the Linked Variations plugin created by IconicWP",
+        "name": "WP Sheet Editor - IconicWP's Linked Varations",
+        "file_name": "wp-sheet-editor-iconic-linked-variations"
+    },
+    {
+        "className": "WPSE_IconicWP_Product_Configurator",
+        "freemiusFunctionName": "",
+        "requiredWPSEPlugin": [
+            [
+                1010,
+                2812
+            ]
+        ],
+        "dependencyClasses": [
+            [
+                "jckpc",
+                "Iconic_WPC"
+            ],
+            "WP_Sheet_Editor_WooCommerce"
+        ],
+        "dependencyFunctions": [],
+        "dependencyConstants": [],
+        "status": "publish",
+        "requiresThirdPartyPlugin": true,
+        "version": "1.0.2",
+        "description": "Support for the Product Configurator plugin created by IconicWP",
+        "name": "WP Sheet Editor - IconicWP's Product Configurator",
+        "file_name": "wp-sheet-editor-iconic-product-configurator"
+    },
+    {
+        "className": "WPSE_IconicWP_Show_Single_Variations",
+        "freemiusFunctionName": "",
+        "requiredWPSEPlugin": [
+            [
+                1010,
+                2812
+            ]
+        ],
+        "dependencyClasses": [
+            "Iconic_WSSV",
+            "WP_Sheet_Editor_WooCommerce"
+        ],
+        "dependencyFunctions": [],
+        "dependencyConstants": [],
+        "status": "publish",
+        "requiresThirdPartyPlugin": true,
+        "version": "1.1.0",
+        "description": "Support for the Show Single Variations plugin created by IconicWP",
+        "name": "WP Sheet Editor - IconicWP's Show Single Variations",
+        "file_name": "wp-sheet-editor-iconic-show-single-variations"
+    },
+    {
+        "className": "WPSE_IconicWP_WooThumbs",
+        "freemiusFunctionName": "",
+        "requiredWPSEPlugin": [
+            [
+                1010,
+                2812
+            ]
+        ],
+        "dependencyClasses": [
+            "Iconic_WooThumbs",
+            "WP_Sheet_Editor_WooCommerce"
+        ],
+        "dependencyFunctions": [],
+        "dependencyConstants": [],
+        "status": "publish",
+        "requiresThirdPartyPlugin": true,
+        "version": "1.0.1",
+        "description": "Support for the WooThumbs plugin created by IconicWP",
+        "name": "WP Sheet Editor - IconicWP's WooThumbs",
+        "file_name": "wp-sheet-editor-iconic-woothumbs"
+    },
+    {
+        "className": "WPSE_JetEngine",
+        "freemiusFunctionName": "vgse_freemius",
+        "requiredWPSEPlugin": [
+            1010
+        ],
+        "dependencyClasses": [
+            "WP_Sheet_Editor_Custom_Columns"
+        ],
+        "dependencyFunctions": [
+            "jet_engine"
+        ],
+        "dependencyConstants": [],
+        "status": "publish",
+        "requiresThirdPartyPlugin": true,
+        "version": "1.1.0",
+        "description": "Add columns for custom fields created with JetEngine with automatic formatting",
+        "name": "WP Sheet Editor - JetEngine",
+        "file_name": "wp-sheet-editor-jetengine"
+    },
+    {
+        "className": "WPSE_Kadence_Shop_Kit",
+        "freemiusFunctionName": "",
+        "requiredWPSEPlugin": [
+            [
+                1010,
+                2812
+            ]
+        ],
+        "dependencyClasses": [
+            "WP_Sheet_Editor_WooCommerce"
+        ],
+        "dependencyFunctions": [],
+        "dependencyConstants": [
+            "KADENCE_WOO_EXTRAS_VERSION"
+        ],
+        "status": "publish",
+        "requiresThirdPartyPlugin": true,
+        "version": "1.0.0",
+        "description": "Allow to edit product swatches in the spreadsheet editor",
+        "name": "WP Sheet Editor - Kadence Shop Kit",
+        "file_name": "wp-sheet-editor-kadence-shop-kit"
+    },
+    {
+        "className": "WPSE_LearnDash",
+        "freemiusFunctionName": "vgse_freemius",
+        "requiredWPSEPlugin": [
+            1010
+        ],
+        "dependencyClasses": [
+            "WP_Sheet_Editor_Custom_Columns"
+        ],
+        "dependencyFunctions": [],
+        "dependencyConstants": [
+            "LEARNDASH_VERSION"
+        ],
+        "status": "publish",
+        "requiresThirdPartyPlugin": true,
+        "version": "1.0.1",
+        "description": "Add columns for custom fields created with LearnDash with automatic formatting",
+        "name": "WP Sheet Editor - LearnDash",
+        "file_name": "wp-sheet-editor-learndash"
+    },
+    {
+        "className": "WPSE_LearnPress",
+        "freemiusFunctionName": "vgse_freemius",
+        "requiredWPSEPlugin": [
+            1010
+        ],
+        "dependencyClasses": [
+            "WP_Sheet_Editor_Custom_Columns",
+            "LearnPress"
+        ],
+        "dependencyFunctions": [],
+        "dependencyConstants": [],
+        "status": "publish",
+        "requiresThirdPartyPlugin": true,
+        "version": "1.0.0",
+        "description": "Add columns for custom fields created with LearnPress with automatic formatting",
+        "name": "WP Sheet Editor - LearnPress",
+        "file_name": "wp-sheet-editor-learnpress"
+    },
+    {
+        "className": "WPSE_Mailchimp_WC",
+        "freemiusFunctionName": "beupis_fs",
+        "requiredWPSEPlugin": [
+            1124
+        ],
+        "dependencyClasses": [
+            "MailChimp_WooCommerce_Loader",
+            "WP_Sheet_Editor_Users"
+        ],
+        "dependencyFunctions": [],
+        "dependencyConstants": [],
+        "status": "publish",
+        "requiresThirdPartyPlugin": true,
+        "version": "1.0.0",
+        "description": "Add a column to edit the Mailchimp status in the users spreadsheet",
+        "name": "WP Sheet Editor - Mailchimp for WooCommerce",
+        "file_name": "wp-sheet-editor-mailchimp-wc"
+    },
+    {
+        "className": "WPSE_Permalink_Manager",
+        "freemiusFunctionName": "vgse_freemius",
+        "requiredWPSEPlugin": [
+            1010
+        ],
+        "dependencyClasses": [
+            "WP_Sheet_Editor_Custom_Columns",
+            "Permalink_Manager_Class"
+        ],
+        "dependencyFunctions": [],
+        "dependencyConstants": [],
+        "status": "publish",
+        "requiresThirdPartyPlugin": true,
+        "version": "1.0.0",
+        "description": "Add a column to the post types and taxonomies spreadsheets to edit the permalinks managed by the plugin Permalink Manager",
+        "name": "WP Sheet Editor - Permalink Manager",
+        "file_name": "wp-sheet-editor-permalink-manager"
+    },
+    {
+        "className": "WPSE_PM_Membership_Pro",
+        "freemiusFunctionName": "",
+        "requiredWPSEPlugin": [
+            [
+                3004,
+                2830,
+                1010,
+                2812,
+                1124
+            ]
+        ],
+        "dependencyClasses": [
+            "WP_Sheet_Editor_Custom_Columns"
+        ],
+        "dependencyFunctions": [],
+        "dependencyConstants": [
+            "PMPRO_VERSION"
+        ],
+        "status": "publish",
+        "requiresThirdPartyPlugin": true,
+        "version": "1.0.1",
+        "description": "Add columns to edit the membership restrictions in all post types and add columns to edit the membership plan in the users spreadsheet",
+        "name": "WP Sheet Editor - PM Membership Pro",
+        "file_name": "wp-sheet-editor-pm-membership-pro"
+    },
+    {
+        "className": "WPSE_Pods",
+        "freemiusFunctionName": "",
+        "requiredWPSEPlugin": [
+            [
+                3004,
+                2830,
+                1010,
+                2812,
+                6996
+            ]
+        ],
+        "dependencyClasses": [
+            "WP_Sheet_Editor_Custom_Columns"
+        ],
+        "dependencyFunctions": [
+            "pods_api"
+        ],
+        "dependencyConstants": [],
+        "status": "publish",
+        "requiresThirdPartyPlugin": true,
+        "version": "1.0.3",
+        "description": "Add columns to edit pods fields on the spreadsheet.",
+        "name": "WP Sheet Editor - Pods",
+        "file_name": "wp-sheet-editor-pods"
+    },
+    {
+        "className": "WPSE_Polylang",
+        "freemiusFunctionName": "",
+        "requiredWPSEPlugin": [
+            [
+                3004,
+                2830,
+                1010,
+                2812,
+                3165
+            ]
+        ],
+        "dependencyClasses": [
+            "WP_Sheet_Editor_Custom_Columns"
+        ],
+        "dependencyFunctions": [
+            "pll_is_translated_post_type"
+        ],
+        "dependencyConstants": [
+            "POLYLANG_VERSION"
+        ],
+        "status": "publish",
+        "requiresThirdPartyPlugin": true,
+        "version": "1.0.4",
+        "description": "Add columns to edit the polylang language and connect the translations on the spreadsheet.",
+        "name": "WP Sheet Editor - Polylang",
+        "file_name": "wp-sheet-editor-polylang"
+    },
+    {
+        "className": "WPSE_Redirection",
+        "freemiusFunctionName": "",
+        "requiredWPSEPlugin": [
+            [
+                3004,
+                2830,
+                1010,
+                2812,
+                4198
+            ]
+        ],
+        "dependencyClasses": [
+            "WP_Sheet_Editor_Custom_Columns"
+        ],
+        "dependencyFunctions": [],
+        "dependencyConstants": [
+            "REDIRECTION_DB_VERSION"
+        ],
+        "status": "publish",
+        "requiresThirdPartyPlugin": true,
+        "version": "1.0.1",
+        "description": "When you delete duplicates or merge posts, we automatically redirect the deleted posts to the unique post. Also, we add a column in the posts\/taxonomies spreadsheet where you can create redirects, and when you rename file names, we automatically redirect the old file urls to the new uls.",
+        "name": "WP Sheet Editor - Redirection",
+        "file_name": "wp-sheet-editor-redirection"
+    },
+    {
+        "className": "WPSE_Taxonomy_Porto",
+        "freemiusFunctionName": "wpsett_fs",
+        "requiredWPSEPlugin": [
+            3165
+        ],
+        "dependencyClasses": [
+            "WP_Sheet_Editor_Taxonomy_Terms"
+        ],
+        "dependencyFunctions": [],
+        "dependencyConstants": [
+            "PORTO_DIR"
+        ],
+        "status": "publish",
+        "requiresThirdPartyPlugin": true,
+        "version": "1.0.1",
+        "description": "Add columns to the product category spreadsheet for fields created by the Porto theme.",
+        "name": "WP Sheet Editor - Porto theme",
+        "file_name": "wp-sheet-editor-taxonomy-porto"
+    },
+    {
+        "className": "WPSE_TM_Extra_Product_Options",
+        "freemiusFunctionName": "wpsewcp_freemius",
+        "requiredWPSEPlugin": [
+            2812
+        ],
+        "dependencyClasses": [
+            "WP_Sheet_Editor_WooCommerce_Variations"
+        ],
+        "dependencyFunctions": [],
+        "dependencyConstants": [
+            "THEMECOMPLETE_EPO_PLUGIN_FILE"
+        ],
+        "status": "publish",
+        "requiresThirdPartyPlugin": true,
+        "version": "1.0.1",
+        "description": "Copy the tm extra product options information when you copy variations from one product to another",
+        "name": "WP Sheet Editor - TM Extra Product Options",
+        "file_name": "wp-sheet-editor-tm-extra-product-options"
+    },
+    {
+        "className": "WPSE_Toolset",
+        "freemiusFunctionName": "vgse_freemius",
+        "requiredWPSEPlugin": [
+            1010
+        ],
+        "dependencyClasses": [],
+        "dependencyFunctions": [],
+        "dependencyConstants": [
+            "TYPES_VERSION"
+        ],
+        "status": "publish",
+        "requiresThirdPartyPlugin": true,
+        "version": "1.1.1",
+        "description": "Add columns for custom fields created with Toolset with automatic formatting",
+        "name": "WP Sheet Editor - Toolset",
+        "file_name": "wp-sheet-editor-toolset"
+    },
+    {
+        "className": "WPSE_TutorLMS",
+        "freemiusFunctionName": "vgse_freemius",
+        "requiredWPSEPlugin": [
+            1010
+        ],
+        "dependencyClasses": [
+            "WP_Sheet_Editor_Custom_Columns"
+        ],
+        "dependencyFunctions": [],
+        "dependencyConstants": [
+            "TUTOR_VERSION"
+        ],
+        "status": "publish",
+        "requiresThirdPartyPlugin": true,
+        "version": "1.0.1",
+        "description": "Add columns for custom fields created with TutorLMS with automatic formatting",
+        "name": "WP Sheet Editor - TutorLMS",
+        "file_name": "wp-sheet-editor-tutorlms"
+    },
+    {
+        "className": "WPSE_UsersWP",
+        "freemiusFunctionName": "beupis_fs",
+        "requiredWPSEPlugin": [
+            1124
+        ],
+        "dependencyClasses": [
+            "WP_Sheet_Editor_Users"
+        ],
+        "dependencyFunctions": [],
+        "dependencyConstants": [
+            "USERSWP_VERSION"
+        ],
+        "status": "publish",
+        "requiresThirdPartyPlugin": true,
+        "version": "1.0.0",
+        "description": "Add columns to the users spreadsheet to edit fields added by the UsersWP plugin (https:\/\/wordpress.org\/plugins\/userswp\/)",
+        "name": "WP Sheet Editor - UsersWP",
+        "file_name": "wp-sheet-editor-userswp"
+    },
+    {
+        "className": "WPSE_WavePlayer",
+        "freemiusFunctionName": "",
+        "requiredWPSEPlugin": [
+            [
+                1010,
+                2812
+            ]
+        ],
+        "dependencyClasses": [],
+        "dependencyFunctions": [
+            "\\PerfectPeach\\WavePlayer\\waveplayer"
+        ],
+        "dependencyConstants": [],
+        "status": "publish",
+        "requiresThirdPartyPlugin": true,
+        "version": "1.0.1",
+        "description": "Enable the spreadsheet for editing WavePlayer galleries and add columns for editing the gallery fields with the proper formatting.",
+        "name": "WP Sheet Editor - WavePlayer",
+        "file_name": "wp-sheet-editor-waveplayer"
+    },
+    {
+        "className": "WPSE_WC_Advanced_Coupons_Pro",
+        "freemiusFunctionName": "wpsewcp_freemius",
+        "requiredWPSEPlugin": [
+            2808
+        ],
+        "dependencyClasses": [
+            "WP_Sheet_Editor_WC_Coupons",
+            "WP_Sheet_Editor_Custom_Columns"
+        ],
+        "dependencyFunctions": [
+            "ACFWP"
+        ],
+        "dependencyConstants": [],
+        "status": "publish",
+        "requiresThirdPartyPlugin": true,
+        "version": "1.0.0",
+        "description": "Add a column to the coupons sheet to edit the field \"Auto apply coupon\" created by the Advanced Coupons Pro plugin.",
+        "name": "WP Sheet Editor - WC Advanced Coupons",
+        "file_name": "wp-sheet-editor-wc-advanced-coupons"
+    },
+    {
+        "className": "WPSE_WC_Composite_Products",
+        "freemiusFunctionName": "",
+        "requiredWPSEPlugin": [],
+        "dependencyClasses": [
+            "WC_Composite_Products",
+            "WP_Sheet_Editor_WooCommerce"
+        ],
+        "dependencyFunctions": [],
+        "dependencyConstants": [],
+        "status": "publish",
+        "requiresThirdPartyPlugin": true,
+        "version": "1.0.1",
+        "description": "Add columns for editing the composite information and make sure they're displayed and saved correctly.",
+        "name": "WP Sheet Editor - WC Composite Products",
+        "file_name": "wp-sheet-editor-wc-composite-products"
+    },
+    {
+        "className": "WPSE_WC_Product_Addons_Ultimate",
+        "freemiusFunctionName": "wpsewcp_freemius",
+        "requiredWPSEPlugin": [
+            2812
+        ],
+        "dependencyClasses": [
+            "WP_Sheet_Editor_WooCommerce_Variations"
+        ],
+        "dependencyFunctions": [
+            "pewc_duplicate_groups_and_fields"
+        ],
+        "dependencyConstants": [],
+        "status": "publish",
+        "requiresThirdPartyPlugin": true,
+        "version": "1.0.1",
+        "description": "Copy the \"WooCommerce Product Add-Ons Ultimate\" information when you copy variations from one product to another",
+        "name": "WP Sheet Editor - WooCommerce Product Add-Ons Ultimate",
+        "file_name": "wp-sheet-editor-wc-product-add-ons"
+    },
+    {
+        "className": "WPSE_WC_Product_SKU_Generator",
+        "freemiusFunctionName": "wpsewcp_freemius",
+        "requiredWPSEPlugin": [
+            2812
+        ],
+        "dependencyClasses": [
+            "WC_SKU_Generator",
+            "WP_Sheet_Editor_WooCommerce"
+        ],
+        "dependencyFunctions": [
+            "WC"
+        ],
+        "dependencyConstants": [],
+        "status": "publish",
+        "requiresThirdPartyPlugin": true,
+        "version": "1.0.1",
+        "description": "Automatically generate SKU when we edit products or variations in the products spreadsheet.",
+        "name": "WP Sheet Editor - WC Product SKU Generator",
+        "file_name": "wp-sheet-editor-wc-product-sku-generator"
+    },
+    {
+        "className": "WPSE_WC_Product_Vendors",
+        "freemiusFunctionName": "wpsewcp_freemius",
+        "requiredWPSEPlugin": [
+            2812
+        ],
+        "dependencyClasses": [
+            "WC_Product_Vendors_Utils",
+            "WP_Sheet_Editor_WooCommerce_Variations"
+        ],
+        "dependencyFunctions": [],
+        "dependencyConstants": [],
+        "status": "publish",
+        "requiresThirdPartyPlugin": true,
+        "version": "1.0.1",
+        "description": "Restrict the spreadsheet to display products associated to the current vendor",
+        "name": "WP Sheet Editor - WC Product Vendors",
+        "file_name": "wp-sheet-editor-wc-product-vendors"
+    },
+    {
+        "className": "WPSE_WC_Shared_Variations_Inventory",
+        "freemiusFunctionName": "wpsewcp_freemius",
+        "requiredWPSEPlugin": [
+            2812
+        ],
+        "dependencyClasses": [
+            "WP_Sheet_Editor_WooCommerce_Variations",
+            "WSVI_Products_Admin"
+        ],
+        "dependencyFunctions": [],
+        "dependencyConstants": [],
+        "status": "publish",
+        "requiresThirdPartyPlugin": true,
+        "version": "1.0.1",
+        "description": "Copy the swatches when you copy variations from one product to another, and add columns to edit attribute fees.",
+        "name": "WP Sheet Editor - WC Shared Variations Inventory",
+        "file_name": "wp-sheet-editor-wc-shared-variation-inventory"
+    },
+    {
+        "className": "WPSE_WC_Variation_Gallery",
+        "freemiusFunctionName": "wpsewcp_freemius",
+        "requiredWPSEPlugin": [
+            2812
+        ],
+        "dependencyClasses": [
+            "WP_Sheet_Editor_WooCommerce_Variations"
+        ],
+        "dependencyFunctions": [
+            "vgse_columns_manager_init"
+        ],
+        "dependencyConstants": [
+            "WOO_VARIATION_GALLERY_PLUGIN_FILE"
+        ],
+        "status": "publish",
+        "requiresThirdPartyPlugin": true,
+        "version": "1.0.1",
+        "description": "Add the column \"Variatio Gallery Images\" for the variation rows",
+        "name": "WP Sheet Editor - WooCommerce Variation Gallery Images",
+        "file_name": "wp-sheet-editor-wc-variation-gallery-images"
+    },
+    {
+        "className": "WPSE_WC_Variation_Swatches",
+        "freemiusFunctionName": "wpsewcp_freemius",
+        "requiredWPSEPlugin": [
+            2812
+        ],
+        "dependencyClasses": [
+            "WP_Sheet_Editor_WooCommerce_Variations",
+            "Woo_Variation_Swatches"
+        ],
+        "dependencyFunctions": [],
+        "dependencyConstants": [],
+        "status": "publish",
+        "requiresThirdPartyPlugin": true,
+        "version": "1.0.1",
+        "description": "Copy the swatches when you copy variations from one product to another, and add columns to edit attribute fees.",
+        "name": "WP Sheet Editor - WC Variation Swatches",
+        "file_name": "wp-sheet-editor-wc-variation-swatches"
+    },
+    {
+        "className": "WPSE_Wholesale_WooCommerce",
+        "freemiusFunctionName": "wpsewcp_freemius",
+        "requiredWPSEPlugin": [
+            2812
+        ],
+        "dependencyClasses": [
+            "WP_Sheet_Editor_WooCommerce_Variations",
+            "Wwp_Wholesale_Pricing"
+        ],
+        "dependencyFunctions": [
+            "WC"
+        ],
+        "dependencyConstants": [],
+        "status": "publish",
+        "requiresThirdPartyPlugin": true,
+        "version": "1.0.1",
+        "description": "Add columns to edit wholesale prices.",
+        "name": "WP Sheet Editor - Wholesale For WooCommerce",
+        "file_name": "wp-sheet-editor-wc-wholesale-prices"
+    },
+    {
+        "className": "WP_Sheet_Editor_WC_Wholesale_Pro_Suite",
+        "freemiusFunctionName": "wpsewcp_freemius",
+        "requiredWPSEPlugin": [
+            2812
+        ],
+        "dependencyClasses": [
+            "WP_Sheet_Editor_WooCommerce_Variations",
+            "IGN_Wholesale_Pro_Suite"
+        ],
+        "dependencyFunctions": [
+            "WC"
+        ],
+        "dependencyConstants": [],
+        "status": "publish",
+        "requiresThirdPartyPlugin": true,
+        "version": "1.0.1",
+        "description": "Add columns to edit the wholesale pricing in the products spreadsheet.",
+        "name": "WP Sheet Editor - WooCommerce Wholesale Pro Suite",
+        "file_name": "wp-sheet-editor-wc-wholesale-pro-suite"
+    },
+    {
+        "className": "WPSE_Wishlist_Member",
+        "freemiusFunctionName": "",
+        "requiredWPSEPlugin": [
+            [
+                3004,
+                2830,
+                1010,
+                2812,
+                1124,
+                3165
+            ]
+        ],
+        "dependencyClasses": [
+            "WP_Sheet_Editor_Custom_Columns",
+            "WishListMember"
+        ],
+        "dependencyFunctions": [
+            "wishlistmember_instance"
+        ],
+        "dependencyConstants": [],
+        "status": "publish",
+        "requiresThirdPartyPlugin": true,
+        "version": "1.0.1",
+        "description": "This will let you edit the Wishlist Member fields in the spreadsheet of any post type (post protections), taxonomy terms spreadsheet (category protections), and users spreadsheet (user addresses, memberships, and custom profile fields).",
+        "name": "WP Sheet Editor - Wishlist Member",
+        "file_name": "wp-sheet-editor-wishlist-member"
+    },
+    {
+        "className": "WPSE_WooCommerce_Dynamic_Pricing",
+        "freemiusFunctionName": "wpsewcp_freemius",
+        "requiredWPSEPlugin": [
+            2812
+        ],
+        "dependencyClasses": [
+            "WP_Sheet_Editor_WooCommerce_Variations",
+            "WC_Dynamic_Pricing"
+        ],
+        "dependencyFunctions": [
+            "WC"
+        ],
+        "dependencyConstants": [],
+        "status": "publish",
+        "requiresThirdPartyPlugin": true,
+        "version": "1.0.1",
+        "description": "Allow to edit in the products spreadsheet pricing rules handled by the WooCommerce Dynamic Pricing plugin",
+        "name": "WP Sheet Editor - WooCommerce Dynamic Pricing",
+        "file_name": "wp-sheet-editor-woo-dynamic-pricing"
+    },
+    {
+        "className": "WPSE_WOO_Multi_Store",
+        "freemiusFunctionName": "wpsewcp_freemius",
+        "requiredWPSEPlugin": [
+            2812
+        ],
+        "dependencyClasses": [
+            "WP_Sheet_Editor_WooCommerce_Variations"
+        ],
+        "dependencyFunctions": [
+            "WC"
+        ],
+        "dependencyConstants": [
+            "WOO_MSTORE_VERSION"
+        ],
+        "status": "publish",
+        "requiresThirdPartyPlugin": true,
+        "version": "1.2.0",
+        "description": "Trigger the synchronization done by the \"Woo Multi Store\" plugin after every edit made on our spreadsheet",
+        "name": "WP Sheet Editor - Woo Multi Store",
+        "file_name": "wp-sheet-editor-woo-multi-store"
+    },
+    {
+        "className": "WPSE_WC_B2B",
+        "freemiusFunctionName": "wpsewcp_freemius",
+        "requiredWPSEPlugin": [
+            2812
+        ],
+        "dependencyClasses": [
+            "WP_Sheet_Editor_WooCommerce_Variations"
+        ],
+        "dependencyFunctions": [
+            "wcb2b_get_groups"
+        ],
+        "dependencyConstants": [],
+        "status": "publish",
+        "requiresThirdPartyPlugin": true,
+        "version": "1.0.1",
+        "description": "Add columns to edit the group prices in the products spreadsheet",
+        "name": "WP Sheet Editor - WooCommerce b2b",
+        "file_name": "wp-sheet-editor-woocommerce-b2b"
+    },
+    {
+        "className": "WPSE_WC_Chained_Products",
+        "freemiusFunctionName": "wpsewcp_freemius",
+        "requiredWPSEPlugin": [
+            2812
+        ],
+        "dependencyClasses": [
+            "WP_Sheet_Editor_WooCommerce_Variations"
+        ],
+        "dependencyFunctions": [
+            "chained_product_activate"
+        ],
+        "dependencyConstants": [],
+        "status": "publish",
+        "requiresThirdPartyPlugin": true,
+        "version": "1.0.1",
+        "description": "Add compatibility with the Chained Products plugin by StoreApps to be able to edit the chain products in the spreadsheet editor.",
+        "name": "WP Sheet Editor - WooCommerce Chained Products",
+        "file_name": "wp-sheet-editor-woocommerce-chained-products"
+    },
+    {
+        "className": "WPSE_WooCommerce_Germanized",
+        "freemiusFunctionName": "wpsewcp_freemius",
+        "requiredWPSEPlugin": [
+            2812
+        ],
+        "dependencyClasses": [
+            "WP_Sheet_Editor_WooCommerce_Variations",
+            "WooCommerce_Germanized"
+        ],
+        "dependencyFunctions": [
+            "WC"
+        ],
+        "dependencyConstants": [],
+        "status": "publish",
+        "requiresThirdPartyPlugin": true,
+        "version": "1.0.1",
+        "description": "Add columns to edit WooCommerce Germanized fields in the products spreadsheet.",
+        "name": "WP Sheet Editor - WooCommerce Germanized",
+        "file_name": "wp-sheet-editor-woocommerce-germanized"
+    },
+    {
+        "className": "WPSE_WC_Simple_Auctions",
+        "freemiusFunctionName": "",
+        "requiredWPSEPlugin": [
+            [
+                1010,
+                2812
+            ]
+        ],
+        "dependencyClasses": [
+            "WP_Sheet_Editor_WooCommerce_Variations",
+            "WooCommerce_simple_auction"
+        ],
+        "dependencyFunctions": [],
+        "dependencyConstants": [],
+        "status": "publish",
+        "requiresThirdPartyPlugin": true,
+        "version": "1.0.2",
+        "description": "Fix compatibility issues between WP Sheet Editor and WooCommerce Simple Auctions.",
+        "name": "WP Sheet Editor - WooCommerce Simple Auctions",
+        "file_name": "wp-sheet-editor-woocommerce-simple-auctions"
+    },
+    {
+        "className": "WPSE_WooCommerce_Tab_Manager",
+        "freemiusFunctionName": "wpsewcp_freemius",
+        "requiredWPSEPlugin": [
+            2812
+        ],
+        "dependencyClasses": [
+            "WP_Sheet_Editor_WooCommerce_Variations",
+            "WC_Tab_Manager_Loader"
+        ],
+        "dependencyFunctions": [
+            "WC"
+        ],
+        "dependencyConstants": [],
+        "status": "publish",
+        "requiresThirdPartyPlugin": true,
+        "version": "1.0.1",
+        "description": "Add columns to the products spreadsheet where we can read and export the content of custom tabs. The tabs columns are read only.",
+        "name": "WP Sheet Editor - WooCommerce Tab Manager",
+        "file_name": "wp-sheet-editor-woocommerce-tab-manager"
+    },
+    {
+        "className": "WPSE_WoodMart",
+        "freemiusFunctionName": "wpsewcp_freemius",
+        "requiredWPSEPlugin": [
+            2812
+        ],
+        "dependencyClasses": [
+            "WP_Sheet_Editor_WooCommerce_Variations"
+        ],
+        "dependencyFunctions": [
+            "WC"
+        ],
+        "dependencyConstants": [
+            "WOODMART_THEME_DIR"
+        ],
+        "status": "publish",
+        "requiresThirdPartyPlugin": true,
+        "version": "1.1.0",
+        "description": "Products spreadsheet: When we copy variations, also copy the variation gallery images; and allow to edit the featured video fields; Product categories spreadsheet: Display the image fields correctly.",
+        "name": "WP Sheet Editor - WoodMart",
+        "file_name": "wp-sheet-editor-woodmart"
+    },
+    {
+        "className": "WPSE_WPC_Composite_Products",
+        "freemiusFunctionName": "",
+        "requiredWPSEPlugin": [],
+        "dependencyClasses": [
+            "WP_Sheet_Editor_WooCommerce"
+        ],
+        "dependencyFunctions": [],
+        "dependencyConstants": [
+            "WOOCO_VERSION"
+        ],
+        "status": "publish",
+        "requiresThirdPartyPlugin": true,
+        "version": "1.0.0",
+        "description": "Add columns for editing the fields used by the plugin \"WPC Composite Products by WPClever\"",
+        "name": "WP Sheet Editor - WPC Composite Products",
+        "file_name": "wp-sheet-editor-wpc-composite-products"
+    },
+    {
+        "className": "WPSE_WPC_Product_Bundles",
+        "freemiusFunctionName": "wpsewcp_freemius",
+        "requiredWPSEPlugin": [
+            2812
+        ],
+        "dependencyClasses": [
+            "WP_Sheet_Editor_WooCommerce"
+        ],
+        "dependencyFunctions": [],
+        "dependencyConstants": [
+            "WOOSB_VERSION"
+        ],
+        "status": "publish",
+        "requiresThirdPartyPlugin": true,
+        "version": "1.0.0",
+        "description": "Add columns for editing the fields used by the plugin \"WPC Product Bundles by WPClever\"",
+        "name": "WP Sheet Editor - WPC Product bundles",
+        "file_name": "wp-sheet-editor-wpc-product-bundles"
+    },
+    {
+        "className": "WPSE_WPFusion",
+        "freemiusFunctionName": "",
+        "requiredWPSEPlugin": [
+            [
+                1010,
+                2812
+            ]
+        ],
+        "dependencyClasses": [
+            "WP_Sheet_Editor_Custom_Columns"
+        ],
+        "dependencyFunctions": [
+            "wp_fusion"
+        ],
+        "dependencyConstants": [],
+        "status": "publish",
+        "requiresThirdPartyPlugin": true,
+        "version": "1.0.1",
+        "description": "Add columns to edit the WPFusion fields in the post types spreadsheets.",
+        "name": "WP Sheet Editor - WPFusion",
+        "file_name": "wp-sheet-editor-wpfusion"
+    },
+    {
+        "className": "WPSE_Yith_Composite_Products",
+        "freemiusFunctionName": "wpsewcp_freemius",
+        "requiredWPSEPlugin": [
+            2812
+        ],
+        "dependencyClasses": [
+            "WP_Sheet_Editor_WooCommerce_Variations"
+        ],
+        "dependencyFunctions": [],
+        "dependencyConstants": [
+            "YITH_WCP"
+        ],
+        "status": "publish",
+        "requiresThirdPartyPlugin": true,
+        "version": "1.0.1",
+        "description": "Add columns to the products spreadsheet to edit the composite product fields.",
+        "name": "WP Sheet Editor - Yith Composite Products",
+        "file_name": "wp-sheet-editor-yith-composite-products"
+    }
+]

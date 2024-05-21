@@ -1,0 +1,8 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<wpml-config>
+	<admin-texts>
+		<key name="ptp_shortcode_defaults">
+			<key name="columns" />
+		</key>
+	</admin-texts>
+</wpml-config>

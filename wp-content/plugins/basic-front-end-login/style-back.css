@@ -1,0 +1,101 @@
+#eeBFEL_Settings {
+	width: 90%;
+	padding-top: 15px;
+	font-size: 110%;
+}
+
+#eeBFEL_Settings h1 {
+	border-bottom: 1px solid #666;
+}
+
+#eeBFEL_Settings fieldset {
+	margin-bottom: 15px;
+	border: 1px solid #868686;
+	padding: 20px;
+	padding-top: 10px;
+	background-color: #e0e0e0;
+}
+
+#eeBFEL_Settings label {
+	float: left;
+	clear: left;
+	text-align: right;
+	margin-right: .5em;
+	padding: 4px;
+	margin-bottom: .25em;
+	background: #d9d9d9;
+	border-bottom-width: 1px;
+	border-bottom-style: solid;
+	border-bottom-color: #5a5a5a;
+	border-right-width: 1px;
+	border-right-style: solid;
+	border-right-color: #5a5a5a;
+}
+
+#eeBFEL_Settings input[type=checkbox] {
+	width: 20px; /* This ensures the checkbox remains square */
+	height: 20px; /* This ensures the checkbox remains square */
+	margin-left: 10px;
+}
+
+#eeBFEL_Settings label.eeBFEL_DenyRoleCheck {
+	width: auto; /* Allow the label to expand with its text */
+	clear: none;
+	margin: 0 15px 15px 0;
+	display: flex; /* Set this label as a flex container */
+	align-items: center; /* Center the checkbox vertically */
+}
+
+
+
+ 
+#eeBFEL_Settings input[type=url] {
+	float: left;
+	width: 64%;
+	margin-bottom: 15px; /* Added space below redirect input */
+}
+
+/* Make the copy-to-clipboard form span the whole width */
+#eeBFEL_Shortcode {
+	float: left;
+	border: none;
+	background-color: #f7f7f7;
+	color: #333;
+	padding: 5px;
+	font-weight: bold;
+	width: 75%; /* Adjust this value as needed */
+}
+
+#eeBFEL_CopyShortcode {
+	float: left;
+	background-color: #0073aa;
+	border: none;
+	color: #fff;
+	padding: 5px 5px; /* Reduced padding */
+	cursor: pointer;
+	width: 20%; /* Slightly increased width */
+	margin-left: 1%; /* Space between input and button */
+}
+
+
+#eeBFEL_CopyShortcode:hover {
+	background-color: #0071a1;
+}
+
+#eeBFEL_Save {
+	display: block;
+	margin: 10px auto;
+	padding: 6px 50px;
+	font-size: 130%;
+}
+
+#eeBFEL_Footer p {
+	text-align: center;
+}
+
+.eeNote {
+	clear: both;
+	margin-bottom: 30px;
+	margin-left: 4%;
+	font-style: italic;
+}

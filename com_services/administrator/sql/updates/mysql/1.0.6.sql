@@ -1,1 +1,0 @@
-ALTER TABLE `#__services_webinar_requests` ADD COLUMN `parent` INT(11) UNSIGNED AFTER `project`;

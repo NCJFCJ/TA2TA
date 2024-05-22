@@ -80,20 +80,14 @@ const SiteLogo = () => {
 		toggleTitle();
 	};
 
-	/* const resetLogoWidth = ( event ) => {
-		if ( ! siteLogo.url ) {
-			return;
-		}
-		event.stopPropagation();
-		onWidthChange( initialState.siteLogo.width );
-	}; */
-
 	useEffect( () => {
 		if ( !! astraSitesVars.isRTLEnabled ) {
 			const rangeControl = document.querySelector(
 				'.components-range-control__wrapper'
 			);
-
+			if ( rangeControl === null ) {
+				return;
+			}
 			// Range control slider styling for RTL.
 			const currentValue = rangeControl.children[ 3 ].style.left;
 			rangeControl.children[ 3 ].style.marginRight = '-10px';
@@ -133,7 +127,7 @@ const SiteLogo = () => {
 											onClick={ open }
 											className="inline-flex border-0 focus:outline-none bg-transparent text-sm font-normal cursor-pointer"
 										>
-											Change
+											{ __( 'Change', 'astra-sites' ) }
 										</button>
 										<button
 											onClick={ removeImage }
@@ -166,11 +160,16 @@ const SiteLogo = () => {
 						{ siteLogo.url && (
 							<div className="flex items-center justify-between gap-2">
 								<span className="text-sm font-normal">
-									Show site title
+									{ __( 'Show site title', 'astra-sites' ) }
 								</span>
 								<ToggleSwitch
 									value={ showTitle }
 									onChange={ handleOnChangeToggleTitle }
+									requiredClass={
+										showTitle
+											? 'bg-accent-st-secondary'
+											: 'bg-border-tertiary'
+									}
 								/>
 							</div>
 						) }
@@ -191,8 +190,8 @@ const SiteLogo = () => {
 											onChange={ ( width ) => {
 												onWidthChange( width );
 											} }
-											trackColor="#3D4592"
-											color="#3D4592"
+											trackColor="#2563EB"
+											color="#2563EB"
 											railColor="#FFFFFF"
 											disabled={
 												'' !== siteLogo.url

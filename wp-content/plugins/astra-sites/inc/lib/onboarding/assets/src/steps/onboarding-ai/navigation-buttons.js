@@ -1,5 +1,6 @@
 import { ArrowRightIcon } from '@heroicons/react/24/outline';
 import { useState } from '@wordpress/element';
+import { __ } from '@wordpress/i18n';
 import LoadingSpinner from './components/loading-spinner';
 import { classNames } from './utils/helpers';
 import Button from './components/button';
@@ -68,7 +69,7 @@ const NavigationButtons = ( {
 						onClick={ handleOnClickPrevious }
 						variant="white"
 					>
-						<span>Previous Step</span>
+						<span>{ __( 'Previous Step', 'astra-sites' ) }</span>
 					</Button>
 				) }
 			</div>

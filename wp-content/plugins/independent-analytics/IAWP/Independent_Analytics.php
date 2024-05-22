@@ -11,6 +11,7 @@ use IAWP\AJAX\AJAX_Manager;
 use IAWP\Menu_Bar_Stats\Menu_Bar_Stats;
 use IAWP\Migrations\Migrations;
 use IAWP\Utils\Singleton;
+use IAWP\Utils\String_Util;
 /** @internal */
 class Independent_Analytics
 {
@@ -43,8 +44,8 @@ class Independent_Analytics
             }
             return $classes;
         });
-        \add_action('admin_enqueue_scripts', [$this, 'enqueue_scripts_and_styles'], 20);
-        // Called at 20 to dequeue other scripts
+        \add_action('admin_enqueue_scripts', [$this, 'enqueue_scripts_and_styles'], 110);
+        // Called at 110 to dequeue other scripts
         \add_action('wp_enqueue_scripts', [$this, 'enqueue_scripts_and_styles_front_end']);
         \add_action('admin_menu', [$this, 'add_admin_menu_pages']);
         \add_filter('plugin_action_links_independent-analytics/iawp.php', [$this, 'plugin_action_links']);
@@ -137,6 +138,7 @@ class Independent_Analytics
         \wp_register_style('iawp-styles', \IAWPSCOPED\iawp_url_to('dist/styles/style.css'), [], \IAWP_VERSION);
         \wp_register_style('iawp-dashboard-widget-styles', \IAWPSCOPED\iawp_url_to('dist/styles/dashboard_widget.css'), [], \IAWP_VERSION);
         \wp_register_style('iawp-freemius-notice-styles', \IAWPSCOPED\iawp_url_to('dist/styles/freemius_notice_styles.css'), [], \IAWP_VERSION);
+        \wp_register_style('iawp-posts-menu-styles', \IAWPSCOPED\iawp_url_to('dist/styles/posts_menu.css'), [], \IAWP_VERSION);
         \wp_register_script('iawp-javascript', \IAWPSCOPED\iawp_url_to('dist/js/index.js'), [], \IAWP_VERSION);
         \wp_register_script('iawp-dashboard-widget-javascript', \IAWPSCOPED\iawp_url_to('dist/js/dashboard_widget.js'), [], \IAWP_VERSION);
         \wp_register_script('iawp-layout-javascript', \IAWPSCOPED\iawp_url_to('dist/js/layout.js'), [], \IAWP_VERSION);
@@ -166,6 +168,7 @@ class Independent_Analytics
             \wp_enqueue_script('iawp-javascript');
             \wp_enqueue_script('iawp-layout-javascript');
             $this->dequeue_bad_actors();
+            $this->maybe_override_adminify_styles();
             if (\is_rtl()) {
                 \wp_enqueue_style('iawp-styles-rtl');
             }
@@ -176,6 +179,8 @@ class Independent_Analytics
         } elseif ($hook === 'index.php') {
             \wp_enqueue_script('iawp-dashboard-widget-javascript');
             \wp_enqueue_style('iawp-dashboard-widget-styles');
+        } elseif ($hook === 'edit.php') {
+            \wp_enqueue_style('iawp-posts-menu-styles');
         }
         if (Menu_Bar_Stats::is_option_enabled()) {
             \wp_enqueue_style('iawp-front-end-styles');
@@ -251,13 +256,48 @@ class Independent_Analytics
         \wp_dequeue_style('woo-invoice');
         // https://wordpress.org/plugins/wp-media-files-name-rename/
         \wp_dequeue_style('wpcmp_bootstrap_css');
+        // https://wordpress.org/plugins/morepuzzles/
+        \wp_dequeue_style('bscss');
+        \wp_dequeue_style('mypluginstyle');
+        $this->dequeue_bootstrap_stylesheets();
+    }
+    // Dequeue any stylesheets loading Twitter Bootstrap. It shouldn't be loaded in our menu and makes all modals inaccessible among other issues.
+    public function dequeue_bootstrap_stylesheets()
+    {
+        global $wp_styles;
+        $bootstrap_strings = ['/bootstrap.css', '/bootstrap.min.css', '/bootstrap.bundle.css', '/bootstrap.bundle.min.css'];
+        foreach ($wp_styles->queue as $key => $handle) {
+            if (\array_key_exists($handle, $wp_styles->registered)) {
+                $url = $wp_styles->registered[$handle]->src;
+                // WP Core scripts can return boolean
+                if (\is_string($url)) {
+                    foreach ($bootstrap_strings as $bootstrap) {
+                        if (String_Util::str_contains($url, $bootstrap)) {
+                            \wp_dequeue_style($handle);
+                            continue;
+                        }
+                    }
+                }
+            }
+        }
+    }
+    public function maybe_override_adminify_styles()
+    {
+        if (\in_array('adminify/adminify.php', \get_option('active_plugins'))) {
+            $settings = \get_option('_wpadminify');
+            if (\array_key_exists('admin_ui', $settings)) {
+                if ($settings['admin_ui']) {
+                    \wp_register_style('iawp-adminify-styles', \IAWPSCOPED\iawp_url_to('dist/styles/adminify.css'), [], \IAWP_VERSION);
+                    \wp_enqueue_style('iawp-adminify-styles');
+                }
+            }
+        }
     }
     public function get_update_notification_count()
     {
         // https://api.wordpress.org/plugins/info/1.0/independent-analytics.json
-        $version_history = ['2.3.0', '2.2.0', '2.1.0'];
+        $version_history = ['2.4.0', '2.3.0', '2.2.0', '2.1.0'];
         $last_update_viewed = $this->get_option('iawp_last_update_viewed', '0');
-        $notification_html = '';
         $unseen_versions = \array_filter($version_history, function ($version) use($last_update_viewed) {
             return \version_compare($last_update_viewed, $version, '<');
         });

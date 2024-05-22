@@ -2,7 +2,7 @@
 /*
   Plugin Name: WP Sheet Editor - Editable Frontend Tables (Premium)
   Description: Display spreadsheet editor on the frontend or custom admin pages, create custom spreadsheets as dashboards for apps.
-  Version: 2.4.33
+  Version: 2.4.37
   Update URI: https://api.freemius.com
   Author:      WP Sheet Editor
   Author URI:  https://wpsheeteditor.com/?utm_source=wp-admin&utm_medium=plugins-list&utm_campaign=frontend
@@ -66,6 +66,7 @@ if (!class_exists('WP_Sheet_Editor_Frontend_Editor')) {
 		var $sheets_bootstrap = null;
 		var $main_admin_page_slug = null;
 		var $frontend_template_key = 'vg-sheet-editor-frontend.php';
+		public $modules_controller = null;
 
 		private function __construct() {
 			
@@ -819,6 +820,12 @@ if (!class_exists('WP_Sheet_Editor_Frontend_Editor')) {
 		 * @param int $post_id Post ID
 		 */
 		function save_meta_box($post_id) {
+
+			if ( ! empty( $_POST['extra_data'] ) ) {
+				// When we render the form in the spreadsheet editor, we send the form data as JSON in extra_data because some servers have low limits for form post fields
+				$_POST = array_merge( $_POST, json_decode( html_entity_decode( wp_unslash( $_POST['extra_data'] ) ), true ) );
+				unset( $_POST['extra_data'] );
+			}
 
 			if (!isset($_POST['bep-nonce']) || !wp_verify_nonce($_POST['bep-nonce'], 'bep-nonce')) {
 				return $post_id;

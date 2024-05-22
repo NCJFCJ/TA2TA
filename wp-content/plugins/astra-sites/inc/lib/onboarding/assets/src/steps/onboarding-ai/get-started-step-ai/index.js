@@ -84,27 +84,45 @@ const GetStarted = () => {
 				<div className="gap-10 lg:gap-16 flex-wrap lg:flex-nowrap h-full flex items-center justify-center w-full px-8 lg:px-10">
 					<div className="flex flex-col items-start justify-center gap-6 order-2 lg:order-1 h-full">
 						<h1 className="font-bold">
-							Building a website has never been this easy!
+							{ __(
+								'Building a website has never been this easy!',
+								'astra-sites'
+							) }
 						</h1>
 						<p className=" m-0 !text-zip-body-text !text-xl !font-normal">
-							Here is how the AI Website Builder works:
+							{ __(
+								'Here is how the AI Website Builder works:',
+								'astra-sites'
+							) }
 						</p>
 						<ul className="list-decimal ml-6 my-0 !text-zip-body-text !text-xl font-normal">
 							<li className="text-start">
-								Create a free account on ZipWP platform.
+								{ __(
+									'Create a free account on ZipWP platform.',
+									'astra-sites'
+								) }
 							</li>
 							<li className="text-start">
-								Describe your dream website in your own words.
+								{ __(
+									'Describe your dream website in your own words.',
+									'astra-sites'
+								) }
 							</li>
 							<li className="text-start">
-								Watch as AI crafts your WordPress website
-								instantly.
+								{ __(
+									'Watch as AI crafts your WordPress website instantly.',
+									'astra-sites'
+								) }
 							</li>
 							<li className="text-start">
-								Refine the website with an easy drag & drop
-								builder.
+								{ __(
+									'Refine the website with an easy drag & drop builder.',
+									'astra-sites'
+								) }
 							</li>
-							<li className="text-start">Launch.</li>
+							<li className="text-start">
+								{ __( 'Launch.', 'astra-sites' ) }
+							</li>
 						</ul>
 
 						<div className="gap-6 mt-4 mb-10 flex flex-col items-start justify-start">
@@ -159,7 +177,7 @@ const GetStarted = () => {
 								} }
 							>
 								<ArrowLongLeftIcon className="w-5 h-5 text-zip-body-text" />
-								<span>Back</span>
+								<span>{ __( 'Back', 'astra-sites' ) }</span>
 							</button>
 						</div>
 					</div>

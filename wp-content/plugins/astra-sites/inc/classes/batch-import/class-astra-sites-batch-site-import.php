@@ -451,7 +451,7 @@ if ( ! class_exists( 'Astra_Sites_Batch_Site_Import' ) ) :
 			require_once ABSPATH . 'wp-admin/includes/plugin.php';
 			require_once ABSPATH . 'wp-admin/includes/update.php';
 
-			$demo_data = get_option( 'astra_sites_import_data', array() );
+			$demo_data = Astra_Sites_File_System::get_instance()->get_demo_content();
 
 			if ( isset( $demo_data['required-plugins'] ) ) {
 
@@ -553,7 +553,7 @@ if ( ! class_exists( 'Astra_Sites_Batch_Site_Import' ) ) :
 		 * Import Flows and Steps
 		 */
 		public function import_flows_and_steps() {
-			$demo_data = get_option( 'astra_sites_import_data', array() );
+			$demo_data = Astra_Sites_File_System::get_instance()->get_demo_content();
 			if ( ! empty( $demo_data ) && isset( $demo_data['astra-site-cartflows-path'] ) && ! empty( $demo_data['astra-site-cartflows-path'] ) ) {
 				Astra_Sites_Importer::get_instance()->import_cartflows( $demo_data['astra-site-cartflows-path'] );
 			}
@@ -566,8 +566,7 @@ if ( ! class_exists( 'Astra_Sites_Batch_Site_Import' ) ) :
 
 			/** WordPress Post Administration API */
 			require_once ABSPATH . 'wp-admin/includes/post.php';
-
-			$demo_data = get_option( 'astra_sites_import_data', array() );
+			$demo_data = Astra_Sites_File_System::get_instance()->get_demo_content();
 			/**
 			 * Import WP Forms.
 			 */
@@ -580,7 +579,7 @@ if ( ! class_exists( 'Astra_Sites_Batch_Site_Import' ) ) :
 		 * Import Customizer Settings.
 		 */
 		public function import_customizer_settings() {
-			$demo_data = get_option( 'astra_sites_import_data', array() );
+			$demo_data = Astra_Sites_File_System::get_instance()->get_demo_content();
 			Astra_Sites_Importer::get_instance()->import_customizer_settings( $demo_data['astra-site-customizer-data'] );
 		}
 
@@ -588,7 +587,7 @@ if ( ! class_exists( 'Astra_Sites_Batch_Site_Import' ) ) :
 		 * Import Content from XML/WXR.
 		 */
 		public function import_xml() {
-			$demo_data = get_option( 'astra_sites_import_data', array() );
+			$demo_data = Astra_Sites_File_System::get_instance()->get_demo_content();
 
 			if ( isset( $demo_data['astra-site-wxr-path'] ) && ! empty( $demo_data['astra-site-wxr-path'] ) ) {
 				$xml_path = Astra_Sites_Helper::download_file( $demo_data['astra-site-wxr-path'] );
@@ -601,7 +600,7 @@ if ( ! class_exists( 'Astra_Sites_Batch_Site_Import' ) ) :
 		 * Import Site Options.
 		 */
 		public function import_site_options() {
-			$demo_data = get_option( 'astra_sites_import_data', array() );
+			$demo_data = Astra_Sites_File_System::get_instance()->get_demo_content();
 
 			if ( isset( $demo_data['astra-site-options-data'] ) && ! empty( $demo_data['astra-site-options-data'] ) ) {
 				Astra_Sites_Importer::get_instance()->import_options( $demo_data['astra-site-options-data'] );
@@ -612,7 +611,7 @@ if ( ! class_exists( 'Astra_Sites_Batch_Site_Import' ) ) :
 		 * Import Widgets.
 		 */
 		public function import_widgets() {
-			$demo_data = get_option( 'astra_sites_import_data', array() );
+			$demo_data = Astra_Sites_File_System::get_instance()->get_demo_content();
 
 			if ( isset( $demo_data['astra-site-widgets-data'] ) && ! empty( $demo_data['astra-site-widgets-data'] ) ) {
 				Astra_Sites_Importer::get_instance()->import_widgets( $demo_data['astra-site-widgets-data'] );
@@ -708,7 +707,7 @@ if ( ! class_exists( 'Astra_Sites_Batch_Site_Import' ) ) :
 			if ( empty( $this->current_site_data ) ) {
 				// @todo Use Astra_Sites::get_instance()->api_request() instead of below function.
 				$this->current_site_data = Astra_Sites_Importer::get_instance()->get_single_demo( $id );
-				update_option( 'astra_sites_import_data', $this->current_site_data, 'no' );
+				Astra_Sites_File_System::get_instance()->update_demo_data( $this->current_site_data );
 			}
 
 			return $this->current_site_data;

@@ -32,7 +32,7 @@ if ( ! class_exists( 'WP_Sheet_Editor_Bootstrap' ) ) {
 			if ( empty( $args['enabled_post_types'] ) ) {
 				// This bootstrap instance only handles post types by default. We filter using post_type_exists because get_enabled_post_types() returns all the enabled sheets across all plugins, which includes non-post-types
 				$args['enabled_post_types'] = array_filter( VGSE()->helpers->get_enabled_post_types(), 'post_type_exists' );
-				
+
 				// If this is the post types plugin and there is a premium products plugin, exclude the products sheet from the post types initialization so it loads the products sheet from the premium products plugin
 				if ( function_exists( 'wpsewcp_freemius' ) && wpsewcp_freemius()->can_use_premium_code__premium_only() ) {
 					$products_index = array_search( 'product', $args['enabled_post_types'] );
@@ -48,6 +48,10 @@ if ( ! class_exists( 'WP_Sheet_Editor_Bootstrap' ) ) {
 			// Allow other plugins to skip post type bootstrapping
 			if ( ! apply_filters( 'vg_sheet_editor/allow_to_bootstrap', true, $this->settings ) ) {
 				return;
+			}
+
+			if ( $this->settings['current_provider'] ) {
+				$this->settings['current_provider'] = $this->settings['current_provider'] && in_array( $this->settings['current_provider'], $args['enabled_post_types'], true ) ? $this->settings['current_provider'] : current( $args['enabled_post_types'] );
 			}
 
 			$current_post_type = $this->settings['current_provider'];
@@ -75,8 +79,8 @@ if ( ! class_exists( 'WP_Sheet_Editor_Bootstrap' ) ) {
 
 				new WP_Sheet_Editor_Factory(
 					array(
-						'posts_per_page'       => ( ! empty( VGSE()->options ) && ! empty( VGSE()->options['be_posts_per_page'] ) ) ? (int) VGSE()->options['be_posts_per_page'] : 20,
-						'save_posts_per_page'  => ( ! empty( VGSE()->options ) && ! empty( VGSE()->options['be_posts_per_page_save'] ) ) ? (int) VGSE()->options['be_posts_per_page_save'] : 4,
+						'posts_per_page'       => ( ! empty( VGSE()->options ) && ! empty( VGSE()->options['be_posts_per_page'] ) ) ? (int) VGSE()->options['be_posts_per_page'] : 40,
+						'save_posts_per_page'  => ( ! empty( VGSE()->options ) && ! empty( VGSE()->options['be_posts_per_page_save'] ) ) ? (int) VGSE()->options['be_posts_per_page_save'] : 8,
 						'wait_between_batches' => ( ! empty( VGSE()->options ) && ! empty( VGSE()->options['be_timeout_between_batches'] ) ) ? (int) VGSE()->options['be_timeout_between_batches'] : 6,
 						'fixed_columns_left'   => $freezed_columns ? $freezed_columns : null,
 						'provider'             => $current_post_type,

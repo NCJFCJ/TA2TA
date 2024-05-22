@@ -4,8 +4,8 @@ Contributors: theeventscalendar, brianjessee, camwynsp, aguseo, bordoni, borkweb
 Tags: widget, events, simple, tooltips, grid, month, list, calendar, event, venue, community, registration, api, dates, date, plugin, posts, sidebar, template, theme, time, google maps, google, maps, conference, workshop, concert, meeting, seminar, summit, forum, shortcode, The Events Calendar, The Events Calendar PRO
 Donate link: https://evnt.is/29
 Requires at least: 6.2
-Tested up to: 6.4.3
-Stable tag: 4.10.15
+Tested up to: 6.5.2
+Stable tag: 4.10.17
 Requires PHP: 7.4
 License: GPLv2 or later
 License URI: http://www.gnu.org/licenses/gpl-2.0.html
@@ -162,6 +162,21 @@ Our Premium Plugins:
 * <a href="https://evnt.is/fa" target="_blank">The Events Calendar: Filter Bar</a>
 
 == Changelog ==
+
+= [4.10.17] 2024-04-18 =
+
+* Feature - Add compatibility with the new Attendees page. [ET-1707]
+* Fix - Corrected an issue where duplicate events could be created when refreshing the submitted event page. [CE-209]
+* Fix - Corrected a missing <div> in default-template.php. [CE-207]
+* Fix - Corrected template override paths from `tribe-events` to `tribe` for templates in the `/src/views/community` folder. [CE-208]
+* Tweak - Added filters: `tec_events_community_event_form_post_id`, `tec_events_community_event_editor_post_content`
+* Tweak - Changed views: `community/blank-comments-template`, `community/default-placeholder`, `community/default-template`, `community/edit-event`, `community/edit-organizer`, `community/edit-venue`, `community/email-template`, `community/event-list-shortcode`, `community/event-list`, `community/login-form`
+* Language - 0 new strings added, 29 updated, 0 fuzzied, and 0 obsoleted
+
+= [4.10.16] 2024-03-25 =
+
+* Fix - Corrected an issue that was occurring when using the pagination on the `My Events` page. [CE-204]
+* Language - 0 new strings added, 0 updated, 0 fuzzied, and 0 obsoleted
 
 = [4.10.15] 2024-02-06 =
 

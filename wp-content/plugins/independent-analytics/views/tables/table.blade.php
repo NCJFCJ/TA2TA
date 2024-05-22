@@ -28,6 +28,7 @@
                                 data-default-sort-direction="<?php echo esc_attr($column->sort_direction()); ?>"
                                 data-sort-column="<?php echo esc_attr($column->id()); ?>"
                                 data-action="sort#sortColumnColumn"
+                                title="<?php echo esc_html($column->label()); ?>"
                         >
                             <div class="row-number"></div>
                             <span class="name"><?php echo esc_html($column->label()); ?></span>

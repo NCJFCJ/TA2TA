@@ -81,19 +81,14 @@ const SiteLogo = () => {
 		toggleTitle();
 	};
 
-	/* const resetLogoWidth = ( event ) => {
-		if ( ! siteLogo.url ) {
-			return;
-		}
-		event.stopPropagation();
-		onWidthChange( initialState.siteLogo.width );
-	}; */
-
 	useEffect( () => {
 		if ( !! astraSitesVars.isRTLEnabled ) {
 			const rangeControl = document.querySelector(
 				'.components-range-control__wrapper'
 			);
+			if ( rangeControl === null ) {
+				return;
+			}
 
 			// Range control slider styling for RTL.
 			const currentValue = rangeControl.children[ 3 ].style.left;
@@ -110,7 +105,7 @@ const SiteLogo = () => {
 	return (
 		<>
 			<h5 className="!text-zip-dark-theme-heading !text-sm !font-semibold !mb-1">
-				Site Logo
+				{ __( 'Site Logo', 'astra-sites' ) }
 			</h5>
 			<MediaUpload
 				onSelect={ ( media ) => onSelectImage( media ) }
@@ -136,7 +131,7 @@ const SiteLogo = () => {
 											onClick={ open }
 											className="inline-flex border-0 focus:outline-none bg-transparent text-sm font-normal text-zip-dark-theme-body cursor-pointer"
 										>
-											Change
+											{ __( 'Change', 'astra-sites' ) }
 										</button>
 										<button
 											onClick={ removeImage }
@@ -169,11 +164,16 @@ const SiteLogo = () => {
 						{ aiSiteLogo.url && (
 							<div className="flex items-center justify-between gap-2">
 								<span className="text-sm font-normal text-zip-dark-theme-body">
-									Show site title
+									{ __( 'Show site title', 'astra-sites' ) }
 								</span>
 								<ToggleSwitch
 									value={ showTitle }
 									onChange={ handleOnChangeToggleTitle }
+									requiredClass={
+										showTitle
+											? 'bg-accent-st'
+											: 'bg-zip-dark-theme-border'
+									}
 								/>
 							</div>
 						) }

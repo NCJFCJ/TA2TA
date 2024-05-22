@@ -2,18 +2,19 @@
 
 namespace Barn2\Plugin\Document_Library_Pro;
 
-use Barn2\Plugin\Document_Library_Pro\Util\SVG_Icon,
-	Barn2\Plugin\Document_Library_Pro\Util\Options,
-	Barn2\Plugin\Document_Library_Pro\Util\Media as Media_Util,
-	Barn2\Plugin\Document_Library_Pro\Dependencies\Lib\Util as Lib_Util;
+use Barn2\Plugin\Document_Library_Pro\Util\SVG_Icon;
+use Barn2\Plugin\Document_Library_Pro\Util\Options;
+use Barn2\Plugin\Document_Library_Pro\Util\Media as Media_Util;
+use Barn2\Plugin\Document_Library_Pro\Util\Util;
+use Barn2\Plugin\Document_Library_Pro\Dependencies\Lib\Util as Lib_Util;
 
 defined( 'ABSPATH' ) || exit;
 
 /**
  * Document Controller
  *
- * @package   Barn2/document-library-pro
- * @author    Barn2 Plugins <info@barn2.com>
+ * @package   Barn2\document-library-pro
+ * @author    Barn2 Plugins <support@barn2.com>
  * @license   GPL-3.0
  * @copyright Barn2 Media Ltd
  */
@@ -92,6 +93,20 @@ class Document {
 		if ( isset( $data['meta_data'] ) ) {
 			foreach ( $data['meta_data'] as $meta ) {
 				$this->set_meta_data( $meta['key'], $meta['value'] );
+			}
+		}
+
+		// Set any Advanced Custom Fields data
+		if ( Util::is_acf_active() && isset( $data['acf'] ) ) {
+			foreach ( $data['acf'] as $meta ) {
+				$this->set_acf_data( $meta['key'], $meta['value'] );
+			}
+		}
+
+		// Set any Easy Post Types data
+		if ( Util::is_ept_active() && isset( $data['ept'] ) ) {
+			foreach ( $data['ept'] as $meta ) {
+				$this->set_ept_data( $meta['key'], $meta['value'] );
 			}
 		}
 	}
@@ -350,6 +365,26 @@ class Document {
 	}
 
 	/**
+	 * Sets Advanced Custom Fields data
+	 *
+	 * @param string $key
+	 * @param string $value
+	 */
+	protected function set_acf_data( $key, $value ) {
+		update_field( $key, $value, $this->id );
+	}
+
+	/**
+	 * Sets Easy Post Types data
+	 *
+	 * @param string $key
+	 * @param string $value
+	 */
+	protected function set_ept_data( $key, $value ) {
+		update_post_meta( $this->id, 'dlp_document_' . $key, $value );
+	}
+
+	/**
 	 * Sets the file type taxonomy if there is associated file
 	 */
 	protected function set_file_type() {
@@ -600,7 +635,7 @@ class Document {
 						}
 
 					}
-					$custom_fields_list[ $key ]['value'] = ( $custom_fields_list[ $key ]['value'] ?? '' ) . ( $value_key > 0 ? ', ' : '' ) . (is_array($value) ? implode( ', ', $value ): $value);
+					$custom_fields_list[ $key ]['value'] = ( $custom_fields_list[ $key ]['value'] ?? '' ) . ( $value_key > 0 ? ', ' : '' ) . $value;
 				}
 				$custom_fields_list[ $key ]['label'] = $label;
 			}

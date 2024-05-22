@@ -51,7 +51,7 @@ class Occurrence_Notices {
 	 *
 	 * @since 6.0.0
 	 *
-	 * @param Events $events_repo
+	 * @param Events $events_repo The CT1 events repository.
 	 */
 	public function __construct( Events $events_repo ) {
 		$this->events_repository = $events_repo;
@@ -76,7 +76,7 @@ class Occurrence_Notices {
 	 *
 	 * @since 6.0.0
 	 *
-	 * @param $post_id
+	 * @param int $post_id The post ID of the event to register the notice for.
 	 */
 	public function register( $post_id ) {
 		Admin_Notices::instance()->register_transient(
@@ -96,13 +96,15 @@ class Occurrence_Notices {
 	 * IDs of each post.
 	 *
 	 * @since 6.0.0
+	 *
+	 * @return void|string The JSON-encoded data.
 	 */
 	public function on_dismiss() {
-		if ( empty( $_GET[ Admin_Notices::$meta_key ] ) ) {
+		if ( empty( tribe_get_request_var( Admin_Notices::$meta_key ) ) ) {
 			wp_send_json( false );
 		}
 
-		$slug = sanitize_title_with_dashes( $_GET[ Admin_Notices::$meta_key ] );
+		$slug = sanitize_title_with_dashes( tribe_get_request_var( Admin_Notices::$meta_key ) );
 
 		// Review if the notice being removed is a classic occurrence make sure to remove the meta from the post ID.
 		$re = '/' . self::NOTICE_SLUG_PREFIX . '(\d+)/';
@@ -115,8 +117,16 @@ class Occurrence_Notices {
 			}
 		}
 
-		// Send a JSON answer with the status of dismissal
-		wp_send_json( Admin_Notices::instance()->dismiss( $slug ) );
+		// Add the user_meta value that this notice has been dismissed.
+		$result = Admin_Notices::instance()->dismiss( $slug );
+
+		// When we don't want to echo & die().
+		if ( tribe_get_request_var( '_return' ) ) {
+			return wp_json_encode( $result );
+		}
+
+		// Send a JSON answer with the status of dismissal.
+		wp_send_json( $result );
 	}
 
 	/**
@@ -133,6 +143,7 @@ class Occurrence_Notices {
 			return '';
 		}
 
+		// phpcs:ignore WordPress.Security.NonceVerification.Recommended
 		if ( empty( $_REQUEST['post'] ) || empty( $_REQUEST['action'] ) || $_REQUEST['action'] !== 'edit' ) {
 			return '';
 		}
@@ -142,7 +153,7 @@ class Occurrence_Notices {
 			return '';
 		}
 
-		// This is only for classic editor
+		// This is only for classic editor.
 		if ( tribe( 'events.editor.compatibility' )->is_blocks_editor_toggled_on() ) {
 			return '';
 		}
@@ -202,6 +213,7 @@ class Occurrence_Notices {
 
 		// Event / draft?
 		if ( $post->post_status === 'draft' ) {
+			// translators: %s is the event label.
 			$event_status_message = sprintf( __( 'Draft %s', 'tribe-events-calendar-pro' ), $event_label_lowercase );
 		} else {
 			$event_status_message = $event_label;
@@ -209,37 +221,38 @@ class Occurrence_Notices {
 
 		// The verbs are published, saved (for new draft events), and updated (for changes to an existing event of any post status).
 		if ( $data['is_updated'] ) {
+			// translators: %s is the event status message.
 			$verb_message = sprintf( __( '%1$s updated.', 'tribe-events-calendar-pro' ), $event_status_message );
-		} else if ( $data['is_inserted'] && $post->post_status === 'draft' ) {
+		} elseif ( $data['is_inserted'] && $post->post_status === 'draft' ) {
+			// translators: %s is the event status message.
 			$verb_message = sprintf( __( '%1$s saved.', 'tribe-events-calendar-pro' ), $event_status_message );
 		} else {
+			// translators: %s is the event status message.
 			$verb_message = sprintf( __( '%1$s published.', 'tribe-events-calendar-pro' ), $event_status_message );
 		}
 
 		// This event in a series?
 		$event_series_relationship = Series_Relationship::find( $event->event_id, 'event_id' );
 		if ( ! $event_series_relationship instanceof Series_Relationship ) {
-			return sprintf(
-				esc_html__( '%1$s %3$sView %2$s%3$s', 'tribe-events-calendar-pro' ),
-				$verb_message,
-				$event_label,
-				'<a href="' . esc_url( get_permalink( $event->post_id ) ) . '">',
-				'</a>'
-			);
+			// translators: %1$s is the verb message, %2$s is the event link, %3$s is the event label, %4$s is the event link closing tag.
+			return sprintf( esc_html__( '%1$s %2$sView %3$s%4$s', 'tribe-events-calendar-pro' ), $verb_message, '<a href="' . esc_url( get_permalink( $event->post_id ) ) . '">', $event_label, '</a>' );
 		}
 
+		// translators: %1$s is the event label.
 		$event_type_message = sprintf( __( 'recurring %1$s', 'tribe-events-calendar-pro' ), $event_label_lowercase );
 
 		if ( empty( $event->rset ) ) {
 			$event_type_message = $event_label_lowercase;
 		}
-		$series_message     = __( 'This %1$s is part of a %2$sSeries%3$s with %4$d total %5$s through %6$s.', 'tribe-events-calendar-pro' );
+		// translators: %1$s is the event type, %2$s is the series link, %3$s is the series link closing tag, %4$d is the total number of events in the series, %5$s is the event label, %6$s is the through date.
+		$series_message = __( 'This %1$s is part of a %2$sSeries%3$s with %4$d total %5$s through %6$s.', 'tribe-events-calendar-pro' );
+
 		// Find the last occurrence in this series.
 		$series_relationship_table = Series_Relationships::table_name( true );
 		$last                      = Occurrence::join( $series_relationship_table, 'event_id', 'event_id' )
-		                                       ->where_raw( "`$series_relationship_table`.series_post_id = %d", $event_series_relationship->series_post_id )
-		                                       ->order_by( 'end_date', 'DESC' )
-		                                       ->first();
+			->where_raw( "`$series_relationship_table`.series_post_id = %d", $event_series_relationship->series_post_id )
+			->order_by( 'end_date', 'DESC' )
+			->first();
 
 		// Should not happen, but fail gracefully.
 		if ( ! $last instanceof Occurrence ) {
@@ -251,8 +264,9 @@ class Occurrence_Notices {
 		$total_in_series = $this->events_repository->get_occurrence_count_for_series( $event_series_relationship->series_post_id );
 		$series_url      = get_edit_post_link( $event_series_relationship->series_post_id );
 
-		// Example message: Event updated. This recurring event is part of a Series with 13 total events through February 2, 2032
-		return sprintf( $verb_message . ' ' . $series_message,
+		// Example message: Event updated. This recurring event is part of a Series with 13 total events through February 2, 2032.
+		return sprintf(
+			$verb_message . ' ' . $series_message,
 			$event_type_message,
 			'<a href="' . esc_url( $series_url ) . '" target="_blank" rel="noopener">',
 			'</a>',
@@ -285,7 +299,7 @@ class Occurrence_Notices {
 	 */
 	public function update( $post_id, $meta = [] ) {
 
-		if ( empty ( $meta ) ) {
+		if ( empty( $meta ) ) {
 			return $this->delete( $post_id );
 		}
 

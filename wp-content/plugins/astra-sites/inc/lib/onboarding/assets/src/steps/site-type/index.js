@@ -15,7 +15,7 @@ import { WandIcon } from '../ui/icons';
 import './style.scss';
 
 const SiteType = () => {
-	const [ { builder }, dispatch ] = useStateValue();
+	const [ { builder, currentIndex }, dispatch ] = useStateValue();
 	const { setLimitExceedModal } = useDispatch( STORE_KEY );
 
 	const zipPlans = astraSitesVars?.zip_plans;
@@ -103,6 +103,15 @@ const SiteType = () => {
 		} );
 	};
 
+	useEffect( () => {
+		if ( currentIndex === 0 ) {
+			dispatch( {
+				type: 'set',
+				builder: 'ai-builder',
+			} );
+		}
+	}, [] );
+
 	return (
 		<DefaultStep
 			content={
@@ -182,10 +191,7 @@ const SiteType = () => {
 												builder === 'ai-builder'
 													? 'gutenberg'
 													: builder,
-											currentIndex:
-												astraSitesVars.default_page_builder
-													? 4
-													: 3,
+											currentIndex: 3,
 										} );
 									} }
 								>

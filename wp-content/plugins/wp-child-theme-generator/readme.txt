@@ -4,8 +4,8 @@ Donate link: https://wensolutions.com
 Tags: theme, child theme, child theme creator, child theme creator, CSS, stylesheet, custom theme, customize theme, plugin, plugins, order, organize, easy theme
 Requires at least: 3.5
 Requires PHP: 5.6
-Tested up to: 6.4
-Stable tag: 1.0.9
+Tested up to: 6.5
+Stable tag: 1.1.0
 License: GPLv2 or later
 License URI: http://www.gnu.org/licenses/gpl-2.0.html
 
@@ -53,6 +53,13 @@ If you have any question, suggestion or issue, please [post here](https://wensol
 2. Child theme generate advance options.
 
 == Changelog ==
+
+= 1.1.0 =
+Release Date: 12th April, 2024
+
+* Fixed plugin general errors
+* Fixed Plugin security errors
+* Compatibility tested with WordPress 6.5
 
 = 1.0.9 =
 Release Date: 18th January, 2024

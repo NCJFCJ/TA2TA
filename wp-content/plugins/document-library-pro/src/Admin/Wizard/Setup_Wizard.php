@@ -2,20 +2,20 @@
 
 namespace Barn2\Plugin\Document_Library_Pro\Admin\Wizard;
 
-use Barn2\Plugin\Document_Library_Pro\Admin\Wizard\Steps,
-	Barn2\Plugin\Document_Library_Pro\Util\Options,
-	Barn2\Plugin\Document_Library_Pro\Dependencies\Lib\Plugin\License\EDD_Licensing,
-	Barn2\Plugin\Document_Library_Pro\Dependencies\Lib\Plugin\License\Plugin_License,
-	Barn2\Plugin\Document_Library_Pro\Dependencies\Lib\Plugin\Licensed_Plugin,
-	Barn2\Plugin\Document_Library_Pro\Dependencies\Lib\Registerable,
-	Barn2\Plugin\Document_Library_Pro\Dependencies\Lib\Util as Lib_Util;
+use Barn2\Plugin\Document_Library_Pro\Admin\Wizard\Steps;
+use Barn2\Plugin\Document_Library_Pro\Util\Options;
+use Barn2\Plugin\Document_Library_Pro\Dependencies\Lib\Plugin\License\EDD_Licensing;
+use Barn2\Plugin\Document_Library_Pro\Dependencies\Lib\Plugin\License\Plugin_License;
+use Barn2\Plugin\Document_Library_Pro\Dependencies\Lib\Plugin\Licensed_Plugin;
+use Barn2\Plugin\Document_Library_Pro\Dependencies\Lib\Registerable;
+use Barn2\Plugin\Document_Library_Pro\Dependencies\Lib\Util as Lib_Util;
 use Barn2\Plugin\Document_Library_Pro\Dependencies\Setup_Wizard\Setup_Wizard as Wizard;
 
 /**
  * Main Setup Wizard Loader
  *
- * @package   Barn2/document-library-pro
- * @author    Barn2 Plugins <info@barn2.com>
+ * @package   Barn2\document-library-pro
+ * @author    Barn2 Plugins <support@barn2.com>
  * @license   GPL-3.0
  * @copyright Barn2 Media Ltd
  */
@@ -69,6 +69,7 @@ class Setup_Wizard implements Registerable {
 
 		$wizard->add_edd_api( EDD_Licensing::class );
 		$wizard->add_license_class( Plugin_License::class );
+		$wizard->add_restart_link( '', '' );
 
 		$wizard->add_custom_asset(
 			$plugin->get_dir_url() . 'assets/js/admin/dlp-wizard-custom.js',

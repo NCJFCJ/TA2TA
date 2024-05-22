@@ -986,3 +986,85 @@ function astra_theme_background_updater_4_6_6() {
 		update_option( 'astra-settings', $theme_options );
 	}
 }
+
+/**
+ * Handle backward compatibility for Starter template library preview line height cases.
+ *
+ * @since 4.6.11
+ * @return void
+ */
+
+function astra_theme_background_updater_4_6_11() {
+	$theme_options = get_option( 'astra-settings', array() );
+
+	if ( isset( $theme_options['global-headings-line-height-update'] ) ) {
+		return;
+	}
+
+	$headers_fonts = array(
+		'h1' => '1.4',
+		'h2' => '1.3',
+		'h3' => '1.3',
+		'h4' => '1.2',
+		'h5' => '1.2',
+		'h6' => '1.25',
+	);
+
+	foreach ( $headers_fonts as $header_tag => $header_font_value ) {
+
+		if ( empty( $theme_options[ 'font-extras-' . $header_tag ]['line-height'] ) ) {
+			$theme_options[ 'font-extras-' . $header_tag ]['line-height'] = $header_font_value;
+			if ( empty( $theme_options[ 'font-extras-' . $header_tag ]['line-height-unit'] ) ) {
+				$theme_options[ 'font-extras-' . $header_tag ]['line-height-unit'] = 'em';
+			}
+		}
+	}
+
+	$theme_options['global-headings-line-height-update'] = true;
+
+	update_option( 'astra-settings', $theme_options );
+
+}
+
+/**
+ * Handle backward compatibility for heading `clear:both` css in single posts and pages.
+ *
+ * @since 4.6.12
+ * @return void
+ */
+function astra_theme_background_updater_4_6_12() {
+	$theme_options = get_option( 'astra-settings', array() );
+
+	if ( ! isset( $theme_options['single_posts_pages_heading_clear_none'] ) ) {
+		$theme_options['single_posts_pages_heading_clear_none'] = false;
+		update_option( 'astra-settings', $theme_options );
+	}
+
+	if ( ! isset( $theme_options['elementor-btn-styling'] ) ) {
+		$theme_options['elementor-btn-styling'] = defined( 'ELEMENTOR_VERSION' ) ? true : false;
+		update_option( 'astra-settings', $theme_options );
+	}
+
+	if ( ! isset( $theme_options['remove_single_posts_navigation_mobile_device_padding'] ) ) {
+		$theme_options['remove_single_posts_navigation_mobile_device_padding'] = true;
+		update_option( 'astra-settings', $theme_options );
+	}
+}
+
+/**
+ * Handle backward compatibility for following pointers.
+ *
+ * 1. unit less line-height support.
+ * 2. H5 font size case.
+ *
+ * @since 4.6.14
+ * @return void
+ */
+function astra_theme_background_updater_4_6_14() {
+	$theme_options = get_option( 'astra-settings', array() );
+
+	if ( ! isset( $theme_options['enable-4-6-14-compatibility'] ) ) {
+		$theme_options['enable-4-6-14-compatibility'] = false;
+		update_option( 'astra-settings', $theme_options );
+	}
+}

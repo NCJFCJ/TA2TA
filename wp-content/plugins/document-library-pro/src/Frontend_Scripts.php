@@ -1,16 +1,16 @@
 <?php
 namespace Barn2\Plugin\Document_Library_Pro;
 
-use Barn2\Plugin\Document_Library_Pro\Posts_Table_Pro\Frontend_Scripts as PTP_Frontend_Scripts,
-	Barn2\Plugin\Document_Library_Pro\Posts_Table_Pro\Util\Util as PTP_Util,
-	Barn2\Plugin\Document_Library_Pro\Posts_Table_Pro\Table_Args,
-	Barn2\Plugin\Document_Library_Pro\Util\Options,
-	Barn2\Plugin\Document_Library_Pro\Util\Util,
-	Barn2\Plugin\Document_Library_Pro\Dependencies\Lib\Service,
-	Barn2\Plugin\Document_Library_Pro\Dependencies\Lib\Registerable,
-	Barn2\Plugin\Document_Library_Pro\Dependencies\Lib\Conditional,
-	Barn2\Plugin\Document_Library_Pro\Dependencies\Lib\Plugin\Plugin,
-	Barn2\Plugin\Document_Library_Pro\Dependencies\Lib\Util as Lib_Util;
+use Barn2\Plugin\Document_Library_Pro\Posts_Table_Pro\Frontend_Scripts as PTP_Frontend_Scripts;
+use Barn2\Plugin\Document_Library_Pro\Posts_Table_Pro\Util\Util as PTP_Util;
+use Barn2\Plugin\Document_Library_Pro\Posts_Table_Pro\Table_Args;
+use Barn2\Plugin\Document_Library_Pro\Util\Options;
+use Barn2\Plugin\Document_Library_Pro\Util\Util;
+use Barn2\Plugin\Document_Library_Pro\Dependencies\Lib\Service;
+use Barn2\Plugin\Document_Library_Pro\Dependencies\Lib\Registerable;
+use Barn2\Plugin\Document_Library_Pro\Dependencies\Lib\Conditional;
+use Barn2\Plugin\Document_Library_Pro\Dependencies\Lib\Plugin\Plugin;
+use Barn2\Plugin\Document_Library_Pro\Dependencies\Lib\Util as Lib_Util;
 
 defined( 'ABSPATH' ) || exit;
 /**

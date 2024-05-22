@@ -30,19 +30,10 @@ defined( 'WPINC' ) or die;
  */
 ?>
 
-<?php
-
-if(is_user_logged_in()){
-	$user_id = get_current_user_id();
-	$organization = get_field( "organization_for_user" , "user_{$user_id}" );
-}
-
-?>
 <input
 	type="text"
 	id="<?php echo esc_attr( $field_id ); ?>"
 	name="<?php echo esc_attr( $field_name ); ?>"
 	class="<?php tribe_community_events_field_classes( $field_name, [] ); ?>"
-	value="<?php if($field_name == '_ecp_custom_27') { $value = $organization; } echo esc_attr( $value ); ?>"
-	<?php if($field_name == '_ecp_custom_27') { echo ( ' disabled' );} ?>
+	value="<?php echo esc_attr( $value ); ?>"
 >

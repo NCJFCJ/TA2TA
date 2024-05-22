@@ -77,7 +77,7 @@ class Astra_Sites_ZipWP_Integration {
             'headers' => Astra_Sites_ZipWP_Api::get_instance()->get_api_headers(),
             'timeout' => 100,
         );
-        $response = wp_remote_post( $api_endpoint, $request_args );
+        $response = wp_safe_remote_post( $api_endpoint, $request_args );
 
         if ( is_wp_error( $response ) ) {
             // There was an error in the request.
@@ -250,7 +250,7 @@ class Astra_Sites_ZipWP_Integration {
 			'timeout' => 100,
             'sslverify' => false,
 		);
-		$response = wp_remote_get( $api_endpoint, $request_args );
+		$response = wp_safe_remote_get( $api_endpoint, $request_args );
 
 		if ( is_wp_error( $response ) ) {
 			// There was an error in the request.

@@ -3,7 +3,7 @@
  * Plugin Name: Starter Templates
  * Plugin URI: https://wpastra.com/
  * Description: Starter Templates is all in one solution for complete starter sites, single page templates, blocks & images. This plugin offers the premium library of ready templates & provides quick access to beautiful Pixabay images that can be imported in your website easily.
- * Version: 4.1.1
+ * Version: 4.2.1
  * Author: Brainstorm Force
  * Author URI: https://www.brainstormforce.com
  * Text Domain: astra-sites
@@ -37,7 +37,7 @@ if ( ! defined( 'ASTRA_SITES_NAME' ) ) {
 }
 
 if ( ! defined( 'ASTRA_SITES_VER' ) ) {
-	define( 'ASTRA_SITES_VER', '4.1.1' );
+	define( 'ASTRA_SITES_VER', '4.2.1' );
 }
 
 if ( ! defined( 'ASTRA_SITES_FILE' ) ) {
@@ -100,22 +100,41 @@ $bsf_analytics->set_entity(
 	)
 );
 
-if ( ! function_exists( 'astra_pro_sites_activation_redirect' ) ) :
+if ( ! function_exists( 'astra_sites_redirect_to_onboarding' ) ) :
 
 	/**
-	 * Astra pro sites activation redirect.
+	 * Redirect to onboarding.
 	 *
-	 * @param mixed $plugin details of plugin.
 	 * @since 3.3.0
 	 * @return void
 	 */
-	function astra_pro_sites_activation_redirect( $plugin ) {
-		if ( ( ! defined( 'WP_CLI' ) || ! WP_CLI ) && ( plugin_basename( __FILE__ ) == $plugin ) ) {
+	function astra_sites_redirect_to_onboarding() {
+		if ( ! get_option( 'st_start_onboarding', false ) ) {
+			return;
+		}
+
+		delete_option( 'st_start_onboarding' );
+		if ( ! defined( 'WP_CLI' ) || ! WP_CLI ) {
 			wp_safe_redirect( admin_url( 'themes.php?page=starter-templates' ) );
 			exit();
 		}
 	}
 
-	add_action( 'activated_plugin', 'astra_pro_sites_activation_redirect' );
+	add_action( 'admin_init', 'astra_sites_redirect_to_onboarding' );
+
+endif;
+
+if ( ! function_exists( 'astra_pro_sites_activate' ) ) :
+
+	/**
+	 * Astra pro sites activate.
+	 *
+	 * @since 4.1.2
+	 * @return void
+	 */
+	function astra_pro_sites_activate() {
+		update_option( 'st_start_onboarding', true );
+	}
+	register_activation_hook( __FILE__, 'astra_pro_sites_activate' );
 
 endif;

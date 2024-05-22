@@ -98,25 +98,25 @@ if (!function_exists( 'wctg_custom_child_theme_form' ) ) :
 													<input type="checkbox" id="save-activate" value="1" name="save-activate"> <?php _e('Create & Activate','wp-child-theme-generator');?>
 												</label>
 				            					<br>
-				            					<label for="child-screenshot">
+				            					<label for="child-screenshot" style="visibility:hidden">
 				             						<input type="checkbox" id="child-screenshot" name="parent-screenshot" value="1" checked > <?php _e("Use parent theme's screenshot", "wp-child-theme-generator" ); ?>
 				           						</label>
 				       						 </fieldset>
 				       					</td>
 				       				</tr>
-								  	<tr id = "custom-screenshot">
+								  	<!-- <tr id = "custom-screenshot">
 					    				<th scope="row"><?php _e ('Choose custom screenshot' , 'wp-child-theme-generator');?></th>
 					    				<td>
 											  <div id= "custom-screenshot">
 												  <input id="fileUpload" name="fileUpload" type="file"/>
 												  	<br>
-												  	<span class="description"> <?php printf( __('WordPress recommends screenshot of size 1200x900 px and in .png format.<br> Click %1$s for more details ', 'wp-child-theme-generator'),'<a href="https://codex.wordpress.org/Theme_Development" target= "_blank" rel="designer">here</a>' ); ?>
+												  	<span class="description"> <?php printf( esc_html__('WordPress recommends screenshot of size 1200x900 px and in .png format. Click %1$s for more details ', 'wp-child-theme-generator'),'<a href="https://codex.wordpress.org/Theme_Development" target= "_blank" rel="designer">here</a>' ); ?>
 												  	</span>
 													   <div id="image-holder">
 													   </div>
 											  </div>
 										</td>
-									</tr>					
+									</tr>					 -->
 								    <tr>
 				    				<th scope="row"><?php _e('Optional Information', 'wp-child-theme-generator'); ?></th>
 				    					<td>
@@ -204,13 +204,13 @@ if (!function_exists( 'wctg_custom_child_theme_form' ) ) :
 						);
 				 foreach ($advert as $key => $value) { ?>
 			<div id="wp_doc_documentation" class="postbox ">
-				<h2 class="child-title"><span><?php _e($value['title'] , 'wp-child-theme-generator' ); ?></span></h2>
+				<h2 class="child-title"><span><?php echo esc_html($value['title'] ); ?></span></h2>
 				<div class="inside">
 					<div class="thumbnail">
 					    <a href="<?php echo esc_url( $value['link'] ) ;?>" target="_blank" class="">
 					    	<img src="<?php echo WCTG_BASE_URL."/assets/images/". $value['image'];?>" style="max-width:100%">
 					    </a>
-					    <p class="text-justify"><?php _e( $value['message'], 'wp-child-theme-generator' ); ?> </p>
+					    <p class="text-justify"><?php echo esc_html( $value['message'] ); ?> </p>
 					    <p class="text-center"><a href="<?php echo esc_url( $value['link'] ); ?>" target="_blank" class="button button-primary"><?php echo $value['button_text']; ?></a></p>
 				    </div>     
 				</div>

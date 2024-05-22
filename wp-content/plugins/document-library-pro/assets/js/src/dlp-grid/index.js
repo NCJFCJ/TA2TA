@@ -26,6 +26,9 @@ jQuery( function( $ ) {
 				'.dlp-grid-reset',
 				this.handleGridReset
 			);
+			$( '.dlp-grid-container' ).each( function( index ) {
+				dlpPopulateGridHtml( $( this ) );
+			} );
 		}
 
 		/**
@@ -113,6 +116,7 @@ jQuery( function( $ ) {
 			const $gridContainer = $this
 				.parents( '.dlp-grid-container' )
 				.first();
+			const $reset_button = $gridContainer.find( '.dlp-grid-reset' );
 			const gridId = $gridContainer.attr( 'id' );
 			let searchQuery = $gridContainer
 				.find( '.dlp-grid-search input[type="search"]' )
@@ -134,7 +138,14 @@ jQuery( function( $ ) {
 				} );
 
 			if ( searchQuery.length < dlp_grid_params.ajax_min_search_term_len ) {
-				searchQuery = '';
+				if ( ! $reset_button.is(':hidden') ) {
+					searchQuery = '';
+					$reset_button.hide();
+				} else {
+					return;
+				}
+			} else {
+				$reset_button.show();
 			}
 
 			$gridContainer.block( blockConfig );
@@ -173,6 +184,7 @@ jQuery( function( $ ) {
 			const $gridContainer = $this
 				.parents( '.dlp-grid-container' )
 				.first();
+			const $reset_buttons = $gridContainer.find( '.dlp-grid-reset' );
 			const gridId = $gridContainer.attr( 'id' );
 			const $searchInputs = $gridContainer.find(
 				'.dlp-grid-search input[type="search"]'
@@ -189,6 +201,8 @@ jQuery( function( $ ) {
 			$searchInputs.each( function( index ) {
 				$( this ).val( '' );
 			} );
+
+			$reset_buttons.hide();
 
 			$gridContainer.block( blockConfig );
 
@@ -262,14 +276,14 @@ jQuery( function( $ ) {
 		}
 	}
 
-	function dlpPopulateGridHtml( $gridContainer, response ) {
+	function dlpPopulateGridHtml( $gridContainer, response = null ) {
 		const $gridCardsContainer = $gridContainer.find(
 			'.dlp-grid-documents'
 		);
-		const $gridPaginationFooter = $gridContainer.find(
+		let $gridPaginationFooter = $gridContainer.find(
 			'footer .dlp-grid-pagination'
 		);
-		const $gridPaginationHeader = $gridContainer.find(
+		let $gridPaginationHeader = $gridContainer.find(
 			'header .dlp-grid-pagination'
 		);
 		const $gridTotalsFooter = $gridContainer.find(
@@ -279,23 +293,35 @@ jQuery( function( $ ) {
 			'header .dlp-grid-totals'
 		);
 
-		if ( response.grid ) {
+		if ( response && response.grid ) {
 			$gridCardsContainer.replaceWith( response.grid );
 		}
 
-		if ( $gridPaginationFooter.length > 0 && response.pagination ) {
+		if ( $gridPaginationFooter.length > 0 && response && response.pagination ) {
 			$gridPaginationFooter.replaceWith( response.pagination.footer );
 		}
-
-		if ( $gridPaginationHeader.length > 0 && response.pagination ) {
-			$gridPaginationHeader.replaceWith( response.pagination.header );
+		$gridPaginationFooter = $gridContainer.find( 'footer .dlp-grid-pagination' );
+		if ( $gridPaginationFooter.children().length > 0 ) {
+			$gridPaginationFooter.show();
+		} else {
+			$gridPaginationFooter.hide();
+		}
+		
+		if ( $gridPaginationHeader.length > 0 && response && response.pagination ) {
+			$gridPaginationHeader.replaceWith( response.pagination.header ).show();
+		}
+		$gridPaginationHeader = $gridContainer.find( 'header .dlp-grid-pagination' );
+		if ( $gridPaginationHeader.children().length > 0 ) {
+			$gridPaginationHeader.show();
+		} else {
+			$gridPaginationHeader.hide();
 		}
 
-		if ( $gridTotalsFooter.length > 0 && response.totals ) {
+		if ( $gridTotalsFooter.length > 0 && response && response.totals ) {
 			$gridTotalsFooter.replaceWith( response.totals.footer );
 		}
 
-		if ( $gridTotalsHeader.length > 0 && response.totals ) {
+		if ( $gridTotalsHeader.length > 0 && response && response.totals ) {
 			$gridTotalsHeader.replaceWith( response.totals.header );
 		}
 	}

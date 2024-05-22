@@ -39,6 +39,7 @@ if ( ! class_exists( 'VG_Freemium_Plugin_SDK' ) ) {
 					'main_plugin_file'         => '',
 					'show_welcome_page'        => true,
 					'welcome_page_file'        => '',
+					'welcome_page_url'         => '',
 					'upgrade_message_file'     => '',
 					'logo'                     => '',
 					'logo_width'               => '',
@@ -252,7 +253,9 @@ if ( ! class_exists( 'VG_Freemium_Plugin_SDK' ) ) {
 			}
 
 			do_action( 'vg_plugin_sdk/before_welcome_page_redirect', $this->settings );
-			wp_redirect( add_query_arg( array( 'page' => $this->settings['plugin_prefix'] . 'welcome_page' ), admin_url( 'admin.php' ) ) );
+
+			$redirect_url = ! empty( $this->settings['welcome_page_url'] ) ? $this->settings['welcome_page_url'] : add_query_arg( array( 'page' => $this->settings['plugin_prefix'] . 'welcome_page' ), admin_url( 'admin.php' ) );
+			wp_redirect( $redirect_url );
 			exit();
 		}
 

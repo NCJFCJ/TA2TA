@@ -18,30 +18,52 @@ use Elementor\Group_Control_Box_Shadow;
 use Tribe\Events\Views\V2\Assets;
 use Tribe\Events\Views\V2\Template_Bootstrap;
 use Tribe__Utils__Array as Arr;
-use Tribe__Events__Pro__Main;
+use TEC\Events\Integrations\Plugins\Elementor\Widgets\Traits\Event_Query;
 
+// phpcs:disable WordPress.WP.GlobalVariablesOverride.Prohibited
+
+/**
+ * Class Widget_Event_Single_Legacy
+ *
+ * @since   5.4.0
+ *
+ * @package Tribe\Events\Pro\Integrations\Elementor\Widgets
+ */
 class Widget_Event_Single_Legacy extends Widget_Abstract {
-	use Traits\Event_Query;
+	use Event_Query;
 
 	/**
 	 * {@inheritdoc}
+	 *
+	 * @since 5.4.0
+	 *
+	 * @var string
 	 */
 	protected static $widget_slug = 'event_single_legacy';
 
 	/**
 	 * {@inheritdoc}
+	 *
+	 * @since 5.4.0
+	 *
+	 * @var string
 	 */
 	protected $widget_icon = 'eicon-single-post';
 
 	/**
 	 * {@inheritdoc}
+	 *
+	 * @since 5.4.0
+	 *
+	 * @param array  $data Widget data.
+	 * @param ?array $args Widget arguments.
 	 */
 	public function __construct( $data = [], $args = null ) {
 		parent::__construct( $data, $args );
 
 		add_filter( 'tec_events_virtual_enqueue_single_virtual_editor_assets', '__return_true' );
 
-		$this->widget_title = __( 'Event', 'tribe-events-calendar-pro' );
+		$this->widget_title = __( 'Legacy Event', 'tribe-events-calendar-pro' );
 	}
 
 	/**
@@ -50,7 +72,7 @@ class Widget_Event_Single_Legacy extends Widget_Abstract {
 	 * @since 5.4.0
 	 */
 	protected function render() {
-		$settings = $this->get_settings_for_display();
+		$settings             = $this->get_settings_for_display();
 		$event_query_settings = $this->get_event_query_settings( $settings );
 		$event_query_settings = $this->set_id_from_repository_if_unset( $event_query_settings );
 
@@ -62,11 +84,12 @@ class Widget_Event_Single_Legacy extends Widget_Abstract {
 
 		$repository = $this->build_event_repository( $event_query_settings );
 		$repository->per_page( 1 );
-		$posts      = $repository->all();
+		$posts = $repository->all();
 
 		if ( ! $posts ) {
 			return;
 		}
+
 
 		$wp_query = $repository->get_query_for_posts( $posts );
 		$post     = $posts[0];
@@ -90,7 +113,7 @@ class Widget_Event_Single_Legacy extends Widget_Abstract {
 		$styles = $this->get_style_overrides( $settings, $selector );
 		$styles = '<style>' . implode( "\n", $styles ) . '</style>';
 
-		echo $styles . $html;
+		echo $styles . $html; // phpcs:ignore WordPress.Security.EscapeOutput.OutputNotEscaped,StellarWP.XSS.EscapeOutput.OutputNotEscaped
 	}
 
 	/**
@@ -98,93 +121,91 @@ class Widget_Event_Single_Legacy extends Widget_Abstract {
 	 *
 	 * @since 5.4.0
 	 *
-	 * @param array $settings Array of Elementor Widget settings.
+	 * @param array  $settings Array of Elementor Widget settings.
 	 * @param string $selector CSS Selector for the Elementor Widget.
 	 *
 	 * @return array
 	 */
 	protected function get_style_overrides( $settings = [], $selector = '' ) {
 		$setting_style_map = [
-			'after_html'         => '.tribe-events-after-html',
-			'all_events_link'    => '.tribe-events-back',
-			'before_html'        => '.tribe-events-before-html',
-			'calendar_links'     => '.tribe-events-cal-links',
-			'cost'               => '.tribe-events-cost',
-			'custom_fields'      => '.tribe-events-meta-group-other, .tribe-block__additional-field',
-			'description'        => '.tribe-events-single-event-description',
-			'details_categories' => [
+			'after_html'           => '.tribe-events-after-html',
+			'all_events_link'      => '.tribe-events-back',
+			'before_html'          => '.tribe-events-before-html',
+			'calendar_links'       => '.tribe-events-cal-links',
+			'cost'                 => '.tribe-events-cost',
+			'custom_fields'        => '.tribe-events-meta-group-other, .tribe-block__additional-field',
+			'description'          => '.tribe-events-single-event-description',
+			'details_categories'   => [
 				'.tribe-events-event-categories-label',
 				'.tribe-events-event-categories-label + dd',
 			],
-			'details_cost'       => [
+			'details_cost'         => [
 				'.tribe-events-event-cost-label',
 				'.tribe-events-event-cost-label + dd',
 			],
-			'details_date'       => [
+			'details_date'         => [
 				'.tribe-events-start-date-label',
 				'.tribe-events-start-date-label + dd',
 			],
-			'details_tags'       => [
+			'details_tags'         => [
 				'.tribe-events-event-categories-label + dd + dt',
 				'.tribe-event-tags',
 			],
-			'details_time'       => [
+			'details_time'         => [
 				'.tribe-events-start-time-label',
 				'.tribe-events-start-time-label + dd',
 			],
-			'featured_image'     => '.tribe-events-event-image',
-			'footer'             => '#tribe-events-footer',
-			'navigation'         => '.tribe-events-nav-pagination',
-			'notices'            => '.tribe-events-notices',
-			'organizer'          => '.tribe-events-meta-group-organizer',
-			'organizer_email'    => [
+			'featured_image'       => '.tribe-events-event-image',
+			'footer'               => '#tribe-events-footer',
+			'navigation'           => '.tribe-events-nav-pagination',
+			'notices'              => '.tribe-events-notices',
+			'organizer'            => '.tribe-events-meta-group-organizer',
+			'organizer_email'      => [
 				'.tribe-organizer-email-label',
 				'.tribe-organizer-email',
 			],
-			'organizer_name'     => '.tribe-organizer',
-			'organizer_phone'    => [
+			'organizer_name'       => '.tribe-organizer',
+			'organizer_phone'      => [
 				'.tribe-organizer-tel-label',
 				'.tribe-organizer-tel',
 			],
-			'organizer_url'      => [
+			'organizer_url'        => [
 				'.tribe-organizer-url-label',
 				'.tribe-organizer-url',
 			],
-			'related_events'     => [
+			'related_events'       => [
 				'.tribe-events-related-events-title',
 				'.tribe-related-events',
 			],
-			'tickets'            => [
+			'tickets'              => [
 				'.cart',
 				'.event-tickets',
 			],
-			'title'              => '.tribe-events-single-event-title',
-			'venue'              => '.tribe-events-single-section.tribe-events-event-meta.secondary',
-			'venue_name'         => '.tribe-venue',
-			'venue_location'     => '.tribe-venue-location',
-			'venue_map'          => '.tribe-events-venue-map',
-			'venue_phone'        => [
+			'title'                => '.tribe-events-single-event-title',
+			'venue'                => '.tribe-events-single-section.tribe-events-event-meta.secondary',
+			'venue_name'           => '.tribe-venue',
+			'venue_location'       => '.tribe-venue-location',
+			'venue_map'            => '.tribe-events-venue-map',
+			'venue_phone'          => [
 				'.tribe-venue-tel-label',
 				'.tribe-venue-tel',
 			],
-			'venue_url'          => [
+			'venue_url'            => [
 				'.tribe-venue-url-label',
 				'.tribe-venue-url',
 			],
-			'virtual_video_embed' => '.tribe-events-virtual-single-video-embed, .tribe-events-virtual-single-youtube__embed-wrap',
+			'virtual_video_embed'  => '.tribe-events-virtual-single-video-embed, .tribe-events-virtual-single-youtube__embed-wrap',
 			'virtual_watch_button' => [
 				'.tribe-events-virtual-link-button',
 				'.tribe-events-virtual-single-zoom-details__meta-group--link-button',
 			],
-			'virtual_zoom_link' => '.tribe-events-virtual-single-zoom-details__meta-group--zoom-link',
-			'virtual_zoom_phone' => '.tribe-events-virtual-single-zoom-details__meta-group--zoom-phone',
+			'virtual_zoom_link'    => '.tribe-events-virtual-single-zoom-details__meta-group--zoom-link',
+			'virtual_zoom_phone'   => '.tribe-events-virtual-single-zoom-details__meta-group--zoom-phone',
 		];
 
 		$styles = [];
 
-		/*---------------------------------------------------
-		 * Setup our simple deactivations.
-		 *---------------------------------------------------*/
+		/** Setup our simple deactivations. */
 		foreach ( $setting_style_map as $setting => $map ) {
 			if ( tribe_is_truthy( Arr::get( $settings, $setting ) ) ) {
 				continue;
@@ -195,18 +216,21 @@ class Widget_Event_Single_Legacy extends Widget_Abstract {
 			}
 
 			// Prepend the widget's ID to each selector.
-			$selectors = array_map( function( $value ) use ( $selector ) {
-				return "{$selector} {$value}";
-			}, $map );
+			$selectors = array_map(
+				function ( $value ) use ( $selector ) {
+					return "{$selector} {$value}";
+				},
+				$map
+			);
 
 			$selectors = implode( ', ', $selectors );
 
 			$styles[] = "{$selectors} { display: none !important; }";
 		}
 
-		/*---------------------------------------------------
+		/**
 		 * We have some more complicated deactivations to check.
-		 *---------------------------------------------------*/
+		 */
 		if ( ! tribe_is_truthy( Arr::get( $settings, 'date-time' ) ) ) {
 			if ( ! tribe_is_truthy( Arr::get( $settings, 'cost' ) ) ) {
 				$styles[] = "{$selector} .tribe-events-schedule { display: none !important; }";
@@ -253,12 +277,12 @@ class Widget_Event_Single_Legacy extends Widget_Abstract {
 	 * @param array $settings Array of Elementor Widget settings.
 	 */
 	protected function enqueue_render_assets( $settings = [] ) {
-		/*---------------------------------------------------
+		/**
 		 * Enqueue some stuff if certain settings are truthy.
-		 *---------------------------------------------------*/
+		 */
 		tribe_asset_enqueue_group( 'events-styles' );
 
-		// Force enqueue these assets when the widget is loaded
+		// Force enqueue these assets when the widget is loaded.
 		tribe_asset_enqueue( 'tribe-events-full-pro-calendar-style' );
 		tribe_asset_enqueue( 'tribe-events-v2-single-blocks' );
 		tribe_asset_enqueue( 'tribe-common-full-style' );
@@ -279,15 +303,12 @@ class Widget_Event_Single_Legacy extends Widget_Abstract {
 			tribe_asset_enqueue( 'event-tickets-details-js' );
 			tribe_asset_enqueue( 'tribe-tickets-forms-style' );
 
-			if ( class_exists( 'Tribe__Tickets__Main' ) ) {
-				if ( tribe_tickets_new_views_is_enabled() || tribe_tickets_rsvp_new_views_is_enabled() ) {
-					tribe_asset_enqueue( 'tribe-tickets-loader' );
-				}
-
-				if ( tribe_tickets_new_views_is_enabled() ) {
-					tribe_asset_enqueue( 'tribe-common-responsive' );
-					tribe_asset_enqueue( 'tribe-tickets-utils' );
-				}
+			if ( function_exists( 'tribe_tickets_new_views_is_enabled' ) && tribe_tickets_new_views_is_enabled() ) {
+				tribe_asset_enqueue( 'tribe-tickets-loader' );
+				tribe_asset_enqueue( 'tribe-common-responsive' );
+				tribe_asset_enqueue( 'tribe-tickets-utils' );
+			} elseif ( function_exists( 'tribe_tickets_rsvp_new_views_is_enabled' ) && tribe_tickets_rsvp_new_views_is_enabled() ) {
+				tribe_asset_enqueue( 'tribe-tickets-loader' );
 			}
 		}
 
@@ -431,11 +452,11 @@ class Widget_Event_Single_Legacy extends Widget_Abstract {
 				'default'      => 'yes',
 			],
 			[
-				'date'          => __( 'Date', 'tribe-events-calendar-pro' ),
-				'time'          => __( 'Time', 'tribe-events-calendar-pro' ),
-				'cost'          => __( 'Cost', 'tribe-events-calendar-pro' ),
-				'categories'    => __( 'Categories', 'tribe-events-calendar-pro' ),
-				'tags'          => __( 'Tags', 'tribe-events-calendar-pro' ),
+				'date'       => __( 'Date', 'tribe-events-calendar-pro' ),
+				'time'       => __( 'Time', 'tribe-events-calendar-pro' ),
+				'cost'       => __( 'Cost', 'tribe-events-calendar-pro' ),
+				'categories' => __( 'Categories', 'tribe-events-calendar-pro' ),
+				'tags'       => __( 'Tags', 'tribe-events-calendar-pro' ),
 			]
 		);
 
@@ -460,10 +481,10 @@ class Widget_Event_Single_Legacy extends Widget_Abstract {
 				'default'      => 'yes',
 			],
 			[
-				'name'       => __( 'Name', 'tribe-events-calendar-pro' ),
-				'phone'      => __( 'Phone', 'tribe-events-calendar-pro' ),
-				'email'      => __( 'Email', 'tribe-events-calendar-pro' ),
-				'url'        => __( 'Website', 'tribe-events-calendar-pro' ),
+				'name'  => __( 'Name', 'tribe-events-calendar-pro' ),
+				'phone' => __( 'Phone', 'tribe-events-calendar-pro' ),
+				'email' => __( 'Email', 'tribe-events-calendar-pro' ),
+				'url'   => __( 'Website', 'tribe-events-calendar-pro' ),
 			]
 		);
 
@@ -488,11 +509,11 @@ class Widget_Event_Single_Legacy extends Widget_Abstract {
 				'default'      => 'yes',
 			],
 			[
-				'name'       => __( 'Name', 'tribe-events-calendar-pro' ),
-				'location'   => __( 'Location', 'tribe-events-calendar-pro' ),
-				'phone'      => __( 'Phone', 'tribe-events-calendar-pro' ),
-				'url'        => __( 'Website', 'tribe-events-calendar-pro' ),
-				'map'        => __( 'Map', 'tribe-events-calendar-pro' ),
+				'name'     => __( 'Name', 'tribe-events-calendar-pro' ),
+				'location' => __( 'Location', 'tribe-events-calendar-pro' ),
+				'phone'    => __( 'Phone', 'tribe-events-calendar-pro' ),
+				'url'      => __( 'Website', 'tribe-events-calendar-pro' ),
+				'map'      => __( 'Map', 'tribe-events-calendar-pro' ),
 			]
 		);
 
@@ -627,50 +648,50 @@ class Widget_Event_Single_Legacy extends Widget_Abstract {
 		);
 		$this->end_controls_section();
 
-		// Start style tab
+		// Start style tab.
 
-		//Start notes on event styling
+		// Start notes on event styling.
 		$this->start_controls_section(
 			'event_styling',
 			[
 				'label' => esc_html__( 'Notes On Event Styling', 'tribe-events-calendar-pro' ),
-				'tab' => Controls_Manager::TAB_STYLE,
+				'tab'   => Controls_Manager::TAB_STYLE,
 			]
 		);
 
 		$this->add_control(
 			'style_warning',
 			[
-				'type' => Controls_Manager::RAW_HTML,
-				'raw' => esc_html__(
+				'type'            => Controls_Manager::RAW_HTML,
+				'content_classes' => 'elementor-panel-alert elementor-panel-alert-info',
+				'raw'             => esc_html__(
 					'The style of this widget is often affected by your theme and plugins. If you experience an issue, try switching to a basic WordPress theme and deactivate related plugins.',
 					'tribe-events-calendar-pro'
 				),
-				'content_classes' => 'elementor-panel-alert elementor-panel-alert-info',
 			]
 		);
 
 		$this->end_controls_section();
-		// End notes on event styling
+		// End notes on event styling.
 
-		// Start content section
+		// Start content section.
 		$this->start_controls_section(
 			'content',
 			[
 				'label' => esc_html__( 'Content', 'tribe-events-calendar-pro' ),
-				'tab' => Controls_Manager::TAB_STYLE,
+				'tab'   => Controls_Manager::TAB_STYLE,
 			]
 		);
 
-		// Start event title
+		// Start event title.
 		$this->add_control(
 			'heading_event_title_style',
 			[
-				'label' => esc_html__( 'Event Title', 'tribe-events-calendar-pro' ),
-				'type' => Controls_Manager::HEADING,
+				'label'     => esc_html__( 'Event Title', 'tribe-events-calendar-pro' ),
+				'type'      => Controls_Manager::HEADING,
 				'separator' => 'before',
 				'condition' => [
-					'title' => 'yes'
+					'title' => 'yes',
 				],
 			]
 		);
@@ -678,13 +699,13 @@ class Widget_Event_Single_Legacy extends Widget_Abstract {
 		$this->add_control(
 			'event_title_color',
 			[
-				'label' => esc_html__( 'Text Color', 'tribe-events-calendar-pro' ),
-				'type' => Controls_Manager::COLOR,
+				'label'     => esc_html__( 'Text Color', 'tribe-events-calendar-pro' ),
+				'type'      => Controls_Manager::COLOR,
 				'selectors' => [
 					'{{WRAPPER}} .tribe-events-single-event-title' => '--tec-color-text-event-title: {{VALUE}};',
 				],
 				'condition' => [
-					'title' => 'yes'
+					'title' => 'yes',
 				],
 			]
 		);
@@ -692,10 +713,10 @@ class Widget_Event_Single_Legacy extends Widget_Abstract {
 		$this->add_group_control(
 			Group_Control_Typography::get_type(),
 			[
-				'name' => 'event_title_typography',
-				'selector' => '{{WRAPPER}} .tribe-events-single-event-title',
+				'name'      => 'event_title_typography',
+				'selector'  => '{{WRAPPER}} .tribe-events-single-event-title',
 				'condition' => [
-					'title' => 'yes'
+					'title' => 'yes',
 				],
 			]
 		);
@@ -703,22 +724,22 @@ class Widget_Event_Single_Legacy extends Widget_Abstract {
 		$this->add_group_control(
 			Group_Control_Text_Shadow::get_type(),
 			[
-				'name' => 'event_title_text_shadow',
+				'name'     => 'event_title_text_shadow',
 				'selector' => '{{WRAPPER}} .tribe-events-single-event-title',
 			]
 		);
 
-		// End event title
+		// End event title.
 
-		// Start datetime
+		// Start datetime.
 		$this->add_control(
 			'heading_datetime_style',
 			[
-				'label' => esc_html__( 'Date/Time', 'tribe-events-calendar-pro' ),
-				'type' => Controls_Manager::HEADING,
+				'label'     => esc_html__( 'Date/Time', 'tribe-events-calendar-pro' ),
+				'type'      => Controls_Manager::HEADING,
 				'separator' => 'before',
 				'condition' => [
-					'date-time' => 'yes'
+					'date-time' => 'yes',
 				],
 			]
 		);
@@ -726,13 +747,13 @@ class Widget_Event_Single_Legacy extends Widget_Abstract {
 		$this->add_control(
 			'datetime_color',
 			[
-				'label' => esc_html__( 'Text Color', 'tribe-events-calendar-pro' ),
-				'type' => Controls_Manager::COLOR,
+				'label'     => esc_html__( 'Text Color', 'tribe-events-calendar-pro' ),
+				'type'      => Controls_Manager::COLOR,
 				'selectors' => [
 					'{{WRAPPER}} .tribe-events-schedule__datetime, {{WRAPPER}} .tribe-events-schedule h2' => '--tec-color-text-primary: {{VALUE}}; --tec-color-text-event-date: {{VALUE}}',
 				],
 				'condition' => [
-					'date-time' => 'yes'
+					'date-time' => 'yes',
 				],
 			]
 		);
@@ -740,21 +761,21 @@ class Widget_Event_Single_Legacy extends Widget_Abstract {
 		$this->add_group_control(
 			Group_Control_Typography::get_type(),
 			[
-				'name' => 'datetime_typography',
-				'selector' => '{{WRAPPER}} .tribe-events-schedule__datetime, {{WRAPPER}} .tribe-events-schedule h2',
+				'name'      => 'datetime_typography',
+				'selector'  => '{{WRAPPER}} .tribe-events-schedule__datetime, {{WRAPPER}} .tribe-events-schedule h2',
 				'condition' => [
-					'date-time' => 'yes'
+					'date-time' => 'yes',
 				],
 			]
 		);
-		// End datetime
+		// End datetime.
 
-		// Start recurring event section
+		// Start recurring event section.
 		$this->add_control(
 			'recurring_event_style',
 			[
-				'label' => esc_html__( 'Recurring Event', 'tribe-events-calendar-pro' ),
-				'type' => Controls_Manager::HEADING,
+				'label'     => esc_html__( 'Recurring Event', 'tribe-events-calendar-pro' ),
+				'type'      => Controls_Manager::HEADING,
 				'separator' => 'before',
 			]
 		);
@@ -762,8 +783,8 @@ class Widget_Event_Single_Legacy extends Widget_Abstract {
 		$this->add_control(
 			'recurring_event_background_color',
 			[
-				'label' => esc_html__( 'Background Color', 'tribe-events-calendar-pro' ),
-				'type' => Controls_Manager::COLOR,
+				'label'     => esc_html__( 'Background Color', 'tribe-events-calendar-pro' ),
+				'type'      => Controls_Manager::COLOR,
 				'selectors' => [
 					'{{WRAPPER}} .tribe-events-single-event-recurrence-description, {{WRAPPER}} .tribe-events-schedule .recurringinfo' => '--tec-color-background-secondary: {{VALUE}};',
 				],
@@ -773,9 +794,9 @@ class Widget_Event_Single_Legacy extends Widget_Abstract {
 		$this->add_control(
 			'recurring_event_label_color',
 			[
-				'label' => esc_html__( 'Label Color', 'tribe-events-calendar-pro' ),
-				'type' => Controls_Manager::COLOR,
-				'default' => 'var(--tec-color-text-primary)',
+				'label'     => esc_html__( 'Label Color', 'tribe-events-calendar-pro' ),
+				'type'      => Controls_Manager::COLOR,
+				'default'   => 'var(--tec-color-text-primary)',
 				'selectors' => [
 					'{{WRAPPER}} .tribe-events-single-event-recurrence-description span, {{WRAPPER}} .event-is-recurring' => 'color: {{VALUE}};',
 				],
@@ -785,13 +806,13 @@ class Widget_Event_Single_Legacy extends Widget_Abstract {
 		$this->add_group_control(
 			Group_Control_Typography::get_type(),
 			[
-				'name' => 'recurring_event_label_typography',
-				'label' => esc_html__( 'Label Typography', 'tribe-events-calendar-pro' ),
-				'selector' => '{{WRAPPER}} .tribe-events-single-event-recurrence-description span, {{WRAPPER}} .event-is-recurring',
+				'name'           => 'recurring_event_label_typography',
+				'label'          => esc_html__( 'Label Typography', 'tribe-events-calendar-pro' ),
+				'selector'       => '{{WRAPPER}} .tribe-events-single-event-recurrence-description span, {{WRAPPER}} .event-is-recurring',
 				'fields_options' => [
-					'typography' => [ 'default' => 'yes' ], // mimics a click on the Typography edit icon
-					'font_size' => [ 
-						'default' => [ 'size' => 14 ] 
+					'typography'  => [ 'default' => 'yes' ], // mimics a click on the Typography edit icon.
+					'font_size'   => [
+						'default' => [ 'size' => 14 ],
 					],
 					'font_weight' => [ 'default' => 600 ],
 				],
@@ -801,9 +822,9 @@ class Widget_Event_Single_Legacy extends Widget_Abstract {
 		$this->add_control(
 			'recurring_event_link_color',
 			[
-				'label' => esc_html__( 'Link Color', 'tribe-events-calendar-pro' ),
-				'type' => Controls_Manager::COLOR,
-				'default' => 'var(--tec-color-accent-primary)',
+				'label'     => esc_html__( 'Link Color', 'tribe-events-calendar-pro' ),
+				'type'      => Controls_Manager::COLOR,
+				'default'   => 'var(--tec-color-accent-primary)',
 				'selectors' => [
 					'{{WRAPPER}} .tribe-events-single-event-recurrence-description a, {{WRAPPER}} .event-is-recurring a' => '--tec-color-link-accent: {{VALUE}};',
 				],
@@ -813,28 +834,28 @@ class Widget_Event_Single_Legacy extends Widget_Abstract {
 		$this->add_group_control(
 			Group_Control_Typography::get_type(),
 			[
-				'name' => 'recurring_event_link_typography',
-				'label' => esc_html__( 'Link Typography', 'tribe-events-calendar-pro' ),
-				'selector' => '{{WRAPPER}} .tribe-events-single-event-recurrence-description a, {{WRAPPER}} .event-is-recurring a',
+				'name'           => 'recurring_event_link_typography',
+				'label'          => esc_html__( 'Link Typography', 'tribe-events-calendar-pro' ),
+				'selector'       => '{{WRAPPER}} .tribe-events-single-event-recurrence-description a, {{WRAPPER}} .event-is-recurring a',
 				'fields_options' => [
-					'typography' => [ 'default' => 'yes' ], // mimics a click on the Typography edit icon
-					'font_size' => [ 
-						'default' => [ 'size' => 14 ] 
+					'typography' => [ 'default' => 'yes' ], // mimics a click on the Typography edit icon.
+					'font_size'  => [
+						'default' => [ 'size' => 14 ],
 					],
 				],
 			]
 		);
-		// End recurring event section
+		// End recurring event section.
 
-		// Start cost
+		// Start cost.
 		$this->add_control(
 			'heading_cost_style',
 			[
-				'label' => esc_html__( 'Cost', 'tribe-events-calendar-pro' ),
-				'type' => Controls_Manager::HEADING,
+				'label'     => esc_html__( 'Cost', 'tribe-events-calendar-pro' ),
+				'type'      => Controls_Manager::HEADING,
 				'separator' => 'before',
 				'condition' => [
-					'cost' => 'yes'
+					'cost' => 'yes',
 				],
 			]
 		);
@@ -842,13 +863,13 @@ class Widget_Event_Single_Legacy extends Widget_Abstract {
 		$this->add_control(
 			'cost_color',
 			[
-				'label' => esc_html__( 'Text Color', 'tribe-events-calendar-pro' ),
-				'type' => Controls_Manager::COLOR,
+				'label'     => esc_html__( 'Text Color', 'tribe-events-calendar-pro' ),
+				'type'      => Controls_Manager::COLOR,
 				'selectors' => [
 					'{{WRAPPER}} .tribe-events-cost, {{WRAPPER}} .tribe-block__event-price' => 'color: {{VALUE}};',
 				],
 				'condition' => [
-					'cost' => 'yes'
+					'cost' => 'yes',
 				],
 			]
 		);
@@ -856,24 +877,24 @@ class Widget_Event_Single_Legacy extends Widget_Abstract {
 		$this->add_group_control(
 			Group_Control_Typography::get_type(),
 			[
-				'name' => 'cost_typography',
-				'selector' => '{{WRAPPER}} .tribe-events-cost, {{WRAPPER}} .tribe-block__event-price',
+				'name'      => 'cost_typography',
+				'selector'  => '{{WRAPPER}} .tribe-events-cost, {{WRAPPER}} .tribe-block__event-price',
 				'condition' => [
-					'cost' => 'yes'
+					'cost' => 'yes',
 				],
 			]
 		);
-		// End cost
+		// End cost.
 
-		// Start description
+		// Start description.
 		$this->add_control(
 			'heading_description_style',
 			[
-				'label' => esc_html__( 'Description', 'tribe-events-calendar-pro' ),
-				'type' => Controls_Manager::HEADING,
+				'label'     => esc_html__( 'Description', 'tribe-events-calendar-pro' ),
+				'type'      => Controls_Manager::HEADING,
 				'separator' => 'before',
 				'condition' => [
-					'description' => 'yes'
+					'description' => 'yes',
 				],
 			]
 		);
@@ -881,13 +902,13 @@ class Widget_Event_Single_Legacy extends Widget_Abstract {
 		$this->add_control(
 			'description_color',
 			[
-				'label' => esc_html__( 'Text Color', 'tribe-events-calendar-pro' ),
-				'type' => Controls_Manager::COLOR,
+				'label'     => esc_html__( 'Text Color', 'tribe-events-calendar-pro' ),
+				'type'      => Controls_Manager::COLOR,
 				'selectors' => [
 					'{{WRAPPER}} .tribe-events-single-event-description p, {{WRAPPER}} .tribe-events-single-event-description' => 'color: {{VALUE}};',
 				],
 				'condition' => [
-					'description' => 'yes'
+					'description' => 'yes',
 				],
 			]
 		);
@@ -895,36 +916,37 @@ class Widget_Event_Single_Legacy extends Widget_Abstract {
 		$this->add_group_control(
 			Group_Control_Typography::get_type(),
 			[
-				'name' => 'description_typography',
-				'selector' => '{{WRAPPER}} .tribe-events-single-event-description p, {{WRAPPER}} .tribe-events-single-event-description',
+				'name'      => 'description_typography',
+				'selector'  => '{{WRAPPER}} .tribe-events-single-event-description p, {{WRAPPER}} .tribe-events-single-event-description',
 				'condition' => [
-					'description' => 'yes'
+					'description' => 'yes',
 				],
 			]
 		);
-		// End description
+		// End description.
 
-		// End content section
+		// End content section.
 		$this->end_controls_section();
 
-		// Start featured image
+		// Start featured image.
 		$this->start_controls_section(
 			'featured_image_style',
 			[
-				'label' => esc_html__( 'Featured Image', 'tribe-events-calendar-pro' ),
-				'tab' => Controls_Manager::TAB_STYLE,
+				'label'     => esc_html__( 'Featured Image', 'tribe-events-calendar-pro' ),
+				'tab'       => Controls_Manager::TAB_STYLE,
 				'condition' => [
-					'featured_image' => 'yes'
+					'featured_image' => 'yes',
 				],
+
 			]
 		);
 
 		$this->add_responsive_control(
 			'featured_image_width',
 			[
-				'label' => esc_html__( 'Width', 'tribe-events-calendar-pro' ),
-				'type' => Controls_Manager::SLIDER,
-				'default' => [
+				'label'          => esc_html__( 'Width', 'tribe-events-calendar-pro' ),
+				'type'           => Controls_Manager::SLIDER,
+				'default'        => [
 					'unit' => '%',
 				],
 				'tablet_default' => [
@@ -933,9 +955,9 @@ class Widget_Event_Single_Legacy extends Widget_Abstract {
 				'mobile_default' => [
 					'unit' => '%',
 				],
-				'size_units' => [ '%', 'px', 'vw' ],
-				'range' => [
-					'%' => [
+				'size_units'     => [ '%', 'px', 'vw' ],
+				'range'          => [
+					'%'  => [
 						'min' => 1,
 						'max' => 100,
 					],
@@ -948,11 +970,11 @@ class Widget_Event_Single_Legacy extends Widget_Abstract {
 						'max' => 100,
 					],
 				],
-				'selectors' => [
+				'selectors'      => [
 					'{{WRAPPER}} .tribe-events-event-image img' => 'width: {{SIZE}}{{UNIT}};',
 				],
-				'condition' => [
-					'featured_image' => 'yes'
+				'condition'      => [
+					'featured_image' => 'yes',
 				],
 			]
 		);
@@ -960,9 +982,9 @@ class Widget_Event_Single_Legacy extends Widget_Abstract {
 		$this->add_responsive_control(
 			'featured_image_space',
 			[
-				'label' => esc_html__( 'Max Width', 'tribe-events-calendar-pro' ),
-				'type' => Controls_Manager::SLIDER,
-				'default' => [
+				'label'          => esc_html__( 'Max Width', 'tribe-events-calendar-pro' ),
+				'type'           => Controls_Manager::SLIDER,
+				'default'        => [
 					'unit' => '%',
 				],
 				'tablet_default' => [
@@ -971,9 +993,9 @@ class Widget_Event_Single_Legacy extends Widget_Abstract {
 				'mobile_default' => [
 					'unit' => '%',
 				],
-				'size_units' => [ '%', 'px', 'vw' ],
-				'range' => [
-					'%' => [
+				'size_units'     => [ '%', 'px', 'vw' ],
+				'range'          => [
+					'%'  => [
 						'min' => 1,
 						'max' => 100,
 					],
@@ -986,7 +1008,7 @@ class Widget_Event_Single_Legacy extends Widget_Abstract {
 						'max' => 100,
 					],
 				],
-				'selectors' => [
+				'selectors'      => [
 					'{{WRAPPER}} .tribe-events-event-image img' => 'max-width: {{SIZE}}{{UNIT}};',
 				],
 			]
@@ -995,9 +1017,9 @@ class Widget_Event_Single_Legacy extends Widget_Abstract {
 		$this->add_responsive_control(
 			'featured_image_height',
 			[
-				'label' => esc_html__( 'Height', 'tribe-events-calendar-pro' ),
-				'type' => Controls_Manager::SLIDER,
-				'default' => [
+				'label'          => esc_html__( 'Height', 'tribe-events-calendar-pro' ),
+				'type'           => Controls_Manager::SLIDER,
+				'default'        => [
 					'unit' => 'px',
 				],
 				'tablet_default' => [
@@ -1006,8 +1028,8 @@ class Widget_Event_Single_Legacy extends Widget_Abstract {
 				'mobile_default' => [
 					'unit' => 'px',
 				],
-				'size_units' => [ 'px', 'vh' ],
-				'range' => [
+				'size_units'     => [ 'px', 'vh' ],
+				'range'          => [
 					'px' => [
 						'min' => 1,
 						'max' => 500,
@@ -1017,7 +1039,7 @@ class Widget_Event_Single_Legacy extends Widget_Abstract {
 						'max' => 100,
 					],
 				],
-				'selectors' => [
+				'selectors'      => [
 					'{{WRAPPER}} .tribe-events-event-image img' => 'height: {{SIZE}}{{UNIT}};',
 				],
 			]
@@ -1026,18 +1048,18 @@ class Widget_Event_Single_Legacy extends Widget_Abstract {
 		$this->add_responsive_control(
 			'featured_image_object_fit',
 			[
-				'label' => esc_html__( 'Object Fit', 'tribe-events-calendar-pro' ),
-				'type' => Controls_Manager::SELECT,
+				'label'     => esc_html__( 'Object Fit', 'tribe-events-calendar-pro' ),
+				'type'      => Controls_Manager::SELECT,
 				'condition' => [
 					'height[size]!' => '',
 				],
-				'options' => [
-					'' => esc_html__( 'Default', 'tribe-events-calendar-pro' ),
-					'fill' => esc_html__( 'Fill', 'tribe-events-calendar-pro' ),
-					'cover' => esc_html__( 'Cover', 'tribe-events-calendar-pro' ),
+				'options'   => [
+					''        => esc_html__( 'Default', 'tribe-events-calendar-pro' ),
+					'fill'    => esc_html__( 'Fill', 'tribe-events-calendar-pro' ),
+					'cover'   => esc_html__( 'Cover', 'tribe-events-calendar-pro' ),
 					'contain' => esc_html__( 'Contain', 'tribe-events-calendar-pro' ),
 				],
-				'default' => '',
+				'default'   => '',
 				'selectors' => [
 					'{{WRAPPER}} .tribe-events-event-image img' => 'object-fit: {{VALUE}};',
 				],
@@ -1047,7 +1069,7 @@ class Widget_Event_Single_Legacy extends Widget_Abstract {
 		$this->add_control(
 			'featured_image_separator_panel',
 			[
-				'type' => Controls_Manager::DIVIDER,
+				'type'  => Controls_Manager::DIVIDER,
 				'style' => 'thick',
 			]
 		);
@@ -1057,12 +1079,12 @@ class Widget_Event_Single_Legacy extends Widget_Abstract {
 		$this->add_control(
 			'featured_image_opacity',
 			[
-				'label' => esc_html__( 'Opacity', 'tribe-events-calendar-pro' ),
-				'type' => Controls_Manager::SLIDER,
-				'range' => [
+				'label'     => esc_html__( 'Opacity', 'tribe-events-calendar-pro' ),
+				'type'      => Controls_Manager::SLIDER,
+				'range'     => [
 					'px' => [
-						'max' => 1,
-						'min' => 0.10,
+						'max'  => 1,
+						'min'  => 0.10,
 						'step' => 0.01,
 					],
 				],
@@ -1070,7 +1092,7 @@ class Widget_Event_Single_Legacy extends Widget_Abstract {
 					'{{WRAPPER}} .tribe-events-event-image img' => 'opacity: {{SIZE}};',
 				],
 				'condition' => [
-					'featured_image' => 'yes'
+					'featured_image' => 'yes',
 				],
 			]
 		);
@@ -1078,10 +1100,10 @@ class Widget_Event_Single_Legacy extends Widget_Abstract {
 		$this->add_group_control(
 			Group_Control_Css_Filter::get_type(),
 			[
-				'name' => 'featured_image_css_filters',
-				'selector' => '{{WRAPPER}} img',
+				'name'      => 'featured_image_css_filters',
+				'selector'  => '{{WRAPPER}} img',
 				'condition' => [
-					'featured_image' => 'yes'
+					'featured_image' => 'yes',
 				],
 			]
 		);
@@ -1093,11 +1115,11 @@ class Widget_Event_Single_Legacy extends Widget_Abstract {
 		$this->add_group_control(
 			Group_Control_Border::get_type(),
 			[
-				'name' => 'featured_image_image_border',
-				'selector' => '{{WRAPPER}} img',
+				'name'      => 'featured_image_image_border',
+				'selector'  => '{{WRAPPER}} img',
 				'separator' => 'before',
 				'condition' => [
-					'featured_image' => 'yes'
+					'featured_image' => 'yes',
 				],
 			]
 		);
@@ -1105,14 +1127,14 @@ class Widget_Event_Single_Legacy extends Widget_Abstract {
 		$this->add_responsive_control(
 			'featured_image_border_radius',
 			[
-				'label' => esc_html__( 'Border Radius', 'tribe-events-calendar-pro' ),
-				'type' => Controls_Manager::DIMENSIONS,
+				'label'      => esc_html__( 'Border Radius', 'tribe-events-calendar-pro' ),
+				'type'       => Controls_Manager::DIMENSIONS,
 				'size_units' => [ 'px', '%' ],
-				'selectors' => [
+				'selectors'  => [
 					'{{WRAPPER}} .tribe-events-event-image img' => 'border-radius: {{TOP}}{{UNIT}} {{RIGHT}}{{UNIT}} {{BOTTOM}}{{UNIT}} {{LEFT}}{{UNIT}};',
 				],
-				'condition' => [
-					'featured_image' => 'yes'
+				'condition'  => [
+					'featured_image' => 'yes',
 				],
 			]
 		);
@@ -1120,28 +1142,28 @@ class Widget_Event_Single_Legacy extends Widget_Abstract {
 		$this->add_group_control(
 			Group_Control_Box_Shadow::get_type(),
 			[
-				'name' => 'featured_image_box_shadow',
-				'exclude' => [
+				'name'      => 'featured_image_box_shadow',
+				'exclude'   => [ // phpcs:ignore WordPressVIPMinimum.Performance.WPQueryParams.PostNotIn_exclude
 					'box_shadow_position',
 				],
-				'selector' => '{{WRAPPER}} .tribe-events-event-image img',
+				'selector'  => '{{WRAPPER}} .tribe-events-event-image img',
 				'condition' => [
-					'featured_image' => 'yes'
+					'featured_image' => 'yes',
 				],
 			]
 		);
 
 		$this->end_controls_section();
-		// End featured image
+		// End featured image.
 
-		// Start event notice
+		// Start event notice.
 		$this->start_controls_section(
 			'event_notice_style',
 			[
-				'label' => esc_html__( 'Notices', 'tribe-events-calendar-pro' ),
-				'tab' => Controls_Manager::TAB_STYLE,
+				'label'     => esc_html__( 'Notices', 'tribe-events-calendar-pro' ),
+				'tab'       => Controls_Manager::TAB_STYLE,
 				'condition' => [
-					'notices' => 'yes'
+					'notices' => 'yes',
 				],
 			]
 		);
@@ -1149,13 +1171,13 @@ class Widget_Event_Single_Legacy extends Widget_Abstract {
 		$this->add_control(
 			'event_notice_background_color',
 			[
-				'label' => esc_html__( 'Background Color', 'tribe-events-calendar-pro' ),
-				'type' => Controls_Manager::COLOR,
+				'label'     => esc_html__( 'Background Color', 'tribe-events-calendar-pro' ),
+				'type'      => Controls_Manager::COLOR,
 				'selectors' => [
 					'{{WRAPPER}} .tribe-events-notices' => 'background-color: {{VALUE}};',
 				],
 				'condition' => [
-					'notices' => 'yes'
+					'notices' => 'yes',
 				],
 			]
 		);
@@ -1163,13 +1185,13 @@ class Widget_Event_Single_Legacy extends Widget_Abstract {
 		$this->add_control(
 			'event_notice_color',
 			[
-				'label' => esc_html__( 'Color', 'tribe-events-calendar-pro' ),
-				'type' => Controls_Manager::COLOR,
+				'label'     => esc_html__( 'Color', 'tribe-events-calendar-pro' ),
+				'type'      => Controls_Manager::COLOR,
 				'selectors' => [
 					'{{WRAPPER}} .tribe-events-notices ul li' => 'color: {{VALUE}};',
 				],
 				'condition' => [
-					'notices' => 'yes'
+					'notices' => 'yes',
 				],
 			]
 		);
@@ -1177,25 +1199,25 @@ class Widget_Event_Single_Legacy extends Widget_Abstract {
 		$this->add_group_control(
 			Group_Control_Typography::get_type(),
 			[
-				'name' => 'event_notices_typography',
-				'selector' => '{{WRAPPER}} .tribe-events-notices ul li',
+				'name'      => 'event_notices_typography',
+				'selector'  => '{{WRAPPER}} .tribe-events-notices ul li',
 				'condition' => [
-					'notices' => 'yes'
+					'notices' => 'yes',
 				],
 			]
 		);
 
 		$this->end_controls_section();
-		// End event notice
+		// End event notice.
 
-		// Start event details
+		// Start event details.
 		$this->start_controls_section(
 			'event_details_style',
 			[
-				'label' => esc_html__( 'Event Details', 'tribe-events-calendar-pro' ),
-				'tab' => Controls_Manager::TAB_STYLE,
+				'label'     => esc_html__( 'Event Details', 'tribe-events-calendar-pro' ),
+				'tab'       => Controls_Manager::TAB_STYLE,
 				'condition' => [
-					'details' => 'yes'
+					'details' => 'yes',
 				],
 			]
 		);
@@ -1203,26 +1225,26 @@ class Widget_Event_Single_Legacy extends Widget_Abstract {
 		$this->add_control(
 			'event_details_background_color',
 			[
-				'label' => esc_html__( 'Background Color', 'tribe-events-calendar-pro' ),
-				'type' => Controls_Manager::COLOR,
+				'label'     => esc_html__( 'Background Color', 'tribe-events-calendar-pro' ),
+				'type'      => Controls_Manager::COLOR,
 				'selectors' => [
 					'{{WRAPPER}} .single-tribe_events .tribe-events-event-meta.primary' => 'background-color: {{VALUE}};',
 				],
 				'condition' => [
-					'details' => 'yes'
+					'details' => 'yes',
 				],
 			]
 		);
 
-		// Start heading section
+		// Start heading section.
 		$this->add_control(
 			'heading_event_details_heading_style',
 			[
-				'label' => esc_html__( 'Headings', 'tribe-events-calendar-pro' ),
-				'type' => Controls_Manager::HEADING,
+				'label'     => esc_html__( 'Headings', 'tribe-events-calendar-pro' ),
+				'type'      => Controls_Manager::HEADING,
 				'separator' => 'before',
 				'condition' => [
-					'details' => 'yes'
+					'details' => 'yes',
 				],
 			]
 		);
@@ -1230,13 +1252,13 @@ class Widget_Event_Single_Legacy extends Widget_Abstract {
 		$this->add_control(
 			'event_details_heading_color',
 			[
-				'label' => esc_html__( 'Color', 'tribe-events-calendar-pro' ),
-				'type' => Controls_Manager::COLOR,
+				'label'     => esc_html__( 'Color', 'tribe-events-calendar-pro' ),
+				'type'      => Controls_Manager::COLOR,
 				'selectors' => [
 					'{{WRAPPER}} .tribe-events-meta-group-details .tribe-events-single-section-title' => 'color: {{VALUE}};',
 				],
 				'condition' => [
-					'details' => 'yes'
+					'details' => 'yes',
 				],
 			]
 		);
@@ -1244,24 +1266,24 @@ class Widget_Event_Single_Legacy extends Widget_Abstract {
 		$this->add_group_control(
 			Group_Control_Typography::get_type(),
 			[
-				'name' => 'event_details_heading_typography',
-				'selector' => '{{WRAPPER}} .tribe-events-meta-group-details .tribe-events-single-section-title',
+				'name'      => 'event_details_heading_typography',
+				'selector'  => '{{WRAPPER}} .tribe-events-meta-group-details .tribe-events-single-section-title',
 				'condition' => [
-					'details' => 'yes'
+					'details' => 'yes',
 				],
 			]
 		);
-		// End heading section
+		// End heading section.
 
-		// Start labels section
+		// Start labels section.
 		$this->add_control(
 			'heading_event_details_labels_style',
 			[
-				'label' => esc_html__( 'Labels', 'tribe-events-calendar-pro' ),
-				'type' => Controls_Manager::HEADING,
+				'label'     => esc_html__( 'Labels', 'tribe-events-calendar-pro' ),
+				'type'      => Controls_Manager::HEADING,
 				'separator' => 'before',
 				'condition' => [
-					'details' => 'yes'
+					'details' => 'yes',
 				],
 			]
 		);
@@ -1269,13 +1291,13 @@ class Widget_Event_Single_Legacy extends Widget_Abstract {
 		$this->add_control(
 			'event_details_labels_color',
 			[
-				'label' => esc_html__( 'Color', 'tribe-events-calendar-pro' ),
-				'type' => Controls_Manager::COLOR,
+				'label'     => esc_html__( 'Color', 'tribe-events-calendar-pro' ),
+				'type'      => Controls_Manager::COLOR,
 				'selectors' => [
 					'{{WRAPPER}} .tribe-events-start-datetime-label, {{WRAPPER}} .tribe-events-end-datetime-label, {{WRAPPER}} .tribe-events-event-cost-label, {{WRAPPER}} .tribe-events-event-categories-label, {{WRAPPER}} .tribe-event-tags-label, {{WRAPPER}} .tribe-events-meta-group-details dt' => 'color: {{VALUE}};',
 				],
 				'condition' => [
-					'details' => 'yes'
+					'details' => 'yes',
 				],
 			]
 		);
@@ -1283,24 +1305,24 @@ class Widget_Event_Single_Legacy extends Widget_Abstract {
 		$this->add_group_control(
 			Group_Control_Typography::get_type(),
 			[
-				'name' => 'event_details_labels_typography',
-				'selector' => '{{WRAPPER}} .tribe-events-start-datetime-label, {{WRAPPER}} .tribe-events-end-datetime-label, {{WRAPPER}} .tribe-events-event-cost-label, {{WRAPPER}} .tribe-events-event-categories-label, {{WRAPPER}} .tribe-event-tags-label, {{WRAPPER}} .tribe-events-meta-group-details dt',
+				'name'      => 'event_details_labels_typography',
+				'selector'  => '{{WRAPPER}} .tribe-events-start-datetime-label, {{WRAPPER}} .tribe-events-end-datetime-label, {{WRAPPER}} .tribe-events-event-cost-label, {{WRAPPER}} .tribe-events-event-categories-label, {{WRAPPER}} .tribe-event-tags-label, {{WRAPPER}} .tribe-events-meta-group-details dt',
 				'condition' => [
-					'details' => 'yes'
+					'details' => 'yes',
 				],
 			]
 		);
-		// End labels section
+		// End labels section.
 
-		// Start description section
+		// Start description section.
 		$this->add_control(
 			'heading_event_details_description_style',
 			[
-				'label' => esc_html__( 'Descriptions', 'tribe-events-calendar-pro' ),
-				'type' => Controls_Manager::HEADING,
+				'label'     => esc_html__( 'Descriptions', 'tribe-events-calendar-pro' ),
+				'type'      => Controls_Manager::HEADING,
 				'separator' => 'before',
 				'condition' => [
-					'details' => 'yes'
+					'details' => 'yes',
 				],
 			]
 		);
@@ -1308,13 +1330,13 @@ class Widget_Event_Single_Legacy extends Widget_Abstract {
 		$this->add_control(
 			'event_details_description_color',
 			[
-				'label' => esc_html__( 'Color', 'tribe-events-calendar-pro' ),
-				'type' => Controls_Manager::COLOR,
+				'label'     => esc_html__( 'Color', 'tribe-events-calendar-pro' ),
+				'type'      => Controls_Manager::COLOR,
 				'selectors' => [
 					'{{WRAPPER}} .tribe-events-start-datetime, {{WRAPPER}} .tribe-events-end-datetime, {{WRAPPER}} .tribe-events-event-cost, {{WRAPPER}} .tribe-events-abbr.dtstart, {{WRAPPER}} .tribe-events-abbr.dtend' => 'color: {{VALUE}};',
 				],
 				'condition' => [
-					'details' => 'yes'
+					'details' => 'yes',
 				],
 			]
 		);
@@ -1322,24 +1344,24 @@ class Widget_Event_Single_Legacy extends Widget_Abstract {
 		$this->add_group_control(
 			Group_Control_Typography::get_type(),
 			[
-				'name' => 'event_details_description_typography',
-				'selector' => '{{WRAPPER}} .tribe-events-start-datetime, {{WRAPPER}} .tribe-events-end-datetime, {{WRAPPER}} .tribe-events-event-cost, {{WRAPPER}} .tribe-events-abbr.dtstart, {{WRAPPER}} .tribe-events-abbr.dtend',
+				'name'      => 'event_details_description_typography',
+				'selector'  => '{{WRAPPER}} .tribe-events-start-datetime, {{WRAPPER}} .tribe-events-end-datetime, {{WRAPPER}} .tribe-events-event-cost, {{WRAPPER}} .tribe-events-abbr.dtstart, {{WRAPPER}} .tribe-events-abbr.dtend',
 				'condition' => [
-					'details' => 'yes'
+					'details' => 'yes',
 				],
 			]
 		);
-		// End description section
+		// End description section.
 
-		// Start links section
+		// Start links section.
 		$this->add_control(
 			'heading_event_details_links_style',
 			[
-				'label' => esc_html__( 'Links', 'tribe-events-calendar-pro' ),
-				'type' => Controls_Manager::HEADING,
+				'label'     => esc_html__( 'Links', 'tribe-events-calendar-pro' ),
+				'type'      => Controls_Manager::HEADING,
 				'separator' => 'before',
 				'condition' => [
-					'details' => 'yes'
+					'details' => 'yes',
 				],
 			]
 		);
@@ -1347,13 +1369,13 @@ class Widget_Event_Single_Legacy extends Widget_Abstract {
 		$this->add_control(
 			'event_details_links_color',
 			[
-				'label' => esc_html__( 'Color', 'tribe-events-calendar-pro' ),
-				'type' => Controls_Manager::COLOR,
+				'label'     => esc_html__( 'Color', 'tribe-events-calendar-pro' ),
+				'type'      => Controls_Manager::COLOR,
 				'selectors' => [
 					'{{WRAPPER}} .tribe-events-event-categories, {{WRAPPER}} .tribe-event-tags, {{WRAPPER}} .tribe-events-event-url' => '--tec-color-link-accent: {{VALUE}};',
 				],
 				'condition' => [
-					'details' => 'yes'
+					'details' => 'yes',
 				],
 			]
 		);
@@ -1361,26 +1383,26 @@ class Widget_Event_Single_Legacy extends Widget_Abstract {
 		$this->add_group_control(
 			Group_Control_Typography::get_type(),
 			[
-				'name' => 'event_details_links_typography',
-				'selector' => '{{WRAPPER}} .tribe-events-event-categories, {{WRAPPER}} .tribe-event-tags, {{WRAPPER}} .tribe-events-event-url',
+				'name'      => 'event_details_links_typography',
+				'selector'  => '{{WRAPPER}} .tribe-events-event-categories, {{WRAPPER}} .tribe-event-tags, {{WRAPPER}} .tribe-events-event-url',
 				'condition' => [
-					'details' => 'yes'
+					'details' => 'yes',
 				],
 			]
 		);
-		// End links section
+		// End links section.
 
 		$this->end_controls_section();
-		// End event details
+		// End event details.
 
-		// Start event organizer
+		// Start event organizer.
 		$this->start_controls_section(
 			'event_organizer_style',
 			[
-				'label' => esc_html__( 'Organizer', 'tribe-events-calendar-pro' ),
-				'tab' => Controls_Manager::TAB_STYLE,
+				'label'     => esc_html__( 'Organizer', 'tribe-events-calendar-pro' ),
+				'tab'       => Controls_Manager::TAB_STYLE,
 				'condition' => [
-					'organizer' => 'yes'
+					'organizer' => 'yes',
 				],
 			]
 		);
@@ -1388,13 +1410,13 @@ class Widget_Event_Single_Legacy extends Widget_Abstract {
 		$this->add_control(
 			'event_organizer_color',
 			[
-				'label' => esc_html__( 'Heading Color', 'tribe-events-calendar-pro' ),
-				'type' => Controls_Manager::COLOR,
+				'label'     => esc_html__( 'Heading Color', 'tribe-events-calendar-pro' ),
+				'type'      => Controls_Manager::COLOR,
 				'selectors' => [
 					'{{WRAPPER}} .tribe-events-meta-group-organizer .tribe-events-single-section-title' => 'color: {{VALUE}};',
 				],
 				'condition' => [
-					'organizer' => 'yes'
+					'organizer' => 'yes',
 				],
 			]
 		);
@@ -1402,23 +1424,23 @@ class Widget_Event_Single_Legacy extends Widget_Abstract {
 		$this->add_group_control(
 			Group_Control_Typography::get_type(),
 			[
-				'name' => 'event_organizer_typography',
-				'selector' => '{{WRAPPER}} .tribe-events-meta-group-organizer .tribe-events-single-section-title',
+				'name'      => 'event_organizer_typography',
+				'selector'  => '{{WRAPPER}} .tribe-events-meta-group-organizer .tribe-events-single-section-title',
 				'condition' => [
-					'organizer' => 'yes'
+					'organizer' => 'yes',
 				],
 			]
 		);
 
-		// Start organizer name
+		// Start organizer name.
 		$this->add_control(
 			'heading_event_organizer_name_style',
 			[
-				'label' => esc_html__( 'Name', 'tribe-events-calendar-pro' ),
-				'type' => Controls_Manager::HEADING,
+				'label'     => esc_html__( 'Name', 'tribe-events-calendar-pro' ),
+				'type'      => Controls_Manager::HEADING,
 				'separator' => 'before',
 				'condition' => [
-					'organizer_name' => 'yes'
+					'organizer_name' => 'yes',
 				],
 			]
 		);
@@ -1426,13 +1448,13 @@ class Widget_Event_Single_Legacy extends Widget_Abstract {
 		$this->add_control(
 			'event_organizer_name_color',
 			[
-				'label' => esc_html__( 'Color', 'tribe-events-calendar-pro' ),
-				'type' => Controls_Manager::COLOR,
+				'label'     => esc_html__( 'Color', 'tribe-events-calendar-pro' ),
+				'type'      => Controls_Manager::COLOR,
 				'selectors' => [
 					'{{WRAPPER}} .tribe-organizer a, {{WRAPPER}} .tribe-block__organizer__title h3 a' => '--tec-color-link-accent: {{VALUE}};',
 				],
 				'condition' => [
-					'organizer_name' => 'yes'
+					'organizer_name' => 'yes',
 				],
 			]
 		);
@@ -1440,24 +1462,24 @@ class Widget_Event_Single_Legacy extends Widget_Abstract {
 		$this->add_group_control(
 			Group_Control_Typography::get_type(),
 			[
-				'name' => 'event_organizer_name_typography',
-				'selector' => '{{WRAPPER}} .tribe-organizer, {{WRAPPER}} #tribe-events-content .tribe-block__organizer__title h3 a',
+				'name'      => 'event_organizer_name_typography',
+				'selector'  => '{{WRAPPER}} .tribe-organizer, {{WRAPPER}} #tribe-events-content .tribe-block__organizer__title h3 a',
 				'condition' => [
-					'organizer_name' => 'yes'
+					'organizer_name' => 'yes',
 				],
 			]
 		);
-		// End organizer name
+		// End organizer name.
 
-		// Start organizer phone
+		// Start organizer phone.
 		$this->add_control(
 			'heading_event_organizer_phone_style',
 			[
-				'label' => esc_html__( 'Phone', 'tribe-events-calendar-pro' ),
-				'type' => Controls_Manager::HEADING,
+				'label'     => esc_html__( 'Phone', 'tribe-events-calendar-pro' ),
+				'type'      => Controls_Manager::HEADING,
 				'separator' => 'before',
 				'condition' => [
-					'organizer_phone' => 'yes'
+					'organizer_phone' => 'yes',
 				],
 			]
 		);
@@ -1465,13 +1487,13 @@ class Widget_Event_Single_Legacy extends Widget_Abstract {
 		$this->add_control(
 			'event_organizer_phone_label_color',
 			[
-				'label' => esc_html__( 'Label Color', 'tribe-events-calendar-pro' ),
-				'type' => Controls_Manager::COLOR,
+				'label'     => esc_html__( 'Label Color', 'tribe-events-calendar-pro' ),
+				'type'      => Controls_Manager::COLOR,
 				'selectors' => [
 					'{{WRAPPER}} .tribe-organizer-tel-label' => 'color: {{VALUE}};',
 				],
 				'condition' => [
-					'organizer_phone' => 'yes'
+					'organizer_phone' => 'yes',
 				],
 			]
 		);
@@ -1479,11 +1501,11 @@ class Widget_Event_Single_Legacy extends Widget_Abstract {
 		$this->add_group_control(
 			Group_Control_Typography::get_type(),
 			[
-				'name' => 'event_organizer_phone_label_typography',
-				'label' => esc_html__( 'Label Typography', 'tribe-events-calendar-pro' ),
-				'selector' => '{{WRAPPER}} .tribe-organizer-tel-label',
+				'name'      => 'event_organizer_phone_label_typography',
+				'label'     => esc_html__( 'Label Typography', 'tribe-events-calendar-pro' ),
+				'selector'  => '{{WRAPPER}} .tribe-organizer-tel-label',
 				'condition' => [
-					'organizer_phone' => 'yes'
+					'organizer_phone' => 'yes',
 				],
 			]
 		);
@@ -1491,10 +1513,10 @@ class Widget_Event_Single_Legacy extends Widget_Abstract {
 		$this->add_control(
 			'event_organizer_phone_separator_panel',
 			[
-				'type' => Controls_Manager::DIVIDER,
-				'style' => 'thick',
+				'type'      => Controls_Manager::DIVIDER,
+				'style'     => 'thick',
 				'condition' => [
-					'organizer_phone' => 'yes'
+					'organizer_phone' => 'yes',
 				],
 			]
 		);
@@ -1502,13 +1524,13 @@ class Widget_Event_Single_Legacy extends Widget_Abstract {
 		$this->add_control(
 			'event_organizer_phone_color',
 			[
-				'label' => esc_html__( 'Phone Color', 'tribe-events-calendar-pro' ),
-				'type' => Controls_Manager::COLOR,
+				'label'     => esc_html__( 'Phone Color', 'tribe-events-calendar-pro' ),
+				'type'      => Controls_Manager::COLOR,
 				'selectors' => [
 					'{{WRAPPER}} .tribe-organizer-tel' => '--tec-color-link-accent: {{VALUE}};',
 				],
 				'condition' => [
-					'organizer_phone' => 'yes'
+					'organizer_phone' => 'yes',
 				],
 			]
 		);
@@ -1516,25 +1538,25 @@ class Widget_Event_Single_Legacy extends Widget_Abstract {
 		$this->add_group_control(
 			Group_Control_Typography::get_type(),
 			[
-				'name' => 'event_organizer_phone_typography',
-				'label' => esc_html__( 'Phone Typography', 'tribe-events-calendar-pro' ),
-				'selector' => '{{WRAPPER}} .tribe-organizer-tel',
+				'name'      => 'event_organizer_phone_typography',
+				'label'     => esc_html__( 'Phone Typography', 'tribe-events-calendar-pro' ),
+				'selector'  => '{{WRAPPER}} .tribe-organizer-tel',
 				'condition' => [
-					'organizer_phone' => 'yes'
+					'organizer_phone' => 'yes',
 				],
 			]
 		);
-		// End organizer phone
+		// End organizer phone.
 
-		// Start organizer email
+		// Start organizer email.
 		$this->add_control(
 			'heading_event_organizer_email_style',
 			[
-				'label' => esc_html__( 'Email', 'tribe-events-calendar-pro' ),
-				'type' => Controls_Manager::HEADING,
+				'label'     => esc_html__( 'Email', 'tribe-events-calendar-pro' ),
+				'type'      => Controls_Manager::HEADING,
 				'separator' => 'before',
 				'condition' => [
-					'organizer_email' => 'yes'
+					'organizer_email' => 'yes',
 				],
 			]
 		);
@@ -1542,13 +1564,13 @@ class Widget_Event_Single_Legacy extends Widget_Abstract {
 		$this->add_control(
 			'event_organizer_email_label_color',
 			[
-				'label' => esc_html__( 'Label Color', 'tribe-events-calendar-pro' ),
-				'type' => Controls_Manager::COLOR,
+				'label'     => esc_html__( 'Label Color', 'tribe-events-calendar-pro' ),
+				'type'      => Controls_Manager::COLOR,
 				'selectors' => [
 					'{{WRAPPER}} .tribe-organizer-email-label' => 'color: {{VALUE}};',
 				],
 				'condition' => [
-					'organizer_email' => 'yes'
+					'organizer_email' => 'yes',
 				],
 			]
 		);
@@ -1556,11 +1578,11 @@ class Widget_Event_Single_Legacy extends Widget_Abstract {
 		$this->add_group_control(
 			Group_Control_Typography::get_type(),
 			[
-				'name' => 'event_organizer_email_label_typography',
-				'label' => esc_html__( 'Label Typography', 'tribe-events-calendar-pro' ),
-				'selector' => '{{WRAPPER}} .tribe-organizer-email-label',
+				'name'      => 'event_organizer_email_label_typography',
+				'label'     => esc_html__( 'Label Typography', 'tribe-events-calendar-pro' ),
+				'selector'  => '{{WRAPPER}} .tribe-organizer-email-label',
 				'condition' => [
-					'organizer_email' => 'yes'
+					'organizer_email' => 'yes',
 				],
 			]
 		);
@@ -1568,10 +1590,10 @@ class Widget_Event_Single_Legacy extends Widget_Abstract {
 		$this->add_control(
 			'event_organizer_email_separator_panel',
 			[
-				'type' => Controls_Manager::DIVIDER,
-				'style' => 'thick',
+				'type'      => Controls_Manager::DIVIDER,
+				'style'     => 'thick',
 				'condition' => [
-					'organizer_email' => 'yes'
+					'organizer_email' => 'yes',
 				],
 			]
 		);
@@ -1579,13 +1601,13 @@ class Widget_Event_Single_Legacy extends Widget_Abstract {
 		$this->add_control(
 			'event_organizer_email_color',
 			[
-				'label' => esc_html__( 'Email Color', 'tribe-events-calendar-pro' ),
-				'type' => Controls_Manager::COLOR,
+				'label'     => esc_html__( 'Email Color', 'tribe-events-calendar-pro' ),
+				'type'      => Controls_Manager::COLOR,
 				'selectors' => [
 					'{{WRAPPER}} .tribe-organizer-email' => 'color: {{VALUE}};',
 				],
 				'condition' => [
-					'organizer_email' => 'yes'
+					'organizer_email' => 'yes',
 				],
 			]
 		);
@@ -1593,25 +1615,25 @@ class Widget_Event_Single_Legacy extends Widget_Abstract {
 		$this->add_group_control(
 			Group_Control_Typography::get_type(),
 			[
-				'name' => 'event_organizer_email_typography',
-				'label' => esc_html__( 'Email Typography', 'tribe-events-calendar-pro' ),
-				'selector' => '{{WRAPPER}} .tribe-organizer-email',
+				'name'      => 'event_organizer_email_typography',
+				'label'     => esc_html__( 'Email Typography', 'tribe-events-calendar-pro' ),
+				'selector'  => '{{WRAPPER}} .tribe-organizer-email',
 				'condition' => [
-					'organizer_email' => 'yes'
+					'organizer_email' => 'yes',
 				],
 			]
 		);
-		// End organizer email
+		// End organizer email.
 
-		// Start organizer website
+		// Start organizer website.
 		$this->add_control(
 			'heading_event_organizer_website_style',
 			[
-				'label' => esc_html__( 'Website', 'tribe-events-calendar-pro' ),
-				'type' => Controls_Manager::HEADING,
+				'label'     => esc_html__( 'Website', 'tribe-events-calendar-pro' ),
+				'type'      => Controls_Manager::HEADING,
 				'separator' => 'before',
 				'condition' => [
-					'organizer_url' => 'yes'
+					'organizer_url' => 'yes',
 				],
 			]
 		);
@@ -1619,13 +1641,13 @@ class Widget_Event_Single_Legacy extends Widget_Abstract {
 		$this->add_control(
 			'event_organizer_website_label_color',
 			[
-				'label' => esc_html__( 'Color', 'tribe-events-calendar-pro' ),
-				'type' => Controls_Manager::COLOR,
+				'label'     => esc_html__( 'Color', 'tribe-events-calendar-pro' ),
+				'type'      => Controls_Manager::COLOR,
 				'selectors' => [
 					'{{WRAPPER}} .tribe-organizer-url a' => '--tec-color-link-accent: {{VALUE}};',
 				],
 				'condition' => [
-					'organizer_url' => 'yes'
+					'organizer_url' => 'yes',
 				],
 			]
 		);
@@ -1633,26 +1655,26 @@ class Widget_Event_Single_Legacy extends Widget_Abstract {
 		$this->add_group_control(
 			Group_Control_Typography::get_type(),
 			[
-				'name' => 'event_organizer_website_label_typography',
-				'selector' => '{{WRAPPER}} .tribe-organizer-url',
+				'name'      => 'event_organizer_website_label_typography',
+				'selector'  => '{{WRAPPER}} .tribe-organizer-url',
 				'condition' => [
-					'organizer_url' => 'yes'
+					'organizer_url' => 'yes',
 				],
 			]
 		);
-		// End organizer website
+		// End organizer website.
 
 		$this->end_controls_section();
-		// End event organizer
+		// End event organizer.
 
-		// Start event venue
+		// Start event venue.
 		$this->start_controls_section(
 			'event_venue_style',
 			[
-				'label' => esc_html__( 'Venue', 'tribe-events-calendar-pro' ),
-				'tab' => Controls_Manager::TAB_STYLE,
+				'label'     => esc_html__( 'Venue', 'tribe-events-calendar-pro' ),
+				'tab'       => Controls_Manager::TAB_STYLE,
 				'condition' => [
-					'venue' => 'yes'
+					'venue' => 'yes',
 				],
 			]
 		);
@@ -1660,13 +1682,13 @@ class Widget_Event_Single_Legacy extends Widget_Abstract {
 		$this->add_control(
 			'event_venue_color',
 			[
-				'label' => esc_html__( 'Heading Color', 'tribe-events-calendar-pro' ),
-				'type' => Controls_Manager::COLOR,
+				'label'     => esc_html__( 'Heading Color', 'tribe-events-calendar-pro' ),
+				'type'      => Controls_Manager::COLOR,
 				'selectors' => [
 					'{{WRAPPER}} .tribe-events-meta-group-venue .tribe-events-single-section-title' => 'color: {{VALUE}};',
 				],
 				'condition' => [
-					'venue' => 'yes'
+					'venue' => 'yes',
 				],
 			]
 		);
@@ -1674,23 +1696,23 @@ class Widget_Event_Single_Legacy extends Widget_Abstract {
 		$this->add_group_control(
 			Group_Control_Typography::get_type(),
 			[
-				'name' => 'event_venue_typography',
-				'selector' => '{{WRAPPER}} .tribe-events-meta-group-venue .tribe-events-single-section-title',
+				'name'      => 'event_venue_typography',
+				'selector'  => '{{WRAPPER}} .tribe-events-meta-group-venue .tribe-events-single-section-title',
 				'condition' => [
-					'venue' => 'yes'
+					'venue' => 'yes',
 				],
 			]
 		);
 
-		// Start venue name
+		// Start venue name.
 		$this->add_control(
 			'heading_event_venue_name_style',
 			[
-				'label' => esc_html__( 'Name', 'tribe-events-calendar-pro' ),
-				'type' => Controls_Manager::HEADING,
+				'label'     => esc_html__( 'Name', 'tribe-events-calendar-pro' ),
+				'type'      => Controls_Manager::HEADING,
 				'separator' => 'before',
 				'condition' => [
-					'venue_name' => 'yes'
+					'venue_name' => 'yes',
 				],
 			]
 		);
@@ -1698,13 +1720,13 @@ class Widget_Event_Single_Legacy extends Widget_Abstract {
 		$this->add_control(
 			'event_venue_name_color',
 			[
-				'label' => esc_html__( 'Color', 'tribe-events-calendar-pro' ),
-				'type' => Controls_Manager::COLOR,
+				'label'     => esc_html__( 'Color', 'tribe-events-calendar-pro' ),
+				'type'      => Controls_Manager::COLOR,
 				'selectors' => [
 					'{{WRAPPER}} .tribe-venue a, {{WRAPPER}} .tribe-block__venue__name h3 a' => '--tec-color-link-accent: {{VALUE}};',
 				],
 				'condition' => [
-					'venue_name' => 'yes'
+					'venue_name' => 'yes',
 				],
 			]
 		);
@@ -1712,24 +1734,24 @@ class Widget_Event_Single_Legacy extends Widget_Abstract {
 		$this->add_group_control(
 			Group_Control_Typography::get_type(),
 			[
-				'name' => 'event_venue_name_typography',
-				'selector' => '{{WRAPPER}} .tribe-venue, {{WRAPPER}} #tribe-events-content .tribe-block__venue__name h3 a',
+				'name'      => 'event_venue_name_typography',
+				'selector'  => '{{WRAPPER}} .tribe-venue, {{WRAPPER}} #tribe-events-content .tribe-block__venue__name h3 a',
 				'condition' => [
-					'venue_name' => 'yes'
+					'venue_name' => 'yes',
 				],
 			]
 		);
-		// End venue name
+		// End venue name.
 
-		// Start venue location
+		// Start venue location.
 		$this->add_control(
 			'heading_event_venue_location_style',
 			[
-				'label' => esc_html__( 'Location', 'tribe-events-calendar-pro' ),
-				'type' => Controls_Manager::HEADING,
+				'label'     => esc_html__( 'Location', 'tribe-events-calendar-pro' ),
+				'type'      => Controls_Manager::HEADING,
 				'separator' => 'before',
 				'condition' => [
-					'venue_location' => 'yes'
+					'venue_location' => 'yes',
 				],
 			]
 		);
@@ -1737,13 +1759,13 @@ class Widget_Event_Single_Legacy extends Widget_Abstract {
 		$this->add_control(
 			'event_venue_location_color',
 			[
-				'label' => esc_html__( 'Color', 'tribe-events-calendar-pro' ),
-				'type' => Controls_Manager::COLOR,
+				'label'     => esc_html__( 'Color', 'tribe-events-calendar-pro' ),
+				'type'      => Controls_Manager::COLOR,
 				'selectors' => [
 					'{{WRAPPER}} .tribe-address' => 'color: {{VALUE}};',
 				],
 				'condition' => [
-					'venue_location' => 'yes'
+					'venue_location' => 'yes',
 				],
 			]
 		);
@@ -1751,10 +1773,10 @@ class Widget_Event_Single_Legacy extends Widget_Abstract {
 		$this->add_group_control(
 			Group_Control_Typography::get_type(),
 			[
-				'name' => 'event_venue_location_typography',
-				'selector' => '{{WRAPPER}} .tribe-address, {{WRAPPER}} #tribe-events-content .tribe-events-gmap',
+				'name'      => 'event_venue_location_typography',
+				'selector'  => '{{WRAPPER}} .tribe-address, {{WRAPPER}} #tribe-events-content .tribe-events-gmap',
 				'condition' => [
-					'venue_location' => 'yes'
+					'venue_location' => 'yes',
 				],
 			]
 		);
@@ -1762,27 +1784,27 @@ class Widget_Event_Single_Legacy extends Widget_Abstract {
 		$this->add_control(
 			'event_venue_location_link_color',
 			[
-				'label' => esc_html__( 'Link Color', 'tribe-events-calendar-pro' ),
-				'type' => Controls_Manager::COLOR,
+				'label'     => esc_html__( 'Link Color', 'tribe-events-calendar-pro' ),
+				'type'      => Controls_Manager::COLOR,
 				'selectors' => [
 					'{{WRAPPER}} .tribe-events-gmap' => '--tec-color-link-accent: {{VALUE}};',
 				],
 				'condition' => [
-					'venue_location' => 'yes'
+					'venue_location' => 'yes',
 				],
 			]
 		);
-		// End venue location
+		// End venue location.
 
-		// Start venue phone
+		// Start venue phone.
 		$this->add_control(
 			'heading_event_venue_phone_style',
 			[
-				'label' => esc_html__( 'Phone', 'tribe-events-calendar-pro' ),
-				'type' => Controls_Manager::HEADING,
+				'label'     => esc_html__( 'Phone', 'tribe-events-calendar-pro' ),
+				'type'      => Controls_Manager::HEADING,
 				'separator' => 'before',
 				'condition' => [
-					'venue_phone' => 'yes'
+					'venue_phone' => 'yes',
 				],
 			]
 		);
@@ -1790,13 +1812,13 @@ class Widget_Event_Single_Legacy extends Widget_Abstract {
 		$this->add_control(
 			'event_venue_phone_label_color',
 			[
-				'label' => esc_html__( 'Label Color', 'tribe-events-calendar-pro' ),
-				'type' => Controls_Manager::COLOR,
+				'label'     => esc_html__( 'Label Color', 'tribe-events-calendar-pro' ),
+				'type'      => Controls_Manager::COLOR,
 				'selectors' => [
 					'{{WRAPPER}} .tribe-venue-tel-label' => 'color: {{VALUE}};',
 				],
 				'condition' => [
-					'venue_phone' => 'yes'
+					'venue_phone' => 'yes',
 				],
 			]
 		);
@@ -1804,11 +1826,11 @@ class Widget_Event_Single_Legacy extends Widget_Abstract {
 		$this->add_group_control(
 			Group_Control_Typography::get_type(),
 			[
-				'name' => 'event_venue_phone_label_typography',
-				'label' => esc_html__( 'Label Typography', 'tribe-events-calendar-pro' ),
-				'selector' => '{{WRAPPER}} .tribe-venue-tel-label',
+				'name'      => 'event_venue_phone_label_typography',
+				'label'     => esc_html__( 'Label Typography', 'tribe-events-calendar-pro' ),
+				'selector'  => '{{WRAPPER}} .tribe-venue-tel-label',
 				'condition' => [
-					'venue_phone' => 'yes'
+					'venue_phone' => 'yes',
 				],
 			]
 		);
@@ -1816,10 +1838,10 @@ class Widget_Event_Single_Legacy extends Widget_Abstract {
 		$this->add_control(
 			'event_venue_phone_separator_panel',
 			[
-				'type' => Controls_Manager::DIVIDER,
-				'style' => 'thick',
+				'type'      => Controls_Manager::DIVIDER,
+				'style'     => 'thick',
 				'condition' => [
-					'venue_phone' => 'yes'
+					'venue_phone' => 'yes',
 				],
 			]
 		);
@@ -1827,13 +1849,13 @@ class Widget_Event_Single_Legacy extends Widget_Abstract {
 		$this->add_control(
 			'event_venue_phone_color',
 			[
-				'label' => esc_html__( 'Phone Color', 'tribe-events-calendar-pro' ),
-				'type' => Controls_Manager::COLOR,
+				'label'     => esc_html__( 'Phone Color', 'tribe-events-calendar-pro' ),
+				'type'      => Controls_Manager::COLOR,
 				'selectors' => [
 					'{{WRAPPER}} .tribe-venue-tel' => 'color: {{VALUE}};',
 				],
 				'condition' => [
-					'venue_phone' => 'yes'
+					'venue_phone' => 'yes',
 				],
 			]
 		);
@@ -1841,25 +1863,25 @@ class Widget_Event_Single_Legacy extends Widget_Abstract {
 		$this->add_group_control(
 			Group_Control_Typography::get_type(),
 			[
-				'name' => 'event_venue_phone_typography',
-				'label' => esc_html__( 'Phone Typography', 'tribe-events-calendar-pro' ),
-				'selector' => '{{WRAPPER}} .tribe-venue-tel',
+				'name'      => 'event_venue_phone_typography',
+				'label'     => esc_html__( 'Phone Typography', 'tribe-events-calendar-pro' ),
+				'selector'  => '{{WRAPPER}} .tribe-venue-tel',
 				'condition' => [
-					'venue_phone' => 'yes'
+					'venue_phone' => 'yes',
 				],
 			]
 		);
-		// End venue phone
+		// End venue phone.
 
-		// Start venue website
+		// Start venue website.
 		$this->add_control(
 			'heading_event_venue_website_style',
 			[
-				'label' => esc_html__( 'Website', 'tribe-events-calendar-pro' ),
-				'type' => Controls_Manager::HEADING,
+				'label'     => esc_html__( 'Website', 'tribe-events-calendar-pro' ),
+				'type'      => Controls_Manager::HEADING,
 				'separator' => 'before',
 				'condition' => [
-					'venue_url' => 'yes'
+					'venue_url' => 'yes',
 				],
 			]
 		);
@@ -1867,13 +1889,13 @@ class Widget_Event_Single_Legacy extends Widget_Abstract {
 		$this->add_control(
 			'event_venue_website_label_color',
 			[
-				'label' => esc_html__( 'Color', 'tribe-events-calendar-pro' ),
-				'type' => Controls_Manager::COLOR,
+				'label'     => esc_html__( 'Color', 'tribe-events-calendar-pro' ),
+				'type'      => Controls_Manager::COLOR,
 				'selectors' => [
 					'{{WRAPPER}} .tribe-venue-url a' => '--tec-color-link-accent: {{VALUE}};',
 				],
 				'condition' => [
-					'venue_url' => 'yes'
+					'venue_url' => 'yes',
 				],
 			]
 		);
@@ -1881,26 +1903,26 @@ class Widget_Event_Single_Legacy extends Widget_Abstract {
 		$this->add_group_control(
 			Group_Control_Typography::get_type(),
 			[
-				'name' => 'event_venue_website_label_typography',
-				'selector' => '{{WRAPPER}} .tribe-venue-url',
+				'name'      => 'event_venue_website_label_typography',
+				'selector'  => '{{WRAPPER}} .tribe-venue-url',
 				'condition' => [
-					'venue_url' => 'yes'
+					'venue_url' => 'yes',
 				],
 			]
 		);
-		// End venue website
+		// End venue website.
 
 		$this->end_controls_section();
-		// End event venue
+		// End event venue.
 
-		// Start custom fields
+		// Start custom fields.
 		$this->start_controls_section(
 			'event_custom_fields_style',
 			[
-				'label' => esc_html__( 'Custom Fields', 'tribe-events-calendar-pro' ),
-				'tab' => Controls_Manager::TAB_STYLE,
+				'label'     => esc_html__( 'Custom Fields', 'tribe-events-calendar-pro' ),
+				'tab'       => Controls_Manager::TAB_STYLE,
 				'condition' => [
-					'custom_fields' => 'yes'
+					'custom_fields' => 'yes',
 				],
 			]
 		);
@@ -1908,11 +1930,11 @@ class Widget_Event_Single_Legacy extends Widget_Abstract {
 		$this->add_control(
 			'event_custom_fields_headings_style',
 			[
-				'label' => esc_html__( 'Headings', 'tribe-events-calendar-pro' ),
-				'type' => Controls_Manager::HEADING,
+				'label'     => esc_html__( 'Headings', 'tribe-events-calendar-pro' ),
+				'type'      => Controls_Manager::HEADING,
 				'separator' => 'before',
 				'condition' => [
-					'custom_fields' => 'yes'
+					'custom_fields' => 'yes',
 				],
 			]
 		);
@@ -1920,13 +1942,13 @@ class Widget_Event_Single_Legacy extends Widget_Abstract {
 		$this->add_control(
 			'event_custom_fields_heading_color',
 			[
-				'label' => esc_html__( 'Color', 'tribe-events-calendar-pro' ),
-				'type' => Controls_Manager::COLOR,
+				'label'     => esc_html__( 'Color', 'tribe-events-calendar-pro' ),
+				'type'      => Controls_Manager::COLOR,
 				'selectors' => [
 					'{{WRAPPER}} .tribe-events-meta-group-other .tribe-events-single-section-title' => 'color: {{VALUE}};',
 				],
 				'condition' => [
-					'custom_fields' => 'yes'
+					'custom_fields' => 'yes',
 				],
 			]
 		);
@@ -1934,10 +1956,10 @@ class Widget_Event_Single_Legacy extends Widget_Abstract {
 		$this->add_group_control(
 			Group_Control_Typography::get_type(),
 			[
-				'name' => 'event_custom_fields_headings_typography',
-				'selector' => '{{WRAPPER}} .tribe-events-meta-group-other .tribe-events-single-section-title',
+				'name'      => 'event_custom_fields_headings_typography',
+				'selector'  => '{{WRAPPER}} .tribe-events-meta-group-other .tribe-events-single-section-title',
 				'condition' => [
-					'custom_fields' => 'yes'
+					'custom_fields' => 'yes',
 				],
 			]
 		);
@@ -1945,11 +1967,11 @@ class Widget_Event_Single_Legacy extends Widget_Abstract {
 		$this->add_control(
 			'event_custom_fields_labels_style',
 			[
-				'label' => esc_html__( 'Labels', 'tribe-events-calendar-pro' ),
-				'type' => Controls_Manager::HEADING,
+				'label'     => esc_html__( 'Labels', 'tribe-events-calendar-pro' ),
+				'type'      => Controls_Manager::HEADING,
 				'separator' => 'before',
 				'condition' => [
-					'custom_fields' => 'yes'
+					'custom_fields' => 'yes',
 				],
 			]
 		);
@@ -1957,13 +1979,13 @@ class Widget_Event_Single_Legacy extends Widget_Abstract {
 		$this->add_control(
 			'event_custom_fields_label_color',
 			[
-				'label' => esc_html__( 'Color', 'tribe-events-calendar-pro' ),
-				'type' => Controls_Manager::COLOR,
+				'label'     => esc_html__( 'Color', 'tribe-events-calendar-pro' ),
+				'type'      => Controls_Manager::COLOR,
 				'selectors' => [
 					'{{WRAPPER}} .tribe-events-meta-group-other dt, {{WRAPPER}} .tribe-block__additional-field h3' => 'color: {{VALUE}};',
 				],
 				'condition' => [
-					'custom_fields' => 'yes'
+					'custom_fields' => 'yes',
 				],
 			]
 		);
@@ -1971,10 +1993,10 @@ class Widget_Event_Single_Legacy extends Widget_Abstract {
 		$this->add_group_control(
 			Group_Control_Typography::get_type(),
 			[
-				'name' => 'event_custom_fields_label_typography',
-				'selector' => '{{WRAPPER}} .tribe-events-meta-group-other dt, {{WRAPPER}} .tribe-block__additional-field h3',
+				'name'      => 'event_custom_fields_label_typography',
+				'selector'  => '{{WRAPPER}} .tribe-events-meta-group-other dt, {{WRAPPER}} .tribe-block__additional-field h3',
 				'condition' => [
-					'custom_fields' => 'yes'
+					'custom_fields' => 'yes',
 				],
 			]
 		);
@@ -1982,11 +2004,11 @@ class Widget_Event_Single_Legacy extends Widget_Abstract {
 		$this->add_control(
 			'event_custom_fields_description_style',
 			[
-				'label' => esc_html__( 'Description', 'tribe-events-calendar-pro' ),
-				'type' => Controls_Manager::HEADING,
+				'label'     => esc_html__( 'Description', 'tribe-events-calendar-pro' ),
+				'type'      => Controls_Manager::HEADING,
 				'separator' => 'before',
 				'condition' => [
-					'custom_fields' => 'yes'
+					'custom_fields' => 'yes',
 				],
 			]
 		);
@@ -1994,13 +2016,13 @@ class Widget_Event_Single_Legacy extends Widget_Abstract {
 		$this->add_control(
 			'event_custom_fields_description_color',
 			[
-				'label' => esc_html__( 'Color', 'tribe-events-calendar-pro' ),
-				'type' => Controls_Manager::COLOR,
+				'label'     => esc_html__( 'Color', 'tribe-events-calendar-pro' ),
+				'type'      => Controls_Manager::COLOR,
 				'selectors' => [
 					'{{WRAPPER}} .tribe-events-meta-group-other .tribe-meta-value, {{WRAPPER}} .tribe-block__additional-field' => 'color: {{VALUE}};',
 				],
 				'condition' => [
-					'custom_fields' => 'yes'
+					'custom_fields' => 'yes',
 				],
 			]
 		);
@@ -2008,38 +2030,38 @@ class Widget_Event_Single_Legacy extends Widget_Abstract {
 		$this->add_group_control(
 			Group_Control_Typography::get_type(),
 			[
-				'name' => 'event_custom_fields_description_typography',
-				'selector' => '{{WRAPPER}} .tribe-events-meta-group-other .tribe-meta-value, {{WRAPPER}} .tribe-block__additional-field',
+				'name'      => 'event_custom_fields_description_typography',
+				'selector'  => '{{WRAPPER}} .tribe-events-meta-group-other .tribe-meta-value, {{WRAPPER}} .tribe-block__additional-field',
 				'condition' => [
-					'custom_fields' => 'yes'
+					'custom_fields' => 'yes',
 				],
 			]
 		);
 
 		$this->end_controls_section();
-		// End custom fields
+		// End custom fields.
 
-		// Start navigation
+		// Start navigation.
 		$this->start_controls_section(
 			'event_navigation_style',
 			[
-				'label' => esc_html__( 'Navigation', 'tribe-events-calendar-pro' ),
-				'tab' => Controls_Manager::TAB_STYLE,
+				'label'     => esc_html__( 'Navigation', 'tribe-events-calendar-pro' ),
+				'tab'       => Controls_Manager::TAB_STYLE,
 				'condition' => [
-					'navigation' => 'yes'
+					'navigation' => 'yes',
 				],
 			]
 		);
 
-		// Start all events link
+		// Start all events link.
 		$this->add_control(
 			'heading_event_all_events_link_style',
 			[
-				'label' => esc_html__( 'All Events Link', 'tribe-events-calendar-pro' ),
-				'type' => Controls_Manager::HEADING,
+				'label'     => esc_html__( 'All Events Link', 'tribe-events-calendar-pro' ),
+				'type'      => Controls_Manager::HEADING,
 				'separator' => 'before',
 				'condition' => [
-					'all_events_link' => 'yes'
+					'all_events_link' => 'yes',
 				],
 			]
 		);
@@ -2047,13 +2069,13 @@ class Widget_Event_Single_Legacy extends Widget_Abstract {
 		$this->add_control(
 			'event_all_events_link_color',
 			[
-				'label' => esc_html__( 'Color', 'tribe-events-calendar-pro' ),
-				'type' => Controls_Manager::COLOR,
+				'label'     => esc_html__( 'Color', 'tribe-events-calendar-pro' ),
+				'type'      => Controls_Manager::COLOR,
 				'selectors' => [
 					'{{WRAPPER}} .tribe-events-back a' => '--tec-color-link-accent: {{VALUE}};',
 				],
 				'condition' => [
-					'all_events_link' => 'yes'
+					'all_events_link' => 'yes',
 				],
 			]
 		);
@@ -2061,24 +2083,24 @@ class Widget_Event_Single_Legacy extends Widget_Abstract {
 		$this->add_group_control(
 			Group_Control_Typography::get_type(),
 			[
-				'name' => 'event_all_events_link_typography',
-				'selector' => '{{WRAPPER}} .tribe-events-back',
+				'name'      => 'event_all_events_link_typography',
+				'selector'  => '{{WRAPPER}} .tribe-events-back',
 				'condition' => [
-					'all_events_link' => 'yes'
+					'all_events_link' => 'yes',
 				],
 			]
 		);
-		// End all events link
+		// End all events link.
 
-		// Start calendar links
+		// Start calendar links.
 		$this->add_control(
 			'heading_event_calendar_links_style',
 			[
-				'label' => esc_html__( 'Calendar Links', 'tribe-events-calendar-pro' ),
-				'type' => Controls_Manager::HEADING,
+				'label'     => esc_html__( 'Calendar Links', 'tribe-events-calendar-pro' ),
+				'type'      => Controls_Manager::HEADING,
 				'separator' => 'before',
 				'condition' => [
-					'calendar_links' => 'yes'
+					'calendar_links' => 'yes',
 				],
 			]
 		);
@@ -2086,13 +2108,13 @@ class Widget_Event_Single_Legacy extends Widget_Abstract {
 		$this->add_control(
 			'event_calendar_links_color',
 			[
-				'label' => esc_html__( 'Color', 'tribe-events-calendar-pro' ),
-				'type' => Controls_Manager::COLOR,
+				'label'     => esc_html__( 'Color', 'tribe-events-calendar-pro' ),
+				'type'      => Controls_Manager::COLOR,
 				'selectors' => [
 					'{{WRAPPER}} .tribe-events-cal-links a' => '--tec-color-link-accent: {{VALUE}};',
 				],
 				'condition' => [
-					'calendar_links' => 'yes'
+					'calendar_links' => 'yes',
 				],
 			]
 		);
@@ -2100,24 +2122,24 @@ class Widget_Event_Single_Legacy extends Widget_Abstract {
 		$this->add_group_control(
 			Group_Control_Typography::get_type(),
 			[
-				'name' => 'event_calendar_links_typography',
-				'selector' => '{{WRAPPER}} .tribe-events-cal-links',
+				'name'      => 'event_calendar_links_typography',
+				'selector'  => '{{WRAPPER}} .tribe-events-cal-links',
 				'condition' => [
-					'calendar_links' => 'yes'
+					'calendar_links' => 'yes',
 				],
 			]
 		);
-		// End calendar links
+		// End calendar links.
 
-		// Start event footer navigation
+		// Start event footer navigation.
 		$this->add_control(
 			'heading_footer_navigation_style',
 			[
-				'label' => esc_html__( 'Footer Navigation', 'tribe-events-calendar-pro' ),
-				'type' => Controls_Manager::HEADING,
+				'label'     => esc_html__( 'Footer Navigation', 'tribe-events-calendar-pro' ),
+				'type'      => Controls_Manager::HEADING,
 				'separator' => 'before',
 				'condition' => [
-					'navigation' => 'yes'
+					'navigation' => 'yes',
 				],
 			]
 		);
@@ -2125,13 +2147,13 @@ class Widget_Event_Single_Legacy extends Widget_Abstract {
 		$this->add_control(
 			'footer_navigation_color',
 			[
-				'label' => esc_html__( 'Color', 'tribe-events-calendar-pro' ),
-				'type' => Controls_Manager::COLOR,
+				'label'     => esc_html__( 'Color', 'tribe-events-calendar-pro' ),
+				'type'      => Controls_Manager::COLOR,
 				'selectors' => [
 					'{{WRAPPER}} .tribe-events-nav-previous a, {{WRAPPER}} .tribe-events-nav-next a' => '--tec-color-link-accent: {{VALUE}};',
 				],
 				'condition' => [
-					'navigation' => 'yes'
+					'navigation' => 'yes',
 				],
 			]
 		);
@@ -2139,26 +2161,26 @@ class Widget_Event_Single_Legacy extends Widget_Abstract {
 		$this->add_group_control(
 			Group_Control_Typography::get_type(),
 			[
-				'name' => 'footer_navigation_typography',
-				'selector' => '{{WRAPPER}} .tribe-events-nav-previous, {{WRAPPER}} .tribe-events-nav-next',
+				'name'      => 'footer_navigation_typography',
+				'selector'  => '{{WRAPPER}} .tribe-events-nav-previous, {{WRAPPER}} .tribe-events-nav-next',
 				'condition' => [
-					'navigation' => 'yes'
+					'navigation' => 'yes',
 				],
 			]
 		);
-		// End footer navigation
+		// End footer navigation.
 
 		$this->end_controls_section();
-		// End navigation
+		// End navigation.
 
-		// Start related events
+		// Start related events.
 		$this->start_controls_section(
 			'related_events_style',
 			[
-				'label' => esc_html__( 'Related Events', 'tribe-events-calendar-pro' ),
-				'tab' => Controls_Manager::TAB_STYLE,
+				'label'     => esc_html__( 'Related Events', 'tribe-events-calendar-pro' ),
+				'tab'       => Controls_Manager::TAB_STYLE,
 				'condition' => [
-					'related_events' => 'yes'
+					'related_events' => 'yes',
 				],
 			]
 		);
@@ -2166,13 +2188,13 @@ class Widget_Event_Single_Legacy extends Widget_Abstract {
 		$this->add_control(
 			'related_events_background_color',
 			[
-				'label' => esc_html__( 'Background Color', 'tribe-events-calendar-pro' ),
-				'type' => Controls_Manager::COLOR,
+				'label'     => esc_html__( 'Background Color', 'tribe-events-calendar-pro' ),
+				'type'      => Controls_Manager::COLOR,
 				'selectors' => [
 					'{{WRAPPER}} .tribe-related-events' => 'background: {{VALUE}};',
 				],
 				'condition' => [
-					'related_events' => 'yes'
+					'related_events' => 'yes',
 				],
 			]
 		);
@@ -2180,11 +2202,11 @@ class Widget_Event_Single_Legacy extends Widget_Abstract {
 		$this->add_control(
 			'related_events_heading_style_title',
 			[
-				'label' => esc_html__( 'Heading', 'tribe-events-calendar-pro' ),
-				'type' => Controls_Manager::HEADING,
+				'label'     => esc_html__( 'Heading', 'tribe-events-calendar-pro' ),
+				'type'      => Controls_Manager::HEADING,
 				'separator' => 'before',
 				'condition' => [
-					'related_events' => 'yes'
+					'related_events' => 'yes',
 				],
 			]
 		);
@@ -2192,13 +2214,13 @@ class Widget_Event_Single_Legacy extends Widget_Abstract {
 		$this->add_control(
 			'related_events_heading_color',
 			[
-				'label' => esc_html__( 'Color', 'tribe-events-calendar-pro' ),
-				'type' => Controls_Manager::COLOR,
+				'label'     => esc_html__( 'Color', 'tribe-events-calendar-pro' ),
+				'type'      => Controls_Manager::COLOR,
 				'selectors' => [
 					'{{WRAPPER}} .tribe-events-related-events-title, {{WRAPPER}} .tribe-block__related-events__title' => '--tec-color-link-accent: {{VALUE}};',
 				],
 				'condition' => [
-					'related_events' => 'yes'
+					'related_events' => 'yes',
 				],
 			]
 		);
@@ -2206,10 +2228,10 @@ class Widget_Event_Single_Legacy extends Widget_Abstract {
 		$this->add_group_control(
 			Group_Control_Typography::get_type(),
 			[
-				'name' => 'related_events_heading_color_typography',
-				'selector' => '{{WRAPPER}} .tribe-events-related-events-title, {{WRAPPER}} .tribe-block__related-events__title',
+				'name'      => 'related_events_heading_color_typography',
+				'selector'  => '{{WRAPPER}} .tribe-events-related-events-title, {{WRAPPER}} .tribe-block__related-events__title',
 				'condition' => [
-					'related_events' => 'yes'
+					'related_events' => 'yes',
 				],
 			]
 		);
@@ -2217,11 +2239,11 @@ class Widget_Event_Single_Legacy extends Widget_Abstract {
 		$this->add_control(
 			'related_events_title_style_title',
 			[
-				'label' => esc_html__( 'Event Title', 'tribe-events-calendar-pro' ),
-				'type' => Controls_Manager::HEADING,
+				'label'     => esc_html__( 'Event Title', 'tribe-events-calendar-pro' ),
+				'type'      => Controls_Manager::HEADING,
 				'separator' => 'before',
 				'condition' => [
-					'related_events' => 'yes'
+					'related_events' => 'yes',
 				],
 			]
 		);
@@ -2229,13 +2251,13 @@ class Widget_Event_Single_Legacy extends Widget_Abstract {
 		$this->add_control(
 			'related_events_title_color',
 			[
-				'label' => esc_html__( 'Color', 'tribe-events-calendar-pro' ),
-				'type' => Controls_Manager::COLOR,
+				'label'     => esc_html__( 'Color', 'tribe-events-calendar-pro' ),
+				'type'      => Controls_Manager::COLOR,
 				'selectors' => [
 					'{{WRAPPER}} .tribe-related-events-title a' => '--tec-color-link-accent: {{VALUE}};',
 				],
 				'condition' => [
-					'related_events' => 'yes'
+					'related_events' => 'yes',
 				],
 			]
 		);
@@ -2243,10 +2265,10 @@ class Widget_Event_Single_Legacy extends Widget_Abstract {
 		$this->add_group_control(
 			Group_Control_Typography::get_type(),
 			[
-				'name' => 'related_events_title_color_typography',
-				'selector' => '{{WRAPPER}} .tribe-related-events-title',
+				'name'      => 'related_events_title_color_typography',
+				'selector'  => '{{WRAPPER}} .tribe-related-events-title',
 				'condition' => [
-					'related_events' => 'yes'
+					'related_events' => 'yes',
 				],
 			]
 		);
@@ -2254,11 +2276,11 @@ class Widget_Event_Single_Legacy extends Widget_Abstract {
 		$this->add_control(
 			'related_events_date_time_style_title',
 			[
-				'label' => esc_html__( 'Date/Time', 'tribe-events-calendar-pro' ),
-				'type' => Controls_Manager::HEADING,
+				'label'     => esc_html__( 'Date/Time', 'tribe-events-calendar-pro' ),
+				'type'      => Controls_Manager::HEADING,
 				'separator' => 'before',
 				'condition' => [
-					'related_events' => 'yes'
+					'related_events' => 'yes',
 				],
 			]
 		);
@@ -2266,13 +2288,13 @@ class Widget_Event_Single_Legacy extends Widget_Abstract {
 		$this->add_control(
 			'related_events_date_time_color',
 			[
-				'label' => esc_html__( 'Color', 'tribe-events-calendar-pro' ),
-				'type' => Controls_Manager::COLOR,
+				'label'     => esc_html__( 'Color', 'tribe-events-calendar-pro' ),
+				'type'      => Controls_Manager::COLOR,
 				'selectors' => [
 					'{{WRAPPER}} .tribe-event-date-start, {{WRAPPER}} .tribe-event-date-end, {{WRAPPER}} .tribe-event-time' => 'color: {{VALUE}};',
 				],
 				'condition' => [
-					'related_events' => 'yes'
+					'related_events' => 'yes',
 				],
 			]
 		);
@@ -2280,23 +2302,23 @@ class Widget_Event_Single_Legacy extends Widget_Abstract {
 		$this->add_group_control(
 			Group_Control_Typography::get_type(),
 			[
-				'name' => 'related_events_date_time_color_typography',
-				'selector' => '{{WRAPPER}} .tribe-event-date-start, {{WRAPPER}} .tribe-event-date-end, {{WRAPPER}} .tribe-event-time',
+				'name'      => 'related_events_date_time_color_typography',
+				'selector'  => '{{WRAPPER}} .tribe-event-date-start, {{WRAPPER}} .tribe-event-date-end, {{WRAPPER}} .tribe-event-time',
 				'condition' => [
-					'related_events' => 'yes'
+					'related_events' => 'yes',
 				],
 			]
 		);
 
-		// Start thumbnail
+		// Start thumbnail.
 		$this->add_control(
 			'related_events_thumbnail_style',
 			[
-				'label' => esc_html__( 'Thumbnail', 'tribe-events-calendar-pro' ),
-				'type' => Controls_Manager::HEADING,
+				'label'     => esc_html__( 'Thumbnail', 'tribe-events-calendar-pro' ),
+				'type'      => Controls_Manager::HEADING,
 				'separator' => 'before',
 				'condition' => [
-					'related_events' => 'yes'
+					'related_events' => 'yes',
 				],
 			]
 		);
@@ -2304,9 +2326,9 @@ class Widget_Event_Single_Legacy extends Widget_Abstract {
 		$this->add_responsive_control(
 			'related_events_thumbnail_width',
 			[
-				'label' => esc_html__( 'Width', 'tribe-events-calendar-pro' ),
-				'type' => Controls_Manager::SLIDER,
-				'default' => [
+				'label'          => esc_html__( 'Width', 'tribe-events-calendar-pro' ),
+				'type'           => Controls_Manager::SLIDER,
+				'default'        => [
 					'unit' => '%',
 				],
 				'tablet_default' => [
@@ -2315,9 +2337,9 @@ class Widget_Event_Single_Legacy extends Widget_Abstract {
 				'mobile_default' => [
 					'unit' => '%',
 				],
-				'size_units' => [ '%', 'px', 'vw' ],
-				'range' => [
-					'%' => [
+				'size_units'     => [ '%', 'px', 'vw' ],
+				'range'          => [
+					'%'  => [
 						'min' => 1,
 						'max' => 100,
 					],
@@ -2330,11 +2352,11 @@ class Widget_Event_Single_Legacy extends Widget_Abstract {
 						'max' => 100,
 					],
 				],
-				'selectors' => [
+				'selectors'      => [
 					'{{WRAPPER}} .tribe-related-events-thumbnail img' => 'width: {{SIZE}}{{UNIT}};',
 				],
-				'condition' => [
-					'related_events' => 'yes'
+				'condition'      => [
+					'related_events' => 'yes',
 				],
 			]
 		);
@@ -2342,9 +2364,9 @@ class Widget_Event_Single_Legacy extends Widget_Abstract {
 		$this->add_responsive_control(
 			'related_events_thumbnail_space',
 			[
-				'label' => esc_html__( 'Max Width', 'tribe-events-calendar-pro' ),
-				'type' => Controls_Manager::SLIDER,
-				'default' => [
+				'label'          => esc_html__( 'Max Width', 'tribe-events-calendar-pro' ),
+				'type'           => Controls_Manager::SLIDER,
+				'default'        => [
 					'unit' => '%',
 				],
 				'tablet_default' => [
@@ -2353,9 +2375,9 @@ class Widget_Event_Single_Legacy extends Widget_Abstract {
 				'mobile_default' => [
 					'unit' => '%',
 				],
-				'size_units' => [ '%', 'px', 'vw' ],
-				'range' => [
-					'%' => [
+				'size_units'     => [ '%', 'px', 'vw' ],
+				'range'          => [
+					'%'  => [
 						'min' => 1,
 						'max' => 100,
 					],
@@ -2368,7 +2390,7 @@ class Widget_Event_Single_Legacy extends Widget_Abstract {
 						'max' => 100,
 					],
 				],
-				'selectors' => [
+				'selectors'      => [
 					'{{WRAPPER}} .tribe-related-events-thumbnail img' => 'max-width: {{SIZE}}{{UNIT}};',
 				],
 			]
@@ -2377,9 +2399,9 @@ class Widget_Event_Single_Legacy extends Widget_Abstract {
 		$this->add_responsive_control(
 			'related_events_thumbnail_height',
 			[
-				'label' => esc_html__( 'Height', 'tribe-events-calendar-pro' ),
-				'type' => Controls_Manager::SLIDER,
-				'default' => [
+				'label'          => esc_html__( 'Height', 'tribe-events-calendar-pro' ),
+				'type'           => Controls_Manager::SLIDER,
+				'default'        => [
 					'unit' => 'px',
 				],
 				'tablet_default' => [
@@ -2388,8 +2410,8 @@ class Widget_Event_Single_Legacy extends Widget_Abstract {
 				'mobile_default' => [
 					'unit' => 'px',
 				],
-				'size_units' => [ 'px', 'vh' ],
-				'range' => [
+				'size_units'     => [ 'px', 'vh' ],
+				'range'          => [
 					'px' => [
 						'min' => 1,
 						'max' => 500,
@@ -2399,7 +2421,7 @@ class Widget_Event_Single_Legacy extends Widget_Abstract {
 						'max' => 100,
 					],
 				],
-				'selectors' => [
+				'selectors'      => [
 					'{{WRAPPER}} .tribe-related-events-thumbnail img' => 'height: {{SIZE}}{{UNIT}};',
 				],
 			]
@@ -2408,18 +2430,18 @@ class Widget_Event_Single_Legacy extends Widget_Abstract {
 		$this->add_responsive_control(
 			'related_events_thumbnail_object_fit',
 			[
-				'label' => esc_html__( 'Object Fit', 'tribe-events-calendar-pro' ),
-				'type' => Controls_Manager::SELECT,
+				'label'     => esc_html__( 'Object Fit', 'tribe-events-calendar-pro' ),
+				'type'      => Controls_Manager::SELECT,
 				'condition' => [
 					'height[size]!' => '',
 				],
-				'options' => [
-					'' => esc_html__( 'Default', 'tribe-events-calendar-pro' ),
-					'fill' => esc_html__( 'Fill', 'tribe-events-calendar-pro' ),
-					'cover' => esc_html__( 'Cover', 'tribe-events-calendar-pro' ),
+				'options'   => [
+					''        => esc_html__( 'Default', 'tribe-events-calendar-pro' ),
+					'fill'    => esc_html__( 'Fill', 'tribe-events-calendar-pro' ),
+					'cover'   => esc_html__( 'Cover', 'tribe-events-calendar-pro' ),
 					'contain' => esc_html__( 'Contain', 'tribe-events-calendar-pro' ),
 				],
-				'default' => '',
+				'default'   => '',
 				'selectors' => [
 					'{{WRAPPER}} .tribe-related-events-thumbnail img' => 'object-fit: {{VALUE}};',
 				],
@@ -2429,7 +2451,7 @@ class Widget_Event_Single_Legacy extends Widget_Abstract {
 		$this->add_control(
 			'related_events_thumbnail_separator_panel',
 			[
-				'type' => Controls_Manager::DIVIDER,
+				'type'  => Controls_Manager::DIVIDER,
 				'style' => 'thick',
 			]
 		);
@@ -2439,12 +2461,12 @@ class Widget_Event_Single_Legacy extends Widget_Abstract {
 		$this->add_control(
 			'related_events_thumbnail_opacity',
 			[
-				'label' => esc_html__( 'Opacity', 'tribe-events-calendar-pro' ),
-				'type' => Controls_Manager::SLIDER,
-				'range' => [
+				'label'     => esc_html__( 'Opacity', 'tribe-events-calendar-pro' ),
+				'type'      => Controls_Manager::SLIDER,
+				'range'     => [
 					'px' => [
-						'max' => 1,
-						'min' => 0.10,
+						'max'  => 1,
+						'min'  => 0.10,
 						'step' => 0.01,
 					],
 				],
@@ -2452,7 +2474,7 @@ class Widget_Event_Single_Legacy extends Widget_Abstract {
 					'{{WRAPPER}} .tribe-related-events-thumbnail img' => 'opacity: {{SIZE}};',
 				],
 				'condition' => [
-					'related_events' => 'yes'
+					'related_events' => 'yes',
 				],
 			]
 		);
@@ -2460,10 +2482,10 @@ class Widget_Event_Single_Legacy extends Widget_Abstract {
 		$this->add_group_control(
 			Group_Control_Css_Filter::get_type(),
 			[
-				'name' => 'related_events_thumbnail_css_filters',
-				'selector' => '{{WRAPPER}} .tribe-related-events-thumbnail img',
+				'name'      => 'related_events_thumbnail_css_filters',
+				'selector'  => '{{WRAPPER}} .tribe-related-events-thumbnail img',
 				'condition' => [
-					'related_events' => 'yes'
+					'related_events' => 'yes',
 				],
 			]
 		);
@@ -2475,11 +2497,11 @@ class Widget_Event_Single_Legacy extends Widget_Abstract {
 		$this->add_group_control(
 			Group_Control_Border::get_type(),
 			[
-				'name' => 'related_events_thumbnail_image_border',
-				'selector' => '{{WRAPPER}} .tribe-related-events-thumbnail img',
+				'name'      => 'related_events_thumbnail_image_border',
+				'selector'  => '{{WRAPPER}} .tribe-related-events-thumbnail img',
 				'separator' => 'before',
 				'condition' => [
-					'related_events' => 'yes'
+					'related_events' => 'yes',
 				],
 			]
 		);
@@ -2487,14 +2509,14 @@ class Widget_Event_Single_Legacy extends Widget_Abstract {
 		$this->add_responsive_control(
 			'related_events_thumbnail_border_radius',
 			[
-				'label' => esc_html__( 'Border Radius', 'tribe-events-calendar-pro' ),
-				'type' => Controls_Manager::DIMENSIONS,
+				'label'      => esc_html__( 'Border Radius', 'tribe-events-calendar-pro' ),
+				'type'       => Controls_Manager::DIMENSIONS,
 				'size_units' => [ 'px', '%' ],
-				'selectors' => [
+				'selectors'  => [
 					'{{WRAPPER}} .tribe-related-events-thumbnail img' => 'border-radius: {{TOP}}{{UNIT}} {{RIGHT}}{{UNIT}} {{BOTTOM}}{{UNIT}} {{LEFT}}{{UNIT}};',
 				],
-				'condition' => [
-					'related_events' => 'yes'
+				'condition'  => [
+					'related_events' => 'yes',
 				],
 			]
 		);
@@ -2502,36 +2524,36 @@ class Widget_Event_Single_Legacy extends Widget_Abstract {
 		$this->add_group_control(
 			Group_Control_Box_Shadow::get_type(),
 			[
-				'name' => 'related_events_thumbnail_box_shadow',
-				'exclude' => [
+				'name'      => 'related_events_thumbnail_box_shadow',
+				'exclude'   => [ // phpcs:ignore WordPressVIPMinimum.Performance.WPQueryParams.PostNotIn_exclude
 					'box_shadow_position',
 				],
-				'selector' => '{{WRAPPER}} .tribe-related-events-thumbnail img',
+				'selector'  => '{{WRAPPER}} .tribe-related-events-thumbnail img',
 				'condition' => [
-					'related_events' => 'yes'
+					'related_events' => 'yes',
 				],
 			]
 		);
-		// End thumbnail
+		// End thumbnail.
 
 		$this->end_controls_section();
-		// End related events section
+		// End related events section.
 
-		// Start virtual event styling section
+		// Start virtual event styling section.
 		if ( class_exists( 'Tribe\\Events\\Virtual\\Plugin' ) ) {
 			$this->start_controls_section(
 				'event_virtual_style',
 				[
 					'label' => esc_html__( 'Virtual', 'tribe-events-calendar-pro' ),
-					'tab' => Controls_Manager::TAB_STYLE,
+					'tab'   => Controls_Manager::TAB_STYLE,
 				]
 			);
 
 			$this->add_control(
 				'event_virtual_background_color',
 				[
-					'label' => esc_html__( 'Background Color', 'tribe-events-calendar-pro' ),
-					'type' => Controls_Manager::COLOR,
+					'label'     => esc_html__( 'Background Color', 'tribe-events-calendar-pro' ),
+					'type'      => Controls_Manager::COLOR,
 					'selectors' => [
 						'{{WRAPPER}} .tribe-events-virtual-single-marker' => 'background-color: {{VALUE}};',
 					],
@@ -2541,8 +2563,8 @@ class Widget_Event_Single_Legacy extends Widget_Abstract {
 			$this->add_control(
 				'event_virtual_text_color',
 				[
-					'label' => esc_html__( 'Text Color', 'tribe-events-calendar-pro' ),
-					'type' => Controls_Manager::COLOR,
+					'label'     => esc_html__( 'Text Color', 'tribe-events-calendar-pro' ),
+					'type'      => Controls_Manager::COLOR,
 					'selectors' => [
 						'{{WRAPPER}} .tribe-events-virtual-single-marker' => 'color: {{VALUE}};',
 					],
@@ -2552,8 +2574,8 @@ class Widget_Event_Single_Legacy extends Widget_Abstract {
 			$this->add_control(
 				'event_virtual_icon_color',
 				[
-					'label' => esc_html__( 'Icon Color', 'tribe-events-calendar-pro' ),
-					'type' => Controls_Manager::COLOR,
+					'label'     => esc_html__( 'Icon Color', 'tribe-events-calendar-pro' ),
+					'type'      => Controls_Manager::COLOR,
 					'selectors' => [
 						'{{WRAPPER}} .tribe-events-virtual-single-marker__icon-svg .tribe-common-c-svgicon__svg-stroke' => 'stroke: {{VALUE}};',
 					],
@@ -2563,16 +2585,16 @@ class Widget_Event_Single_Legacy extends Widget_Abstract {
 			$this->add_group_control(
 				Group_Control_Typography::get_type(),
 				[
-					'name' => 'event_virtual_typography',
+					'name'     => 'event_virtual_typography',
 					'selector' => '{{WRAPPER}} .tribe-events-virtual-single-marker',
 				]
 			);
 
 			$this->end_controls_section();
 		}
-		// End virtual event styling section
-		
-		// End style tab
+		// End virtual event styling section.
+
+		// End style tab.
 
 		if ( class_exists( 'Tribe\\Events\\Virtual\\Plugin' ) ) {
 			$this->start_controls_section(
@@ -2656,15 +2678,12 @@ class Widget_Event_Single_Legacy extends Widget_Abstract {
 		tribe_asset_enqueue( 'event-tickets-details-js' );
 		tribe_asset_enqueue( 'tribe-tickets-forms-style' );
 
-		if ( class_exists( 'Tribe__Tickets__Main' ) ) {
-			if ( tribe_tickets_new_views_is_enabled() || tribe_tickets_rsvp_new_views_is_enabled() ) {
-				tribe_asset_enqueue( 'tribe-tickets-loader' );
-			}
-
-			if ( tribe_tickets_new_views_is_enabled() ) {
-				tribe_asset_enqueue( 'tribe-common-responsive' );
-				tribe_asset_enqueue( 'tribe-tickets-utils' );
-			}
+		if ( function_exists( 'tribe_tickets_new_views_is_enabled' ) && tribe_tickets_new_views_is_enabled() ) {
+			tribe_asset_enqueue( 'tribe-tickets-loader' );
+			tribe_asset_enqueue( 'tribe-common-responsive' );
+			tribe_asset_enqueue( 'tribe-tickets-utils' );
+		} elseif ( function_exists( 'tribe_tickets_rsvp_new_views_is_enabled' ) && tribe_tickets_rsvp_new_views_is_enabled() ) {
+			tribe_asset_enqueue( 'tribe-tickets-loader' );
 		}
 
 		if ( tribe( Assets::class )->should_enqueue_full_styles() ) {
@@ -2678,8 +2697,8 @@ class Widget_Event_Single_Legacy extends Widget_Abstract {
 	 * @since 5.4.0
 	 *
 	 * @param string $parent_id Control parent ID.
-	 * @param array $parent_args Control parent Arguments.
-	 * @param array $controls Collection of dependent child controls.
+	 * @param array  $parent_args Control parent Arguments.
+	 * @param array  $controls Collection of dependent child controls.
 	 */
 	protected function add_base_and_child_controls( $parent_id, array $parent_args, array $controls ) {
 		$this->add_control( $parent_id, $parent_args );

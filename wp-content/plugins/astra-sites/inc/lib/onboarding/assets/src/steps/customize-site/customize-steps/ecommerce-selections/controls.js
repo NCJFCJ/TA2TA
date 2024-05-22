@@ -29,7 +29,7 @@ const EcommerceSelectionsControls = () => {
 	return (
 		<>
 			<ChooseEcommerce />
-			<div className="w-full flex flex-col gap-4 mt-auto px-6">
+			<div className="w-full flex flex-col gap-4 mt-auto">
 				<Button
 					className={ `w-full flex gap-2 items-center ${
 						templateId === 0

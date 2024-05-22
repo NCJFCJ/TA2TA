@@ -78,6 +78,15 @@ class Plugin {
 	public $plugin_url;
 
 	/**
+	 * Where in the themes we will look for templates.
+	 *
+	 * @since TBD
+	 *
+	 * @var string
+	 */
+	public $template_namespace = 'events-virtual';
+
+	/**
 	 * Allows this class to be used as a singleton.
 	 *
 	 * Note this specifically doesn't have a typing, just a type hinting via Docblocks, it helps

@@ -289,6 +289,7 @@ class FacetWP_Settings
         $show = isset( $field['show'] ) ? ' v-show="' . $field['show'] . '"' : '';
         $default = isset( $field['default'] ) ? ' value="' . $field['default'] . '"' : '';
         $label = empty( $field['label'] ) ? '' : $field['label'];
+        $checked = ( isset( $field['default'] ) && 'checked' == $field['default'] ) ? ' checked="checked"' : '';
 
         if ( isset( $field['notes'] ) ) {
             $label = '<div class="facetwp-tooltip">' . $label . '<div class="facetwp-tooltip-content">' . $field['notes'] . '</div></div>';
@@ -310,9 +311,9 @@ class FacetWP_Settings
 <?php
         }
         elseif ( 'toggle' == $type ) {
-?>
+            ?>
                 <label class="facetwp-switch">
-                    <input type="checkbox" class="facet-<?php echo $name; ?>" true-value="yes" false-value="no" />
+                    <input type="checkbox" class="facet-<?php echo $name; ?>" true-value="yes" false-value="no"<?php echo $checked; ?> />
                     <span class="facetwp-slider"></span>
                 </label>
 <?php

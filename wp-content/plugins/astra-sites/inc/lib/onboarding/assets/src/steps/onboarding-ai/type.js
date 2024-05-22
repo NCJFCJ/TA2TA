@@ -10,7 +10,8 @@ import LanguageSelection from './language-selection';
 import BusinessTypes from './components/business-types';
 
 const Type = ( { onClickContinue } ) => {
-	const { setSiteLanguageListAIStep } = useDispatch( STORE_KEY );
+	const { setSiteLanguageListAIStep, setAuthenticationErrorModal } =
+		useDispatch( STORE_KEY );
 	const { businessType, siteLanguageList } = useSelect( ( select ) => {
 		const { getAIStepData } = select( STORE_KEY );
 		return getAIStepData();
@@ -36,7 +37,9 @@ const Type = ( { onClickContinue } ) => {
 			if ( response.success ) {
 				setSiteLanguageListAIStep( response?.data?.data );
 			} else {
-				//  Handle error.
+				setAuthenticationErrorModal( {
+					open: true,
+				} );
 			}
 		} catch ( error ) {
 			// Handle error.

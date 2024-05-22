@@ -2,7 +2,7 @@
 /**
  * Download Plugins and Themes from Dashboard - Core Class
  *
- * @version 1.8.0
+ * @version 1.8.6
  * @since   1.2.0
  *
  * @author  WPFactory
@@ -13,6 +13,20 @@ defined( 'ABSPATH' ) || exit;
 if ( ! class_exists( 'Alg_Download_Plugins_Core' ) ) :
 
 class Alg_Download_Plugins_Core {
+
+	/**
+	 * $system_requirements_check.
+	 *
+	 * @since 1.8.6
+	 */
+	public $system_requirements_check;
+
+	/**
+	 * $last_error.
+	 *
+	 * @since 1.8.6
+	 */
+	public $last_error;
 
 	/**
 	 * Constructor.
@@ -398,15 +412,18 @@ class Alg_Download_Plugins_Core {
 	/**
 	 * download_theme.
 	 *
-	 * @version 1.4.0
+	 * @version 1.8.6
 	 * @since   1.1.0
 	 *
 	 * @todo    [later] (dev) extra validation (i.e. check for `$theme_name` in `wp_get_themes()`)
 	 */
 	function download_theme() {
 		if ( isset( $_GET['alg_download_theme'] ) && is_user_logged_in() && current_user_can( 'switch_themes' ) ) {
-			if ( '' != ( $theme_name = sanitize_text_field( $_GET['alg_download_theme'] ) ) ) {
-				// Validated successfully
+			if (
+				'' != ( $theme_name = basename( sanitize_text_field( $_GET['alg_download_theme'] ) ) ) &&
+				is_a( ( $_theme = wp_get_theme( $theme_name ) ), 'WP_Theme' ) &&
+				$_theme->exists()
+			) {
 				$theme_root = get_theme_root();
 				if ( 'yes' === get_option( 'alg_download_plugins_dashboard_themes_append_version', 'no' ) ) {
 					$_theme  = wp_get_theme( $theme_name, $theme_root );
@@ -468,12 +485,12 @@ class Alg_Download_Plugins_Core {
 	/**
 	 * download_plugin.
 	 *
-	 * @version 1.5.0
+	 * @version 1.8.6
 	 * @since   1.0.0
 	 */
 	function download_plugin() {
 		if ( isset( $_GET['alg_download_plugin'] ) && is_user_logged_in() && current_user_can( 'activate_plugins' ) ) {
-			if ( '' != ( $plugin_name = sanitize_text_field( $_GET['alg_download_plugin'] ) ) ) {
+			if ( '' != ( $plugin_name = basename( sanitize_text_field( $_GET['alg_download_plugin'] ) ) ) ) {
 				$all_plugins = $this->get_plugins();
 				foreach ( $all_plugins as $plugin_file => $plugin_data ) {
 					$plugin_file = explode( '/', $plugin_file );
@@ -542,7 +559,7 @@ class Alg_Download_Plugins_Core {
 	/**
 	 * download_plugin_or_theme.
 	 *
-	 * @version 1.5.0
+	 * @version 1.8.6
 	 * @since   1.1.0
 	 *
 	 * @todo    [later] (dev) recheck if themes can be single file (i.e. `$is_dir = false`)
@@ -551,6 +568,7 @@ class Alg_Download_Plugins_Core {
 		if ( ! $this->check_system_requirements() ) {
 			return false;
 		}
+		$plugin_or_theme_name = basename( $plugin_or_theme_name );
 		$zip_file_name        = $plugin_or_theme_name . ( '' != $version ? '.' : '' ) . $version . '.zip';
 		$zip_file_path        = $this->get_temp_dir() . '/' . $zip_file_name;
 		$plugin_or_theme_path = $plugin_or_theme_dir . '/' . $plugin_or_theme_name;
@@ -568,28 +586,35 @@ class Alg_Download_Plugins_Core {
 	/**
 	 * get_files.
 	 *
-	 * @version 1.3.0
+	 * @version 1.8.6
 	 * @since   1.3.0
 	 */
 	function get_files( $plugin_or_theme_path ) {
+		if ( ! file_exists( $plugin_or_theme_path ) ) {
+			return array();
+		}
 		$files       = new RecursiveIteratorIterator( new RecursiveDirectoryIterator( $plugin_or_theme_path ), RecursiveIteratorIterator::LEAVES_ONLY );
 		$files_paths = array();
 		foreach ( $files as $name => $file ) {
 			if ( ! $file->isDir() ) {
-				$file_path = str_replace( '\\', '/', $file->getRealPath() );
+				$file_path     = str_replace( '\\', '/', $file->getRealPath() );
 				$files_paths[] = $file_path;
 			}
 		}
+
 		return $files_paths;
 	}
 
 	/**
 	 * create_zip.
 	 *
-	 * @version 1.4.1
+	 * @version 1.8.6
 	 * @since   1.3.0
 	 */
 	function create_zip( $args, $files ) {
+		if ( empty( $files ) ) {
+			return false;
+		}
 		if ( file_exists( $args['zip_file_path'] ) ) {
 			unlink( $args['zip_file_path'] );
 		}

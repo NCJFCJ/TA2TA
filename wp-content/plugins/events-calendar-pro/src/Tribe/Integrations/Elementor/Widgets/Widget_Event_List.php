@@ -1,6 +1,6 @@
 <?php
 /**
- * Countdown View Elementor Widget.
+ * List View Elementor Widget.
  *
  * @since   5.4.0
  *
@@ -13,28 +13,51 @@ use Elementor\Controls_Manager;
 use Elementor\Group_Control_Typography;
 use Elementor\Group_Control_Text_Shadow;
 use Tribe\Events\Views\V2\Assets;
-use Tribe\Events\Pro\Integrations\Elementor\Traits;
+use TEC\Events\Integrations\Plugins\Elementor\Traits as Elementor_Traits;
 
+/**
+ * Class Widget_Event_List
+ *
+ * @since   5.4.0
+ *
+ * @package Tribe\Events\Pro\Integrations\Elementor\Widgets
+ */
 class Widget_Event_List extends Widget_Abstract {
-	use Traits\Tags;
+	use Elementor_Traits\Tags;
 
 	/**
 	 * {@inheritdoc}
+	 *
+	 * @since 5.4.0
+	 *
+	 * @var string
 	 */
 	protected static $widget_slug = 'events_list_widget';
 
 	/**
 	 * {@inheritdoc}
+	 *
+	 * @since 5.4.0
+	 *
+	 * @var string
 	 */
 	protected $widget_icon = 'eicon-post-list';
 
 	/**
+	 *
+	 * @since 5.4.0
+	 *
 	 * @var string
 	 */
 	protected $shortcode = 'tribe_events_list';
 
 	/**
 	 * {@inheritdoc}
+	 *
+	 * @since 5.4.0
+	 *
+	 * @param array  $data Widget data.
+	 * @param ?array $args Widget arguments.
 	 */
 	public function __construct( $data = [], $args = null ) {
 		parent::__construct( $data, $args );
@@ -77,13 +100,18 @@ class Widget_Event_List extends Widget_Abstract {
 	 * @since 5.4.0
 	 */
 	protected function register_controls() {
-		// Content Tab
+		// Content Tab.
 		$this->do_content_panel();
 
-		// Style tab
+		// Style tab.
 		$this->do_style_panel();
 	}
 
+	/**
+	 * Register the widget controls for the content tab.
+	 *
+	 * @since 5.4.0
+	 */
 	protected function do_content_panel() {
 		$this->start_controls_section(
 			'content_section',
@@ -96,11 +124,11 @@ class Widget_Event_List extends Widget_Abstract {
 			$this->add_control(
 				'limit',
 				[
-					'label'        => __( 'Maximum Events', 'tribe-events-calendar-pro' ),
-					'description'  => __( 'The maximum number of events this widget should show.', 'tribe-events-calendar-pro' ),
-					'type'         => Controls_Manager::TEXT,
-					'label_block'  => true,
-					'default'      => '',
+					'label'       => __( 'Maximum Events', 'tribe-events-calendar-pro' ),
+					'description' => __( 'The maximum number of events this widget should show.', 'tribe-events-calendar-pro' ),
+					'type'        => Controls_Manager::TEXT,
+					'label_block' => true,
+					'default'     => '',
 				]
 			);
 
@@ -115,6 +143,11 @@ class Widget_Event_List extends Widget_Abstract {
 		$this->end_controls_section();
 	}
 
+	/**
+	 * Register the widget controls for the view options tab.
+	 *
+	 * @since 5.4.0
+	 */
 	protected function do_option_view_tab() {
 		$this->start_controls_tab(
 			'option_view_tab',
@@ -258,6 +291,11 @@ class Widget_Event_List extends Widget_Abstract {
 		$this->end_controls_tab();
 	}
 
+	/**
+	 * Register the widget controls for the event options tab.
+	 *
+	 * @since 5.4.0
+	 */
 	protected function do_option_event_tab() {
 		$this->start_controls_tab(
 			'option_event_tab',
@@ -291,100 +329,120 @@ class Widget_Event_List extends Widget_Abstract {
 		$this->end_controls_tab();
 	}
 
+	/**
+	 * Register the widget controls for the style tab.
+	 *
+	 * @since 5.4.0
+	 */
 	protected function do_style_panel() {
 
-		// Events section (warning)
+		// Events section (warning).
 		$this->do_events_styles();
 
-		// Date section
+		// Date section.
 		$this->do_date_section();
 
-		// Featured event section
+		// Featured event section.
 		$this->do_featured_event_section();
 
-		// Time section
+		// Time section.
 		$this->do_time_section();
 
-		// Title section
+		// Title section.
 		$this->do_title_section();
 
-		// Calendar link section
+		// Calendar link section.
 		$this->do_calendar_link_section();
 
 		// Optional style sections based on widget view settings.
 		$this->do_view_based_style_sections();
 	}
 
+	/**
+	 * Register the widget controls for the view based style sections.
+	 *
+	 * @since 5.4.0
+	 */
 	protected function do_view_based_style_sections() {
-		// Cost section
+		// Cost section.
 		$this->do_cost_section();
 
-		// Organizer section
+		// Organizer section.
 		$this->do_organizer_section();
 
-		// Venue section
+		// Venue section.
 		$this->do_venue_section();
 
-		// Street section
+		// Street section.
 		$this->do_street_section();
 
-		// Country section
+		// Country section.
 		$this->do_country_section();
 
-		// City section
+		// City section.
 		$this->do_city_section();
 
-		// Region section
+		// Region section.
 		$this->do_region_section();
 
-		// Zip section
+		// Zip section.
 		$this->do_zip_section();
 
-		// Start phone section
+		// Start phone section.
 		$this->do_phone_section();
 
-		// Website section
+		// Website section.
 		$this->do_website_section();
 	}
 
+	/**
+	 * Register the widget controls for the event styles section.
+	 *
+	 * @since 5.4.0
+	 */
 	protected function do_events_styles() {
 		$this->start_controls_section(
 			'events',
 			[
 				'label' => esc_html__( 'Notes On Event Styling', 'tribe-events-calendar-pro' ),
-				'tab' => Controls_Manager::TAB_STYLE,
+				'tab'   => Controls_Manager::TAB_STYLE,
 			]
 		);
 
 			$this->add_control(
 				'style_warning',
 				[
-					'type' => Controls_Manager::RAW_HTML,
-					'raw' => esc_html__(
+					'type'            => Controls_Manager::RAW_HTML,
+					'content_classes' => 'elementor-panel-alert elementor-panel-alert-info',
+					'raw'             => esc_html__(
 						'The style of this widget is often affected by your theme and plugins. If you experience an issue, try switching to a basic WordPress theme and deactivate related plugins.',
 						'tribe-events-calendar-pro'
 					),
-					'content_classes' => 'elementor-panel-alert elementor-panel-alert-info',
 				]
 			);
 
 		$this->end_controls_section();
 	}
 
+	/**
+	 * Register the widget controls for the title section.
+	 *
+	 * @since 5.4.0
+	 */
 	protected function do_title_section() {
 		$this->start_controls_section(
 			'event_title_tab',
 			[
 				'label' => esc_html__( 'Event Title', 'tribe-events-calendar-pro' ),
-				'tab' => Controls_Manager::TAB_STYLE,
+				'tab'   => Controls_Manager::TAB_STYLE,
 			]
 		);
 
 		$this->add_control(
 			'event_title_color',
 			[
-				'label' => esc_html__( 'Text Color', 'tribe-events-calendar-pro' ),
-				'type' => Controls_Manager::COLOR,
+				'label'     => esc_html__( 'Text Color', 'tribe-events-calendar-pro' ),
+				'type'      => Controls_Manager::COLOR,
 				'selectors' => [
 					'{{WRAPPER}} .tribe-events-widget-events-list__event-title-link' => 'color: {{VALUE}};',
 				],
@@ -394,7 +452,7 @@ class Widget_Event_List extends Widget_Abstract {
 		$this->add_group_control(
 			Group_Control_Typography::get_type(),
 			[
-				'name' => 'event_title_typography',
+				'name'     => 'event_title_typography',
 				'selector' => '{{WRAPPER}} .tribe-events-widget-events-list__event-title',
 			]
 		);
@@ -402,7 +460,7 @@ class Widget_Event_List extends Widget_Abstract {
 		$this->add_group_control(
 			Group_Control_Text_Shadow::get_type(),
 			[
-				'name' => 'event_title_text_shadow',
+				'name'     => 'event_title_text_shadow',
 				'selector' => '{{WRAPPER}} .tribe-events-widget-events-list__event-title',
 			]
 		);
@@ -410,20 +468,25 @@ class Widget_Event_List extends Widget_Abstract {
 		$this->end_controls_section();
 	}
 
+	/**
+	 * Register the widget controls for the date section.
+	 *
+	 * @since 5.4.0
+	 */
 	protected function do_date_section() {
 		$this->start_controls_section(
 			'date_tab',
 			[
 				'label' => esc_html__( 'Date', 'tribe-events-calendar-pro' ),
-				'tab' => Controls_Manager::TAB_STYLE,
+				'tab'   => Controls_Manager::TAB_STYLE,
 			]
 		);
 
 		$this->add_control(
 			'heading_event_date_month_style',
 			[
-				'label' => esc_html__( 'Month', 'tribe-events-calendar-pro' ),
-				'type' => Controls_Manager::HEADING,
+				'label'     => esc_html__( 'Month', 'tribe-events-calendar-pro' ),
+				'type'      => Controls_Manager::HEADING,
 				'separator' => 'before',
 			]
 		);
@@ -431,8 +494,8 @@ class Widget_Event_List extends Widget_Abstract {
 		$this->add_control(
 			'event_date_tag_month_color',
 			[
-				'label' => esc_html__( 'Text Color', 'tribe-events-calendar-pro' ),
-				'type' => Controls_Manager::COLOR,
+				'label'     => esc_html__( 'Text Color', 'tribe-events-calendar-pro' ),
+				'type'      => Controls_Manager::COLOR,
 				'selectors' => [
 					'{{WRAPPER}} .tribe-events-widget-events-list__event-date-tag-month' => 'color: {{VALUE}};',
 				],
@@ -442,7 +505,7 @@ class Widget_Event_List extends Widget_Abstract {
 		$this->add_group_control(
 			Group_Control_Typography::get_type(),
 			[
-				'name' => 'event_date_tag_month_typography',
+				'name'     => 'event_date_tag_month_typography',
 				'selector' => '{{WRAPPER}} .tribe-events-widget-events-list__event-date-tag-month',
 			]
 		);
@@ -450,7 +513,7 @@ class Widget_Event_List extends Widget_Abstract {
 		$this->add_group_control(
 			Group_Control_Text_Shadow::get_type(),
 			[
-				'name' => 'event_date_tag_month_text_shadow',
+				'name'     => 'event_date_tag_month_text_shadow',
 				'selector' => '{{WRAPPER}} .tribe-events-widget-events-list__event-date-tag-month',
 			]
 		);
@@ -458,8 +521,8 @@ class Widget_Event_List extends Widget_Abstract {
 		$this->add_control(
 			'heading_event_date_daynum_style',
 			[
-				'label' => esc_html__( 'Date', 'tribe-events-calendar-pro' ),
-				'type' => Controls_Manager::HEADING,
+				'label'     => esc_html__( 'Date', 'tribe-events-calendar-pro' ),
+				'type'      => Controls_Manager::HEADING,
 				'separator' => 'before',
 			]
 		);
@@ -467,8 +530,8 @@ class Widget_Event_List extends Widget_Abstract {
 		$this->add_control(
 			'event_date_daynum_color',
 			[
-				'label' => esc_html__( 'Text Color', 'tribe-events-calendar-pro' ),
-				'type' => Controls_Manager::COLOR,
+				'label'     => esc_html__( 'Text Color', 'tribe-events-calendar-pro' ),
+				'type'      => Controls_Manager::COLOR,
 				'selectors' => [
 					'{{WRAPPER}} .tribe-events-widget-events-list__event-date-tag-daynum' => 'color: {{VALUE}};',
 				],
@@ -478,7 +541,7 @@ class Widget_Event_List extends Widget_Abstract {
 		$this->add_group_control(
 			Group_Control_Typography::get_type(),
 			[
-				'name' => 'event_date_tag_daynum_typography',
+				'name'     => 'event_date_tag_daynum_typography',
 				'selector' => '{{WRAPPER}} .tribe-events-widget-events-list__event-date-tag-daynum',
 			]
 		);
@@ -486,7 +549,7 @@ class Widget_Event_List extends Widget_Abstract {
 		$this->add_group_control(
 			Group_Control_Text_Shadow::get_type(),
 			[
-				'name' => 'event_date_tag_daynum_text_shadow',
+				'name'     => 'event_date_tag_daynum_text_shadow',
 				'selector' => '{{WRAPPER}} .tribe-events-widget-events-list__event-date-tag-daynum',
 			]
 		);
@@ -494,20 +557,25 @@ class Widget_Event_List extends Widget_Abstract {
 		$this->end_controls_section();
 	}
 
+	/**
+	 * Register the widget controls for the time section.
+	 *
+	 * @since 5.4.0
+	 */
 	protected function do_time_section() {
 		$this->start_controls_section(
 			'time_tab',
 			[
 				'label' => esc_html__( 'Time', 'tribe-events-calendar-pro' ),
-				'tab' => Controls_Manager::TAB_STYLE,
+				'tab'   => Controls_Manager::TAB_STYLE,
 			]
 		);
 
 		$this->add_control(
 			'event_time_color',
 			[
-				'label' => esc_html__( 'Text Color', 'tribe-events-calendar-pro' ),
-				'type' => Controls_Manager::COLOR,
+				'label'     => esc_html__( 'Text Color', 'tribe-events-calendar-pro' ),
+				'type'      => Controls_Manager::COLOR,
 				'selectors' => [
 					'{{WRAPPER}} .tribe-events-widget-events-list__event-datetime, {{WRAPPER}} .tribe-common-c-svgicon' => 'color: {{VALUE}};',
 				],
@@ -517,7 +585,7 @@ class Widget_Event_List extends Widget_Abstract {
 		$this->add_group_control(
 			Group_Control_Typography::get_type(),
 			[
-				'name' => 'event_time_typography',
+				'name'     => 'event_time_typography',
 				'selector' => '{{WRAPPER}} .tribe-events-widget-events-list__event-datetime',
 			]
 		);
@@ -525,7 +593,7 @@ class Widget_Event_List extends Widget_Abstract {
 		$this->add_group_control(
 			Group_Control_Text_Shadow::get_type(),
 			[
-				'name' => 'event_time_text_shadow',
+				'name'     => 'event_time_text_shadow',
 				'selector' => '{{WRAPPER}} .tribe-events-widget-events-list__event-datetime',
 			]
 		);
@@ -533,20 +601,25 @@ class Widget_Event_List extends Widget_Abstract {
 		$this->end_controls_section();
 	}
 
+	/**
+	 * Register the widget controls for the feature event section.
+	 *
+	 * @since 5.4.0
+	 */
 	protected function do_featured_event_section() {
 		$this->start_controls_section(
 			'featured_event_section',
 			[
 				'label' => esc_html__( 'Featured Events', 'tribe-events-calendar-pro' ),
-				'tab' => Controls_Manager::TAB_STYLE,
+				'tab'   => Controls_Manager::TAB_STYLE,
 			]
 		);
 
 		$this->add_control(
 			'featured_event_border_color',
 			[
-				'label' => esc_html__( 'Border Color', 'tribe-events-calendar-pro' ),
-				'type' => Controls_Manager::COLOR,
+				'label'     => esc_html__( 'Border Color', 'tribe-events-calendar-pro' ),
+				'type'      => Controls_Manager::COLOR,
 				'selectors' => [
 					'{{WRAPPER}} .tribe-events-widget-events-list__event-date-tag-datetime:after' => 'background-color: {{VALUE}};',
 				],
@@ -556,8 +629,8 @@ class Widget_Event_List extends Widget_Abstract {
 		$this->add_control(
 			'featured_event_icon_color',
 			[
-				'label' => esc_html__( 'Icon Color', 'tribe-events-calendar-pro' ),
-				'type' => Controls_Manager::COLOR,
+				'label'     => esc_html__( 'Icon Color', 'tribe-events-calendar-pro' ),
+				'type'      => Controls_Manager::COLOR,
 				'selectors' => [
 					'{{WRAPPER}} .tribe-common-c-svgicon' => 'color: {{VALUE}};',
 				],
@@ -567,20 +640,25 @@ class Widget_Event_List extends Widget_Abstract {
 		$this->end_controls_section();
 	}
 
+	/**
+	 * Register the widget controls for the calendar link section.
+	 *
+	 * @since 5.4.0
+	 */
 	protected function do_calendar_link_section() {
 		$this->start_controls_section(
 			'calendar_link',
 			[
 				'label' => esc_html__( 'Calendar Link', 'tribe-events-calendar-pro' ),
-				'tab' => Controls_Manager::TAB_STYLE,
+				'tab'   => Controls_Manager::TAB_STYLE,
 			]
 		);
 
 		$this->add_control(
 			'view_calendar_link_color',
 			[
-				'label' => esc_html__( 'Text Color', 'tribe-events-calendar-pro' ),
-				'type' => Controls_Manager::COLOR,
+				'label'     => esc_html__( 'Text Color', 'tribe-events-calendar-pro' ),
+				'type'      => Controls_Manager::COLOR,
 				'selectors' => [
 					'{{WRAPPER}} .tribe-events-widget-events-list__view-more-link' => 'color: {{VALUE}};',
 				],
@@ -590,7 +668,7 @@ class Widget_Event_List extends Widget_Abstract {
 		$this->add_group_control(
 			Group_Control_Typography::get_type(),
 			[
-				'name' => 'view_calendar_link_typography',
+				'name'     => 'view_calendar_link_typography',
 				'selector' => '{{WRAPPER}} .tribe-events-widget-events-list__view-more',
 			]
 		);
@@ -598,7 +676,7 @@ class Widget_Event_List extends Widget_Abstract {
 		$this->add_group_control(
 			Group_Control_Text_Shadow::get_type(),
 			[
-				'name' => 'view_calendar_text_shadow',
+				'name'     => 'view_calendar_text_shadow',
 				'selector' => '{{WRAPPER}} .tribe-events-widget-events-list__view-more',
 			]
 		);
@@ -606,12 +684,17 @@ class Widget_Event_List extends Widget_Abstract {
 		$this->end_controls_section();
 	}
 
+	/**
+	 * Register the widget controls for the cost section.
+	 *
+	 * @since 5.4.0
+	 */
 	protected function do_cost_section() {
 		$this->start_controls_section(
 			'event_cost',
 			[
-				'label' => esc_html__( 'Cost', 'tribe-events-calendar-pro' ),
-				'tab' => Controls_Manager::TAB_STYLE,
+				'label'     => esc_html__( 'Cost', 'tribe-events-calendar-pro' ),
+				'tab'       => Controls_Manager::TAB_STYLE,
 				'condition' => [
 					'cost' => 'yes',
 				],
@@ -621,8 +704,8 @@ class Widget_Event_List extends Widget_Abstract {
 		$this->add_control(
 			'event_cost_color',
 			[
-				'label' => esc_html__( 'Text Color', 'tribe-events-calendar-pro' ),
-				'type' => Controls_Manager::COLOR,
+				'label'     => esc_html__( 'Text Color', 'tribe-events-calendar-pro' ),
+				'type'      => Controls_Manager::COLOR,
 				'selectors' => [
 					'{{WRAPPER}} .tribe-events-widget-events-list__event-cost-price' => 'color: {{VALUE}};',
 				],
@@ -632,7 +715,7 @@ class Widget_Event_List extends Widget_Abstract {
 		$this->add_group_control(
 			Group_Control_Typography::get_type(),
 			[
-				'name' => 'event_cost_typography',
+				'name'     => 'event_cost_typography',
 				'selector' => '{{WRAPPER}} .tribe-events-widget-events-list__event-cost-price',
 			]
 		);
@@ -640,7 +723,7 @@ class Widget_Event_List extends Widget_Abstract {
 		$this->add_group_control(
 			Group_Control_Text_Shadow::get_type(),
 			[
-				'name' => 'event_cost_text_shadow',
+				'name'     => 'event_cost_text_shadow',
 				'selector' => '{{WRAPPER}} .tribe-events-widget-events-list__event-cost-price',
 			]
 		);
@@ -648,12 +731,17 @@ class Widget_Event_List extends Widget_Abstract {
 		$this->end_controls_section();
 	}
 
+	/**
+	 * Register the widget controls for the organizer section.
+	 *
+	 * @since 5.4.0
+	 */
 	protected function do_organizer_section() {
 		$this->start_controls_section(
 			'event_organizer',
 			[
-				'label' => esc_html__( 'Organizer', 'tribe-events-calendar-pro' ),
-				'tab' => Controls_Manager::TAB_STYLE,
+				'label'     => esc_html__( 'Organizer', 'tribe-events-calendar-pro' ),
+				'tab'       => Controls_Manager::TAB_STYLE,
 				'condition' => [
 					'organizer' => 'yes',
 				],
@@ -663,8 +751,8 @@ class Widget_Event_List extends Widget_Abstract {
 		$this->add_control(
 			'event_organizer_color',
 			[
-				'label' => esc_html__( 'Text Color', 'tribe-events-calendar-pro' ),
-				'type' => Controls_Manager::COLOR,
+				'label'     => esc_html__( 'Text Color', 'tribe-events-calendar-pro' ),
+				'type'      => Controls_Manager::COLOR,
 				'selectors' => [
 					'{{WRAPPER}} .tribe-events-widget-events-list__event-organizer-label, {{WRAPPER}} .tribe-events-widget-events-list__event-organizer-title-link, {{WRAPPER}} .tribe-events-widget-events-list__event-organizer-phone' => 'color: {{VALUE}};',
 				],
@@ -674,7 +762,7 @@ class Widget_Event_List extends Widget_Abstract {
 		$this->add_group_control(
 			Group_Control_Typography::get_type(),
 			[
-				'name' => 'event_organizer_typography',
+				'name'     => 'event_organizer_typography',
 				'selector' => '{{WRAPPER}} .tribe-events-widget-events-list__event-organizer-label, {{WRAPPER}} .tribe-events-widget-events-list__event-organizer-title-link, {{WRAPPER}} .tribe-events-widget-events-list__event-organizer-phone',
 			]
 		);
@@ -682,7 +770,7 @@ class Widget_Event_List extends Widget_Abstract {
 		$this->add_group_control(
 			Group_Control_Text_Shadow::get_type(),
 			[
-				'name' => 'event_organizer_text_shadow',
+				'name'     => 'event_organizer_text_shadow',
 				'selector' => '{{WRAPPER}} .tribe-events-widget-events-list__event-organizer-label, {{WRAPPER}} .tribe-events-widget-events-list__event-organizer-title-link, {{WRAPPER}} .tribe-events-widget-events-list__event-organizer-phone',
 			]
 		);
@@ -690,20 +778,25 @@ class Widget_Event_List extends Widget_Abstract {
 		$this->end_controls_section();
 	}
 
+	/**
+	 * Register the widget controls for the venue section.
+	 *
+	 * @since 5.4.0
+	 */
 	protected function do_venue_section() {
 		$this->start_controls_section(
 			'event_venue',
 			[
 				'label' => esc_html__( 'Venue', 'tribe-events-calendar-pro' ),
-				'tab' => Controls_Manager::TAB_STYLE,
+				'tab'   => Controls_Manager::TAB_STYLE,
 			]
 		);
 
 		$this->add_control(
 			'heading_event_venue_title',
 			[
-				'label' => esc_html__( 'Venue Title', 'tribe-events-calendar-pro' ),
-				'type' => Controls_Manager::HEADING,
+				'label'     => esc_html__( 'Venue Title', 'tribe-events-calendar-pro' ),
+				'type'      => Controls_Manager::HEADING,
 				'separator' => 'before',
 			]
 		);
@@ -711,8 +804,8 @@ class Widget_Event_List extends Widget_Abstract {
 		$this->add_control(
 			'event_venue_color',
 			[
-				'label' => esc_html__( 'Text Color', 'tribe-events-calendar-pro' ),
-				'type' => Controls_Manager::COLOR,
+				'label'     => esc_html__( 'Text Color', 'tribe-events-calendar-pro' ),
+				'type'      => Controls_Manager::COLOR,
 				'selectors' => [
 					'{{WRAPPER}} .tribe-events-widget-events-list__event-venue-name' => 'color: {{VALUE}};',
 				],
@@ -722,7 +815,7 @@ class Widget_Event_List extends Widget_Abstract {
 		$this->add_group_control(
 			Group_Control_Typography::get_type(),
 			[
-				'name' => 'event_venue_typography',
+				'name'     => 'event_venue_typography',
 				'selector' => '{{WRAPPER}} .tribe-events-widget-events-list__event-venue-name',
 			]
 		);
@@ -730,7 +823,7 @@ class Widget_Event_List extends Widget_Abstract {
 		$this->add_group_control(
 			Group_Control_Text_Shadow::get_type(),
 			[
-				'name' => 'event_venue_text_shadow',
+				'name'     => 'event_venue_text_shadow',
 				'selector' => '{{WRAPPER}} .tribe-events-widget-events-list__event-venue-name',
 			]
 		);
@@ -738,8 +831,8 @@ class Widget_Event_List extends Widget_Abstract {
 		$this->add_control(
 			'heading_event_venue_details',
 			[
-				'label' => esc_html__( 'Venue Details', 'tribe-events-calendar-pro' ),
-				'type' => Controls_Manager::HEADING,
+				'label'     => esc_html__( 'Venue Details', 'tribe-events-calendar-pro' ),
+				'type'      => Controls_Manager::HEADING,
 				'separator' => 'before',
 			]
 		);
@@ -747,8 +840,8 @@ class Widget_Event_List extends Widget_Abstract {
 		$this->add_control(
 			'event_venue_details_color',
 			[
-				'label' => esc_html__( 'Text Color', 'tribe-events-calendar-pro' ),
-				'type' => Controls_Manager::COLOR,
+				'label'     => esc_html__( 'Text Color', 'tribe-events-calendar-pro' ),
+				'type'      => Controls_Manager::COLOR,
 				'selectors' => [
 					'{{WRAPPER}} .tribe-events-widget-events-list__event-venue-address-street, {{WRAPPER}} .tribe-events-widget-events-list__event-venue-address-country, {{WRAPPER}} .tribe-events-widget-events-list__event-venue-address-city, {{WRAPPER}} .tribe-events-widget-events-list__event-venue-address-region, {{WRAPPER}} .tribe-events-widget-events-list__event-venue-address-zip, {{WRAPPER}} .tribe-events-widget-events-list__event-venue-phone' => 'color: {{VALUE}};',
 				],
@@ -758,7 +851,7 @@ class Widget_Event_List extends Widget_Abstract {
 		$this->add_group_control(
 			Group_Control_Typography::get_type(),
 			[
-				'name' => 'event_venue_details_typography',
+				'name'     => 'event_venue_details_typography',
 				'selector' => '{{WRAPPER}} .tribe-events-widget-events-list__event-venue-address-street, {{WRAPPER}} .tribe-events-widget-events-list__event-venue-address-country, {{WRAPPER}} .tribe-events-widget-events-list__event-venue-address-city, {{WRAPPER}} .tribe-events-widget-events-list__event-venue-address-region, {{WRAPPER}} .tribe-events-widget-events-list__event-venue-address-zip, {{WRAPPER}} .tribe-events-widget-events-list__event-venue-phone',
 			]
 		);
@@ -766,7 +859,7 @@ class Widget_Event_List extends Widget_Abstract {
 		$this->add_group_control(
 			Group_Control_Text_Shadow::get_type(),
 			[
-				'name' => 'event_venue_details_text_shadow',
+				'name'     => 'event_venue_details_text_shadow',
 				'selector' => '{{WRAPPER}} .tribe-events-widget-events-list__event-venue-address-street, {{WRAPPER}} .tribe-events-widget-events-list__event-venue-address-country, {{WRAPPER}} .tribe-events-widget-events-list__event-venue-address-city, {{WRAPPER}} .tribe-events-widget-events-list__event-venue-address-region, {{WRAPPER}} .tribe-events-widget-events-list__event-venue-address-zip, {{WRAPPER}} .tribe-events-widget-events-list__event-venue-phone',
 			]
 		);
@@ -774,13 +867,17 @@ class Widget_Event_List extends Widget_Abstract {
 		$this->end_controls_section();
 	}
 
-
+	/**
+	 * Register the widget controls for the street section.
+	 *
+	 * @since 5.4.0
+	 */
 	protected function do_street_section() {
 		$this->start_controls_section(
 			'event_street',
 			[
-				'label' => esc_html__( 'Street', 'tribe-events-calendar-pro' ),
-				'tab' => Controls_Manager::TAB_STYLE,
+				'label'     => esc_html__( 'Street', 'tribe-events-calendar-pro' ),
+				'tab'       => Controls_Manager::TAB_STYLE,
 				'condition' => [
 					'street' => 'yes',
 				],
@@ -790,8 +887,8 @@ class Widget_Event_List extends Widget_Abstract {
 		$this->add_control(
 			'event_street_color',
 			[
-				'label' => esc_html__( 'Text Color', 'tribe-events-calendar-pro' ),
-				'type' => Controls_Manager::COLOR,
+				'label'     => esc_html__( 'Text Color', 'tribe-events-calendar-pro' ),
+				'type'      => Controls_Manager::COLOR,
 				'selectors' => [
 					'{{WRAPPER}} .tribe-events-widget-events-list__event-venue-address-street' => 'color: {{VALUE}};',
 				],
@@ -801,19 +898,25 @@ class Widget_Event_List extends Widget_Abstract {
 		$this->add_group_control(
 			Group_Control_Typography::get_type(),
 			[
-				'name' => 'event_street_typography',
+				'name'     => 'event_street_typography',
 				'selector' => '{{WRAPPER}} .tribe-events-widget-events-list__event-venue-address-street',
 			]
 		);
 
 		$this->end_controls_section();
 	}
+
+	/**
+	 * Register the widget controls for the country section.
+	 *
+	 * @since 5.4.0
+	 */
 	protected function do_country_section() {
 		$this->start_controls_section(
 			'event_country',
 			[
-				'label' => esc_html__( 'Country', 'tribe-events-calendar-pro' ),
-				'tab' => Controls_Manager::TAB_STYLE,
+				'label'     => esc_html__( 'Country', 'tribe-events-calendar-pro' ),
+				'tab'       => Controls_Manager::TAB_STYLE,
 				'condition' => [
 					'country' => 'yes',
 				],
@@ -823,8 +926,8 @@ class Widget_Event_List extends Widget_Abstract {
 			$this->add_control(
 				'event_country_color',
 				[
-					'label' => esc_html__( 'Text Color', 'tribe-events-calendar-pro' ),
-					'type' => Controls_Manager::COLOR,
+					'label'     => esc_html__( 'Text Color', 'tribe-events-calendar-pro' ),
+					'type'      => Controls_Manager::COLOR,
 					'selectors' => [
 						'{{WRAPPER}} .tribe-events-widget-events-list__event-venue-address-country' => 'color: {{VALUE}};',
 					],
@@ -834,7 +937,7 @@ class Widget_Event_List extends Widget_Abstract {
 			$this->add_group_control(
 				Group_Control_Typography::get_type(),
 				[
-					'name' => 'event_country_typography',
+					'name'     => 'event_country_typography',
 					'selector' => '{{WRAPPER}} .tribe-events-widget-events-list__event-venue-address-country',
 				]
 			);
@@ -842,12 +945,17 @@ class Widget_Event_List extends Widget_Abstract {
 		$this->end_controls_section();
 	}
 
+	/**
+	 * Register the widget controls for the city section.
+	 *
+	 * @since 5.4.0
+	 */
 	protected function do_city_section() {
 		$this->start_controls_section(
 			'event_city',
 			[
-				'label' => esc_html__( 'City', 'tribe-events-calendar-pro' ),
-				'tab' => Controls_Manager::TAB_STYLE,
+				'label'     => esc_html__( 'City', 'tribe-events-calendar-pro' ),
+				'tab'       => Controls_Manager::TAB_STYLE,
 				'condition' => [
 					'city' => 'yes',
 				],
@@ -857,8 +965,8 @@ class Widget_Event_List extends Widget_Abstract {
 			$this->add_control(
 				'event_city_color',
 				[
-					'label' => esc_html__( 'Text Color', 'tribe-events-calendar-pro' ),
-					'type' => Controls_Manager::COLOR,
+					'label'     => esc_html__( 'Text Color', 'tribe-events-calendar-pro' ),
+					'type'      => Controls_Manager::COLOR,
 					'selectors' => [
 						'{{WRAPPER}} .tribe-events-widget-events-list__event-venue-address-city' => 'color: {{VALUE}};',
 					],
@@ -868,7 +976,7 @@ class Widget_Event_List extends Widget_Abstract {
 			$this->add_group_control(
 				Group_Control_Typography::get_type(),
 				[
-					'name' => 'event_city_typography',
+					'name'     => 'event_city_typography',
 					'selector' => '{{WRAPPER}} .tribe-events-widget-events-list__event-venue-address-city',
 				]
 			);
@@ -876,12 +984,17 @@ class Widget_Event_List extends Widget_Abstract {
 		$this->end_controls_section();
 	}
 
+	/**
+	 * Register the widget controls for the region section.
+	 *
+	 * @since 5.4.0
+	 */
 	protected function do_region_section() {
 		$this->start_controls_section(
 			'event_region',
 			[
-				'label' => esc_html__( 'Region', 'tribe-events-calendar-pro' ),
-				'tab' => Controls_Manager::TAB_STYLE,
+				'label'     => esc_html__( 'Region', 'tribe-events-calendar-pro' ),
+				'tab'       => Controls_Manager::TAB_STYLE,
 				'condition' => [
 					'region' => 'yes',
 				],
@@ -891,8 +1004,8 @@ class Widget_Event_List extends Widget_Abstract {
 			$this->add_control(
 				'event_region_color',
 				[
-					'label' => esc_html__( 'Text Color', 'tribe-events-calendar-pro' ),
-					'type' => Controls_Manager::COLOR,
+					'label'     => esc_html__( 'Text Color', 'tribe-events-calendar-pro' ),
+					'type'      => Controls_Manager::COLOR,
 					'selectors' => [
 						'{{WRAPPER}} .tribe-events-widget-events-list__event-venue-address-region' => 'color: {{VALUE}};',
 					],
@@ -902,7 +1015,7 @@ class Widget_Event_List extends Widget_Abstract {
 			$this->add_group_control(
 				Group_Control_Typography::get_type(),
 				[
-					'name' => 'event_region_typography',
+					'name'     => 'event_region_typography',
 					'selector' => '{{WRAPPER}} .tribe-events-widget-events-list__event-venue-address-region',
 				]
 			);
@@ -910,12 +1023,17 @@ class Widget_Event_List extends Widget_Abstract {
 		$this->end_controls_section();
 	}
 
+	/**
+	 * Register the widget controls for the zip section.
+	 *
+	 * @since 5.4.0
+	 */
 	protected function do_zip_section() {
 		$this->start_controls_section(
 			'event_zip',
 			[
-				'label' => esc_html__( 'Zip', 'tribe-events-calendar-pro' ),
-				'tab' => Controls_Manager::TAB_STYLE,
+				'label'     => esc_html__( 'Zip', 'tribe-events-calendar-pro' ),
+				'tab'       => Controls_Manager::TAB_STYLE,
 				'condition' => [
 					'zip' => 'yes',
 				],
@@ -925,8 +1043,8 @@ class Widget_Event_List extends Widget_Abstract {
 			$this->add_control(
 				'event_zip_color',
 				[
-					'label' => esc_html__( 'Text Color', 'tribe-events-calendar-pro' ),
-					'type' => Controls_Manager::COLOR,
+					'label'     => esc_html__( 'Text Color', 'tribe-events-calendar-pro' ),
+					'type'      => Controls_Manager::COLOR,
 					'selectors' => [
 						'{{WRAPPER}} .tribe-events-widget-events-list__event-venue-address-zip' => 'color: {{VALUE}};',
 					],
@@ -936,7 +1054,7 @@ class Widget_Event_List extends Widget_Abstract {
 			$this->add_group_control(
 				Group_Control_Typography::get_type(),
 				[
-					'name' => 'event_zip_typography',
+					'name'     => 'event_zip_typography',
 					'selector' => '{{WRAPPER}} .tribe-events-widget-events-list__event-venue-address-zip',
 				]
 			);
@@ -944,12 +1062,17 @@ class Widget_Event_List extends Widget_Abstract {
 		$this->end_controls_section();
 	}
 
+	/**
+	 * Register the widget controls for the phone section.
+	 *
+	 * @since 5.4.0
+	 */
 	protected function do_phone_section() {
 		$this->start_controls_section(
 			'event_phone',
 			[
-				'label' => esc_html__( 'Phone', 'tribe-events-calendar-pro' ),
-				'tab' => Controls_Manager::TAB_STYLE,
+				'label'     => esc_html__( 'Phone', 'tribe-events-calendar-pro' ),
+				'tab'       => Controls_Manager::TAB_STYLE,
 				'condition' => [
 					'phone' => 'yes',
 				],
@@ -959,8 +1082,8 @@ class Widget_Event_List extends Widget_Abstract {
 		$this->add_control(
 			'event_phone_color',
 			[
-				'label' => esc_html__( 'Text Color', 'tribe-events-calendar-pro' ),
-				'type' => Controls_Manager::COLOR,
+				'label'     => esc_html__( 'Text Color', 'tribe-events-calendar-pro' ),
+				'type'      => Controls_Manager::COLOR,
 				'selectors' => [
 					'{{WRAPPER}} .tribe-events-widget-events-list__event-venue-phone' => 'color: {{VALUE}};',
 				],
@@ -970,7 +1093,7 @@ class Widget_Event_List extends Widget_Abstract {
 		$this->add_group_control(
 			Group_Control_Typography::get_type(),
 			[
-				'name' => 'event_phone_typography',
+				'name'     => 'event_phone_typography',
 				'selector' => '{{WRAPPER}} .tribe-events-widget-events-list__event-venue-phone',
 			]
 		);
@@ -987,8 +1110,8 @@ class Widget_Event_List extends Widget_Abstract {
 		$this->start_controls_section(
 			'event_website',
 			[
-				'label' => esc_html__( 'Website', 'tribe-events-calendar-pro' ),
-				'tab' => Controls_Manager::TAB_STYLE,
+				'label'     => esc_html__( 'Website', 'tribe-events-calendar-pro' ),
+				'tab'       => Controls_Manager::TAB_STYLE,
 				'condition' => [
 					'website' => 'yes',
 				],
@@ -998,8 +1121,8 @@ class Widget_Event_List extends Widget_Abstract {
 		$this->add_control(
 			'event_website_color',
 			[
-				'label' => esc_html__( 'Text Color', 'tribe-events-calendar-pro' ),
-				'type' => Controls_Manager::COLOR,
+				'label'     => esc_html__( 'Text Color', 'tribe-events-calendar-pro' ),
+				'type'      => Controls_Manager::COLOR,
 				'selectors' => [
 					'{{WRAPPER}} .tribe-events-widget-events-list__event-website a' => 'color: {{VALUE}};',
 				],
@@ -1009,7 +1132,7 @@ class Widget_Event_List extends Widget_Abstract {
 		$this->add_group_control(
 			Group_Control_Typography::get_type(),
 			[
-				'name' => 'event_website_typography',
+				'name'     => 'event_website_typography',
 				'selector' => '{{WRAPPER}} .tribe-events-widget-events-list__event-website',
 			]
 		);
@@ -1017,7 +1140,7 @@ class Widget_Event_List extends Widget_Abstract {
 		$this->add_group_control(
 			Group_Control_Text_Shadow::get_type(),
 			[
-				'name' => 'event_website_text_shadow',
+				'name'     => 'event_website_text_shadow',
 				'selector' => '{{WRAPPER}} .tribe-events-widget-events-list__event-website',
 			]
 		);
@@ -1039,6 +1162,5 @@ class Widget_Event_List extends Widget_Abstract {
 			tribe_asset_enqueue( 'tribe-events-widgets-v2-events-list-full' );
 			tribe_asset_enqueue( 'tribe-events-virtual-widgets-v2-events-list-full' );
 		}
-
 	}
 }

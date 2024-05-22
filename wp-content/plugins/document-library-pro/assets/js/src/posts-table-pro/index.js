@@ -205,12 +205,13 @@
 			.on( 'processing.dt', { table: this }, onProcessing )
 			.on( 'responsive-display.dt', { table: this }, onResponsiveDisplay )
 			.on( 'search.dt', { table: this }, onSearch )
-			.on( 'xhr.dt', { table: this }, onAjaxLoad );
+			.on( 'xhr.dt', { table: this }, onAjaxLoad )
+			.on( 'responsive-resize.dt', { table: this }, onResponsiveResize );
 
 		$( window ).on( 'load.ptp', { table: this }, onWindowLoad );
 
 		// Show the table - loading class removed on init.dt
-		$table.addClass( 'loading' ).css( 'visibility', 'visible' );
+		$table.addClass( 'loading' );
 	};
 
 	PostsTable.prototype.buildConfig = function() {
@@ -391,7 +392,7 @@
 		}
 
 		let $resetButton =
-			$( '<div class="posts-table-reset"><a class="reset" href="#">' + params.language.resetButton + '</a></div>' )
+			$( '<div class="posts-table-reset"><a class="reset" href="#" style="display: none;">' + params.language.resetButton + '</a></div>' )
 				.on( 'click.ptp', 'a', { table: table }, onReset );
 
 		// Append reset button
@@ -409,7 +410,7 @@
 	PostsTable.prototype.initSearchOnClick = function() {
 		let table = this;
 
-		if ( table.config.clickFilter ) {
+		if ( table.config.clickFilter !== 'false' ) {
 			// 'search_on_click' - add click handler for relevant links. When clicked, the table will filter by the link text.
 			table.$table.on( 'click.ptp', 'a[data-column]', { table: table }, onClickToSearch );
 		}
@@ -429,6 +430,11 @@
 			escapeMarkup: function( markup ) {
 				// Empty function to disable escaping - this is handled by WordPress and PTP.
 				return markup;
+			},
+			language: {
+				noResults: function() {
+					return posts_table_params.language.emptyFilter;
+				}
 			}
 		};
 
@@ -453,6 +459,17 @@
 		table.$tableControls.find( '.dataTables_length select' ).select2(
 			Object.assign( select2Options, { minimumResultsForSearch: -1 } )
 		);
+
+		// Fix Safari tabindex bug that scrolls the page after clicking outside an option.
+		var isSafari = /^((?!chrome|android).)*safari/i.test( navigator.userAgent );
+		if ( isSafari ) {
+			table.$tableControls.add( table.$filters ).on( 'select2:open', function ( e ) {
+				$( '.select2-selection' ).attr( 'tabindex', '' );
+			});
+			table.$tableControls.add( table.$filters ).on( 'select2:close', function ( e ) {
+				$( '.select2-selection' ).attr( 'tabindex', '0' );
+			});
+		}
 
 		return table;
 	};
@@ -564,7 +581,7 @@
 	function onAjaxLoad( event, settings, json ) {
 		let table = event.data.table;
 
-		if ( null !== json && 'data' in json && $.isArray( json.data ) ) {
+		if ( null !== json && 'data' in json && Array.isArray( json.data ) ) {
 			table.ajaxData = json.data;
 		}
 
@@ -577,8 +594,14 @@
 			columnName = $link.data( 'column' ),
 			slug = $link.children( '[data-slug]' ).length ? $link.children( '[data-slug]' ).data( 'slug' ) : '';
 
+		let clickFilter = table.config.clickFilter.split(',');
+		let taxColumnName = columnName;
+		if ( columnName.substring( 0, 4 ) === 'tax_' ) {
+			taxColumnName = 'tax:' + columnName.substring( 4 );
+		}
+		
 		// Bail if no term slug to search.
-		if ( '' === slug ) {
+		if ( '' === slug || ( ! clickFilter.includes( taxColumnName ) && table.config.clickFilter !== 'true' ) ) {
 			return true;
 		}
 
@@ -605,6 +628,9 @@
 			let searchVal = '(^|, )' + $.fn.dataTable.util.escapeRegex( $link.text() ) + '(, |$)';
 			column.search( searchVal, true, false ).draw();
 		}
+
+		// Show reset link.
+		table.$table.parent().find( '.reset' ).show();
 
 		table.scrollToTop();
 		return false;
@@ -671,6 +697,9 @@
 
 		// Re-enable onSearch.
 		table.$table.on( 'search.dt', { table: table }, onSearch );
+
+		// Show reset link.
+		table.$table.parent().find( '.reset' ).show();
 	}
 
 	function onInit( event ) {
@@ -767,8 +796,12 @@
 		table.$table.off( 'search.dt', onSearch );
 
 		// Reset responsive child rows
-		table.$table.find( 'tr.child' ).remove();
-		table.$table.find( 'tr.parent' ).removeClass( 'parent' );
+		dataTable.rows().every( function() {
+			if ( this.child.isShown() ) {
+				this.child.hide();
+				$( this.node() ).removeClass( 'parent' );
+			}
+		} );
 
 		// Clear search for all filtered columns
 		dataTable.columns( 'th[data-searchable="true"]' ).search( '' );
@@ -806,6 +839,9 @@
 
 		// Re-enable onSearch.
 		table.$table.on( 'search.dt', { table: table }, onSearch );
+
+		// Hide reset link.
+		table.$table.parent().find( '.reset' ).hide();
 	}
 
 	function onResponsiveDisplay( event, datatable, row, showHide ) {
@@ -824,6 +860,23 @@
 		// we disable this event handler for those events.
 		let table = event.data.table;
 		table.updateFilterOptions( table.$filters );
+
+		// Shows or hide the reset link automatically depending on the search box and the filters.
+		let filtersSearch = table.getDataTable().columns( 'th[data-searchable="true"]' ).search();
+		let isFiltersEmpty = true;
+		if ( filtersSearch.length ) {
+			for( let i = 0; i < filtersSearch.length; i++ ) {
+				if ( filtersSearch[i] !== '' ) {
+					isFiltersEmpty = false;
+				}
+			}
+		}
+		table.$tableWrapper = table.$table.parent();
+		if ( table.getDataTable().search() === '' && isFiltersEmpty ) {
+			table.$tableWrapper.find( '.reset' ).hide();
+		} else {
+			table.$tableWrapper.find( '.reset' ).show();
+		}
 	}
 
 	function onWindowLoad( event ) {
@@ -835,6 +888,27 @@
 			.responsive.recalc();
 
 		table.$table.trigger( 'load.ptp', [ table ] );
+	}
+
+	function onResponsiveResize( event ) {
+		let table = event.data.table;
+		if ( ! table.$table.is( ':visible' ) ) {
+			table.$table.removeClass('visible');
+			// Recalculate column widths for hidden table when they become visible.
+			new IntersectionObserver(( entries, observer ) => {
+				entries.forEach( entry => {
+					if ( entry.intersectionRatio > 0 ) {
+						table.getDataTable()
+							.columns.adjust()
+							.responsive.recalc();
+						observer.disconnect();
+						table.$table.addClass('visible');
+					}
+				} );
+			} ).observe( table.$table[0] );
+		} else {
+			table.$table.addClass('visible');
+		}
 	}
 
 	/******************************************

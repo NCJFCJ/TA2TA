@@ -1,8 +1,8 @@
 === WordPress Editable Posts Table for the Frontend ===
 Contributors: wpsheeteditor,vegacorp,josevega
 Tags: anonymous post, frontend post, guest author, guest post, frontend dashboard
-Tested up to: 6.4
-Stable tag: 2.4.33
+Tested up to: 6.5
+Stable tag: 2.4.37
 Requires at least: 4.7
 License: GPLv2
 License URI: http://www.gnu.org/licenses/gpl-2.0.html
@@ -116,6 +116,22 @@ Yes. You can set up the number of posts to save per batch and the waiting betwee
 2. settings page
 
 == Changelog ==
+= V 2.4.37 - 2024-03-28 =
+* Updated to CORE v2.25.13
+
+
+= V 2.4.36 - 2024-03-28 =
+* Updated to CORE v2.25.12
+
+
+= V 2.4.35 - 2024-03-27 =
+* Updated to CORE v2.25.11
+
+
+= V 2.4.34 - 2024-03-22 =
+* Updated to CORE v2.25.10
+
+
 = V 2.4.33 - 2024-01-26 =
 * Updated to CORE v2.25.9
 

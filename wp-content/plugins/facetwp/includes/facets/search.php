@@ -2,10 +2,12 @@
 
 class FacetWP_Facet_Search extends FacetWP_Facet
 {
+    public $field_defaults;
 
     function __construct() {
         $this->label = __( 'Search', 'fwp' );
-        $this->fields = [ 'search_engine', 'placeholder', 'auto_refresh' ];
+        $this->fields = [ 'search_engine', 'placeholder', 'auto_refresh', 'enable_relevance' ];
+        $this->field_defaults = [ 'enable_relevance' => 'yes' ];
     }
 
 
@@ -34,6 +36,11 @@ class FacetWP_Facet_Search extends FacetWP_Facet
     function filter_posts( $params ) {
 
         $facet = $params['facet'];
+
+        if ( 'no' == $facet['enable_relevance'] ) {
+            add_filter( 'facetwp_use_search_relevancy', '__return_false' );
+        }
+
         $selected_values = $params['selected_values'];
         $selected_values = is_array( $selected_values ) ? $selected_values[0] : $selected_values;
 
@@ -74,6 +81,12 @@ class FacetWP_Facet_Search extends FacetWP_Facet
                 'type' => 'toggle',
                 'label' => __( 'Auto refresh', 'fwp' ),
                 'notes' => 'Automatically refresh the results while typing?'
+            ],
+            'enable_relevance' => [
+                'type' => 'toggle',
+                'label' => __( 'Order by relevance', 'fwp' ),
+                'notes' => 'By default, search results are ordered by relevance. Disable to use the original listing query order.',
+                'default' => 'checked'
             ]
         ];
     }

@@ -205,6 +205,26 @@
         "file_name": "wp-sheet-editor-featured-image-from-external-url"
     },
     {
+        "className": "WPSE_FileBird",
+        "freemiusFunctionName": "wpseml_freemius",
+        "requiredWPSEPlugin": [
+            4198
+        ],
+        "dependencyClasses": [
+            "WP_Sheet_Editor_Custom_Columns"
+        ],
+        "dependencyFunctions": [],
+        "dependencyConstants": [
+            "NJFB_PREFIX"
+        ],
+        "status": "publish",
+        "requiresThirdPartyPlugin": true,
+        "version": "1.0.0",
+        "description": "Add column to edit the FileBird folder in the media library sheet",
+        "name": "WP Sheet Editor - FileBird",
+        "file_name": "wp-sheet-editor-filebird"
+    },
+    {
         "className": "WPSE_Formidable_Entries",
         "freemiusFunctionName": "",
         "requiredWPSEPlugin": [
@@ -353,7 +373,7 @@
         "dependencyConstants": [],
         "status": "publish",
         "requiresThirdPartyPlugin": true,
-        "version": "1.1.0",
+        "version": "1.1.2",
         "description": "Support for the Show Single Variations plugin created by IconicWP",
         "name": "WP Sheet Editor - IconicWP's Show Single Variations",
         "file_name": "wp-sheet-editor-iconic-show-single-variations"
@@ -482,6 +502,32 @@
         "file_name": "wp-sheet-editor-mailchimp-wc"
     },
     {
+        "className": "WPSE_Metabox",
+        "freemiusFunctionName": "",
+        "requiredWPSEPlugin": [
+            [
+                3004,
+                2830,
+                1010,
+                2812,
+                6996
+            ]
+        ],
+        "dependencyClasses": [
+            "WP_Sheet_Editor_Custom_Columns"
+        ],
+        "dependencyFunctions": [
+            "rwmb_get_registry"
+        ],
+        "dependencyConstants": [],
+        "status": "publish",
+        "requiresThirdPartyPlugin": true,
+        "version": "1.0.1",
+        "description": "Add columns to edit metabox fields on the spreadsheet.",
+        "name": "WP Sheet Editor - Metabox",
+        "file_name": "wp-sheet-editor-metabox"
+    },
+    {
         "className": "WPSE_Permalink_Manager",
         "freemiusFunctionName": "vgse_freemius",
         "requiredWPSEPlugin": [
@@ -521,9 +567,9 @@
         ],
         "status": "publish",
         "requiresThirdPartyPlugin": true,
-        "version": "1.0.1",
-        "description": "Add columns to edit the membership restrictions in all post types and add columns to edit the membership plan in the users spreadsheet",
-        "name": "WP Sheet Editor - PM Membership Pro",
+        "version": "1.0.2",
+        "description": "Add columns to edit the membership restrictions of PMPro in all post types and add columns to edit the membership plan in the users spreadsheet",
+        "name": "WP Sheet Editor - Paid Membership Pro",
         "file_name": "wp-sheet-editor-pm-membership-pro"
     },
     {
@@ -547,7 +593,7 @@
         "dependencyConstants": [],
         "status": "publish",
         "requiresThirdPartyPlugin": true,
-        "version": "1.0.3",
+        "version": "1.0.5",
         "description": "Add columns to edit pods fields on the spreadsheet.",
         "name": "WP Sheet Editor - Pods",
         "file_name": "wp-sheet-editor-pods"
@@ -605,6 +651,44 @@
         "description": "When you delete duplicates or merge posts, we automatically redirect the deleted posts to the unique post. Also, we add a column in the posts\/taxonomies spreadsheet where you can create redirects, and when you rename file names, we automatically redirect the old file urls to the new uls.",
         "name": "WP Sheet Editor - Redirection",
         "file_name": "wp-sheet-editor-redirection"
+    },
+    {
+        "className": "WPSE_Routiz",
+        "freemiusFunctionName": "vgse_freemius",
+        "requiredWPSEPlugin": [
+            1010
+        ],
+        "dependencyClasses": [
+            "WP_Sheet_Editor_Custom_Columns"
+        ],
+        "dependencyFunctions": [],
+        "dependencyConstants": [
+            "RZ_VERSION"
+        ],
+        "status": "publish",
+        "requiresThirdPartyPlugin": true,
+        "version": "1.0.0",
+        "description": "Add columns for editing listing vendor, and vendor users",
+        "name": "WP Sheet Editor - Routiz",
+        "file_name": "wp-sheet-editor-routiz"
+    },
+    {
+        "className": "WPSE_SmartCrawl",
+        "freemiusFunctionName": "wpsett_fs",
+        "requiredWPSEPlugin": [
+            3165
+        ],
+        "dependencyClasses": [],
+        "dependencyFunctions": [
+            "smartcrawl_get_term_meta"
+        ],
+        "dependencyConstants": [],
+        "status": "publish",
+        "requiresThirdPartyPlugin": true,
+        "version": "1.0.0",
+        "description": "Add columns for custom fields created by Smartcrawl for the taxonomies spreadsheets.",
+        "name": "WP Sheet Editor - SmartCrawl",
+        "file_name": "wp-sheet-editor-smartcrawl"
     },
     {
         "className": "WPSE_Taxonomy_Porto",
@@ -679,7 +763,7 @@
         ],
         "status": "publish",
         "requiresThirdPartyPlugin": true,
-        "version": "1.0.1",
+        "version": "1.0.2",
         "description": "Add columns for custom fields created with TutorLMS with automatic formatting",
         "name": "WP Sheet Editor - TutorLMS",
         "file_name": "wp-sheet-editor-tutorlms"
@@ -1074,7 +1158,7 @@
         "dependencyConstants": [],
         "status": "publish",
         "requiresThirdPartyPlugin": true,
-        "version": "1.0.2",
+        "version": "1.0.3",
         "description": "Fix compatibility issues between WP Sheet Editor and WooCommerce Simple Auctions.",
         "name": "WP Sheet Editor - WooCommerce Simple Auctions",
         "file_name": "wp-sheet-editor-woocommerce-simple-auctions"

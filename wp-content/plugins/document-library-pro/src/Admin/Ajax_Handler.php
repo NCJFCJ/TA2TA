@@ -1,13 +1,13 @@
 <?php
 namespace Barn2\Plugin\Document_Library_Pro\Admin;
 
-use Barn2\Plugin\Document_Library_Pro\Dependencies\Lib\Service,
-	Barn2\Plugin\Document_Library_Pro\Dependencies\Lib\Registerable,
-	Barn2\Plugin\Document_Library_Pro\Admin\Importer\CSV_Controller,
-	Barn2\Plugin\Document_Library_Pro\Post_Type,
-	Barn2\Plugin\Document_Library_Pro\Util\Util,
-	Barn2\Plugin\Document_Library_Pro\Util\Media as Media_Util,
-	Barn2\Plugin\Document_Library_Pro\Document;
+use Barn2\Plugin\Document_Library_Pro\Dependencies\Lib\Service;
+use Barn2\Plugin\Document_Library_Pro\Dependencies\Lib\Registerable;
+use Barn2\Plugin\Document_Library_Pro\Admin\Importer\CSV_Controller;
+use Barn2\Plugin\Document_Library_Pro\Post_Type;
+use Barn2\Plugin\Document_Library_Pro\Util\Util;
+use Barn2\Plugin\Document_Library_Pro\Util\Media as Media_Util;
+use Barn2\Plugin\Document_Library_Pro\Document;
 
 defined( 'ABSPATH' ) || exit;
 

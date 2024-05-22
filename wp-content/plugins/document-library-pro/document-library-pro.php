@@ -13,12 +13,15 @@
  * Plugin Name:     Document Library Pro
  * Plugin URI:      https://barn2.com/wordpress-plugins/document-library-pro/
  * Description:     Add documents and display them in a searchable document library with filters.
- * Version:         1.13.2
+ * Version:         1.13.6
  * Author:          Barn2 Plugins
  * Author URI:      https://barn2.com
  * Text Domain:     document-library-pro
  * Domain Path:     /languages
  *
+ * Requires at least:     6.0
+ * Tested up to:          6.5
+ * Requires PHP:          7.4
  *
  * Copyright:       Barn2 Media Ltd
  * License:         GNU General Public License v3.0
@@ -31,7 +34,7 @@ if ( ! defined( 'ABSPATH' ) ) {
 	exit;
 }
 
-const PLUGIN_VERSION = '1.13.2';
+const PLUGIN_VERSION = '1.13.6';
 const PLUGIN_FILE    = __FILE__;
 
 // Include autoloader.

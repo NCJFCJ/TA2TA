@@ -2,23 +2,23 @@
 
 namespace Barn2\Plugin\Document_Library_Pro\Integration;
 
-use Barn2\Plugin\Document_Library_Pro\Dependencies\Lib\Registerable,
-	Barn2\Plugin\Document_Library_Pro\Dependencies\Lib\Service,
-	Barn2\Plugin\Document_Library_Pro\Table_Data,
-	Barn2\Plugin\Document_Library_Pro\Posts_Table_Pro\Util\Util,
-	Barn2\Plugin\Document_Library_Pro\Posts_Table_Pro\Table_Query,
-	Barn2\Plugin\Document_Library_Pro\Taxonomies,
-	Barn2\Plugin\Document_Library_Pro\Shortcode,
-	Barn2\Plugin\Document_Library_Pro\Util\Options,
-	Barn2\Plugin\Document_Library_Pro\Util\SVG_Icon;
+use Barn2\Plugin\Document_Library_Pro\Dependencies\Lib\Registerable;
+use Barn2\Plugin\Document_Library_Pro\Dependencies\Lib\Service;
+use Barn2\Plugin\Document_Library_Pro\Table_Data;
+use Barn2\Plugin\Document_Library_Pro\Posts_Table_Pro\Util\Util;
+use Barn2\Plugin\Document_Library_Pro\Posts_Table_Pro\Table_Query;
+use Barn2\Plugin\Document_Library_Pro\Taxonomies;
+use Barn2\Plugin\Document_Library_Pro\Shortcode;
+use Barn2\Plugin\Document_Library_Pro\Util\Options;
+use Barn2\Plugin\Document_Library_Pro\Util\SVG_Icon;
 
 defined( 'ABSPATH' ) || exit;
 
 /**
  * Handles the integration with PTP
  *
- * @package   Barn2/document-library-pro
- * @author    Barn2 Plugins <info@barn2.com>
+ * @package   Barn2\document-library-pro
+ * @author    Barn2 Plugins <support@barn2.com>
  * @license   GPL-3.0
  * @copyright Barn2 Media Ltd
  */
@@ -153,7 +153,6 @@ class Posts_Table_Pro implements Registerable, Service {
 			'grid_content'           => is_array( $args['grid_content'] ) ? $sanitize_string_array : FILTER_SANITIZE_FULL_SPECIAL_CHARS,
 			'grid_columns'           => FILTER_SANITIZE_FULL_SPECIAL_CHARS,
 			'multi_download_button'  => FILTER_SANITIZE_FULL_SPECIAL_CHARS,
-			'multi_download_button'  => FILTER_SANITIZE_FULL_SPECIAL_CHARS,
 			'multi_download_text'    => FILTER_SANITIZE_FULL_SPECIAL_CHARS,
 			'accessing_documents'    => FILTER_SANITIZE_FULL_SPECIAL_CHARS,
 			'preview'                => FILTER_VALIDATE_BOOLEAN,
@@ -179,16 +178,47 @@ class Posts_Table_Pro implements Registerable, Service {
 	 * @param Table_Args $table_args
 	 */
 	public function parse_custom_table_args( $table_args ) {
-		// Grid Content Multicheckbox Array
-		$table_args->grid_content = is_array( $table_args->grid_content ) ? $table_args->grid_content : Options::sanitize_grid_content( Options::string_list_to_multicheckbox_array( $table_args->grid_content ) );
+
+		$defaults = $table_args::get_site_defaults();
 
 		// Folders order.
 		$table_args->folders_order = strtolower( $table_args->folders_order );
-
-		if ( ! in_array( $table_args->folders_order, [ 'ASC', 'DESC' ], true ) ) {
-			$table_args->folders_order = 'ASC';
+		if ( ! in_array( $table_args->folders_order, [ 'asc', 'desc' ], true ) ) {
+			$table_args->folders_order = $defaults['folders_order'];
 		}
 
+		// Grid content multicheckbox array.
+		$table_args->grid_content = is_array( $table_args->grid_content ) ? $table_args->grid_content : Options::sanitize_grid_content( Options::string_list_to_multicheckbox_array( $table_args->grid_content ) );
+
+		// Grid columns.
+		if ( ! is_numeric( $table_args->grid_columns ) ) {
+			$table_args->grid_columns = $defaults['grid_columns'];
+		}
+
+		// Multi download button.
+		if ( ! in_array( $table_args->multi_download_button, [ 'below', 'above', 'both' ], true ) ) {
+			$table_args->multi_download_button = $defaults['multi_download_button'];
+		}
+
+		// Accessing documents.
+		if ( ! in_array( $table_args->accessing_documents, [ 'link', 'checkbox', 'both' ], true ) ) {
+			$table_args->accessing_documents = $defaults['accessing_documents'];
+		}
+
+		// Preview style.
+		if ( ! in_array( $table_args->preview_style, [ 'button', 'button_icon_text', 'button_icon', 'icon_only', 'link' ], true ) ) {
+			$table_args->preview_style = $defaults['preview_style'];
+		}
+
+		// Link style.
+		if ( ! in_array( $table_args->link_style, [ 'button', 'button_icon_text', 'button_icon', 'icon_only', 'icon', 'text' ], true ) ) {
+			$table_args->link_style = $defaults['link_style'];
+		}
+
+		// Link destination.
+		if ( ! in_array( $table_args->link_destination, [ 'direct', 'single' ], true ) ) {
+			$table_args->link_destination = $defaults['link_destination'];
+		}
 	}
 
 	/**

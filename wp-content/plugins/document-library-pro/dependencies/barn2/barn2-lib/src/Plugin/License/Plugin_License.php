@@ -80,7 +80,7 @@ class Plugin_License implements Registerable, License
     public function get_status()
     {
         $data = $this->get_license_data();
-        return 'active';//isset($data['status']) ? $data['status'] : '';
+        return isset($data['status']) ? $data['status'] : '';
     }
     public function get_status_help_text()
     {
@@ -136,7 +136,7 @@ class Plugin_License implements Registerable, License
             // Successful response - now check whether license is valid.
             $response = $api_result->response;
             // $response->license will be 'valid' or 'invalid'.
-            if ('valid' === 'valid'){//$response->license) {
+            if ('valid' === $response->license) {
                 $license_data['status'] = 'active';
                 $result = \true;
                 \do_action('barn2_license_activated_' . $this->item_id, $license_key, $url_to_activate);
@@ -227,7 +227,7 @@ class Plugin_License implements Registerable, License
         if ($api_result->success) {
             // Successful response returned.
             $response = $api_result->response;
-            if ('valid' === 'valid'){//$response->license) {
+            if ('valid' === $response->license) {
                 // Valid (and active) license.
                 $license_data['status'] = 'active';
             } else {

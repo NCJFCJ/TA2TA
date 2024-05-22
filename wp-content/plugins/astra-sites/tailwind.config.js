@@ -9,6 +9,7 @@ module.exports = {
 				'accent-wp-primary': '#0073AA',
 				'accent-wp-primary-alt': '#70CFFF',
 				'accent-wp-secondary': '#00A0D2',
+				'browser-bar': '#FAFAFA',
 				'heading-text': '#030712',
 				'body-text': '#374151',
 				'secondary-text': '#9CA3AF',
@@ -38,6 +39,7 @@ module.exports = {
 				favorite: '#FD3997',
 				tooltip: '#334155',
 				'credit-warning': '#FB7E0A',
+				'button-bg': '#2F327E',
 				'credit-danger': '#EA1522',
 				'button-disabled': '#E5E7EB',
 				'blue-crayola': '#3D4592',
@@ -55,8 +57,6 @@ module.exports = {
 				'gradient-color-1': '#B809A7',
 				'gradient-color-2': '#E90B76',
 				'gradient-color-3': '#FC8536',
-				'gradient-2':
-					'linear-gradient(180deg, #B809A7 0%, #E90B76 46.88%, #FC8536 100%)',
 				'step-gradient':
 					'linear-gradient(to bottom, #FFF 0%, #0000FF 100%)',
 				'zip-app-inactive-icon': '#94A3B8',
@@ -64,6 +64,12 @@ module.exports = {
 				'st-background-secondary': '#f7f7f9',
 				'outline-color': '#FF580E',
 				'preview-background': '#F2F4F7',
+			},
+			backgroundImage: {
+				'gradient-1':
+					'linear-gradient(90deg, #B809A7 0%, #E90B76 46.88%, #FC8536 100%)',
+				'gradient-2':
+					'linear-gradient(180deg, #B809A7 0%, #E90B76 46.88%, #FC8536 100%)',
 			},
 			animation: {
 				rotate: 'rotation 7s linear infinite',

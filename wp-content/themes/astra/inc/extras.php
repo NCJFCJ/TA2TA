@@ -427,7 +427,7 @@ function astra_get_theme_author_details() {
 	$theme_author = apply_filters(
 		'astra_theme_author',
 		array(
-			'theme_name'       => __( 'Astra WordPress Theme', 'astra' ),
+			'theme_name'       => esc_html__( 'Astra WordPress Theme', 'astra' ),
 			'theme_author_url' => 'https://wpastra.com/',
 		)
 	);
@@ -517,15 +517,19 @@ function astra_dropdown_icon_to_menu_link( $title, $item, $args, $depth ) {
 		'ast-hf-menu-10-sticky',
 		'ast-hf-account-menu',
 	);
-	
+
 	$is_special_menu = in_array( $args->menu_id, $special_menu_ids );
-	
+
 	if ( $is_nav_menu_extension_inactive || $is_special_menu ) {
 		$icon = Astra_Icons::get_icons( 'arrow' );
-	}   
+	}
 
-	$custom_tabindex  = true === Astra_Builder_Helper::$is_header_footer_builder_active ? 'tabindex="0"' : '';
-	$astra_arrow_icon = '<span role="' . esc_attr( $role ) . '" class="dropdown-menu-toggle ast-header-navigation-arrow" ' . $custom_tabindex . ' aria-expanded="false" aria-label="' . esc_attr__( 'Menu Toggle', 'astra' ) . '" >' . $icon . '</span>';
+	$astra_arrow_icon = '';
+	// Render arrow icon for special menu appearance or on pro deactivation or nav menu extension deactivation.
+	if ( $is_special_menu || $is_nav_menu_extension_inactive || ! defined( 'ASTRA_EXT_VER' ) ) {
+		$custom_tabindex  = true === Astra_Builder_Helper::$is_header_footer_builder_active ? 'tabindex="0"' : '';
+		$astra_arrow_icon = '<span role="' . esc_attr( $role ) . '" class="dropdown-menu-toggle ast-header-navigation-arrow" ' . $custom_tabindex . ' aria-expanded="false" aria-label="' . esc_attr__( 'Menu Toggle', 'astra' ) . '" >' . $icon . '</span>';
+	}
 
 	foreach ( $item->classes as $value ) {
 		if ( 'menu-item-has-children' === $value ) {
@@ -1133,11 +1137,11 @@ function astra_get_font_array_css( $font_family, $font_weight, $font_size, $font
  */
 function astra_get_site_image_sizes( $add_custom = false ) {
 	$image_sizes = array(
-		'thumbnail'    => __( 'Thumbnail', 'astra' ),
-		'medium'       => __( 'Medium', 'astra' ),
-		'medium_large' => __( 'Medium Large', 'astra' ),
-		'large'        => __( 'Large', 'astra' ),
-		'full'         => __( 'Full Size', 'astra' ),
+		'thumbnail'    => esc_html__( 'Thumbnail', 'astra' ),
+		'medium'       => esc_html__( 'Medium', 'astra' ),
+		'medium_large' => esc_html__( 'Medium Large', 'astra' ),
+		'large'        => esc_html__( 'Large', 'astra' ),
+		'full'         => esc_html__( 'Full Size', 'astra' ),
 	);
 
 	// Gets the available intermediate image size names on site.
@@ -1145,7 +1149,7 @@ function astra_get_site_image_sizes( $add_custom = false ) {
 
 
 	$refactored_sizes = array(
-		'full' => __( 'Full Size', 'astra' ),
+		'full' => esc_html__( 'Full Size', 'astra' ),
 	);
 
 	foreach ( $all_sizes as $size ) {
@@ -1159,7 +1163,7 @@ function astra_get_site_image_sizes( $add_custom = false ) {
 	/** @psalm-suppress UndefinedClass */ // phpcs:ignore Generic.Commenting.DocComment.MissingShort
 	if ( $add_custom && defined( 'ASTRA_EXT_VER' ) && Astra_Ext_Extension::is_active( 'blog-pro' ) ) {
 		/** @psalm-suppress UndefinedClass */ // phpcs:ignore Generic.Commenting.DocComment.MissingShort
-		$refactored_sizes['custom'] = __( 'Custom', 'astra' );
+		$refactored_sizes['custom'] = esc_html__( 'Custom', 'astra' );
 	}
 
 	return $refactored_sizes;
@@ -1177,15 +1181,13 @@ function astra_get_site_image_sizes( $add_custom = false ) {
  * @return string
  */
 function astra_get_dynamic_image_aspect_ratio( $aspect_ratio_type, $predefined_scale, $custom_scale_width, $custom_scale_height ) {
-	$aspect_ratio_css = '';
-	if ( 'default' !== $aspect_ratio_type ) {
-		if ( 'custom' === $aspect_ratio_type ) {
-			$aspect_ratio_css = absint( $custom_scale_width ) . '/' . absint( $custom_scale_height );
-		} else {
-			$aspect_ratio_css = $predefined_scale;
-		}
+	switch ( $aspect_ratio_type ) {
+		case 'predefined':
+			return $predefined_scale;
+		case 'custom':
+			return absint( $custom_scale_width ) . '/' . absint( $custom_scale_height );
 	}
-	return $aspect_ratio_css;
+	return '';
 }
 
 /**
@@ -1232,7 +1234,6 @@ function astra_get_queried_post_types() {
 			'astra_adv_header',
 			'elementor_library',
 			'brizy_template',
-			'sc_collection',
 
 			'course',
 			'lesson',

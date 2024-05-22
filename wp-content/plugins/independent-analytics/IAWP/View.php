@@ -2,11 +2,13 @@
 
 namespace IAWP;
 
+use IAWP\Custom_WordPress_Columns\Views_Column;
 use IAWP\Models\Page;
 use IAWP\Models\Visitor;
 use IAWP\Utils\Device;
 use IAWP\Utils\String_Util;
 use IAWP\Utils\URL;
+use IAWPSCOPED\Illuminate\Database\Query\JoinClause;
 /** @internal */
 class View
 {
@@ -38,6 +40,7 @@ class View
         $this->set_session_total_views();
         $this->set_sessions_initial_view($view_id);
         $this->set_sessions_final_view($view_id);
+        $this->update_postmeta($this->resource);
     }
     /**
      * @return int ID of newly created session
@@ -279,5 +282,18 @@ class View
     {
         $sessions_table = \IAWP\Query::get_table_name(\IAWP\Query::SESSIONS);
         return \IAWP\Illuminate_Builder::get_builder()->from($sessions_table)->where('visitor_id', '=', $this->visitor->id())->whereRaw('created_at > DATE_SUB(UTC_TIMESTAMP(), INTERVAL 30 MINUTE)')->orderBy('created_at', 'desc')->first();
+    }
+    private function update_postmeta(Page $resource) : void
+    {
+        $post_id = $resource->get_post_id();
+        if ($post_id === null) {
+            return;
+        }
+        $views_table = \IAWP\Query::get_table_name(\IAWP\Query::VIEWS);
+        $resources_table = \IAWP\Query::get_table_name(\IAWP\Query::RESOURCES);
+        $total_views = \IAWP\Illuminate_Builder::get_builder()->selectRaw('COUNT(*) AS views')->from("{$resources_table} as resources")->join("{$views_table} AS views", function (JoinClause $join) {
+            $join->on('resources.id', '=', 'views.resource_id');
+        })->where('singular_id', '=', $post_id)->value('views');
+        \update_post_meta($post_id, Views_Column::$meta_key, $total_views);
     }
 }

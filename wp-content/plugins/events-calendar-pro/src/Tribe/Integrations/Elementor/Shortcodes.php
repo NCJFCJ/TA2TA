@@ -51,7 +51,7 @@ class Shortcodes {
 	 *
 	 * @return string The shortcode HTML, modified to include the `script` (JS) and `link` (CSS) HTML tags if required.
 	 */
-	public function support_archive_shortcode( $output, $tag ) {
+	public function support_archive_shortcode( $output, $tag ): string {
 		if ( $this->did_support_archives ) {
 			return $output;
 		}

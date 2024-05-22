@@ -18,6 +18,9 @@ window.tec = window.tec || {};
 tec.classicEditorEvents = tec.classicEditorEvents || {};
 tec.classicEditorEvents.dayOfMonth = tec.classicEditorEvents.dayOfMonth || {};
 
+dayjs.extend(window.dayjs_plugin_isoWeek);
+dayjs.extend(window.dayjs_plugin_customParseFormat);
+
 /**
  * Handles the day of month cases of recurrence and exclusions.
  *
@@ -195,7 +198,7 @@ tec.classicEditorEvents.dayOfMonth = tec.classicEditorEvents.dayOfMonth || {};
 	 * @return {void}
 	 */
 	obj.setDateDropdownValue = function ( $dropdown, optionType ) {
-		const isInitialSync = ! moment.isMoment( tec.classicEditorEvents.eventDate.eventStart.prevMoment );
+		const isInitialSync = ! dayjs.isDayjs( tec.classicEditorEvents.eventDate.eventStart.prevMoment );
 
 		let value;
 		const dropdownEl = $dropdown[ 0 ];
@@ -373,10 +376,10 @@ tec.classicEditorEvents.dayOfMonth = tec.classicEditorEvents.dayOfMonth || {};
 		}
 
 		// Event start previous moment will not be set on initial sync.
-		const isInitialSync = ! moment.isMoment( tec.classicEditorEvents.eventDate.eventStart.prevMoment );
+		const isInitialSync = ! dayjs.isDayjs( tec.classicEditorEvents.eventDate.eventStart.prevMoment );
 		// Checks if the start day has changed or not.
-		const isSameDay = moment.isMoment( tec.classicEditorEvents.eventDate.eventStart.moment ) &&
-			moment.isMoment( tec.classicEditorEvents.eventDate.eventStart.prevMoment ) &&
+		const isSameDay = dayjs.isDayjs( tec.classicEditorEvents.eventDate.eventStart.moment ) &&
+			dayjs.isDayjs( tec.classicEditorEvents.eventDate.eventStart.prevMoment ) &&
 			tec.classicEditorEvents.eventDate.eventStart.moment.isSame( tec.classicEditorEvents.eventDate.eventStart.prevMoment, 'day' );
 		// Checks if the date dropdown matches event start date.
 		const dropdownMatchesEventStart = obj.isDateDropdownMatchEventStart( row );

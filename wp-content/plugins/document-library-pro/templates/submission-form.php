@@ -2,18 +2,16 @@
 /**
  * Displays the frontend submission form.
  *
- * This template can be overridden by copying it to yourtheme/ptp_templates/submission-form.php.
+ * This template can be overridden by copying it to yourtheme/dlp_templates/submission-form.php.
  *
- * @package   Barn2/document-library-pro
- * @author    Barn2 Media <info@barn2.com>
+ * @version   1.9.0
+ * @package   Barn2\document-library-pro
+ * @author    Barn2 Plugins <support@barn2.com>
  * @license   GPL-3.0
  * @copyright Barn2 Media Ltd
  */
 
-// Prevent direct file access
-if ( ! defined( 'ABSPATH' ) ) {
-	exit;
-}
+defined( 'ABSPATH' ) || exit;
 
 $is_success = isset( $_GET['success'] ) && $_GET['success'] === '1'; //phpcs:ignore
 

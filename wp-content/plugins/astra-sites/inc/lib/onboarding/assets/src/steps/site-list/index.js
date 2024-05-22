@@ -109,150 +109,153 @@ const SiteList = () => {
 
 	const siteCount = Object.keys( siteData.sites ).length;
 
-	const fseBackStep = () => {
+	const backStep = () => {
 		dispatch( {
 			type: 'set',
 			currentIndex: 0,
+			builder: 'ai-builder',
 		} );
-	};
-
-	const backStep = () => {
-		if ( astraSitesVars.default_page_builder === 'fse' ) {
-			fseBackStep();
-		}
 	};
 	return (
 		<DefaultStep
 			content={
-				<div
-					className={ `site-list-screen-container ${
-						loadingSkeleton ? 'site-loading' : 'site-loaded'
-					}` }
-				>
-					<SiteListSkeleton />
-					<div className="site-list-screen-wrap">
-						<h1>
-							{ __(
-								'What type of website are you building?',
-								'astra-sites'
-							) }
-						</h1>
-
-						<div className="site-list-content">
-							<SiteSearch setSiteData={ setSiteData } />
-
-							<div className="st-templates-content">
-								<div className="st-other-filters">
-									<div className="st-category-filter">
-										<SiteBusinessType
-											parent={ siteBusinessType }
-											menu={ selectedMegaMenu }
-											onClick={ (
-												event,
-												option,
-												childItem
-											) => {
-												dispatch( {
-													type: 'set',
-													siteBusinessType: option.ID,
-													selectedMegaMenu:
-														childItem.ID,
-													siteSearchTerm:
-														childItem.title,
-													onMyFavorite: false,
-													siteOrder: 'popular',
-												} );
-												const urlParam =
-													setURLParmsValue(
-														's',
-														childItem.title
-													);
-												history( `?${ urlParam }` );
-											} }
-										/>
-									</div>
-									<div className="st-type-and-order-filters">
-										<SiteType
-											value={ siteType }
-											onClick={ ( event, type ) => {
-												dispatch( {
-													type: 'set',
-													siteType: type.id,
-													onMyFavorite: false,
-												} );
-											} }
-										/>
-
-										<SiteOrder
-											value={ siteOrder }
-											onClick={ ( event, order ) => {
-												dispatch( {
-													type: 'set',
-													siteOrder: order.id,
-													onMyFavorite: false,
-													siteBusinessType: '',
-													selectedMegaMenu: '',
-													siteSearchTerm: '',
-												} );
-												const urlParam =
-													setURLParmsValue( 's', '' );
-												history( `?${ urlParam }` );
-											} }
-										/>
-									</div>
-								</div>
-
-								{ onMyFavorite ? (
-									<FavoriteSites />
-								) : (
-									<>
-										{ siteCount ? (
-											<>
-												<div className="st-sites-grid">
-													{ siteSearchTerm ? (
-														<div className="st-sites-found-message">
-															{ sprintf(
-																/* translators: %1$s: search term. */
-																__(
-																	'Starter Templates for %1$s:',
-																	'astra-sites'
-																),
-																decodeEntities(
-																	siteSearchTerm
-																)
-															) }
-														</div>
-													) : null }
-
-													{ siteData.gridSkeleton ? (
-														<GridSkeleton />
-													) : (
-														<SiteGrid
-															sites={
-																siteData.sites
-															}
-														/>
-													) }
-												</div>
-											</>
-										) : (
-											<>
-												<NoResultFound
-													searchTerm={
-														siteSearchTerm
-													}
-												/>
-												<RelatedSites
-													sites={ allFilteredSites }
-												/>
-											</>
-										) }
-									</>
+				<>
+					<div
+						className={ `site-list-screen-container ${
+							loadingSkeleton ? 'site-loading' : 'site-loaded'
+						}` }
+					>
+						<SiteListSkeleton />
+						<div className="site-list-screen-wrap">
+							<h1>
+								{ __(
+									'What type of website are you building?',
+									'astra-sites'
 								) }
+							</h1>
+
+							<div className="site-list-content">
+								<SiteSearch setSiteData={ setSiteData } />
+
+								<div className="st-templates-content">
+									<div className="st-other-filters">
+										<div className="st-category-filter">
+											<SiteBusinessType
+												parent={ siteBusinessType }
+												menu={ selectedMegaMenu }
+												onClick={ (
+													event,
+													option,
+													childItem
+												) => {
+													dispatch( {
+														type: 'set',
+														siteBusinessType:
+															option.ID,
+														selectedMegaMenu:
+															childItem.ID,
+														siteSearchTerm:
+															childItem.title,
+														onMyFavorite: false,
+														siteOrder: 'popular',
+													} );
+													const urlParam =
+														setURLParmsValue(
+															's',
+															childItem.title
+														);
+													history( `?${ urlParam }` );
+												} }
+											/>
+										</div>
+										<div className="st-type-and-order-filters">
+											<SiteType
+												value={ siteType }
+												onClick={ ( event, type ) => {
+													dispatch( {
+														type: 'set',
+														siteType: type.id,
+														onMyFavorite: false,
+													} );
+												} }
+											/>
+
+											<SiteOrder
+												value={ siteOrder }
+												onClick={ ( event, order ) => {
+													dispatch( {
+														type: 'set',
+														siteOrder: order.id,
+														onMyFavorite: false,
+														siteBusinessType: '',
+														selectedMegaMenu: '',
+														siteSearchTerm: '',
+													} );
+													const urlParam =
+														setURLParmsValue(
+															's',
+															''
+														);
+													history( `?${ urlParam }` );
+												} }
+											/>
+										</div>
+									</div>
+
+									{ onMyFavorite ? (
+										<FavoriteSites />
+									) : (
+										<>
+											{ siteCount ? (
+												<>
+													<div className="st-sites-grid">
+														{ siteSearchTerm ? (
+															<div className="st-sites-found-message">
+																{ sprintf(
+																	/* translators: %1$s: search term. */
+																	__(
+																		'Starter Templates for %1$s:',
+																		'astra-sites'
+																	),
+																	decodeEntities(
+																		siteSearchTerm
+																	)
+																) }
+															</div>
+														) : null }
+
+														{ siteData.gridSkeleton ? (
+															<GridSkeleton />
+														) : (
+															<SiteGrid
+																sites={
+																	siteData.sites
+																}
+															/>
+														) }
+													</div>
+												</>
+											) : (
+												<>
+													<NoResultFound
+														searchTerm={
+															siteSearchTerm
+														}
+													/>
+													<RelatedSites
+														sites={
+															allFilteredSites
+														}
+													/>
+												</>
+											) }
+										</>
+									) }
+								</div>
 							</div>
 						</div>
 					</div>
-				</div>
+				</>
 			}
 			actions={
 				<>

@@ -1,4 +1,5 @@
 import {
+	ArrowUpTrayIcon,
 	ChevronDownIcon,
 	ChevronUpIcon,
 	MagnifyingGlassIcon,
@@ -7,15 +8,10 @@ import {
 import { useForm } from 'react-hook-form';
 import Masonry from 'react-layout-masonry';
 import apiFetch from '@wordpress/api-fetch';
-import {
-	useEffect,
-	useState,
-	useCallback,
-	useRef,
-	Fragment,
-} from '@wordpress/element';
+import { useEffect, useState, useCallback, useRef } from '@wordpress/element';
 import { compose } from '@wordpress/compose';
 import { withDispatch, useDispatch, useSelect } from '@wordpress/data';
+import { __, sprintf } from '@wordpress/i18n';
 import Tile from './components/tile';
 import SuggestedKeywords from './components/suggested-keywords';
 import Dropdown from './components/dropdown';
@@ -30,29 +26,35 @@ import ImagePreview from './components/image-preview';
 import { clearSessionStorage } from './utils/helpers';
 import { USER_KEYWORD } from './select-template';
 import UploadImage from './components/upload-image';
+import { uploadMedia } from '@wordpress/media-utils';
+import { useDropzone } from 'react-dropzone';
 
 const ORIENTATIONS = {
 	all: {
 		value: 'all',
-		label: 'All',
+		label: __( 'All', 'astra-sites' ),
 	},
 	landscape: {
 		value: 'landscape',
-		label: 'Landscape',
+		label: __( 'Landscape', 'astra-sites' ),
 	},
 	portrait: {
 		value: 'portrait',
-		label: 'Portrait',
+		label: __( 'Portrait', 'astra-sites' ),
 	},
 };
 
 const TABS = [
 	{
-		label: 'Search Results',
+		label: __( 'Search Results', 'astra-sites' ),
 		value: 'all',
 	},
 	{
-		label: 'Selected Images',
+		label: __( 'Upload Your Images', 'astra-sites' ),
+		value: 'upload',
+	},
+	{
+		label: __( 'Selected Images', 'astra-sites' ),
 		value: 'selected',
 	},
 ];
@@ -96,13 +98,20 @@ const getImageSkeleton = ( count = SKELETON_COUNT ) => {
 const Images = ( { onClickPrevious, onClickNext } ) => {
 	const { setWebsiteImagesAIStep, setWebsiteTemplateKeywords } =
 		useDispatch( STORE_KEY );
+	const { acceptedFiles, getRootProps, getInputProps } = useDropzone( {
+		accept: {
+			'image/jpeg': [],
+			'image/png': [],
+		},
+		noClick: true,
+		noKeyboard: true,
+	} );
 
 	const {
 		stepsData: {
 			businessName,
 			selectedImages = [],
 			keywords = [],
-			// imagesPreSelected,
 			businessType,
 			businessDetails,
 			businessContact,
@@ -143,6 +152,7 @@ const Images = ( { onClickPrevious, onClickNext } ) => {
 	const imageRequestCompleted = useRef( false );
 	const blackListedEngines = useRef( new Set() );
 	const previouslySelected = useRef( [ ...selectedImages ] );
+	const uploadImagesBtn = useRef( null );
 
 	const {
 		register,
@@ -217,15 +227,14 @@ const Images = ( { onClickPrevious, onClickNext } ) => {
 		[ selectedImages, setWebsiteImagesAIStep ] // eslint-disable-line
 	);
 
-	const handleClearImageSelection = useCallback(
-		( event ) => {
-			event.preventDefault();
-			event.stopPropagation();
+	const handleClearImageSelection = ( event ) => {
+		event.preventDefault();
+		event.stopPropagation();
 
-			setWebsiteImagesAIStep( [] );
-		},
-		[ setWebsiteImagesAIStep ]
-	);
+		setWebsiteImagesAIStep(
+			selectedImages.filter( ( img ) => ! img.engine )
+		);
+	};
 
 	const handleClickBackToTop = () => {
 		if ( ! scrollContainerRef.current ) {
@@ -281,7 +290,7 @@ const Images = ( { onClickPrevious, onClickNext } ) => {
 		}
 		handleShowBackToTop( event );
 
-		if ( activeTab === TABS[ 1 ].value ) {
+		if ( activeTab === TABS[ 2 ].value ) {
 			return;
 		}
 
@@ -456,6 +465,14 @@ const Images = ( { onClickPrevious, onClickNext } ) => {
 		setFocus( 'keyword' );
 	}, [] );
 
+	const getUploadedImages = ( imagesArray = [] ) => {
+		return imagesArray.filter( ( image ) => ! image.engine );
+	};
+
+	const getSelectedImages = ( imagesArray = [] ) => {
+		return imagesArray.filter( ( image ) => image.engine );
+	};
+
 	const getRenderItems = () => {
 		switch ( activeTab ) {
 			case TABS[ 0 ].value:
@@ -463,10 +480,9 @@ const Images = ( { onClickPrevious, onClickNext } ) => {
 					? [ ...images, ...getImageSkeleton() ]
 					: images;
 			case TABS[ 1 ].value:
-				return [
-					<UploadImage key="upload-images" />,
-					...selectedImages,
-				];
+				return getUploadedImages( selectedImages );
+			case TABS[ 2 ].value:
+				return getSelectedImages( selectedImages );
 			default:
 				return isLoading
 					? [ ...images, ...getImageSkeleton() ]
@@ -480,6 +496,11 @@ const Images = ( { onClickPrevious, onClickNext } ) => {
 		selImages = selectedImages,
 		skip = false
 	) => {
+		if ( ! skip && selImages.length === 0 ) {
+			selImages.push( astraSitesVars?.placeholder_images[ 0 ] );
+			selImages.push( astraSitesVars?.placeholder_images[ 1 ] );
+		}
+
 		await apiFetch( {
 			path: 'zipwp/v1/user-details',
 			method: 'POST',
@@ -528,6 +549,51 @@ const Images = ( { onClickPrevious, onClickNext } ) => {
 		reset( { keyword: '' } );
 	};
 
+	const uploadDroppedFiles = async ( filesList ) => {
+		try {
+			const uploadedImages = [];
+			await uploadMedia( {
+				filesList,
+				allowedTypes: [ 'image' ],
+				onFileChange: ( files ) => {
+					if ( ! files.every( ( file ) => !! file.id ) ) {
+						return;
+					}
+					files.forEach( ( file ) => uploadedImages.push( file ) );
+				},
+				onError: ( error ) => console.error( error ),
+			} );
+
+			setWebsiteImagesAIStep( [
+				...selectedImages,
+				...uploadedImages.map( ( image ) => ( {
+					id: String( image.id ),
+					url: image?.originalImageURL ?? image.url,
+					optimized_url: image?.sizes?.large?.url ?? image.url,
+					engine: '',
+					description: '',
+					orientation:
+						image?.orientation ??
+						( image?.width > image?.height
+							? 'landscape'
+							: 'portrait' ),
+					author_name: image?.author_name ?? '',
+					author_url: '',
+				} ) ),
+			] );
+		} catch ( error ) {
+			// Handle error
+			console.error( error );
+		}
+	};
+
+	useEffect( () => {
+		if ( ! acceptedFiles?.length ) {
+			return;
+		}
+		uploadDroppedFiles( acceptedFiles );
+	}, [ acceptedFiles ] );
+
 	return (
 		<div
 			className="w-full flex flex-col flex-auto h-full overflow-y-auto"
@@ -552,17 +618,19 @@ const Images = ( { onClickPrevious, onClickNext } ) => {
 						} }
 						error={ errors?.keyword }
 						prefixIcon={
-							<button
-								type="button"
-								className="w-auto h-auto p-0 flex items-center justify-center cursor-pointer bg-transparent border-0 focus:outline-none"
-								onClick={ handleClearSearch }
-							>
-								{ watchedKeyword ? (
-									<XMarkIcon className="w-5 h-5 text-zip-app-inactive-icon" />
-								) : (
-									<MagnifyingGlassIcon className="w-5 h-5 text-zip-app-inactive-icon" />
-								) }
-							</button>
+							<div className="absolute left-4 flex items-center">
+								<button
+									type="button"
+									className="w-auto h-auto p-0 flex items-center justify-center cursor-pointer bg-transparent border-0 focus:outline-none"
+									onClick={ handleClearSearch }
+								>
+									{ watchedKeyword ? (
+										<XMarkIcon className="w-5 h-5 text-zip-app-inactive-icon" />
+									) : (
+										<MagnifyingGlassIcon className="w-5 h-5 text-zip-app-inactive-icon" />
+									) }
+								</button>
+							</div>
 						}
 					/>
 				</form>
@@ -591,21 +659,42 @@ const Images = ( { onClickPrevious, onClickNext } ) => {
 										data-title={ tab.label }
 									>
 										{ tab.label }
+										{ tab.value === TABS[ 2 ].value &&
+											!! getSelectedImages(
+												selectedImages
+											)?.length &&
+											` (${
+												getSelectedImages(
+													selectedImages
+												)?.length
+											})` }
 										{ tab.value === TABS[ 1 ].value &&
-											!! selectedImages?.length &&
-											` (${ selectedImages.length })` }
+											!! getUploadedImages(
+												selectedImages
+											)?.length &&
+											` (${
+												getUploadedImages(
+													selectedImages
+												)?.length
+											})` }
 									</button>
 								) ) }
 							</div>
 						</div>
-						{ activeTab === TABS[ 0 ].value ? (
+						{ activeTab === TABS[ 0 ].value && (
 							<Dropdown
 								placement="right"
 								trigger={
 									<div className="flex items-center gap-2 min-w-[100px] cursor-pointer">
 										<span className="text-sm font-normal text-body-text leading-[150%]">
-											Orientation: { '' }
-											{ orientation.label }
+											{ sprintf(
+												/* translators: %s: Orientation */
+												__(
+													'Orientation: %s',
+													'astra-sites'
+												),
+												orientation.label
+											) }
 										</span>
 										<ChevronDownIcon className="w-5 h-5 text-app-inactive-icon" />
 									</div>
@@ -634,15 +723,37 @@ const Images = ( { onClickPrevious, onClickNext } ) => {
 									)
 								) }
 							</Dropdown>
-						) : (
+						) }
+						{ activeTab === TABS[ 2 ].value &&
 							!! selectedImages?.length && (
 								<button
 									onClick={ handleClearImageSelection }
 									className="px-1 py-px bg-transparent border border-solid border-border-primary rounded text-xs leading-4 text-body-text cursor-pointer"
 								>
-									Clear
+									{ __( 'Clear', 'astra-sites' ) }
 								</button>
-							)
+							) }
+						{ activeTab === TABS[ 1 ].value && (
+							<UploadImage
+								render={ ( { open } ) => (
+									<button
+										ref={ uploadImagesBtn }
+										className="px-0 bg-transparent border-none rounded text-xs leading-5 font-semibold text-accent-st cursor-pointer inline-flex items-center justify-end gap-2"
+										onClick={ open }
+									>
+										<ArrowUpTrayIcon
+											className="w-4 h-4 text-zip-app-inactive-icon"
+											strokeWidth={ 2 }
+										/>
+										<span>
+											{ __(
+												'Upload Your Images',
+												'astra-sites'
+											) }
+										</span>
+									</button>
+								) }
+							/>
 						) }
 					</div>
 				</div>
@@ -670,6 +781,7 @@ const Images = ( { onClickPrevious, onClickNext } ) => {
 										isSelected={ isSelected( image ) }
 										onClick={ handleImageSelection }
 										variant={
+											activeTab === TABS[ 2 ].value ||
 											activeTab === TABS[ 1 ].value
 												? 'selection'
 												: 'default'
@@ -683,6 +795,47 @@ const Images = ( { onClickPrevious, onClickNext } ) => {
 					) }
 				</AnimatePresence>
 
+				{ activeTab === TABS[ 1 ].value && ! renderImages.length && (
+					<div
+						className={ classNames(
+							'relative flex flex-col items-center justify-center gap-3 py-[3.125rem] px-4 bg-preview-background border border-dashed border-border-tertiary rounded cursor-pointer'
+						) }
+						{ ...getRootProps() }
+					>
+						<input { ...getInputProps() } />
+						<ArrowUpTrayIcon className="w-6 h-6 text-zip-app-inactive-icon" />
+						<p className="text-zip-body-text text-base">
+							<span className="text-accent-st min-w-fit break-keep text-nowrap whitespace-nowrap font-semibold mr-1">
+								{ __( 'Upload images', 'astra-sites' ) }
+							</span>
+							{ __( 'or drop your images here', 'astra-sites' ) }
+						</p>
+						<p className="text-zip-body-text text-base">
+							{ __( 'PNG, JPG, JPEG', 'astra-sites' ) }
+						</p>
+						<div
+							className="absolute inset-0"
+							onClick={ () => {
+								if ( ! uploadImagesBtn?.current ) {
+									return;
+								}
+								uploadImagesBtn?.current.click();
+							} }
+						/>
+					</div>
+				) }
+
+				{ activeTab === TABS[ 2 ].value && ! renderImages.length && (
+					<div className="flex flex-col items-center justify-center h-full">
+						<p className="text-secondary-text text-center px-10 py-5 border-2 border-dashed border-border-primary rounded-md">
+							{ __(
+								'You have not selected any images yet.',
+								'astra-sites'
+							) }
+						</p>
+					</div>
+				) }
+
 				{ activeTab === TABS[ 0 ].value &&
 					! isLoading &&
 					! images.length &&
@@ -691,16 +844,22 @@ const Images = ( { onClickPrevious, onClickNext } ) => {
 							<p className="text-secondary-text text-center px-10 py-5 border-2 border-dashed border-border-primary rounded-md">
 								{ ! keyword.length ? (
 									<>
-										Find the perfect images for your website
-										by entering a keyword or selecting from
-										the suggested options.
+										{ __(
+											'Find the perfect images for your website by entering a keyword or selecting from the suggested options.',
+											'astra-sites'
+										) }
 									</>
 								) : (
 									<>
-										We couldn`t find anything with your
-										keyword.
+										{ __(
+											"We couldn't find anything with your keyword.",
+											'astra-sites'
+										) }
 										<br />
-										Try to refine your search.
+										{ __(
+											'Try to refine your search.',
+											'astra-sites'
+										) }
 									</>
 								) }
 							</p>
@@ -712,18 +871,13 @@ const Images = ( { onClickPrevious, onClickNext } ) => {
 					!! images.length && (
 						<div className="pb-5 pt-10 flex flex-col items-center justify-center h-full">
 							<p className="text-secondary-text text-sm leading-5 text-center after:mx-2.5 after:content-[''] after:inline-block after:w-5 sm:after:w-12 after:h-px after:bg-app-border after:relative after:-top-[5px] before:mx-2.5 before:content-[''] before:inline-block before:w-5 sm:before:w-12 before:h-px before:bg-app-border before:relative before:-top-[5px]">
-								End of the search results
+								{ __(
+									'End of the search results',
+									'astra-sites'
+								) }
 							</p>
 						</div>
 					) }
-
-				{ /* { activeTab === TABS[ 1 ].value && ! selectedImages.length && (
-					<div className="flex flex-col items-center justify-center h-full">
-						<p className="text-secondary-text text-center px-10 py-5 border-2 border-dashed border-border-primary rounded-md">
-							No images are selected yet.
-						</p>
-					</div>
-				) } */ }
 			</div>
 			{ /* Back to the top */ }
 			{ backToTop && (

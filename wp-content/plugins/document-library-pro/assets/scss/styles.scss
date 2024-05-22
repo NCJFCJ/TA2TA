@@ -1,5 +1,6 @@
 $prefix: 'posts-table';
 $table-class: '.posts-data-table';
+$icon-font-path: '../../dependencies/barn2/barn2-lib/assets/fonts';
 
 @import "../../dependencies/barn2/datatables/assets/scss/index";
 @import "main";

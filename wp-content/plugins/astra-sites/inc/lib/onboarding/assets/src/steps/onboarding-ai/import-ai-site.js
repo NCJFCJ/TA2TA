@@ -1,17 +1,11 @@
 import React, { useEffect, useMemo, useRef, useState } from 'react';
-// import Lottie from 'react-lottie-player';
 import { CircularProgressBar } from '@tomickigrzegorz/react-circular-progress-bar';
 import { __, sprintf } from '@wordpress/i18n';
-// import PreviousStepLink from '../../components/util/previous-step-link/index';
-// import DefaultStep from '../../components/default-step/index';
 import { withDispatch, useSelect } from '@wordpress/data';
 import { compose } from '@wordpress/compose';
 import apiFetch from '@wordpress/api-fetch';
 import ImportLoaderAi from '../../components/import-steps/import-loader-ai';
-// import ErrorScreen from '../../components/error/index';
 import { useStateValue } from '../../store/store';
-// import lottieJson from '../../../images/website-building.json';
-// import ICONS from '../../../icons';
 import sseImport from '../import-site/sse-import';
 import {
 	installAstra,
@@ -19,12 +13,12 @@ import {
 	checkRequiredPlugins,
 	checkFileSystemPermissions,
 	generateAnalyticsLead,
-	// exportAiSite,
 	getAiDemo,
 	setSiteLogo,
 	setColorPalettes,
 	setSiteTitle,
 	saveTypography,
+	setSiteLanguage,
 } from '../import-site/import-utils';
 const { reportError } = starterTemplates;
 let sendReportFlag = reportError;
@@ -63,7 +57,13 @@ const ImportAiSite = ( { onClickNext } ) => {
 
 	const {
 		websiteInfo,
-		aiStepData: { businessName, selectedTemplate, selectedImages },
+		aiStepData: {
+			businessName,
+			selectedTemplate,
+			selectedImages,
+			siteLanguage,
+			siteLanguageList,
+		},
 	} = useSelect( ( select ) => {
 		const { getWebsiteInfo, getAIStepData } = select( STORE_KEY );
 		return {
@@ -187,10 +187,14 @@ const ImportAiSite = ( { onClickNext } ) => {
 	const customizeWebsite = async () => {
 		const [ { aiSiteLogo, aiActiveTypography, aiActivePallette } ] =
 			storedState;
+		const languageItem = siteLanguageList.find(
+			( item ) => item.code === siteLanguage
+		);
 		await setSiteLogo( aiSiteLogo );
 		await setColorPalettes( JSON.stringify( aiActivePallette ) );
 		await setSiteTitle( businessName );
 		await saveTypography( aiActiveTypography );
+		await setSiteLanguage( languageItem?.[ 'wordpress-code' ] ?? 'en_US' );
 	};
 
 	const { stepsData } = useSelect( ( select ) => {
@@ -214,14 +218,6 @@ const ImportAiSite = ( { onClickNext } ) => {
 		let imageDownloadStatus = false;
 
 		resetStatus = await resetOldSite();
-
-		// if ( resetStatus ) {
-		// 	cfStatus = await importCartflowsFlows();
-		// }
-
-		// if ( cfStatus ) {
-		// 	formsStatus = await importForms();
-		// }
 
 		if ( resetStatus ) {
 			imageDownloadStatus = await downloadImages();
@@ -1060,6 +1056,15 @@ const ImportAiSite = ( { onClickNext } ) => {
 			formData.append( '_ajax_nonce', astraSitesVars._ajax_nonce );
 			formData.append( 'index', index );
 			try {
+				dispatch( {
+					type: 'set',
+					importStatus: sprintf(
+						//translators: %s: Image number.
+						__( 'Downloading Image %s', 'astra-sites' ),
+						index + 1
+					),
+				} );
+
 				const response = await fetch( ajaxurl, {
 					method: 'POST',
 					body: formData,
@@ -1067,16 +1072,7 @@ const ImportAiSite = ( { onClickNext } ) => {
 
 				const data = await response.json();
 
-				if ( data.success ) {
-					dispatch( {
-						type: 'set',
-						importStatus: sprintf(
-							//translators: %s: Image number.
-							__( 'Downloading Image %s', 'astra-sites' ),
-							index + 1
-						),
-					} );
-				} else {
+				if ( ! data.success ) {
 					report(
 						__( 'Downloading images failed.', 'astra-sites' ),
 						'',
@@ -1305,15 +1301,17 @@ const ImportAiSite = ( { onClickNext } ) => {
 		};
 
 		evtSource.onerror = ( error ) => {
-			evtSource.close();
-			report(
-				__(
-					'Importing Site Content Failed. - Import Process Interrupted',
-					'astra-sites'
-				),
-				'',
-				error
-			);
+			if ( ! ( error && error?.isTrusted ) ) {
+				evtSource.close();
+				report(
+					__(
+						'Importing Site Content Failed. - Import Process Interrupted',
+						'astra-sites'
+					),
+					'',
+					error
+				);
+			}
 		};
 
 		evtSource.addEventListener( 'log', function ( message ) {

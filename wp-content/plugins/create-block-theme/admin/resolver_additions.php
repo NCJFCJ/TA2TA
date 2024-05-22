@@ -21,16 +21,17 @@ function augment_resolver_with_utilities() {
 		 * 'variation' will include just the user custom styles and settings.
 		 */
 		public static function export_theme_data( $content, $extra_theme_data = null ) {
+			$current_theme = wp_get_theme();
 			if ( class_exists( 'WP_Theme_JSON_Gutenberg' ) ) {
 				$theme = new WP_Theme_JSON_Gutenberg();
 			} else {
 				$theme = new WP_Theme_JSON();
 			}
 
-			if ( 'all' === $content && wp_get_theme()->parent() ) {
+			if ( 'all' === $content && $current_theme->parent() ) {
 				// Get parent theme.json.
 				$parent_theme_json_data = static::read_json_file( static::get_file_path_from_theme( 'theme.json', true ) );
-				$parent_theme_json_data = static::translate( $parent_theme_json_data, wp_get_theme()->parent()->get( 'TextDomain' ) );
+				$parent_theme_json_data = static::translate( $parent_theme_json_data, $current_theme->parent()->get( 'TextDomain' ) );
 
 				// Get the schema from the parent JSON.
 				$schema = $parent_theme_json_data['$schema'];
@@ -63,6 +64,7 @@ function augment_resolver_with_utilities() {
 				$theme->merge( $theme_theme );
 			}
 
+			// Merge the User Data
 			if ( class_exists( 'WP_Theme_JSON_Resolver_Gutenberg' ) ) {
 				$theme->merge( WP_Theme_JSON_Resolver_Gutenberg::get_user_data() );
 			} else {
@@ -93,9 +95,38 @@ function augment_resolver_with_utilities() {
 			$data['$schema'] = $schema;
 			$theme_json      = wp_json_encode( $data, JSON_PRETTY_PRINT | JSON_UNESCAPED_SLASHES | JSON_UNESCAPED_UNICODE );
 			return preg_replace( '~(?:^|\G)\h{4}~m', "\t", $theme_json );
-
 		}
 
+		public static function get_theme_file_contents() {
+			$theme_json_data = static::read_json_file( static::get_file_path_from_theme( 'theme.json' ) );
+			return $theme_json_data;
+		}
+
+		public static function write_theme_file_contents( $theme_json_data ) {
+			$theme_json = wp_json_encode( $theme_json_data, JSON_PRETTY_PRINT | JSON_UNESCAPED_SLASHES | JSON_UNESCAPED_UNICODE );
+			file_put_contents( static::get_file_path_from_theme( 'theme.json' ), $theme_json );
+			static::clean_cached_data();
+		}
+
+		public static function write_user_settings( $user_settings ) {
+			$global_styles_id = static::get_user_global_styles_post_id();
+			$request          = new WP_REST_Request( 'POST', '/wp/v2/global-styles/' . $global_styles_id );
+			$request->set_param( 'settings', $user_settings );
+			rest_do_request( $request );
+			static::clean_cached_data();
+		}
+
+		public static function clean_cached_data() {
+			parent::clean_cached_data();
+
+			if ( class_exists( 'WP_Theme_JSON_Resolver_Gutenberg' ) ) {
+				WP_Theme_JSON_Resolver_Gutenberg::clean_cached_data();
+			}
+
+			//TODO: Clearing the cache should clear this too.
+			// Does this clear the Gutenberg equivalent?
+			static::$theme_json_file_cache = array();
+		}
 	}
 }
 

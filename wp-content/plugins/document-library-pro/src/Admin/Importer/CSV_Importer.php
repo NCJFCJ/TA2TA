@@ -1,17 +1,17 @@
 <?php
 namespace Barn2\Plugin\Document_Library_Pro\Admin\Importer;
 
-use Barn2\Plugin\Document_Library_Pro\Document,
-	Barn2\Plugin\Document_Library_Pro\Taxonomies,
-	Barn2\Plugin\Document_Library_Pro\Util\Util,
-	Barn2\Plugin\Document_Library_Pro\Post_Type;
+use Barn2\Plugin\Document_Library_Pro\Document;
+use Barn2\Plugin\Document_Library_Pro\Taxonomies;
+use Barn2\Plugin\Document_Library_Pro\Util\Util;
+use Barn2\Plugin\Document_Library_Pro\Post_Type;
 
 defined( 'ABSPATH' ) || exit;
 /**
  * This class is the controller for the CSV Import
  *
- * @package   Barn2/document-library-pro
- * @author    Barn2 Plugins <info@barn2.com>
+ * @package   Barn2\document-library-pro
+ * @author    Barn2 Plugins <support@barn2.com>
  * @license   GPL-3.0
  * @copyright Barn2 Media Ltd
  */
@@ -704,12 +704,26 @@ class CSV_Importer {
 
 		// Handle special column names which span multiple columns.
 		$meta_data  = [];
+		$acf        = [];
+		$ept        = [];
 		$taxonomies = [];
 
 		foreach ( $data as $key => $value ) {
 			if ( $this->starts_with( $key, 'cf:' ) ) {
 				$meta_data[] = [
 					'key'   => str_replace( 'cf:', '', $key ),
+					'value' => $value,
+				];
+				unset( $data[ $key ] );
+			} elseif ( $this->starts_with( $key, 'acf:' ) ) {
+				$acf[] = [
+					'key'   => str_replace( 'acf:', '', $key ),
+					'value' => $value,
+				];
+				unset( $data[ $key ] );
+			} elseif ( $this->starts_with( $key, 'ept:' ) ) {
+				$ept[] = [
+					'key'   => str_replace( 'ept:', '', $key ),
 					'value' => $value,
 				];
 				unset( $data[ $key ] );
@@ -722,6 +736,14 @@ class CSV_Importer {
 
 		if ( ! empty( $meta_data ) ) {
 			$data['meta_data'] = $meta_data;
+		}
+
+		if ( ! empty( $acf ) ) {
+			$data['acf'] = $acf;
+		}
+
+		if ( ! empty( $ept ) ) {
+			$data['ept'] = $ept;
 		}
 
 		if ( ! empty( $taxonomies ) ) {

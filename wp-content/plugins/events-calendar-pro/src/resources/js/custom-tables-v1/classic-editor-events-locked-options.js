@@ -18,6 +18,8 @@ window.tec = window.tec || {};
 tec.classicEditorEvents = tec.classicEditorEvents || {};
 tec.classicEditorEvents.lockedOptions = tec.classicEditorEvents.lockedOptions || {};
 
+dayjs.extend(window.dayjs_plugin_isoWeek);
+
 /**
  * Handles the locked options cases of recurrence and exclusions.
  *

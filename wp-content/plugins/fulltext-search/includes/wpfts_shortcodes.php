@@ -1,7 +1,7 @@
 <?php
 
 /**  
- * Copyright 2013-2023 Epsiloncool
+ * Copyright 2013-2024 Epsiloncool
  *
  *  This program is free software: you can redistribute it and/or modify
  *  it under the terms of the GNU General Public License as published by
@@ -22,7 +22,7 @@
  *  It will keep me working further on this useful product.
  ******************************************************************************
  * 
- *  @copyright 2013-2023
+ *  @copyright 2013-2024
  *  @license GPLv3
  *  @package WP Fast Total Search
  *  @author Epsiloncool <info@e-wm.org>
@@ -58,20 +58,20 @@ add_shortcode('wpfts_widget', function($atts)
 
 	ob_start();
 	?>
-	<div class="wpfts_widget wpfts_search_widget presetid-<?php echo $preset_id2; ?><?php echo strlen($class) > 0 ? ' '.$class : ''; ?>">
+	<div class="wpfts_widget wpfts_search_widget presetid-<?php echo esc_attr($preset_id2); ?><?php echo strlen($class) > 0 ? ' '.esc_attr($class) : ''; ?>">
 		<?php
 			if ($title) {
-				echo '<span class="widget-title">' . $title . '</span>';
+				echo '<span class="widget-title">' . esc_attr($title) . '</span>';
 			}
 		?>
-		<form role="search" class="wpfts_search_form-<?php echo htmlspecialchars($preset_id2); ?> search-form <?php echo $preset['autocomplete_mode'] ? ' wpfts_autocomplete': ''; ?>" action="<?php echo htmlspecialchars($preset['results_url']); ?>" method="get">
-			<?php echo (strlen($preset_id) > 0) ? '<input type="hidden" name="wpfts_wdgt" value="'.htmlspecialchars($preset_id).'">' : ''; ?>
+		<form role="search" class="wpfts_search_form-<?php echo esc_attr($preset_id2); ?> search-form <?php echo $preset['autocomplete_mode'] ? ' wpfts_autocomplete': ''; ?>" action="<?php echo htmlspecialchars($preset['results_url']); ?>" method="get">
+			<?php echo (strlen($preset_id) > 0) ? '<input type="hidden" name="wpfts_wdgt" value="'.esc_attr($preset_id).'">' : ''; ?>
 			<label>
 				<span class="screen-reader-text"><?php echo __('Search for:', 'fulltext-search'); ?></span>
-				<input type="search" class="search-field" placeholder="<?php echo $placeholder; ?>" value="<?php echo get_search_query(); ?>" name="s">
+				<input type="search" class="search-field" placeholder="<?php echo esc_attr($placeholder); ?>" value="<?php echo esc_attr(get_search_query()); ?>" name="s">
 			</label>
 			<?php if ($hide_button != 1) {
-				?><input type="submit" class="search-submit" value="<?php echo $button_text; ?>"><?php
+				?><input type="submit" class="search-submit" value="<?php echo esc_attr($button_text); ?>"><?php
 				}
 			?>
 		</form>

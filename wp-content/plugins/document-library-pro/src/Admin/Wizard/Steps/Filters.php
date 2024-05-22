@@ -3,15 +3,15 @@
 namespace Barn2\Plugin\Document_Library_Pro\Admin\Wizard\Steps;
 
 use Barn2\Plugin\Document_Library_Pro\Dependencies\Setup_Wizard\Api;
-use Barn2\Plugin\Document_Library_Pro\Dependencies\Setup_Wizard\Step,
-	Barn2\Plugin\Document_Library_Pro\Util\Options,
-	Barn2\Plugin\Document_Library_Pro\Dependencies\Lib\Util as Lib_Util;
+use Barn2\Plugin\Document_Library_Pro\Dependencies\Setup_Wizard\Step;
+use Barn2\Plugin\Document_Library_Pro\Util\Options;
+use Barn2\Plugin\Document_Library_Pro\Dependencies\Lib\Util as Lib_Util;
 
 /**
  * Filters Settings Step.
  *
- * @package   Barn2/document-library-pro
- * @author    Barn2 Plugins <info@barn2.com>
+ * @package   Barn2\document-library-pro
+ * @author    Barn2 Plugins <support@barn2.com>
  * @license   GPL-3.0
  * @copyright Barn2 Media Ltd
  */

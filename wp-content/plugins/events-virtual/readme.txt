@@ -3,9 +3,15 @@
 Contributors: theeventscalendar, aguseo, borkweb, bordoni, brianjessee, Camwyn, juanfra, leahkoerper, lirianojoel, lucatume, neillmcshea, rafsuntaskin, zbtirrell
 Tags: virtual events, events, calendar, event, venue, organizer, dates, date, schema, conference, online events, concert, meeting, seminar, summit, class, the events calendar, tec, zoom, livestream
 Donate link: https://evnt.is/29
+<<<<<<< HEAD
 Requires at least: 6.1.0
 Tested up to: 6.4.3
-Stable tag: 1.15.6
+Stable tag: 1.15.8
+=======
+Requires at least: 6.2
+Tested up to: 6.5
+Stable tag: 1.15.7
+>>>>>>> master
 Requires PHP: 7.4
 License: GPLv2 or later
 License URI: http://www.gnu.org/licenses/gpl-2.0.html
@@ -120,6 +126,15 @@ Our premium products:
 * <a href="https://evnt.is/1ako" target="_blank">Image Widget Plus</a>
 
 == Changelog ==
+
+= [1.15.8] 2024-04-18 =
+
+* Fix - Corrected the template override paths to include the `events-virtual` folder. [ET-2064]
+* Language - 0 new strings added, 0 updated, 0 fuzzied, and 0 obsoleted
+
+= [1.15.7] 2024-04-09 =
+
+* Tweak - Added the filter `tec_events_virtual_export_should_override_venue_location` which will allow virtual event meeting URL's to override Venue addresses in the exported calendar location field. [VE-581]
 
 = [1.15.6] 2024-02-19 =
 

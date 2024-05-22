@@ -2,12 +2,12 @@
 
 namespace Barn2\Plugin\Document_Library_Pro;
 
-use Barn2\Plugin\Document_Library_Pro\Posts_Table_Pro\Table_Args,
-	Barn2\Plugin\Document_Library_Pro\Posts_Table_Pro\Table_Query,
-	Barn2\Plugin\Document_Library_Pro\Frontend_Scripts,
-	Barn2\Plugin\Document_Library_Pro\Util\SVG_Icon,
-	Barn2\Plugin\Document_Library_Pro\Util\Options,
-	Barn2\Plugin\Document_Library_Pro\Taxonomies;
+use Barn2\Plugin\Document_Library_Pro\Posts_Table_Pro\Table_Args;
+use Barn2\Plugin\Document_Library_Pro\Posts_Table_Pro\Table_Query;
+use Barn2\Plugin\Document_Library_Pro\Frontend_Scripts;
+use Barn2\Plugin\Document_Library_Pro\Util\SVG_Icon;
+use Barn2\Plugin\Document_Library_Pro\Util\Options;
+use Barn2\Plugin\Document_Library_Pro\Taxonomies;
 
 defined( 'ABSPATH' ) || exit;
 
@@ -284,7 +284,7 @@ class Folder_Tree {
 				'include'    => $remaining_sub_categories_ids,
 				'orderby'    => apply_filters( 'document_library_pro_folder_orderby', $this->args->get_args()['folders_order_by'] ),
 				'order'      => $this->args->get_args()['folders_order'],
-				'hide_empty' => false,
+				'hide_empty' => true,
 			]
 		);
 
@@ -316,7 +316,7 @@ class Folder_Tree {
 				'include'    => $top_level_ids,
 				'orderby'    => apply_filters( 'document_library_pro_folder_orderby', $this->args->get_args()['folders_order_by'] ),
 				'order'      => $this->args->get_args()['folders_order'],
-				'hide_empty' => false,
+				'hide_empty' => true,
 			]
 		);
 
@@ -367,7 +367,7 @@ class Folder_Tree {
 					'parent'     => $category_id,
 					'orderby'    => apply_filters( 'document_library_pro_folder_orderby', $this->args->get_args()['folders_order_by'] ),
 					'order'      => $this->args->get_args()['folders_order'],
-					'hide_empty' => false,
+					'hide_empty' => true,
 				]
 			);
 	
@@ -448,14 +448,22 @@ class Folder_Tree {
 				foreach ( $categories as $category_id => $subcategories ) :
 					$term   = get_term( $category_id );
 					$status = $this->get_term_status( $term );
-
 					?>
 					<li class="dlp-folder dlp-folder <?php echo esc_attr( $status ); ?>" data-category-id="<?php echo esc_attr( $category_id ); ?>">
 						<span class="dlp-category">
 							<?php SVG_Icon::render( 'folder', [], $folder_color ); ?>
 							<?php SVG_Icon::render( 'folder_open', [], $folder_color ); ?>
 							<span class="dlp-folder-label">
-								<span class="dlp-category-name"><?php echo esc_html( $term->name ); ?></span>
+							<span class="dlp-category-name"><?php echo esc_html( $term->name ); ?></span>
+							<?php
+							$description = $term->description;
+							if ( $description != '' && apply_filters( 'document_library_pro_should_display_category_description_in_folder', false ) ) {
+								if ( isset( Options::get_shortcode_options()['shortcodes'] ) && Options::get_shortcode_options()['shortcodes'] ) {
+									$description = do_shortcode( $description );
+								}
+								?>
+							<span class="dlp-category-description"><?php echo wp_kses_post( $description ); ?></span>
+							<?php } ?>
 							</span>
 						</span>
 
@@ -520,6 +528,10 @@ class Folder_Tree {
 		$search_position = $this->args->get_args()['search_box'];
 		$search_html     = '';
 
+		if ( $search_position === 'true' || $search_position === true ) {
+			$search_position = 'top';
+		}
+
 		// Search Input
 		if ( in_array( $search_position, [ $context, 'both' ], true ) ) {
 			$search_label       = apply_filters( 'document_library_pro_search_label', __( 'Search:', 'document-library-pro' ) );
@@ -546,7 +558,7 @@ class Folder_Tree {
 	private function maybe_output_search_results_container() {
 		$search_position = $this->args->get_args()['search_box'];
 
-		if ( ! in_array( $search_position, [ 'top', 'bottom', 'both' ], true ) ) {
+		if ( ! in_array( $search_position, [ 'top', 'bottom', 'both', 'true', true ], true ) ) {
 			return;
 		}
 

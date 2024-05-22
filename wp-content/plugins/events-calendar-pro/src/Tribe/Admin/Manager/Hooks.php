@@ -83,7 +83,7 @@ class Hooks extends Service_Provider {
 	}
 
 	/**
-	 * Set the tribe_events shortcode to display if in the dashboard and on the manager page.
+	 * Set the tribe_events shortcode to display when it's in the dashboard and on the manager page.
 	 *
 	 * @since 5.9.0
 	 */
@@ -115,7 +115,7 @@ class Hooks extends Service_Provider {
 	}
 
 	/**
-	 * Modify link on the Administration Bar for Editing Events.
+	 * Modify the link on the Administration Bar for Editing Events.
 	 *
 	 * @since 5.9.0
 	 *
@@ -130,9 +130,9 @@ class Hooks extends Service_Provider {
 	 *
 	 * @since 5.9.0
 	 *
-	 * @param  string    $slug    The current view Slug.
-	 * @param  array     $params  Params so far that will be used to build this view.
-	 * @param  Request   $request The rest request that generated this call.
+	 * @param string  $slug    The current view Slug.
+	 * @param array   $params  Params so far that will be used to build this view.
+	 * @param Request $request The REST request that generated this call.
 	 */
 	public function action_shortcode_toggle_hooks( $slug, $params, Request $request ) {
 		$this->container->make( Shortcode::class )->maybe_toggle_hooks_for_rest( $slug, $params, $request );
@@ -146,11 +146,12 @@ class Hooks extends Service_Provider {
 	 *
 	 * @since 5.10.0
 	 *
-	 * @param string|null $submenu_file
+	 * @param string|null $submenu_file A path to the file.
 	 *
+	 * @return string
 	 */
 	public function change_default_events_menu_url( $submenu_file ) {
-		$this->container->make( Page::class )->change_default_events_menu_url( $submenu_file );
+		return $this->container->make( Page::class )->change_default_events_menu_url( $submenu_file );
 	}
 
 	/**

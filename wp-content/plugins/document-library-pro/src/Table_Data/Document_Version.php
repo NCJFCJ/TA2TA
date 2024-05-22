@@ -1,8 +1,8 @@
 <?php
 namespace Barn2\Plugin\Document_Library_Pro\Table_Data;
 
-use Barn2\Plugin\Document_Library_Pro\Posts_Table_Pro\Data\Abstract_Table_Data,
-	Barn2\Plugin\Document_Library_Pro\Document;
+use Barn2\Plugin\Document_Library_Pro\Posts_Table_Pro\Data\Abstract_Table_Data;
+use Barn2\Plugin\Document_Library_Pro\Document;
 
 defined( 'ABSPATH' ) || exit;
 /**

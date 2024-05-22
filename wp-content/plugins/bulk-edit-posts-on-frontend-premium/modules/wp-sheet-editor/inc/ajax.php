@@ -414,7 +414,7 @@ if ( ! class_exists( 'WP_Sheet_Editor_Ajax' ) ) {
 				wp_send_json_error( array( 'message' => __( 'Missing parameters.', 'vg_sheet_editor' ) ) );
 			}
 			if ( ! VGSE()->helpers->verify_nonce_from_request() || ! VGSE()->helpers->user_can_manage_options() ) {
-				wp_send_json_error( array( 'message' => __( 'You dont have enough permissions to search taxonomy terms.', 'vg_sheet_editor' ) ) );
+				wp_send_json_error( array( 'message' => __( 'You dont have enough permissions to perform this action.', 'vg_sheet_editor' ) ) );
 			}
 			$post_types = array_map( array( VGSE()->helpers, 'sanitize_table_key' ), $_REQUEST['post_types'] );
 			$append     = sanitize_text_field( $_REQUEST['append'] );
@@ -472,7 +472,7 @@ if ( ! class_exists( 'WP_Sheet_Editor_Ajax' ) ) {
 					continue;
 				}
 				if ( ! isset( $registered_settings[ $key ] ) ) {
-					$new_settings[ $key ] = sanitize_text_field( $value );
+					$new_settings[ $key ] = sanitize_text_field( wp_unslash( $value ) );
 					continue;
 				}
 				$args = $registered_settings[ $key ];
@@ -492,7 +492,7 @@ if ( ! class_exists( 'WP_Sheet_Editor_Ajax' ) ) {
 				} elseif ( $args['type'] === 'new_select' && ! empty( $args['multi'] ) ) {
 					$new_settings[ $key ] = array_map( 'sanitize_text_field', $value );
 				} else {
-					$new_settings[ $key ] = sanitize_text_field( $value );
+					$new_settings[ $key ] = sanitize_text_field( wp_unslash( $value ) );
 				}
 			}
 			return $new_settings;

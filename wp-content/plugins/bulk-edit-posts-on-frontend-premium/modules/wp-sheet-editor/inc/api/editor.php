@@ -35,13 +35,6 @@ if ( ! class_exists( 'WP_Sheet_Editor_Factory' ) ) {
 			// Priority 20 because these submenus depend on the main wpse menu, which might not be registered at priority 10 execution
 			add_action( 'admin_menu', array( $this, 'register_menu' ), 20 );
 
-			// When we bootstrap 2 separate spreadsheets for different post types,
-			// if the current sheet loaded is for a post type not enabled in this bootstrap config,
-			// don't bootstrap to avoid loading two spreadsheets in the same page
-			if ( ! defined( 'WPSE_DISABLE_DOUBLE_SHEET_PROTECTION' ) && ! in_array( $this->args['provider'], $this->args['enabled_post_types'] ) ) {
-				return;
-			}
-
 			// If is spreadsheet page and this $editor is not related to the active spreadsheet, don't initialize it
 			$current_provider_in_page = VGSE()->helpers->get_provider_from_query_string();
 			if ( VGSE()->helpers->is_editor_page() && ! in_array( $current_provider_in_page, $this->args['enabled_post_types'] ) ) {
@@ -50,17 +43,34 @@ if ( ! class_exists( 'WP_Sheet_Editor_Factory' ) ) {
 
 			do_action( 'vg_sheet_editor/editor/before_init', $this );
 
+			$class_key = VGSE()->helpers->get_data_provider_class_key( $this->args['provider'] );
+			if ( isset( VGSE()->editors[ $class_key ] ) ) {
+				$current_provider_from_request                            = VGSE()->helpers->get_provider_from_query_string( false );
+				VGSE()->editors[ $class_key ]->args['enabled_post_types'] = array_unique( array_merge( VGSE()->editors[ $class_key ]->args['enabled_post_types'], $this->args['enabled_post_types'] ) );
+
+				if ( $current_provider_from_request !== VGSE()->editors[ $class_key ]->args['provider'] && in_array( $current_provider_from_request, VGSE()->editors[ $class_key ]->args['enabled_post_types'], true ) ) {
+					VGSE()->editors[ $class_key ]->args['provider'] = $current_provider_from_request;
+				}
+			} else {
+				VGSE()->editors[ VGSE()->helpers->get_data_provider_class_key( $this->args['provider'] ) ] = & $this;
+			}
+
+			// When we bootstrap 2 separate spreadsheets for different post types,
+			// if the current sheet loaded is for a post type not enabled in this bootstrap config,
+			// don't bootstrap to avoid loading two spreadsheets in the same page
+			if ( ! defined( 'WPSE_DISABLE_DOUBLE_SHEET_PROTECTION' ) && ! in_array( $this->args['provider'], $this->args['enabled_post_types'] ) ) {
+				return;
+			}
+
+			if ( empty( VGSE()->options['be_disable_heartbeat'] ) ) {
+				add_filter( 'heartbeat_settings', array( $this, 'limit_heartbeat_on_spreadsheet' ) );
+			}
+
 			add_action( 'admin_head', array( $this, 'add_editor_settings_to_header' ) );
 			add_action( 'vg_sheet_editor/render_editor_js_settings', array( $this, 'add_editor_settings_to_header' ) );
 
 			add_action( 'admin_enqueue_scripts', array( $this, 'remove_conflicting_assets' ), 99999999 );
 			add_action( 'admin_print_styles', array( $this, 'remove_conflicting_assets' ), 99999999 );
-
-			VGSE()->editors[ VGSE()->helpers->get_data_provider_class_key( $this->args['provider'] ) ] = & $this;
-
-			if ( empty( VGSE()->options['be_disable_heartbeat'] ) ) {
-				add_filter( 'heartbeat_settings', array( $this, 'limit_heartbeat_on_spreadsheet' ) );
-			}
 		}
 
 		function get_provider_items( $provider, $run_callbacks = false, $skip_filters = false ) {
@@ -284,6 +294,17 @@ if ( ! class_exists( 'WP_Sheet_Editor_Factory' ) ) {
 			}
 
 			$texts = array(
+				'please_select_rows_with_checkboxes'      => __( 'Please select some rows with the checkboxes.', 'vg_sheet_editor' ),
+				'variations_not_found_for_selected_products' => __( 'These product IDs don\'t have variations to display: {ids}', 'vg_sheet_editor' ),
+				'variations_displayed_for_selected_products' => __( 'Displayed variations for {parentProductsWithVariationsCount} product(s), {parentProductsWithoutVariationsCount} product(s) don\'t have variations to display', 'vg_sheet_editor' ),
+				'variations_displayed_successfully_for_selected_products' => __( 'Displayed variations for {parentProductsWithVariationsCount} product(s)', 'vg_sheet_editor' ),
+				'cm_disable_column_tip'                   => __( 'Disable column. You can enable it later.', 'vg_sheet_editor' ),
+				'cm_enable_column_tip'                    => __( 'Enable column', 'vg_sheet_editor' ),
+				'cm_read_role_tip'                        => __( 'The column will appear in the spreadsheet and exports if the user has a role with the required capability.', 'vg_sheet_editor' ),
+				'cm_edit_role_tip'                        => __( 'The column will be read only if the user doesn\'t have a role with the required capability.', 'vg_sheet_editor' ),
+				'cm_readonly_tip'                         => __( 'Read-only columns will display a lock and it won\'t be possible to edit them anywhere in the spreadsheet. This is not a security feature because people still can edit in the regular WP screens.', 'vg_sheet_editor' ),
+				'cm_requires_reload'                      => __( 'Enabling this column requires a page reload', 'vg_sheet_editor' ),
+				'cm_delete_tip'                           => __( 'Remove column completely. If you want to use it later you can disable it by dragging and dropping to the right column', 'vg_sheet_editor' ),
 				'import_all_columns_ignored'              => __( 'Please select at least one column to import', 'vg_sheet_editor' ),
 				'show_column_key'                         => __( 'Show column key', 'vg_sheet_editor' ),
 				'column_key_description'                  => __( 'This is the dynamic tag for this column. You can copy this and use it in the bulk edit tool', 'vg_sheet_editor' ),
@@ -331,9 +352,9 @@ if ( ! class_exists( 'WP_Sheet_Editor_Factory' ) ) {
 				'open_columns_visibility'                 => __( 'Add new column', 'vg_sheet_editor' ),
 				'confirm_column_reload_page'              => __( 'ENABLE COLUMNS. These columns require a page reload: {columns}. Do you want to reload now? We will reload automatically', 'vg_sheet_editor' ),
 				'column_removed'                          => __( 'Column removed. Go to "settings > hide/display columns" to enable it again', 'vg_sheet_editor' ),
-				'save_changes_before_remove_filter'       => __( 'You have modified posts. Please save the changes because we will refresh the spreadsheet.', 'vg_sheet_editor' ),
+				'save_changes_before_remove_filter'       => __( 'You have modified rows. Please save the changes because we will refresh the spreadsheet.', 'vg_sheet_editor' ),
 				'save_changes_before_remove_column'       => __( 'You have modified rows. Please save the changes before removing columns from the spreadsheet.', 'vg_sheet_editor' ),
-				'save_changes_before_we_reload'           => __( 'You have modified posts. Please save the changes because we will refresh the spreadsheet. Do you want to refresh now?', 'vg_sheet_editor' ),
+				'save_changes_before_we_reload'           => __( 'You have modified rows. Please save the changes because we will refresh the spreadsheet. Do you want to refresh now?', 'vg_sheet_editor' ),
 				'save_changes_reload_optional'            => __( 'Some rows were modified in the background. Please save the changes and reload the spreadsheet to see the changes', 'vg_sheet_editor' ),
 				'save_changes_before_using_tool'          => __( 'Some rows were modified in the spreadsheet. Please save the changes before using this feature.', 'vg_sheet_editor' ),
 				'no_rows_for_formula'                     => __( "We didn't find rows to update from the search query. Please try another search query.", 'vg_sheet_editor' ),
@@ -370,9 +391,9 @@ if ( ! class_exists( 'WP_Sheet_Editor_Factory' ) ) {
 				'open_regular_editor'                     => __( 'WP Editor', 'vg_sheet_editor' ),
 			);
 
-			$extension                 = VGSE()->helpers->get_extension_by_post_type( $current_provider_in_page );
-			$review_tip_dismissed      = (bool) get_option( 'vgse_dismiss_review_tip' );
-			$texts['ask_review'] = ( VGSE()->helpers->is_happy_user() && $extension && ! $review_tip_dismissed && ! empty( $extension['wp_org_slug'] ) ) ? sprintf( __( '<span class="review-tip">Do we deserve a 5-star review? <a href="%s" target="_blank" class="dismiss-review-tip">Yes, you deserve it</a> . - . <a href=""  class="dismiss-review-tip">No</a></span>', 'vg_sheet_editor' ), 'https://wordpress.org/support/plugin/' . $extension['wp_org_slug'] . '/reviews/?filter=5#new-post' ) : '';
+			$extension            = VGSE()->helpers->get_extension_by_post_type( $current_provider_in_page );
+			$review_tip_dismissed = (bool) get_option( 'vgse_dismiss_review_tip' );
+			$texts['ask_review']  = ( VGSE()->helpers->is_happy_user() && $extension && ! $review_tip_dismissed && ! empty( $extension['wp_org_slug'] ) ) ? sprintf( __( '<span class="review-tip">Do we deserve a 5-star review? <a href="%s" target="_blank" class="dismiss-review-tip">Yes, you deserve it</a> . - . <a href=""  class="dismiss-review-tip">No</a></span>', 'vg_sheet_editor' ), 'https://wordpress.org/support/plugin/' . $extension['wp_org_slug'] . '/reviews/?filter=5#new-post' ) : '';
 
 			$all_settings['texts'] = $texts;
 

@@ -69,7 +69,7 @@ const WebsiteBuilding = ( { onClickNext } ) => {
 			setHideCloseIcon( false );
 			setShowProgressBar( false );
 		}
-		setStatusText( msg || 'Failed to create website' );
+		setStatusText( msg || __( 'Failed to create website', 'astra-sites' ) );
 		setStatus( 'error' );
 		clearInterval( intervalHandle.current );
 	};
@@ -119,7 +119,7 @@ const WebsiteBuilding = ( { onClickNext } ) => {
 			if ( msg === 'Done' ) {
 				clearInterval( intervalHandle.current );
 
-				setStatusText( 'Please wait a moment...' );
+				setStatusText( __( 'Please wait a moment…', 'astra-sites' ) );
 				setStatus( 'in-progress' );
 
 				const templateResponse = await getDemoWithRetry( storedState );
@@ -136,7 +136,12 @@ const WebsiteBuilding = ( { onClickNext } ) => {
 				await checkRequiredPlugins( storedState );
 				checkFileSystemPermissions( storedState );
 
-				setStatusText( 'Congratulations! Your website is ready!' );
+				setStatusText(
+					__(
+						'Congratulations! Your website is ready!',
+						'astra-sites'
+					)
+				);
 				setStatus( 'done' );
 				onClickNext();
 			}
@@ -229,7 +234,9 @@ const WebsiteBuilding = ( { onClickNext } ) => {
 	};
 
 	const restartProcess = () => {
-		resetErrorState( 'Retrying creating the site again.' );
+		resetErrorState(
+			__( 'Retrying creating the site again.', 'astra-sites' )
+		);
 		createSite();
 	};
 
@@ -312,7 +319,12 @@ const WebsiteBuilding = ( { onClickNext } ) => {
 						/>
 					) : (
 						<div className="flex flex-col">
-							<h4>We are building your website...</h4>
+							<h4>
+								{ __(
+									'We are building your website…',
+									'astra-sites'
+								) }
+							</h4>
 							<p className="zw-sm-normal text-app-text w-[350px]">
 								{ statusText }
 							</p>

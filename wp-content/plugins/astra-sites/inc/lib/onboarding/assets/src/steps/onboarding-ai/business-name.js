@@ -1,6 +1,7 @@
 import { useForm } from 'react-hook-form';
 import { withDispatch, useSelect, useDispatch } from '@wordpress/data';
 import { compose } from '@wordpress/compose';
+import { __, sprintf } from '@wordpress/i18n';
 import { useEffect } from '@wordpress/element';
 import Input from './components/input';
 import Heading from './heading';
@@ -30,10 +31,8 @@ const BusinessName = ( { onClickContinue, onClickPrevious } ) => {
 	};
 
 	const getTitle = () => {
-		const prefix = 'What is the name of ';
 		let title = websiteTypeName;
 		let pronoun = 'your ';
-		const suffix = '?';
 		switch ( websiteType?.replaceAll( ' ', '-' )?.toLowerCase?.() ) {
 			case 'personal-website':
 			case 'other':
@@ -55,7 +54,12 @@ const BusinessName = ( { onClickContinue, onClickPrevious } ) => {
 				break;
 		}
 
-		return `${ prefix }${ pronoun }${ title }${ suffix }`;
+		return sprintf(
+			/* translators: %1$s: pronoun, %2$s: title */
+			__( 'What is the name of %1$s %2$s?', 'astra-sites' ),
+			pronoun,
+			title
+		);
 	};
 
 	const getSubHeading = () => {
@@ -104,10 +108,10 @@ const BusinessName = ( { onClickContinue, onClickPrevious } ) => {
 			<Input
 				className="w-full"
 				name="businessName"
-				placeholder="Enter name"
+				placeholder={ __( 'Enter name', 'astra-sites' ) }
 				register={ register }
 				validations={ {
-					required: 'Name is required',
+					required: __( 'Name is required', 'astra-sites' ),
 				} }
 				error={ errors.businessName }
 				height="12"

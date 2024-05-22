@@ -2,10 +2,8 @@
 
 namespace IAWP\Utils;
 
-use IAWPSCOPED\DeviceDetector\Cache\DoctrineBridge;
 use IAWPSCOPED\DeviceDetector\DeviceDetector;
 use IAWPSCOPED\DeviceDetector\Parser\Client\Browser;
-use IAWPSCOPED\Doctrine\Common\Cache\PhpFileCache;
 use IAWP\Illuminate_Builder;
 use IAWP\Query;
 use Throwable;
@@ -20,13 +18,9 @@ class Device
     private function __construct()
     {
         $this->detector = new DeviceDetector($_SERVER['HTTP_USER_AGENT']);
-        // symphony/cache example
-        // $this->detector->setCache(
-        //     new PSR6Bridge(
-        //         new FilesystemAdapter('devices-cache', 0, trailingslashit(wp_upload_dir()['basedir']) . 'iawp-cache')
-        //     )
-        // );
-        $this->detector->setCache(new DoctrineBridge(new PhpFileCache(\IAWPSCOPED\iawp_temp_path_to('device-data-cache'))));
+        $cache = new \IAWP\Utils\Device_Cache();
+        $cache->load_from_file();
+        $this->detector->setCache($cache);
         try {
             @$this->detector->parse();
             $this->type = $this->detect_type($this->detector);
@@ -37,6 +31,7 @@ class Device
             $this->os = null;
             $this->browser = null;
         }
+        $cache->save_to_file();
     }
     public function type_id() : ?int
     {

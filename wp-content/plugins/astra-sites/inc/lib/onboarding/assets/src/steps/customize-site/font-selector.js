@@ -1,4 +1,5 @@
 import { memo, useEffect, useState } from 'react';
+import { __ } from '@wordpress/i18n';
 import { ArrowPathIcon, ChevronDownIcon } from '@heroicons/react/24/outline';
 import { classNames } from '../onboarding-ai/helpers';
 import { FONTS } from './customize-steps/site-colors-typography/other-fonts';
@@ -168,7 +169,7 @@ const FontSelector = () => {
 				<>
 					<div className="flex items-center justify-between !mt-5">
 						<DropdownList.Label className=" text-sm font-normal">
-							Font Pair
+							{ __( 'Font Pair', 'astra-sites' ) }
 						</DropdownList.Label>
 						<button
 							key="reset-to-default-fonts"
@@ -186,24 +187,6 @@ const FontSelector = () => {
 								strokeWidth={ 2 }
 							/>
 						</button>
-						{ /* <AnimatePresence>
-							{ ! typography?.default && (
-								<motion.button
-									key="reset-to-default-fonts"
-									className="inline-flex  items-center justify-center text-zip-app-inactive-icon border-0 bg-transparent focus:outline-none cursor-pointer"
-									onClick={ handleReset }
-									initial={ { opacity: 0 } }
-									animate={ { opacity: 1 } }
-									exit={ { opacity: 0 } }
-									transition={ { duration: 0.15 } }
-								>
-									<ArrowPathIcon
-										className="w-4 h-4"
-										strokeWidth={ 2 }
-									/>
-								</motion.button>
-							) }
-						</AnimatePresence> */ }
 					</div>
 					<div className="relative mt-1 bg-background-primary">
 						<DropdownList.Button className="text-sm font-normal bg-transparent border border-solid border-border-tertiary">

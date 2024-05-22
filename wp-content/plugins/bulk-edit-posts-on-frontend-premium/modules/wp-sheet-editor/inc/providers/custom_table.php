@@ -261,7 +261,7 @@ class VGSE_Provider_Custom_table extends VGSE_Provider_Abstract {
 			$query_args[ $primary_key . '__not' ] = $query_args['post__not_in'];
 		}
 		if ( ! empty( $query_args['fields'] ) && $query_args['fields'] === 'ids' ) {
-			$query_args['query_select'] = $primary_key;
+			$query_args['query_select'] = 't.' . $primary_key;
 		}
 		if ( ! empty( $query_args['s'] ) ) {
 			$query_args['s'] = $query_args['s'];
@@ -458,7 +458,7 @@ class VGSE_Provider_Custom_table extends VGSE_Provider_Abstract {
 
 			$s_conditions = array();
 			foreach ( $this->get_arg( 's_columns', $args['post_type'] ) as $s_column ) {
-				$s_conditions[]  = VGSE()->helpers->sanitize_table_key( $s_column ) . ' LIKE %s';
+				$s_conditions[]  = 't.' . VGSE()->helpers->sanitize_table_key( $s_column ) . ' LIKE %s';
 				$prepared_data[] = '%' . $wpdb->esc_like( $s ) . '%';
 			}
 			$s_sql = '( ' . implode( ' OR ', $s_conditions ) . ' ) ';
@@ -483,33 +483,33 @@ class VGSE_Provider_Custom_table extends VGSE_Provider_Abstract {
 
 				if ( is_array( $args[ $column_key ] ) ) {
 					$value_in_query_placeholders = implode( ', ', array_fill( 0, count( $args[ $column_key ] ), '%d' ) );
-					$wheres[]                    = "$column_key IN ($value_in_query_placeholders)";
+					$wheres[]                    = "t.$column_key IN ($value_in_query_placeholders)";
 					$prepared_data               = array_merge( $prepared_data, array_map( 'intval', $args[ $column_key ] ) );
 				} else {
-					$wheres[]        = "$column_key = %d";
+					$wheres[]        = "t.$column_key = %d";
 					$prepared_data[] = intval( $args[ $column_key ] );
 				}
 			} elseif ( $column['type'] === 'float' ) {
 
 				if ( is_array( $args[ $column_key ] ) ) {
 					$value_in_query_placeholders = implode( ', ', array_fill( 0, count( $args[ $column_key ] ), '%f' ) );
-					$wheres[]                    = "$column_key IN ($value_in_query_placeholders) ";
+					$wheres[]                    = "t.$column_key IN ($value_in_query_placeholders) ";
 					$prepared_data               = array_merge( $prepared_data, array_map( 'floatval', $args[ $column_key ] ) );
 				} else {
-					$wheres[]        = "$column_key = %f";
+					$wheres[]        = "t.$column_key = %f";
 					$prepared_data[] = floatval( $args[ $column_key ] );
 				}
 			} elseif ( $column['type'] === 'dates' ) {
 				if ( ! empty( $args[ $column_key ] ) ) {
-					$wheres[]        = "$column_key LIKE %s";
+					$wheres[]        = "t.$column_key LIKE %s";
 					$prepared_data[] = '%' . $wpdb->esc_like( $args[ $column_key ] ) . '%';
 				} else {
 					if ( ! empty( $args[ $column_key . '_after' ] ) ) {
-						$wheres[]        = "$column_key > %s";
+						$wheres[]        = "t.$column_key > %s";
 						$prepared_data[] = $args[ $column_key . '_after' ];
 					}
 					if ( ! empty( $args[ $column_key . '_before' ] ) ) {
-						$wheres[]        = "$column_key < %s";
+						$wheres[]        = "t.$column_key < %s";
 						$prepared_data[] = $args[ $column_key . '_before' ];
 					}
 				}
@@ -517,10 +517,10 @@ class VGSE_Provider_Custom_table extends VGSE_Provider_Abstract {
 
 				if ( is_array( $args[ $column_key ] ) ) {
 					$value_in_query_placeholders = implode( ', ', array_fill( 0, count( $args[ $column_key ] ), '%s' ) );
-					$wheres[]                    = "$column_key IN ($value_in_query_placeholders)";
+					$wheres[]                    = "t.$column_key IN ($value_in_query_placeholders)";
 					$prepared_data               = array_merge( $prepared_data, array_map( 'wp_kses_post', $args[ $column_key ] ) );
 				} else {
-					$wheres[]        = "$column_key = %s";
+					$wheres[]        = "t.$column_key = %s";
 					$prepared_data[] = wp_kses_post( $args[ $column_key ] );
 				}
 			}
@@ -537,34 +537,34 @@ class VGSE_Provider_Custom_table extends VGSE_Provider_Abstract {
 
 				if ( is_array( $args[ $not_arg_key ] ) ) {
 					$value_in_query_placeholders = implode( ', ', array_fill( 0, count( $args[ $not_arg_key ] ), '%d' ) );
-					$wheres[]                    = "$column_key NOT IN ($value_in_query_placeholders)";
+					$wheres[]                    = "t.$column_key NOT IN ($value_in_query_placeholders)";
 					$prepared_data               = array_merge( $prepared_data, array_map( 'intval', $args[ $not_arg_key ] ) );
 				} else {
-					$wheres[]        = "$column_key != %d";
+					$wheres[]        = "t.$column_key != %d";
 					$prepared_data[] = intval( $args[ $not_arg_key ] );
 				}
 			} elseif ( $column['type'] === 'float' ) {
 
 				if ( is_array( $args[ $not_arg_key ] ) ) {
 					$value_in_query_placeholders = implode( ', ', array_fill( 0, count( $args[ $not_arg_key ] ), '%f' ) );
-					$wheres[]                    = "$column_key NOT IN ($value_in_query_placeholders)";
+					$wheres[]                    = "t.$column_key NOT IN ($value_in_query_placeholders)";
 					$prepared_data               = array_merge( $prepared_data, array_map( 'floatval', $args[ $not_arg_key ] ) );
 				} else {
-					$wheres[]        = "$column_key != %f";
+					$wheres[]        = "t.$column_key != %f";
 					$prepared_data[] = floatval( $args[ $not_arg_key ] );
 				}
 			} elseif ( $column['type'] === 'dates' ) {
 				if ( ! empty( $args[ $not_arg_key ] ) ) {
-					$wheres[]        = "$column_key NOT LIKE %s ";
+					$wheres[]        = "t.$column_key NOT LIKE %s ";
 					$prepared_data[] = '%' . $wpdb->esc_like( $args[ $not_arg_key ] ) . '%';
 				} else {
 					// devolver los que tienen un tripSection futuro
 					if ( ! empty( $args[ $not_arg_key . '_after' ] ) ) {
-						$wheres[]        = "$column_key < %s";
+						$wheres[]        = "t.$column_key < %s";
 						$prepared_data[] = $args[ $not_arg_key . '_after' ];
 					}
 					if ( ! empty( $args[ $not_arg_key . '_before' ] ) ) {
-						$wheres[]        = "$column_key > %s";
+						$wheres[]        = "t.$column_key > %s";
 						$prepared_data[] = $args[ $not_arg_key . '_before' ];
 					}
 				}
@@ -573,10 +573,10 @@ class VGSE_Provider_Custom_table extends VGSE_Provider_Abstract {
 				if ( is_array( $args[ $not_arg_key ] ) ) {
 
 					$value_in_query_placeholders = implode( ', ', array_fill( 0, count( $args[ $not_arg_key ] ), '%s' ) );
-					$wheres[]                    = "$column_key NOT IN ($value_in_query_placeholders)";
+					$wheres[]                    = "t.$column_key NOT IN ($value_in_query_placeholders)";
 					$prepared_data               = array_merge( $prepared_data, array_map( 'wp_kses_post', $args[ $not_arg_key ] ) );
 				} else {
-					$wheres[]        = "$column_key != %s";
+					$wheres[]        = "t.$column_key != %s";
 					$prepared_data[] = wp_kses_post( $args[ $not_arg_key ] );
 				}
 			}

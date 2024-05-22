@@ -564,6 +564,9 @@ if ( ! class_exists( 'WPSE_WC_Products_Universal_Sheet' ) ) {
 			} elseif ( ! empty( $data['id'] ) ) {
 				$product_type = VGSE()->WC->get_product_type( $data['id'] );
 			}
+			if ( ! empty( VGSE()->options['wc_product_attributes_not_variation'] ) ) {
+				$attributes_not_used_for_variations = array_map( 'preg_quote', array_filter( array_map( 'sanitize_title', array_map( 'trim', explode( ',', VGSE()->get_option( 'wc_product_attributes_not_variation', '' ) ) ) ) ) );
+			}
 
 			// Convert the special column keys from attribute_name to attribute:name,
 			// required by the WC importer class.
@@ -576,25 +579,38 @@ if ( ! class_exists( 'WPSE_WC_Products_Universal_Sheet' ) ) {
 					unset( $data[ $key ] );
 				}
 
-				// WC uses the ID as id
-				if ( ! empty( $data['ID'] ) ) {
-					$data['id'] = $data['ID'];
-				}
-
 				// Make sure there is a default attribute always, otherwise WC won't save the variations
 				if ( strpos( $key, 'attributes:value' ) !== false && $product_type === 'variable' ) {
 					$default_attribute_key = str_replace( 'attributes:value', 'attributes:default', $key );
+
 					if ( empty( $data[ $default_attribute_key ] ) ) {
 						$data[ $default_attribute_key ] = current( array_map( 'trim', explode( ',', $value ) ) );
 					}
-				}
 
-				// Copy the category_ids column to product_cat to save it with
-				// WPSE CORE so the wpse_old_platform_id option works
-				if ( ! empty( $data['category_ids'] ) ) {
-					$data['product_cat']  = $data['category_ids'];
-					$data['category_ids'] = '';
+					$attribute_name_column_key = str_replace( 'attributes:value', 'attributes:name', $key );
+					if ( ! empty( $data[ $attribute_name_column_key ] ) && ! empty( $attributes_not_used_for_variations ) ) {
+						$attribute_key = sanitize_title( $data[ $attribute_name_column_key ] );
+						if ( preg_match( '/(' . implode( '|', $attributes_not_used_for_variations ) . ')/', $attribute_key ) && isset( $data[ $default_attribute_key ] ) ) {
+							unset( $data[ $default_attribute_key ] );
+						}
+					}
 				}
+			}
+
+			// WC uses the ID as id
+			if ( ! empty( $data['ID'] ) ) {
+				$data['id'] = $data['ID'];
+			}
+
+			// Copy the category_ids column to product_cat to save it with
+			// WPSE CORE so the wpse_old_platform_id option works
+			if ( ! empty( $data['category_ids'] ) ) {
+				$data['product_cat']  = $data['category_ids'];
+				$data['category_ids'] = '';
+			}
+			if ( ! empty( $data['tag_ids'] ) ) {
+				$data['product_tag'] = $data['tag_ids'];
+				$data['tag_ids']     = '';
 			}
 
 			// Weird bug on WC's side. It returns a "SKU duplicated" error when
@@ -611,8 +627,8 @@ if ( ! class_exists( 'WPSE_WC_Products_Universal_Sheet' ) ) {
 					$type   = 'ID';
 				} else {
 					$data['parent_id'] = str_replace( '&', '-', $data['parent_id'] );
-					$id   = (int) wc_get_product_id_by_sku( $data['parent_id'] );
-					$type = 'SKU';
+					$id                = (int) wc_get_product_id_by_sku( $data['parent_id'] );
+					$type              = 'SKU';
 				}
 				if ( ! $id ) {
 					return new WP_Error( 'wpse', sprintf( __( 'One variation row has a parent product that does not exist. The "parent" column contains the %1$s: %2$s. Please correct it and start a new import', 'vg_sheet_editor' ), esc_html( $type ), $data['parent_id'] ) );
@@ -645,10 +661,11 @@ if ( ! class_exists( 'WPSE_WC_Products_Universal_Sheet' ) ) {
 
 			// Updating the SKU is very expensive in terms of DB queries, even if the SKU did not change
 			// So we will remove the SKU field if the value did not change
-			$existing_sku = get_post_meta( $data['ID'], '_sku', true );
-			if ( isset( $data['sku'] ) && $data['sku'] === $existing_sku ) {
+			if ( isset( $data['sku'] ) && $data['sku'] === get_post_meta( $data['ID'], '_sku', true ) ) {
 				unset( $data['sku'] );
 			}
+
+			$data    = apply_filters( 'vg_sheet_editor/woocommerce/prepared_data_for_wc_api_import', $data, $post_id, $spreadsheet_columns, $settings );
 			$mapping = array_combine( array_keys( $data ), array_keys( $data ) );
 
 			$keys_to_be_updated = array_diff( array_keys( $data ), array( 'id', 'ID', '', 'post_type' ) );
@@ -807,7 +824,11 @@ if ( ! class_exists( 'WPSE_WC_Products_Universal_Sheet' ) ) {
 
 				$all_exported_keys = array();
 				foreach ( $cleaned_rows as $cleaned_row_index => $cleaned_row ) {
-					$new_data = $exporter->generate_row_data( wc_get_product( $cleaned_row['ID'] ) );
+					$product = wc_get_product( $cleaned_row['ID'] );
+					if ( ! $product ) {
+						throw new Exception( sprintf( __( 'Error: We weren\'t able to export data for product ID %1$d because WooCommerce didn\'t recognize the ID, please make sure this product ID has a valid product type and status. Row: %2$s', 'vg_sheet_editor' ), $cleaned_row['ID'], wp_json_encode( $cleaned_row ) ), E_USER_ERROR );
+					}
+					$new_data = $exporter->generate_row_data( $product );
 					// WPSE core has the ID key, remove duplicate from WC
 					if ( isset( $new_data['id'] ) ) {
 						unset( $new_data['id'] );
@@ -837,6 +858,9 @@ if ( ! class_exists( 'WPSE_WC_Products_Universal_Sheet' ) ) {
 							$column_headers[ $index ] = $key;
 						}
 					}
+				}
+				if ( count( $column_headers ) > count( $all_exported_keys ) ) {
+					$column_headers = array_slice( $column_headers, 0, count( $all_exported_keys ) );
 				}
 				$GLOBALS['wpse_wc_last_exported_keys'] = array_combine( $all_exported_keys, $column_headers );
 			}

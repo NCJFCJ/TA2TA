@@ -37,7 +37,7 @@ const ExitConfirmationPopover = ( { onExit, placement = 'auto' } ) => {
 				>
 					<div className="w-full space-y-2">
 						<p className="!text-zip-app-heading !text-base !font-semibold">
-							Are you sure?
+							{ __( 'Are you sure?', 'astra-sites' ) }
 						</p>
 						<p className="!text-zip-body-text !text-sm !font-normal">
 							{ __(
@@ -59,7 +59,7 @@ const ExitConfirmationPopover = ( { onExit, placement = 'auto' } ) => {
 							variant="blank"
 							onClick={ toggleShow }
 						>
-							<span>Cancel</span>
+							<span>{ __( 'Cancel', 'astra-sites' ) }</span>
 						</Button>
 						<Button
 							className="text-white text-xs font-semibold py-1.5 px-3 rounded border border-solid border-alert-error-text bg-alert-error-text shadow-sm"
@@ -67,7 +67,7 @@ const ExitConfirmationPopover = ( { onExit, placement = 'auto' } ) => {
 							variant="blank"
 							onClick={ onExit }
 						>
-							<span>Exit</span>
+							<span>{ __( 'Exit', 'astra-sites' ) }</span>
 						</Button>
 					</div>
 					{ /* Arrow */ }

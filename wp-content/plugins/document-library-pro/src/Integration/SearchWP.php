@@ -10,7 +10,7 @@ use Barn2\Plugin\Password_Protected_Categories\PPC_Util;
 /**
  * Handles integration with SearchWP
  *
- * @package   Barn2/document-library-pro
+ * @package   Barn2\document-library-pro
  * @author    Barn2 Plugins <support@barn2.com>
  * @license   GPL-3.0
  * @copyright Barn2 Media Ltd

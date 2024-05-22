@@ -16,11 +16,6 @@ parameters:
 			path: astra-sites.php
 
 		-
-			message: "#^Call to an undefined method object\\:\\:get_cta_link\\(\\)\\.$#"
-			count: 2
-			path: classes/class-astra-sites-admin.php
-
-		-
 			message: "#^Call to an undefined method object\\:\\:is_white_labeled\\(\\)\\.$#"
 			count: 3
 			path: classes/class-astra-sites-admin.php
@@ -71,11 +66,6 @@ parameters:
 			path: inc/classes/batch-import/class-astra-sites-batch-site-import-batch.php
 
 		-
-			message: "#^Call to an undefined method object\\:\\:backup_settings\\(\\)\\.$#"
-			count: 1
-			path: inc/classes/batch-import/class-astra-sites-batch-site-import.php
-
-		-
 			message: "#^Call to an undefined method object\\:\\:delete_imported_posts\\(\\)\\.$#"
 			count: 1
 			path: inc/classes/batch-import/class-astra-sites-batch-site-import.php
@@ -87,11 +77,6 @@ parameters:
 
 		-
 			message: "#^Call to an undefined method object\\:\\:delete_imported_wp_forms\\(\\)\\.$#"
-			count: 1
-			path: inc/classes/batch-import/class-astra-sites-batch-site-import.php
-
-		-
-			message: "#^Call to an undefined method object\\:\\:get_reset_data\\(\\)\\.$#"
 			count: 1
 			path: inc/classes/batch-import/class-astra-sites-batch-site-import.php
 
@@ -133,16 +118,6 @@ parameters:
 		-
 			message: "#^Call to an undefined method object\\:\\:push_to_queue\\(\\)\\.$#"
 			count: 3
-			path: inc/classes/batch-import/class-astra-sites-batch-site-import.php
-
-		-
-			message: "#^Call to an undefined method object\\:\\:required_plugin\\(\\)\\.$#"
-			count: 1
-			path: inc/classes/batch-import/class-astra-sites-batch-site-import.php
-
-		-
-			message: "#^Call to an undefined method object\\:\\:required_plugin_activate\\(\\)\\.$#"
-			count: 2
 			path: inc/classes/batch-import/class-astra-sites-batch-site-import.php
 
 		-
@@ -466,11 +441,6 @@ parameters:
 			path: inc/classes/class-astra-sites-elementor-pages.php
 
 		-
-			message: "#^Parameter \\#2 \\$options of function wp_json_encode expects int, true given\\.$#"
-			count: 2
-			path: inc/classes/class-astra-sites-elementor-pages.php
-
-		-
 			message: "#^Parameter \\#3 \\$subject of function str_replace expects array\\|string, string\\|false given\\.$#"
 			count: 1
 			path: inc/classes/class-astra-sites-elementor-pages.php
@@ -511,38 +481,8 @@ parameters:
 			path: inc/classes/class-astra-sites-error-handler.php
 
 		-
-			message: "#^Method Astra_Sites_Image_Processing\\:\\:buffer_images_for_processing\\(\\) has parameter \\$image_meta with no value type specified in iterable type array\\.$#"
-			count: 1
-			path: inc/classes/class-astra-sites-image-processing.php
-
-		-
-			message: "#^Method Astra_Sites_Image_Processing\\:\\:buffer_images_for_processing\\(\\) has parameter \\$new_sizes with no value type specified in iterable type array\\.$#"
-			count: 1
-			path: inc/classes/class-astra-sites-image-processing.php
-
-		-
-			message: "#^Method Astra_Sites_Image_Processing\\:\\:buffer_images_for_processing\\(\\) return type has no value type specified in iterable type array\\.$#"
-			count: 1
-			path: inc/classes/class-astra-sites-image-processing.php
-
-		-
-			message: "#^Method Astra_Sites_Image_Processing\\:\\:defer_image_processing_while_import\\(\\) has no return type specified\\.$#"
-			count: 1
-			path: inc/classes/class-astra-sites-image-processing.php
-
-		-
-			message: "#^Static property Astra_Sites_Image_Processing\\:\\:\\$instance \\(object\\) in isset\\(\\) is not nullable\\.$#"
-			count: 1
-			path: inc/classes/class-astra-sites-image-processing.php
-
-		-
 			message: "#^Argument of an invalid type array\\<string\\>\\|false supplied for foreach, only iterables are supported\\.$#"
 			count: 1
-			path: inc/classes/class-astra-sites-importer-log.php
-
-		-
-			message: "#^Call to an undefined method object\\:\\:get_filesystem\\(\\)\\.$#"
-			count: 5
 			path: inc/classes/class-astra-sites-importer-log.php
 
 		-
@@ -628,16 +568,6 @@ parameters:
 		-
 			message: "#^Action callback returns array but should not return anything\\.$#"
 			count: 1
-			path: inc/classes/class-astra-sites-importer.php
-
-		-
-			message: "#^Call to an undefined method object\\:\\:get_api_url\\(\\)\\.$#"
-			count: 1
-			path: inc/classes/class-astra-sites-importer.php
-
-		-
-			message: "#^Call to an undefined method object\\:\\:get_filesystem\\(\\)\\.$#"
-			count: 2
 			path: inc/classes/class-astra-sites-importer.php
 
 		-
@@ -819,21 +749,6 @@ parameters:
 			message: "#^is_wp_error\\(int\\<0, max\\>\\) will always evaluate to false\\.$#"
 			count: 1
 			path: inc/classes/class-astra-sites-importer.php
-
-		-
-			message: "#^Call to an undefined method object\\:\\:get_all_sites\\(\\)\\.$#"
-			count: 1
-			path: inc/classes/class-astra-sites-page.php
-
-		-
-			message: "#^Call to an undefined method object\\:\\:get_api_option\\(\\)\\.$#"
-			count: 1
-			path: inc/classes/class-astra-sites-page.php
-
-		-
-			message: "#^Call to an undefined method object\\:\\:get_page_builders\\(\\)\\.$#"
-			count: 1
-			path: inc/classes/class-astra-sites-page.php
 
 		-
 			message: "#^Call to an undefined method object\\:\\:get_status\\(\\)\\.$#"
@@ -1061,7 +976,7 @@ parameters:
 			path: inc/classes/class-astra-sites-wp-cli.php
 
 		-
-			message: "#^Call to an undefined method object\\:\\:backup_settings\\(\\)\\.$#"
+			message: "#^Binary operation \"\\.\" between string and array results in an error\\.$#"
 			count: 1
 			path: inc/classes/class-astra-sites-wp-cli.php
 
@@ -1083,21 +998,6 @@ parameters:
 		-
 			message: "#^Call to an undefined method object\\:\\:display_items\\(\\)\\.$#"
 			count: 2
-			path: inc/classes/class-astra-sites-wp-cli.php
-
-		-
-			message: "#^Call to an undefined method object\\:\\:filesystem_permission\\(\\)\\.$#"
-			count: 1
-			path: inc/classes/class-astra-sites-wp-cli.php
-
-		-
-			message: "#^Call to an undefined method object\\:\\:get_api_url\\(\\)\\.$#"
-			count: 2
-			path: inc/classes/class-astra-sites-wp-cli.php
-
-		-
-			message: "#^Call to an undefined method object\\:\\:get_reset_data\\(\\)\\.$#"
-			count: 1
 			path: inc/classes/class-astra-sites-wp-cli.php
 
 		-
@@ -1137,16 +1037,6 @@ parameters:
 
 		-
 			message: "#^Call to an undefined method object\\:\\:process_batch\\(\\)\\.$#"
-			count: 1
-			path: inc/classes/class-astra-sites-wp-cli.php
-
-		-
-			message: "#^Call to an undefined method object\\:\\:required_plugin\\(\\)\\.$#"
-			count: 1
-			path: inc/classes/class-astra-sites-wp-cli.php
-
-		-
-			message: "#^Call to an undefined method object\\:\\:required_plugin_activate\\(\\)\\.$#"
 			count: 1
 			path: inc/classes/class-astra-sites-wp-cli.php
 
@@ -1401,33 +1291,13 @@ parameters:
 			path: inc/classes/class-astra-sites.php
 
 		-
-			message: "#^Call to an undefined method object\\:\\:get_api_domain\\(\\)\\.$#"
-			count: 4
-			path: inc/classes/class-astra-sites.php
-
-		-
 			message: "#^Call to an undefined method object\\:\\:get_attachment_data\\(\\)\\.$#"
-			count: 1
-			path: inc/classes/class-astra-sites.php
-
-		-
-			message: "#^Call to an undefined method object\\:\\:get_filesystem\\(\\)\\.$#"
 			count: 1
 			path: inc/classes/class-astra-sites.php
 
 		-
 			message: "#^Call to an undefined method object\\:\\:get_option\\(\\)\\.$#"
 			count: 1
-			path: inc/classes/class-astra-sites.php
-
-		-
-			message: "#^Call to an undefined method object\\:\\:get_page_builders\\(\\)\\.$#"
-			count: 2
-			path: inc/classes/class-astra-sites.php
-
-		-
-			message: "#^Call to an undefined method object\\:\\:get_sync_complete_message\\(\\)\\.$#"
-			count: 2
 			path: inc/classes/class-astra-sites.php
 
 		-
@@ -1452,12 +1322,12 @@ parameters:
 
 		-
 			message: "#^Call to an undefined method object\\:\\:start_error_handler\\(\\)\\.$#"
-			count: 8
+			count: 7
 			path: inc/classes/class-astra-sites.php
 
 		-
 			message: "#^Call to an undefined method object\\:\\:stop_error_handler\\(\\)\\.$#"
-			count: 8
+			count: 7
 			path: inc/classes/class-astra-sites.php
 
 		-
@@ -1531,17 +1401,7 @@ parameters:
 			path: inc/classes/class-astra-sites.php
 
 		-
-			message: "#^Method Astra_Sites\\:\\:ai_api_request\\(\\) has no return type specified\\.$#"
-			count: 1
-			path: inc/classes/class-astra-sites.php
-
-		-
 			message: "#^Method Astra_Sites\\:\\:api_request\\(\\) has no return type specified\\.$#"
-			count: 1
-			path: inc/classes/class-astra-sites.php
-
-		-
-			message: "#^Method Astra_Sites\\:\\:backup_settings\\(\\) has no return type specified\\.$#"
 			count: 1
 			path: inc/classes/class-astra-sites.php
 
@@ -1596,26 +1456,6 @@ parameters:
 			path: inc/classes/class-astra-sites.php
 
 		-
-			message: "#^Method Astra_Sites\\:\\:get_api_domain\\(\\) has no return type specified\\.$#"
-			count: 1
-			path: inc/classes/class-astra-sites.php
-
-		-
-			message: "#^Method Astra_Sites\\:\\:get_api_option\\(\\) has parameter \\$option with no value type specified in iterable type array\\.$#"
-			count: 1
-			path: inc/classes/class-astra-sites.php
-
-		-
-			message: "#^Method Astra_Sites\\:\\:get_api_option\\(\\) return type has no value type specified in iterable type array\\.$#"
-			count: 1
-			path: inc/classes/class-astra-sites.php
-
-		-
-			message: "#^Method Astra_Sites\\:\\:get_api_url\\(\\) has no return type specified\\.$#"
-			count: 1
-			path: inc/classes/class-astra-sites.php
-
-		-
 			message: "#^Method Astra_Sites\\:\\:get_compatibilities\\(\\) return type has no value type specified in iterable type array\\.$#"
 			count: 1
 			path: inc/classes/class-astra-sites.php
@@ -1646,16 +1486,6 @@ parameters:
 			path: inc/classes/class-astra-sites.php
 
 		-
-			message: "#^Method Astra_Sites\\:\\:get_license_key\\(\\) return type has no value type specified in iterable type array\\.$#"
-			count: 1
-			path: inc/classes/class-astra-sites.php
-
-		-
-			message: "#^Method Astra_Sites\\:\\:get_license_key\\(\\) should return array but returns string\\.$#"
-			count: 1
-			path: inc/classes/class-astra-sites.php
-
-		-
 			message: "#^Method Astra_Sites\\:\\:get_local_vars\\(\\) has no return type specified\\.$#"
 			count: 1
 			path: inc/classes/class-astra-sites.php
@@ -1681,7 +1511,7 @@ parameters:
 			path: inc/classes/class-astra-sites.php
 
 		-
-			message: "#^Method Astra_Sites\\:\\:get_reset_data\\(\\) has no return type specified\\.$#"
+			message: "#^Method Astra_Sites\\:\\:get_reset_data\\(\\) return type has no value type specified in iterable type array\\.$#"
 			count: 1
 			path: inc/classes/class-astra-sites.php
 
@@ -1835,16 +1665,6 @@ parameters:
 			path: inc/classes/class-astra-sites.php
 
 		-
-			message: "#^Parameter \\#1 \\$option of function get_site_option expects string, array given\\.$#"
-			count: 1
-			path: inc/classes/class-astra-sites.php
-
-		-
-			message: "#^Parameter \\#1 \\$option of method Astra_Sites\\:\\:get_api_option\\(\\) expects array, string given\\.$#"
-			count: 1
-			path: inc/classes/class-astra-sites.php
-
-		-
 			message: "#^Parameter \\#1 \\$string of function stripslashes expects string, array given\\.$#"
 			count: 2
 			path: inc/classes/class-astra-sites.php
@@ -1890,7 +1710,7 @@ parameters:
 			path: inc/classes/class-astra-sites.php
 
 		-
-			message: "#^Static property Astra_Sites\\:\\:\\$instance \\(object\\) in isset\\(\\) is not nullable\\.$#"
+			message: "#^Static property Astra_Sites\\:\\:\\$instance \\(Astra_Sites\\) in isset\\(\\) is not nullable\\.$#"
 			count: 1
 			path: inc/classes/class-astra-sites.php
 
@@ -2295,11 +2115,6 @@ parameters:
 			path: inc/classes/compatibility/woocommerce/class-astra-sites-compatibility-woocommerce.php
 
 		-
-			message: "#^Call to an undefined method object\\:\\:get_api_domain\\(\\)\\.$#"
-			count: 1
-			path: inc/classes/functions.php
-
-		-
 			message: "#^Cannot access offset 'host' on array\\{scheme\\?\\: string, host\\?\\: string, port\\?\\: int, user\\?\\: string, pass\\?\\: string, path\\?\\: string, query\\?\\: string, fragment\\?\\: string\\}\\|false\\.$#"
 			count: 1
 			path: inc/classes/functions.php
@@ -2465,11 +2280,6 @@ parameters:
 			path: inc/importers/batch-processing/class-astra-sites-batch-processing-elementor.php
 
 		-
-			message: "#^Parameter \\#2 \\$options of function wp_json_encode expects int, true given\\.$#"
-			count: 1
-			path: inc/importers/batch-processing/class-astra-sites-batch-processing-elementor.php
-
-		-
 			message: "#^Result of && is always false\\.$#"
 			count: 2
 			path: inc/importers/batch-processing/class-astra-sites-batch-processing-elementor.php
@@ -2510,16 +2320,6 @@ parameters:
 			path: inc/importers/batch-processing/class-astra-sites-batch-processing-gutenberg.php
 
 		-
-			message: "#^Parameter \\#1 \\$search of function str_replace expects array\\|string, int\\|string given\\.$#"
-			count: 1
-			path: inc/importers/batch-processing/class-astra-sites-batch-processing-gutenberg.php
-
-		-
-			message: "#^Parameter \\#3 \\$subject of function str_replace expects array\\|string, int\\|string given\\.$#"
-			count: 1
-			path: inc/importers/batch-processing/class-astra-sites-batch-processing-gutenberg.php
-
-		-
 			message: "#^Result of && is always false\\.$#"
 			count: 1
 			path: inc/importers/batch-processing/class-astra-sites-batch-processing-gutenberg.php
@@ -2528,16 +2328,6 @@ parameters:
 			message: "#^Static property Astra_Sites_Batch_Processing_Gutenberg\\:\\:\\$instance \\(object\\) in isset\\(\\) is not nullable\\.$#"
 			count: 1
 			path: inc/importers/batch-processing/class-astra-sites-batch-processing-gutenberg.php
-
-		-
-			message: "#^Call to an undefined method object\\:\\:get_api_domain\\(\\)\\.$#"
-			count: 8
-			path: inc/importers/batch-processing/class-astra-sites-batch-processing-importer.php
-
-		-
-			message: "#^Call to an undefined method object\\:\\:get_license_key\\(\\)\\.$#"
-			count: 2
-			path: inc/importers/batch-processing/class-astra-sites-batch-processing-importer.php
 
 		-
 			message: "#^Method Astra_Sites_Batch_Processing_Importer\\:\\:import_sites\\(\\) return type has no value type specified in iterable type array\\.$#"
@@ -2596,16 +2386,6 @@ parameters:
 
 		-
 			message: "#^Access to static property \\$instance on an unknown class Elementor\\\\Plugin\\.$#"
-			count: 1
-			path: inc/importers/batch-processing/class-astra-sites-batch-processing.php
-
-		-
-			message: "#^Call to an undefined method object\\:\\:get_api_domain\\(\\)\\.$#"
-			count: 2
-			path: inc/importers/batch-processing/class-astra-sites-batch-processing.php
-
-		-
-			message: "#^Call to an undefined method object\\:\\:get_filesystem\\(\\)\\.$#"
 			count: 1
 			path: inc/importers/batch-processing/class-astra-sites-batch-processing.php
 
@@ -3221,11 +3001,6 @@ parameters:
 
 		-
 			message: "#^Call to an undefined method object\\:\\:get_preliminary_information\\(\\)\\.$#"
-			count: 1
-			path: inc/importers/wxr-importer/class-astra-wxr-importer.php
-
-		-
-			message: "#^Call to an undefined method object\\:\\:get_theme_status\\(\\)\\.$#"
 			count: 1
 			path: inc/importers/wxr-importer/class-astra-wxr-importer.php
 
@@ -4218,11 +3993,6 @@ parameters:
 			message: "#^is_wp_error\\(int\\<0, max\\>\\) will always evaluate to false\\.$#"
 			count: 1
 			path: inc/importers/wxr-importer/class-wxr-importer.php
-
-		-
-			message: "#^Call to an undefined method object\\:\\:get_sync_complete_message\\(\\)\\.$#"
-			count: 1
-			path: inc/includes/templates.php
 
 		-
 			message: "#^Call to an undefined method object\\:\\:get_white_label_name\\(\\)\\.$#"

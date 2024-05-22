@@ -235,7 +235,17 @@ class Tribe__Events__Pro__Assets {
 			$pro,
 			'tribe_events-premium-recurrence',
 			'events-recurrence.js',
-			[ 'tribe-events-admin', Tribe__Events__Main::POSTTYPE . '-premium-admin', 'tribe-events-pro-handlebars', 'tribe-moment', 'tribe-dropdowns', 'jquery-ui-dialog', 'tribe-buttonset' ],
+			[
+				'tribe-events-admin',
+				Tribe__Events__Main::POSTTYPE . '-premium-admin',
+				'tribe-events-pro-handlebars',
+				'tec-dayjs',
+				'tec-dayjs-isoweek',
+				'tec-dayjs-customparseformat',
+				'tribe-dropdowns',
+				'jquery-ui-dialog',
+				'tribe-buttonset'
+			],
 			[ 'tribe_events_enqueue', 'tribe_venue_enqueue' ],
 			[
 				'in_footer' => true,

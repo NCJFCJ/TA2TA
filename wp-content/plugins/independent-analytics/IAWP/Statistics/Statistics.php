@@ -140,7 +140,7 @@ abstract class Statistics
         $session_statistics->select('sessions.session_id')->selectRaw('COUNT(DISTINCT views.id) AS views')->selectRaw('COUNT(DISTINCT wc_orders.order_id) AS orders')->selectRaw('IFNULL(CAST(SUM(wc_orders.total) AS DECIMAL(10, 2)), 0) AS gross_sales')->selectRaw('IFNULL(CAST(SUM(wc_orders.total_refunded) AS DECIMAL(10, 2)), 0) AS total_refunded')->selectRaw('IFNULL(CAST(SUM(wc_orders.total_refunds) AS UNSIGNED), 0) AS total_refunds')->selectRaw('IFNULL(CAST(SUM(wc_orders.total - wc_orders.total_refunded) AS DECIMAL(10, 2)), 0) AS net_sales')->from("{$sessions_table} AS sessions")->join("{$views_table} AS views", function (JoinClause $join) {
             $join->on('sessions.session_id', '=', 'views.session_id');
         })->leftJoin("{$wc_orders_table} AS wc_orders", function (JoinClause $join) {
-            $join->on('views.id', '=', 'wc_orders.view_id')->whereIn('wc_orders.status', ['wc-completed', 'completed', 'wc-processing', 'processing', 'wc-refunded', 'refunded']);
+            $join->on('views.id', '=', 'wc_orders.initial_view_id')->whereIn('wc_orders.status', ['wc-completed', 'completed', 'wc-processing', 'processing', 'wc-refunded', 'refunded']);
         })->when(!\is_null($this->rows), function (Builder $query) {
             $this->rows->attach_filters($query);
         })->whereBetween('sessions.created_at', [$range->iso_start(), $range->iso_end()])->whereBetween('views.viewed_at', [$range->iso_start(), $range->iso_end()])->groupBy('sessions.session_id')->when(!\is_null($this->required_column()), function (Builder $query) {

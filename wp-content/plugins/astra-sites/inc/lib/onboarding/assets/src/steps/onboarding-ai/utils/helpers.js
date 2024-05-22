@@ -427,3 +427,58 @@ export const limitExceeded = () => {
 
 	return false;
 };
+
+export const socialMediaParser = {
+	socialMediaPrefix: {
+		twitter: 'twitter.com/',
+		facebook: 'facebook.com/',
+		instagram: 'instagram.com/',
+		linkedin: 'linkedin.com/in/',
+		youtube: 'youtube.com/',
+		google: 'google.com/maps/place',
+		yelp: 'yelp.com/biz/',
+	},
+
+	patterns: {
+		twitter:
+			/^(?:http:\/\/www\.|https:\/\/www\.|http:\/\/|https:\/\/)?twitter\.com\/([a-zA-Z0-9_#?&=+]+)\/?$/,
+		linkedin:
+			/^(?:http:\/\/www\.|https:\/\/www\.|http:\/\/|https:\/\/)?linkedin\.com\/in\/([a-zA-Z0-9-._#?&=+]+)\/?$/,
+		facebook:
+			/^(?:http:\/\/www\.|https:\/\/www\.|http:\/\/|https:\/\/)?facebook\.com\/([a-zA-Z0-9._@#?&=+]+)\/?$/,
+		instagram:
+			/^(?:http:\/\/www\.|https:\/\/www\.|http:\/\/|https:\/\/)?instagram\.com\/([a-zA-Z0-9._@?&=]+)\/?$/,
+		youtube:
+			/^(?:http:\/\/www\.|https:\/\/www\.|http:\/\/|https:\/\/)?youtube\.com\/([a-zA-Z0-9_#?&=+@]+)\/?$/,
+		google: /^(?:http:\/\/www\.|https:\/\/www\.|http:\/\/|https:\/\/)?google\.com\/maps\/place\/([a-zA-Z0-9-+_.#?&=+]+)\/?$/,
+
+		yelp: /^(?:http:\/\/www\.|https:\/\/www\.|http:\/\/|https:\/\/)?yelp\.com\/biz\/([a-zA-Z0-9-_#?&=+]+)\/?$/,
+	},
+
+	validate( platform, url ) {
+		if ( this.patterns[ platform ] ) {
+			return this.patterns[ platform ].test( url );
+		}
+		return false;
+	},
+
+	parse( text ) {
+		const matches = {};
+		Object.keys( this.patterns ).forEach( ( platform ) => {
+			try {
+				const match = text.match( this.patterns[ platform ] );
+
+				if ( match && match[ 1 ] ) {
+					matches[ platform ] = {
+						handle: match[ 1 ],
+						prefix: match[ 0 ].replace( match[ 1 ], '' ),
+					};
+				}
+			} catch ( error ) {
+				console.log( error );
+			}
+		} );
+
+		return matches;
+	},
+};

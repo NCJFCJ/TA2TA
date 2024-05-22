@@ -18,7 +18,7 @@ if ( ! class_exists( 'Tribe__Events__Community__Main' ) ) {
 		/**
 		 * The current version of Community Events
 		 */
-		const VERSION = '4.10.15';
+		const VERSION = '4.10.17';
 
 		/**
 		 * Singleton instance variable
@@ -91,7 +91,7 @@ if ( ! class_exists( 'Tribe__Events__Community__Main' ) ) {
 		public $defaultStatus;
 
 		/**
-		 * setting to allow anonymous submissions
+		 * Setting to allow anonymous submissions.
 		 *
 		 * @var bool
 		 */
@@ -2656,6 +2656,7 @@ if ( ! class_exists( 'Tribe__Events__Community__Main' ) ) {
 		 * Form event content.
 		 *
 		 * @since 1.0
+		 * @since 4.10.17 Added filter `tec_events_community_event_editor_post_content`.
 		 *
 		 * @param object $event The event to display the tile for.
 		 *
@@ -2667,12 +2668,14 @@ if ( ! class_exists( 'Tribe__Events__Community__Main' ) ) {
 				$event = get_post();
 			}
 			if ( $event ) {
-				$post_content = $event->post_content;
+				$post_content = get_post_field( 'post_content', $event->ID );
 			} elseif ( ! empty( $_POST['post_content'] ) ) {
 				$post_content = stripslashes( $_POST['post_content'] );
 			} else {
 				$post_content = '';
 			}
+
+			$post_content = apply_filters( 'tec_events_community_event_editor_post_content', $post_content, $event );
 
 			$classes = tribe_community_events_field_classes( 'post_content', [ 'frontend' ], false );
 
@@ -3774,6 +3777,8 @@ if ( ! class_exists( 'Tribe__Events__Community__Main' ) ) {
 			tribe_register_provider( '\\TEC\\Events_Community\\Routes\\Provider' );
 
 			tribe_register_provider( \TEC\Events_Community\Integrations\Provider::class );
+
+			tribe_register_provider( \TEC\Events_Community\Block_Conversion\Controller::class );
 		}
 
 		/**
@@ -3815,9 +3820,19 @@ if ( ! class_exists( 'Tribe__Events__Community__Main' ) ) {
 				return false;
 			}
 
-			// Cannot manage attendees without event.
-			if ( empty( $event_id ) ) {
-				return false;
+			// If Event Tickets is active.
+			if ( class_exists( 'Tribe__Tickets__Main', false ) ) {
+				// Cannot manage attendees without event, when not on the attendees page.
+				if (
+					! tribe( TEC\Tickets\Admin\Attendees\Page::class )->is_on_page()
+					&& empty( $event_id )
+				) {
+					return false;
+				}
+			} else {
+				if ( empty( $event_id ) ) {
+					return false;
+				}
 			}
 
 			// Can manage attendees from admin area.

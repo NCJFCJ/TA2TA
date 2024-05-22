@@ -1,6 +1,6 @@
 <?php
 /**
- * Copyright (C) 2014-2023 ServMask Inc.
+ * Copyright (C) 2014-2018 ServMask Inc.
  *
  * This program is free software: you can redistribute it and/or modify
  * it under the terms of the GNU General Public License as published by
@@ -23,10 +23,6 @@
  * ╚══════╝╚══════╝╚═╝  ╚═╝  ╚═══╝  ╚═╝     ╚═╝╚═╝  ╚═╝╚══════╝╚═╝  ╚═╝
  */
 
-if ( ! defined( 'ABSPATH' ) ) {
-	die( 'Kangaroos cannot jump here' );
-}
-
 class Ai1wm_Handler {
 
 	/**
@@ -39,14 +35,12 @@ class Ai1wm_Handler {
 	 * @return void
 	 */
 	public static function error( $errno, $errstr, $errfile, $errline ) {
-		Ai1wm_Log::error(
-			array(
-				'Number'  => $errno,
-				'Message' => $errstr,
-				'File'    => $errfile,
-				'Line'    => $errline,
-			)
-		);
+		Ai1wm_Log::error( array(
+			'Number'  => $errno,
+			'Message' => $errstr,
+			'File'    => $errfile,
+			'Line'    => $errline,
+		) );
 	}
 
 	/**

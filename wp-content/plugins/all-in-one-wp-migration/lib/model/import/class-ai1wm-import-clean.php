@@ -1,6 +1,6 @@
 <?php
 /**
- * Copyright (C) 2014-2023 ServMask Inc.
+ * Copyright (C) 2014-2018 ServMask Inc.
  *
  * This program is free software: you can redistribute it and/or modify
  * it under the terms of the GNU General Public License as published by
@@ -23,28 +23,10 @@
  * ╚══════╝╚══════╝╚═╝  ╚═╝  ╚═══╝  ╚═╝     ╚═╝╚═╝  ╚═╝╚══════╝╚═╝  ╚═╝
  */
 
-if ( ! defined( 'ABSPATH' ) ) {
-	die( 'Kangaroos cannot jump here' );
-}
-
 class Ai1wm_Import_Clean {
 
 	public static function execute( $params ) {
-		// Get database client
-		$mysql = Ai1wm_Database_Utility::create_client();
-
-		// Flush mainsite tables
-		$mysql->add_table_prefix_filter( ai1wm_table_prefix( 'mainsite' ) );
-		$mysql->flush();
-
-		// Delete storage files
 		Ai1wm_Directory::delete( ai1wm_storage_path( $params ) );
-
-		// Exit in console
-		if ( defined( 'WP_CLI' ) ) {
-			return $params;
-		}
-
 		exit;
 	}
 }

@@ -29,10 +29,8 @@ class Post_Custom_Taxonomy extends Abstract_Table_Data {
 	}
 
 	public function get_data() {
-		$sep        = parent::get_separator( 'terms' );
-		$show_links = array_intersect( [ 'all', 'terms' ], $this->links );
-
-		$terms = parent::get_terms_for_column( $this->column, $show_links, $sep );
+		$sep   = parent::get_separator( 'terms' );
+		$terms = parent::get_terms_for_column( $this->column, $this->links, $sep );
 
 		// If taxonomy is a date and there's only 1 term, format value in required date format.
 		if ( $this->is_date && $this->date_format && ( false === strpos( $terms, $sep ) ) ) {

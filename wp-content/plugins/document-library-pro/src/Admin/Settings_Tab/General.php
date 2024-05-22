@@ -2,19 +2,20 @@
 
 namespace Barn2\Plugin\Document_Library_Pro\Admin\Settings_Tab;
 
-use Barn2\Plugin\Document_Library_Pro\Dependencies\Lib\Registerable,
-	Barn2\Plugin\Document_Library_Pro\Dependencies\Lib\Admin\Settings_API_Helper,
-	Barn2\Plugin\Document_Library_Pro\Dependencies\Lib\Util as Lib_Util,
-	Barn2\Plugin\Document_Library_Pro\Util\Options,
-	Barn2\Plugin\Document_Library_Pro\Posts_Table_Pro\Table_Args as PTP_Table_Args;
+use Barn2\Plugin\Document_Library_Pro\Dependencies\Lib\Registerable;
+use Barn2\Plugin\Document_Library_Pro\Dependencies\Lib\Admin\Settings_API_Helper;
+use Barn2\Plugin\Document_Library_Pro\Dependencies\Lib\Admin\Settings_Util;
+use Barn2\Plugin\Document_Library_Pro\Dependencies\Lib\Util as Lib_Util;
+use Barn2\Plugin\Document_Library_Pro\Util\Options;
+use Barn2\Plugin\Document_Library_Pro\Posts_Table_Pro\Table_Args as PTP_Table_Args;
 
 defined( 'ABSPATH' ) || exit;
 
 /**
  * General Setting Tab
  *
- * @package   Barn2/document-library-pro
- * @author    Barn2 Plugins <info@barn2.com>
+ * @package   Barn2\document-library-pro
+ * @author    Barn2 Plugins <support@barn2.com>
  * @license   GPL-3.0
  * @copyright Barn2 Media Ltd
  */
@@ -181,16 +182,10 @@ class General implements Registerable {
 	 */
 	public function support_links() {
 		printf(
-			'<p>%s | %s | %s</p>',
-			// phpcs:disable WordPress.Security.EscapeOutput.OutputNotEscaped
-			Lib_Util::format_link( $this->plugin->get_documentation_url(), __( 'Documentation', 'document-library-pro' ), true ),
-			Lib_Util::format_link( $this->plugin->get_support_url(), __( 'Support', 'document-library-pro' ), true ),
-			sprintf(
-				'<a class="barn2-wiz-restart-btn" href="%s">%s</a>',
-				add_query_arg( [ 'page' => $this->plugin->get_slug() . '-setup-wizard' ], admin_url( 'admin.php' ) ),
-				__( 'Setup wizard', 'document-library-pro' )
-			)
-			// phpcs:enable
+			'<p>%s</p>',
+			// phpcs:reason The output is already escaped in the Settings_Util::get_help_links() method.
+			// phpcs:ignore WordPress.Security.EscapeOutput.OutputNotEscaped
+			Settings_Util::get_help_links( $this->plugin )
 		);
 	}
 
@@ -399,15 +394,18 @@ class General implements Registerable {
 	 * @return array
 	 */
 	private function get_document_lists_settings() {
+		$document_page = ! empty( get_option( Options::DOCUMENT_PAGE_OPTION_KEY ) ) ? get_option( Options::DOCUMENT_PAGE_OPTION_KEY ) : '';
+
 		return [
 			[
-				'id'       => Options::DOCUMENT_PAGE_OPTION_KEY,
-				'title'    => __( 'Document library page', 'document-library-pro' ),
-				'type'     => 'select',
-				'desc'     => __( 'The page to display your documents.', 'document-library-pro' ),
-				'desc_tip' => __( 'You can also use the [doc_library] shortcode to list documents on other pages.', 'document-library-pro' ),
-				'options'  => $this->get_pages(),
-				'default'  => '',
+				'id'        => Options::DOCUMENT_PAGE_OPTION_KEY,
+				'title'     => __( 'Document library page', 'document-library-pro' ),
+				'type'      => 'select',
+				'desc'      => __( 'The page to display your documents.', 'document-library-pro' ),
+				'desc_tip'  => __( 'You can also use the [doc_library] shortcode to list documents on other pages.', 'document-library-pro' ),
+				'options'   => $this->get_pages(),
+				'default'   => '',
+				'show_page' => $document_page,
 			],
 			[
 				'id'      => Options::SHORTCODE_OPTION_KEY . '[layout]',
@@ -584,15 +582,10 @@ class General implements Registerable {
 		return [
 			[
 				'title'   => __( 'Search box', 'document-library-pro' ),
-				'type'    => 'select',
+				'type'    => 'checkbox',
 				'id'      => Options::SHORTCODE_OPTION_KEY . '[search_box]',
-				'desc'    => __( 'The position of the search box above the list of documents. You can also add a search box using a shortcode or widget.', 'document-library-pro' ) . $this->read_more( 'kb/document-library-search/#standalone-search-box' ),
-				'options' => [
-					'top'    => __( 'Above library', 'document-library-pro' ),
-					'bottom' => __( 'Below library', 'document-library-pro' ),
-					'both'   => __( 'Above and below library', 'document-library-pro' ),
-					'false'  => __( 'Hidden', 'document-library-pro' )
-				],
+				'label'   => __( 'Display a search box above the list of documents', 'document-library-pro' ),
+				'desc'    => __( 'You can also add a search box using a shortcode or widget.', 'document-library-pro' ) . $this->read_more( 'kb/document-library-search/#standalone-search-box' ),
 				'default' => $this->default_settings['search_box']
 			],
 			[

@@ -8,10 +8,12 @@ if (!class_exists('WP_Sheet_Editor_WooCommerce_Teaser')) {
 	class WP_Sheet_Editor_WooCommerce_Teaser {
 
 		static private $instance = false;
-		var $post_type = null;
-		var $allowed_columns = null;
-		var $wc_lookuptable_after_save_synced = array();
-		var $variation_post_type = 'product_variation';
+		public $post_type = null;
+		public $allowed_columns = null;
+		public $wc_lookuptable_after_save_synced = array();
+		public $variation_post_type = 'product_variation';
+		public $variation_columns = array();
+		public $variation_only_columns = array();
 
 		private function __construct() {
 			

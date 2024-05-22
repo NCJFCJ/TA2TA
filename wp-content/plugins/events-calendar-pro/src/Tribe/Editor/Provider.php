@@ -13,7 +13,7 @@ class Tribe__Events__Pro__Editor__Provider extends Service_Provider {
 	 */
 	public function register() {
 		// Return if we shouldn't load blocks.
-		if ( ! tribe( 'editor' )->should_load_blocks()) {
+		if ( ! tribe( 'editor' )->should_load_blocks() && ! tec_is_full_site_editor() ) {
 			return;
 		}
 

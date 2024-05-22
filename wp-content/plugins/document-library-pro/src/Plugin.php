@@ -2,27 +2,25 @@
 
 namespace Barn2\Plugin\Document_Library_Pro;
 
-use Barn2\Plugin\Document_Library_Pro\Widgets\Document_Search,
-	Barn2\Plugin\Document_Library_Pro\Dependencies\Lib\Registerable,
-	Barn2\Plugin\Document_Library_Pro\Dependencies\Lib\Translatable,
-	Barn2\Plugin\Document_Library_Pro\Dependencies\Lib\Service_Provider,
-	Barn2\Plugin\Document_Library_Pro\Dependencies\Lib\Service_Container,
-	Barn2\Plugin\Document_Library_Pro\Dependencies\Lib\Plugin\Premium_Plugin,
-	Barn2\Plugin\Document_Library_Pro\Dependencies\Lib\Plugin\Licensed_Plugin,
-	Barn2\Plugin\Document_Library_Pro\Dependencies\Lib\Admin\Notices;
+use Barn2\Plugin\Document_Library_Pro\Widgets\Document_Search;
+use Barn2\Plugin\Document_Library_Pro\Dependencies\Lib\Registerable;
+use Barn2\Plugin\Document_Library_Pro\Dependencies\Lib\Translatable;
+use Barn2\Plugin\Document_Library_Pro\Dependencies\Lib\Service_Provider;
+use Barn2\Plugin\Document_Library_Pro\Dependencies\Lib\Plugin\Premium_Plugin;
+use Barn2\Plugin\Document_Library_Pro\Dependencies\Lib\Plugin\Licensed_Plugin;
+use Barn2\Plugin\Document_Library_Pro\Dependencies\Lib\Admin\Notices;
 
 defined( 'ABSPATH' ) || exit;
 
 /**
  * The main plugin class. Responsible for setting up to core plugin services.
  *
- * @package   Barn2/document-library-pro
- * @author    Barn2 Plugins <info@barn2.com>
+ * @package   Barn2\document-library-pro
+ * @author    Barn2 Plugins <support@barn2.com>
  * @license   GPL-3.0
  * @copyright Barn2 Media Ltd
  */
 class Plugin extends Premium_Plugin implements Licensed_Plugin, Registerable, Translatable, Service_Provider {
-	use Service_Container;
 
 	const NAME    = 'Document Library Pro';
 	const ITEM_ID = 194365;
@@ -36,14 +34,17 @@ class Plugin extends Premium_Plugin implements Licensed_Plugin, Registerable, Tr
 	public function __construct( $file = null, $version = '1.0' ) {
 		parent::__construct(
 			[
+				'id'                 => self::ITEM_ID,
 				'name'               => self::NAME,
-				'item_id'            => self::ITEM_ID,
 				'version'            => $version,
 				'file'               => $file,
 				'settings_path'      => 'admin.php?page=document_library_pro',
 				'documentation_path' => 'kb-categories/document-library-pro-kb/',
 			]
 		);
+
+		$this->add_service( 'plugin_setup', new Admin\Plugin_Setup( $this->get_file(), $this ), true );
+		$this->get_service( 'plugin_setup' )->register();
 	}
 
 	/**
@@ -54,15 +55,12 @@ class Plugin extends Premium_Plugin implements Licensed_Plugin, Registerable, Tr
 
 		register_activation_hook( $this->get_file(), [ 'Barn2\\Plugin\\Document_Library_Pro\\Install', 'install' ] );
 
-		$plugin_setup = new Admin\Plugin_Setup( $this->get_file(), $this );
-		$plugin_setup->register();
-
 		add_action( 'plugins_loaded', [ $this, 'maybe_load_plugin' ] );
 		add_action( 'widgets_init', [ $this, 'register_widgets' ] );
 	}
 
 	/**
-	 * Maybe bootup plugin
+	 * Maybe bootup plugin.
 	 */
 	public function maybe_load_plugin() {
 		if ( ! $this->check_wp_requirements() ) {
@@ -70,6 +68,8 @@ class Plugin extends Premium_Plugin implements Licensed_Plugin, Registerable, Tr
 		}
 
 		$this->check_updates();
+
+		$this->add_services();
 
 		add_action( 'init', [ $this, 'load_textdomain' ], 5 );
 		add_action( 'init', [ $this, 'register_services' ], 5 );
@@ -80,42 +80,39 @@ class Plugin extends Premium_Plugin implements Licensed_Plugin, Registerable, Tr
 	 *
 	 * @return array
 	 */
-	public function get_services() {
-		$services = [
-			'admin' => new Admin\Admin( $this ),
-			'wizard' => new Admin\Wizard\Setup_Wizard( $this ),
-		];
+	public function add_services() {
 
-		// Initialize plugin if valid
+		$this->add_service( 'admin', new Admin\Admin( $this ) );
+		$this->add_service( 'wizard', new Admin\Wizard\Setup_Wizard( $this ) );
+
+		// Initialize plugin if valid.
 		if ( $this->has_valid_license() ) {
-			$services['post_type']                 = new Post_Type();
-			$services['taxonomies']                = new Taxonomies();
-			$services['shortcode']                 = new Shortcode();
-			$services['frontend_scripts']          = new Frontend_Scripts( $this );
-			$services['ajax_handler']              = new Ajax_Handler();
-			$services['single_content']            = new Single_Content();
-			$services['comments']                  = new Comments( $this );
-			$services['preview_modal']             = new Preview_Modal();
-			$services['search_handler']            = new Search_Handler();
-			$services['shortcode/doc_search']      = new Shortcodes\Document_Search();
-			$services['rest_api'] = new Submissions\Rest_Api();
-			$services['submission_form']           = new Submissions\Frontend_Form();
-			$services['shortcode/submission_form'] = new Shortcodes\Frontend_Form();
+			$this->add_service( 'post_type', new Post_Type() );
+			$this->add_service( 'taxonomies', new Taxonomies() );
+			$this->add_service( 'shortcode', new Shortcode() );
+			$this->add_service( 'frontend_scripts', new Frontend_Scripts( $this ) );
+			$this->add_service( 'ajax_handler', new Ajax_Handler() );
+			$this->add_service( 'single_content', new Single_Content() );
+			$this->add_service( 'comments',new Comments( $this ) );
+			$this->add_service( 'preview_modal',new Preview_Modal() );
+			$this->add_service( 'search_handler', new Search_Handler() );
+			$this->add_service( 'shortcode/doc_search',new Shortcodes\Document_Search() );
+			$this->add_service( 'rest_api', new Submissions\Rest_Api() );
+			$this->add_service( 'submission_form',new Submissions\Frontend_Form() );
+			$this->add_service( 'shortcode/submission_form', new Shortcodes\Frontend_Form() );
 
 			// PTP Integration
-			$services['ptp_integration']          = new Integration\Posts_Table_Pro();
-			$services['ptp/frontend_scripts']     = new Posts_Table_Pro\Frontend_Scripts( $this );
-			$services['ptp/ajax_handler']         = new Posts_Table_Pro\Ajax_Handler();
-			$services['ptp/theme_integration']    = new Posts_Table_Pro\Integration\Theme_Integration();
+			$this->add_service( 'ptp_integration', new Integration\Posts_Table_Pro() );
+			$this->add_service( 'ptp/frontend_scripts', new Posts_Table_Pro\Frontend_Scripts( $this ) );
+			$this->add_service( 'ptp/ajax_handler', new Posts_Table_Pro\Ajax_Handler() );
+			$this->add_service( 'ptp/theme_integration', new Posts_Table_Pro\Integration\Theme_Integration() );
 
 			// 3rd Party Integration
-			$services['integration/wp_term_order']         = new Integration\WP_Term_Order();
-			$services['integration/custom_taxonomy_order'] = new Integration\Custom_Taxonomy_Order();
-			$services['integration/facetwp']               = new Integration\FacetWP();
-			$services['integration/searchwp']              = new Integration\SearchWP();
+			$this->add_service( 'integration/wp_term_order', new Integration\WP_Term_Order() );
+			$this->add_service( 'integration/custom_taxonomy_order', new Integration\Custom_Taxonomy_Order() );
+			$this->add_service( 'integration/facetwp', new Integration\FacetWP() );
+			$this->add_service( 'integration/searchwp', new Integration\SearchWP() );
 		}
-
-		return $services;
 	}
 
 	/**

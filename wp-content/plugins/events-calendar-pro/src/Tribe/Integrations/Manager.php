@@ -128,7 +128,16 @@ class Tribe__Events__Pro__Integrations__Manager {
 			return;
 		}
 
-		tribe_register_provider( Elementor_Integration::class );
+		if ( did_action( 'tec_events_elementor_widgets_registered' ) ) {
+			tribe_register_provider( Elementor_Integration::class );
+		} else {
+			add_action(
+				'tec_events_elementor_widgets_registered',
+				function () {
+					tribe_register_provider( Elementor_Integration::class );
+				}
+			);
+		}
 	}
 
 	/**

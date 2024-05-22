@@ -1,11 +1,11 @@
-/*! DataTables 1.13.1
- * ©2008-2022 SpryMedia Ltd - datatables.net/license
+/*! DataTables 1.13.5
+ * ©2008-2023 SpryMedia Ltd - datatables.net/license
  */
 
 /**
  * @summary     DataTables
  * @description Paginate, search and order HTML tables
- * @version     1.13.1
+ * @version     1.13.4
  * @author      SpryMedia Ltd
  * @contact     www.datatables.net
  * @copyright   SpryMedia Ltd.
@@ -34,21 +34,28 @@
 	}
 	else if ( typeof exports === 'object' ) {
 		// CommonJS
-		module.exports = function (root, $) {
-			if ( ! root ) {
-				// CommonJS environments without a window global must pass a
-				// root. This will give an error otherwise
-				root = window;
-			}
+		// jQuery's factory checks for a global window - if it isn't present then it
+		// returns a factory function that expects the window object
+		var jq = require('jquery');
 
-			if ( ! $ ) {
-				$ = typeof window !== 'undefined' ? // jQuery's factory checks for a global window
-					require('jquery') :
-					require('jquery')( root );
-			}
+		if (typeof window !== 'undefined') {
+			module.exports = function (root, $) {
+				if ( ! root ) {
+					// CommonJS environments without a window global must pass a
+					// root. This will give an error otherwise
+					root = window;
+				}
 
-			return factory( $, root, root.document );
-		};
+				if ( ! $ ) {
+					$ = jq( root );
+				}
+
+				return factory( $, root, root.document );
+			};
+		}
+		else {
+			return factory( jq, window, window.document );
+		}
 	}
 	else {
 		// Browser
@@ -61,6 +68,12 @@
 	
 	var DataTable = function ( selector, options )
 	{
+		// Check if called with a window or jQuery object for DOM less applications
+		// This is for backwards compatibility
+		if (DataTable.factory(selector, options)) {
+			return DataTable;
+		}
+	
 		// When creating with `new`, create a new DataTable, returning the API instance
 		if (this instanceof DataTable) {
 			return $(selector).DataTable(options);
@@ -1165,6 +1178,7 @@
 								type:   sort !== null   ? i+'.@data-'+sort   : undefined,
 								filter: filter !== null ? i+'.@data-'+filter : undefined
 							};
+							col._isArrayHost = true;
 			
 							_fnColumnOptions( oSettings, i );
 						}
@@ -1370,7 +1384,12 @@
 	
 	
 	var _isNumber = function ( d, decimalPoint, formatted ) {
-		var strType = typeof d === 'string';
+		var type = typeof d;
+		var strType = type === 'string';
+	
+		if ( type === 'number' || type === 'bigint') {
+			return true;
+		}
 	
 		// If empty return immediately so there must be a number if it is a
 		// formatted string (this stops the string "k", or "kr", etc being detected
@@ -1499,7 +1518,9 @@
 	
 	
 	var _stripHtml = function ( d ) {
-		return d.replace( _re_html, '' );
+		return d
+			.replace( _re_html, '' ) // Complete tags
+			.replace(/<script/i, ''); // Safety for incomplete script tag
 	};
 	
 	
@@ -1873,7 +1894,10 @@
 								continue;
 							}
 		
-							if ( data === null || data[ a[i] ] === undefined ) {
+							if (data === null || data[ a[i] ] === null) {
+								return null;
+							}
+							else if ( data === undefined || data[ a[i] ] === undefined ) {
 								return undefined;
 							}
 	
@@ -2348,7 +2372,7 @@
 	
 		// Indicate if DataTables should read DOM data as an object or array
 		// Used in _fnGetRowElements
-		if ( typeof mDataSrc !== 'number' ) {
+		if ( typeof mDataSrc !== 'number' && ! oCol._isArrayHost ) {
 			oSettings._rowReadObject = true;
 		}
 	
@@ -4044,11 +4068,16 @@
 		settings.iDraw++;
 		_fnProcessingDisplay( settings, true );
 	
+		// Keep track of drawHold state to handle scrolling after the Ajax call
+		var drawHold = settings._drawHold;
+	
 		_fnBuildAjax(
 			settings,
 			_fnAjaxParameters( settings ),
 			function(json) {
+				settings._drawHold = drawHold;
 				_fnAjaxUpdateDraw( settings, json );
+				settings._drawHold = false;
 			}
 		);
 	}
@@ -4312,7 +4341,7 @@
 					_fnThrottle( searchFn, searchDelay ) :
 					searchFn
 			)
-			.on( 'mouseup', function(e) {
+			.on( 'mouseup.DT', function(e) {
 				// Edge fix! Edge 17 does not trigger anything other than mouse events when clicking
 				// on the clear icon (Edge bug 17584515). This is safe in other browsers as `searchFn`
 				// checks the value to see if it has changed. In other browsers it won't have.
@@ -4378,7 +4407,7 @@
 		if ( _fnDataSource( oSettings ) != 'ssp' )
 		{
 			/* Global filter */
-			_fnFilter( oSettings, oInput.sSearch, iForce, fnRegex(oInput), oInput.bSmart, oInput.bCaseInsensitive, oInput.return );
+			_fnFilter( oSettings, oInput.sSearch, iForce, fnRegex(oInput), oInput.bSmart, oInput.bCaseInsensitive );
 			fnSaveFilter( oInput );
 	
 			/* Now do the individual column filter */
@@ -4547,9 +4576,13 @@
 			 * 
 			 * ^(?=.*?\bone\b)(?=.*?\btwo three\b)(?=.*?\bfour\b).*$
 			 */
-			var a = $.map( search.match( /"[^"]+"|[^ ]+/g ) || [''], function ( word ) {
+			var a = $.map( search.match( /["\u201C][^"\u201D]+["\u201D]|[^ ]+/g ) || [''], function ( word ) {
 				if ( word.charAt(0) === '"' ) {
 					var m = word.match( /^"(.*)"$/ );
+					word = m ? m[1] : word;
+				}
+				else if ( word.charAt(0) === '\u201C' ) {
+					var m = word.match( /^\u201C(.*)\u201D$/ );
 					word = m ? m[1] : word;
 				}
 	
@@ -5102,7 +5135,8 @@
 	{
 		return $('<div/>', {
 				'id': ! settings.aanFeatures.r ? settings.sTableId+'_processing' : null,
-				'class': settings.oClasses.sProcessing
+				'class': settings.oClasses.sProcessing,
+				'role': 'status'
 			} )
 			.html( settings.oLanguage.sProcessing )
 			.append('<div><div></div><div></div><div></div><div></div></div>')
@@ -6777,8 +6811,15 @@
 	
 		if ( eventName !== null ) {
 			var e = $.Event( eventName+'.dt' );
+			var table = $(settings.nTable);
 	
-			$(settings.nTable).trigger( e, args );
+			table.trigger( e, args );
+	
+			// If not yet attached to the document, trigger the event
+			// on the body directly to sort of simulate the bubble
+			if (table.parents('body').length === 0) {
+				$('body').trigger( e, args );
+			}
 	
 			ret.push( e.result );
 		}
@@ -8341,10 +8382,9 @@
 	
 	$(document).on('plugin-init.dt', function (e, context) {
 		var api = new _Api( context );
-		
-		const namespace = 'on-plugin-init';
-		const stateSaveParamsEvent = `stateSaveParams.${namespace}`;
-		const destroyEvent = `destroy.${namespace}`;
+		var namespace = 'on-plugin-init';
+		var stateSaveParamsEvent = 'stateSaveParams.' + namespace;
+		var destroyEvent = 'destroy. ' + namespace;
 	
 		api.on( stateSaveParamsEvent, function ( e, settings, d ) {
 			// This could be more compact with the API, but it is a lot faster as a simple
@@ -8363,7 +8403,7 @@
 		});
 	
 		api.on( destroyEvent, function () {
-			api.off(`${stateSaveParamsEvent} ${destroyEvent}`);
+			api.off(stateSaveParamsEvent + ' ' + destroyEvent);
 		});
 	
 		var loaded = api.state.loaded();
@@ -9345,6 +9385,52 @@
 	
 	
 	/**
+	 * Set the jQuery or window object to be used by DataTables
+	 *
+	 * @param {*} module Library / container object
+	 * @param {string} [type] Library or container type `lib`, `win` or `datetime`.
+	 *   If not provided, automatic detection is attempted.
+	 */
+	DataTable.use = function (module, type) {
+		if (type === 'lib' || module.fn) {
+			$ = module;
+		}
+		else if (type == 'win' || module.document) {
+			window = module;
+			document = module.document;
+		}
+		else if (type === 'datetime' || module.type === 'DateTime') {
+			DataTable.DateTime = module;
+		}
+	}
+	
+	/**
+	 * CommonJS factory function pass through. This will check if the arguments
+	 * given are a window object or a jQuery object. If so they are set
+	 * accordingly.
+	 * @param {*} root Window
+	 * @param {*} jq jQUery
+	 * @returns {boolean} Indicator
+	 */
+	DataTable.factory = function (root, jq) {
+		var is = false;
+	
+		// Test if the first parameter is a window object
+		if (root && root.document) {
+			window = root;
+			document = root.document;
+		}
+	
+		// Test if the second parameter is a jQuery object
+		if (jq && jq.fn && jq.fn.jquery) {
+			$ = jq;
+			is = true;
+		}
+	
+		return is;
+	}
+	
+	/**
 	 * Provide a common method for plug-ins to check the version of DataTables being
 	 * used, in order to ensure compatibility.
 	 *
@@ -9675,7 +9761,9 @@
 				resolved._;
 		}
 	
-		return resolved.replace( '%d', plural ); // nb: plural might be undefined,
+		return typeof resolved === 'string'
+			? resolved.replace( '%d', plural ) // nb: plural might be undefined,
+			: resolved;
 	} );	
 	/**
 	 * Version string for plug-ins to check compatibility. Allowed format is
@@ -9685,7 +9773,7 @@
 	 *  @type string
 	 *  @default Version number
 	 */
-	DataTable.version = "1.13.1";
+	DataTable.version = "1.13.5";
 	
 	/**
 	 * Private data store, containing all of the settings objects that are
@@ -14818,10 +14906,17 @@
 							}
 	
 							if ( btnDisplay !== null ) {
-								node = $('<a>', {
+								var tag = settings.oInit.pagingTag || 'a';
+								var disabled = btnClass.indexOf(disabledClass) !== -1;
+			
+	
+								node = $('<'+tag+'>', {
 										'class': classes.sPageButton+' '+btnClass,
 										'aria-controls': settings.sTableId,
+										'aria-disabled': disabled ? 'true' : null,
 										'aria-label': aria[ button ],
+										'role': 'link',
+										'aria-current': btnClass === classes.sPageButtonActive ? 'page' : null,
 										'data-dt-idx': button,
 										'tabindex': tabIndex,
 										'id': idx === 0 && typeof button === 'string' ?
@@ -14952,6 +15047,12 @@
 	var __numericReplace = function ( d, decimalPlace, re1, re2 ) {
 		if ( d !== 0 && (!d || d === '-') ) {
 			return -Infinity;
+		}
+		
+		var type = typeof d;
+	
+		if (type === 'number' || type === 'bigint') {
+			return d;
 		}
 	
 		// If a decimal place other than `.` is used, it needs to be given to the
@@ -15322,7 +15423,7 @@
 	var __thousands = ',';
 	var __decimal = '.';
 	
-	if (Intl) {
+	if (window.Intl !== undefined) {
 		try {
 			var num = new Intl.NumberFormat().formatToParts(100000.1);
 		
@@ -15617,25 +15718,33 @@
 	}
 	else if ( typeof exports === 'object' ) {
 		// CommonJS
-		module.exports = function (root, $) {
-			if ( ! root ) {
-				// CommonJS environments without a window global must pass a
-				// root. This will give an error otherwise
-				root = window;
-			}
-
-			if ( ! $ ) {
-				$ = typeof window !== 'undefined' ? // jQuery's factory checks for a global window
-					require('jquery') :
-					require('jquery')( root );
-			}
-
+		var jq = require('jquery');
+		var cjsRequires = function (root, $) {
 			if ( ! $.fn.dataTable ) {
 				require('datatables.net')(root, $);
 			}
-
-			return factory( $, root, root.document );
 		};
+
+		if (typeof window === 'undefined') {
+			module.exports = function (root, $) {
+				if ( ! root ) {
+					// CommonJS environments without a window global must pass a
+					// root. This will give an error otherwise
+					root = window;
+				}
+
+				if ( ! $ ) {
+					$ = jq( root );
+				}
+
+				cjsRequires( root, $ );
+				return factory( $, root, root.document );
+			};
+		}
+		else {
+			cjsRequires( window, jq );
+			module.exports = factory( jq, window, window.document );
+		}
 	}
 	else {
 		// Browser
@@ -15652,10 +15761,28 @@ var DataTable = $.fn.dataTable;
 return DataTable;
 }));
 
-/*! Responsive 2.4.0
- * 2014-2022 SpryMedia Ltd - datatables.net/license
+/*! Responsive 2.2.9
+ * 2014-2021 SpryMedia Ltd - datatables.net/license
  */
 
+/**
+ * @summary     Responsive
+ * @description Responsive tables plug-in for DataTables
+ * @version     2.2.9
+ * @file        dataTables.responsive.js
+ * @author      SpryMedia Ltd (www.sprymedia.co.uk)
+ * @contact     www.sprymedia.co.uk/contact
+ * @copyright   Copyright 2014-2021 SpryMedia Ltd.
+ *
+ * This source file is free software, available under the following license:
+ *   MIT license - http://datatables.net/license/mit
+ *
+ * This source file is distributed in the hope that it will be useful, but
+ * WITHOUT ANY WARRANTY; without even the implied warranty of MERCHANTABILITY
+ * or FITNESS FOR A PARTICULAR PURPOSE. See the license files for details.
+ *
+ * For details please refer to: http://www.datatables.net
+ */
 (function( factory ){
 	if ( typeof define === 'function' && define.amd ) {
 		// AMD
@@ -15667,19 +15794,11 @@ return DataTable;
 		// CommonJS
 		module.exports = function (root, $) {
 			if ( ! root ) {
-				// CommonJS environments without a window global must pass a
-				// root. This will give an error otherwise
 				root = window;
 			}
 
-			if ( ! $ ) {
-				$ = typeof window !== 'undefined' ? // jQuery's factory checks for a global window
-					require('jquery') :
-					require('jquery')( root );
-			}
-
-			if ( ! $.fn.dataTable ) {
-				require('datatables.net')(root, $);
+			if ( ! $ || ! $.fn.dataTable ) {
+				$ = require('datatables.net')(root, $).$;
 			}
 
 			return factory( $, root, root.document );
@@ -15693,25 +15812,6 @@ return DataTable;
 'use strict';
 var DataTable = $.fn.dataTable;
 
-
-
-/**
- * @summary     Responsive
- * @description Responsive tables plug-in for DataTables
- * @version     2.4.0
- * @author      SpryMedia Ltd (www.sprymedia.co.uk)
- * @contact     www.sprymedia.co.uk/contact
- * @copyright   SpryMedia Ltd.
- *
- * This source file is free software, available under the following license:
- *   MIT license - http://datatables.net/license/mit
- *
- * This source file is distributed in the hope that it will be useful, but
- * WITHOUT ANY WARRANTY; without even the implied warranty of MERCHANTABILITY
- * or FITNESS FOR A PARTICULAR PURPOSE. See the license files for details.
- *
- * For details please refer to: http://www.datatables.net
- */
 
 /**
  * Responsive is a plug-in for the DataTables library that makes use of
@@ -15765,10 +15865,9 @@ var Responsive = function ( settings, opts ) {
 	}
 
 	this.s = {
-		childNodeStore: {},
+		dt: new DataTable.Api( settings ),
 		columns: [],
-		current: [],
-		dt: new DataTable.Api( settings )
+		current: []
 	};
 
 	// Check if responsive has already been initialised on this table
@@ -15972,63 +16071,6 @@ $.extend( Responsive.prototype, {
 	/* * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * *
 	 * Private methods
 	 */
-
-	/**
-	 * Get and store nodes from a cell - use for node moving renderers
-	 *
-	 * @param {*} dt DT instance
-	 * @param {*} row Row index
-	 * @param {*} col Column index
-	 */
-	_childNodes: function( dt, row, col ) {
-		var name = row+'-'+col;
-
-		if ( this.s.childNodeStore[ name ] ) {
-			return this.s.childNodeStore[ name ];
-		}
-
-		// https://jsperf.com/childnodes-array-slice-vs-loop
-		var nodes = [];
-		var children = dt.cell( row, col ).node().childNodes;
-		for ( var i=0, ien=children.length ; i<ien ; i++ ) {
-			nodes.push( children[i] );
-		}
-
-		this.s.childNodeStore[ name ] = nodes;
-
-		return nodes;
-	},
-
-	/**
-	 * Restore nodes from the cache to a table cell
-	 *
-	 * @param {*} dt DT instance
-	 * @param {*} row Row index
-	 * @param {*} col Column index
-	 */
-	_childNodesRestore: function( dt, row, col ) {
-		var name = row+'-'+col;
-
-		if ( ! this.s.childNodeStore[ name ] ) {
-			return;
-		}
-
-		var node = dt.cell( row, col ).node();
-		var store = this.s.childNodeStore[ name ];
-		var parent = store[0].parentNode;
-		var parentChildren = parent.childNodes;
-		var a = [];
-
-		for ( var i=0, ien=parentChildren.length ; i<ien ; i++ ) {
-			a.push( parentChildren[i] );
-		}
-
-		for ( var j=0, jen=a.length ; j<jen ; j++ ) {
-			node.appendChild( a[j] );
-		}
-
-		this.s.childNodeStore[ name ] = undefined;
-	},
 
 	/**
 	 * Calculate the visibility for the columns in a table for a given
@@ -16359,8 +16401,8 @@ $.extend( Responsive.prototype, {
 				: details.renderer;
 
 			var res = details.display( row, update, function () {
-				return renderer.call(
-					that, dt, row[0], that._detailsObj(row[0])
+				return renderer(
+					dt, row[0], that._detailsObj(row[0])
 				);
 			} );
 
@@ -16582,11 +16624,9 @@ $.extend( Responsive.prototype, {
 			}
 		} );
 
-		// Always need to update the display, regardless of if it has changed or not, so nodes
-		// can be re-inserted for listHiddenNodes
-		this._redrawChildren();
-
 		if ( changed ) {
+			this._redrawChildren();
+
 			// Inform listeners of the change
 			$(dt.table().node()).trigger( 'responsive-resize.dt', [dt, this.s.current] );
 
@@ -16612,7 +16652,6 @@ $.extend( Responsive.prototype, {
 	{
 		var dt = this.s.dt;
 		var columns = this.s.columns;
-		var that = this;
 
 		// Are we allowed to do auto sizing?
 		if ( ! this.c.auto ) {
@@ -16626,11 +16665,11 @@ $.extend( Responsive.prototype, {
 		}
 
 		// Need to restore all children. They will be reinstated by a re-render
-		if ( ! $.isEmptyObject( this.s.childNodeStore ) ) {
-			$.each( this.s.childNodeStore, function ( key ) {
+		if ( ! $.isEmptyObject( _childNodeStore ) ) {
+			$.each( _childNodeStore, function ( key ) {
 				var idx = key.split('-');
 
-				that._childNodesRestore( dt, idx[0]*1, idx[1]*1 );
+				_childNodesRestore( dt, idx[0]*1, idx[1]*1 );
 			} );
 		}
 
@@ -16750,7 +16789,6 @@ $.extend( Responsive.prototype, {
 	 */
 	_setColumnVis: function ( col, showHide )
 	{
-		var that = this;
 		var dt = this.s.dt;
 		var display = showHide ? '' : 'none'; // empty string will remove the attr
 
@@ -16767,9 +16805,9 @@ $.extend( Responsive.prototype, {
 			.toggleClass('dtr-hidden', !showHide);
 
 		// If the are child nodes stored, we might need to reinsert them
-		if ( ! $.isEmptyObject( this.s.childNodeStore ) ) {
+		if ( ! $.isEmptyObject( _childNodeStore ) ) {
 			dt.cells( null, col ).indexes().each( function (idx) {
-				that._childNodesRestore( dt, idx.row, idx.column );
+				_childNodesRestore( dt, idx.row, idx.column );
 			} );
 		}
 	},
@@ -16936,6 +16974,52 @@ Responsive.display = {
 };
 
 
+var _childNodeStore = {};
+
+function _childNodes( dt, row, col ) {
+	var name = row+'-'+col;
+
+	if ( _childNodeStore[ name ] ) {
+		return _childNodeStore[ name ];
+	}
+
+	// https://jsperf.com/childnodes-array-slice-vs-loop
+	var nodes = [];
+	var children = dt.cell( row, col ).node().childNodes;
+	for ( var i=0, ien=children.length ; i<ien ; i++ ) {
+		nodes.push( children[i] );
+	}
+
+	_childNodeStore[ name ] = nodes;
+
+	return nodes;
+}
+
+function _childNodesRestore( dt, row, col ) {
+	var name = row+'-'+col;
+
+	if ( ! _childNodeStore[ name ] ) {
+		return;
+	}
+
+	var node = dt.cell( row, col ).node();
+	var store = _childNodeStore[ name ];
+	var parent = store[0].parentNode;
+	var parentChildren = parent.childNodes;
+	var a = [];
+
+	for ( var i=0, ien=parentChildren.length ; i<ien ; i++ ) {
+		a.push( parentChildren[i] );
+	}
+
+	for ( var j=0, jen=a.length ; j<jen ; j++ ) {
+		node.appendChild( a[j] );
+	}
+
+	_childNodeStore[ name ] = undefined;
+}
+
+
 /**
  * Display methods - functions which define how the hidden data should be shown
  * in the table.
@@ -16947,7 +17031,6 @@ Responsive.display = {
 Responsive.renderer = {
 	listHiddenNodes: function () {
 		return function ( api, rowIdx, columns ) {
-			var that = this;
 			var ul = $('<ul data-dtr-index="'+rowIdx+'" class="dtr-details"/>');
 			var found = false;
 
@@ -16964,7 +17047,7 @@ Responsive.renderer = {
 							'</span> '+
 						'</li>'
 					)
-						.append( $('<span class="dtr-data"/>').append( that._childNodes( api, col.rowIndex, col.columnIndex ) ) )// api.cell( col.rowIndex, col.columnIndex ).node().childNodes ) )
+						.append( $('<span class="dtr-data"/>').append( _childNodes( api, col.rowIndex, col.columnIndex ) ) )// api.cell( col.rowIndex, col.columnIndex ).node().childNodes ) )
 						.appendTo( ul );
 
 					found = true;
@@ -17148,7 +17231,7 @@ Api.registerPlural( 'columns().responsiveHidden()', 'column().responsiveHidden()
  * @name Responsive.version
  * @static
  */
-Responsive.version = '2.4.0';
+Responsive.version = '2.2.9';
 
 
 $.fn.dataTable.Responsive = Responsive;
@@ -17175,11 +17258,11 @@ $(document).on( 'preInit.dt.dtr', function (e, settings, json) {
 } );
 
 
-return DataTable;
+return Responsive;
 }));
 
 /*! DataTables styling wrapper for Responsive
- * © SpryMedia Ltd - datatables.net/license
+ * ©2018 SpryMedia Ltd - datatables.net/license
  */
 
 (function( factory ){
@@ -17193,19 +17276,11 @@ return DataTable;
 		// CommonJS
 		module.exports = function (root, $) {
 			if ( ! root ) {
-				// CommonJS environments without a window global must pass a
-				// root. This will give an error otherwise
 				root = window;
 			}
 
-			if ( ! $ ) {
-				$ = typeof window !== 'undefined' ? // jQuery's factory checks for a global window
-					require('jquery') :
-					require('jquery')( root );
-			}
-
-			if ( ! $.fn.dataTable ) {
-				require('datatables.net-dt')(root, $);
+			if ( ! $ || ! $.fn.dataTable ) {
+				$ = require('datatables.net-dt')(root, $).$;
 			}
 
 			if ( ! $.fn.dataTable.Responsive ) {
@@ -17220,10 +17295,89 @@ return DataTable;
 		factory( jQuery, window, document );
 	}
 }(function( $, window, document, undefined ) {
+
+return $.fn.dataTable;
+
+}));
+/*! © guillimon, SpryMedia Ltd - datatables.net/license */
+
+(function( factory ){
+	if ( typeof define === 'function' && define.amd ) {
+		// AMD
+		define( ['jquery', 'datatables.net'], function ( $ ) {
+			return factory( $, window, document );
+		} );
+	}
+	else if ( typeof exports === 'object' ) {
+		// CommonJS
+		var jq = require('jquery');
+		var cjsRequires = function (root, $) {
+			if ( ! $.fn.dataTable ) {
+				require('datatables.net')(root, $);
+			}
+		};
+
+		if (typeof window === 'undefined') {
+			module.exports = function (root, $) {
+				if ( ! root ) {
+					// CommonJS environments without a window global must pass a
+					// root. This will give an error otherwise
+					root = window;
+				}
+
+				if ( ! $ ) {
+					$ = jq( root );
+				}
+
+				cjsRequires( root, $ );
+				return factory( $, root, root.document );
+			};
+		}
+		else {
+			cjsRequires( window, jq );
+			module.exports = factory( jq, window, window.document );
+		}
+	}
+	else {
+		// Browser
+		factory( jQuery, window, document );
+	}
+}(function( $, window, document, undefined ) {
 'use strict';
 var DataTable = $.fn.dataTable;
 
 
+/**
+ * DataTables has a built in type called `html` which will strip HTML tags
+ * from a search string, but it doesn't cope with nested HTML inside another
+ * element's attributes (for example DOM0 events with have HTML in them). This
+ * plug-in function overrules the built-in method and provides complete HTML
+ * tag removal.
+ *
+ * Note that this function is not included in DataTables by
+ * default because it is slightly slower than the built-in method, which is
+ * good enough for by far the majority of use cases.
+ *
+ *  @summary Strip HTML using DOM methods
+ *  @name html
+ *  @author _guillimon_
+ *
+ *  @example
+ *    $(document).ready(function() {
+ *        $('#example').dataTable({
+ *            "columnDefs": [
+ *                { type: "html", target: 0 }
+ *            ]
+ *        });
+ *    } );
+ */
+var _div = document.createElement('div');
+DataTable.ext.type.search.html = function (data) {
+    _div.innerHTML = data;
+    return _div.textContent
+        ? _div.textContent.replace(/\n/g, ' ')
+        : _div.innerText.replace(/\n/g, ' ');
+};
 
 
 return DataTable;

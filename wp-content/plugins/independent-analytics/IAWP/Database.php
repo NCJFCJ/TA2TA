@@ -52,22 +52,61 @@ class Database
         }
         return self::$collation;
     }
+    public static function has_table(string $table) : bool
+    {
+        global $wpdb;
+        $tables = $wpdb->get_row($wpdb->prepare("SHOW TABLES LIKE %s", $table));
+        return !\is_null($tables);
+    }
+    public static function has_index(string $table, string $index) : bool
+    {
+        global $wpdb;
+        if (!self::has_table($table)) {
+            return \false;
+        }
+        $row = $wpdb->get_row($wpdb->prepare("\n                SHOW INDEX FROM {$table} WHERE Key_name = %s\n            ", $index));
+        return !\is_null($row);
+    }
+    public static function get_character_set_and_collation_for(string $table_name) : string
+    {
+        global $wpdb;
+        $query = \IAWP\Illuminate_Builder::get_builder()->selectRaw('CCSA.CHARACTER_SET_NAME AS character_set_name')->selectRaw('CCSA.COLLATION_NAME AS collation_name')->from('information_schema.TABLES', 'THE_TABLES')->leftJoin('information_schema.COLLATION_CHARACTER_SET_APPLICABILITY AS CCSA', 'CCSA.COLLATION_NAME', '=', 'THE_TABLES.TABLE_COLLATION')->where('THE_TABLES.TABLE_SCHEMA', '=', $wpdb->dbname)->where('THE_TABLES.TABLE_NAME', '=', $table_name);
+        $result = $query->first();
+        $character_set = $result->character_set_name ?? null;
+        $collation = $result->collation_name ?? null;
+        if ($character_set === null || $collation === null) {
+            return '';
+        }
+        return "DEFAULT CHARACTER SET {$character_set} COLLATE {$collation}";
+    }
+    /**
+     * From MySQL: It is not possible to deny a privilege granted at a higher level by absence of that privilege at a lower level.
+     *
+     * @return string[]
+     */
     private static function user_privileges() : array
     {
+        global $wpdb;
         if (!\is_null(self::$user_privileges)) {
             return self::$user_privileges;
         }
-        global $wpdb;
         $user = \IAWP\Illuminate_Builder::get_builder()->selectRaw('CURRENT_USER() as user')->value('user');
         $parts = \explode('@', $user);
         $grantee = "'" . $parts[0] . "'@'" . $parts[1] . "'";
-        $query = \IAWP\Illuminate_Builder::get_builder()->select('*')->from('information_schema.schema_privileges')->where('grantee', '=', $grantee)->where('table_schema', '=', $wpdb->dbname);
-        self::$user_privileges = \array_map(function ($record) {
+        $global_privileges_query = \IAWP\Illuminate_Builder::get_builder()->select('*')->from('information_schema.user_privileges')->where('grantee', '=', $grantee);
+        $global_privileges = \array_map(function ($record) {
             return $record->PRIVILEGE_TYPE;
-        }, $query->get()->all());
+        }, $global_privileges_query->get()->all());
+        $database_privileges_query = \IAWP\Illuminate_Builder::get_builder()->select('*')->from('information_schema.schema_privileges')->where('grantee', '=', $grantee)->where('table_schema', '=', $wpdb->dbname);
+        $database_privileges = \array_map(function ($record) {
+            return $record->PRIVILEGE_TYPE;
+        }, $database_privileges_query->get()->all());
+        $privileges = \array_unique(\array_merge($global_privileges, $database_privileges), \SORT_REGULAR);
         // If SELECT is missing, that means our query is broken and should be ignored
-        if (!\in_array('SELECT', self::$user_privileges)) {
+        if (!\in_array('SELECT', $privileges)) {
             self::$user_privileges = self::$required_privileges;
+        } else {
+            self::$user_privileges = $privileges;
         }
         return self::$user_privileges;
     }

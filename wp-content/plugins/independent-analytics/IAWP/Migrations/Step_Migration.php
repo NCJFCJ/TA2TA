@@ -50,10 +50,4 @@ abstract class Step_Migration
         }
         return \true;
     }
-    public static function has_index(string $table, string $name) : bool
-    {
-        global $wpdb;
-        $row = $wpdb->get_row($wpdb->prepare("\n                SHOW INDEX FROM {$table} WHERE Key_name = %s\n            ", $name));
-        return !\is_null($row);
-    }
 }

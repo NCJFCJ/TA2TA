@@ -4,9 +4,9 @@
  * Plugin Name:       Independent Analytics
  * Plugin URI:        https://independentwp.com/
  * Description:       User-friendly website analytics built for WordPress
- * Version:           2.3.2
+ * Version:           2.4.3
  * Requires at least: 5.9
- * Tested up to:      6.4.3
+ * Tested up to:      6.5.2
  * Requires PHP:      7.3.33
  * Author:            Independent Analytics
  * Author URI:        https://independentwp.com/
@@ -18,18 +18,14 @@
 if ( !defined( 'ABSPATH' ) ) {
     exit;
 }
-
 if ( function_exists( 'IAWP_FS' ) ) {
     IAWP_FS()->set_basename( false, __FILE__ );
 } else {
     // DO NOT REMOVE THIS IF, IT IS ESSENTIAL FOR THE `function_exists` CALL ABOVE TO PROPERLY WORK.
-    
     if ( !function_exists( 'IAWP_FS' ) ) {
         // Create a helper function for easy SDK access.
-        function IAWP_FS()
-        {
-            global  $ia_fs ;
-            
+        function IAWP_FS() {
+            global $ia_fs;
             if ( !isset( $ia_fs ) ) {
                 // Activate multisite network integration.
                 if ( !defined( 'WP_FS__PRODUCT_9944_MULTISITE' ) ) {
@@ -48,24 +44,22 @@ if ( function_exists( 'IAWP_FS' ) ) {
                     'has_addons'     => false,
                     'has_paid_plans' => true,
                     'menu'           => [
-                    'slug'    => 'independent-analytics',
-                    'contact' => false,
-                    'support' => false,
-                    'pricing' => false,
-                ],
+                        'slug'    => 'independent-analytics',
+                        'contact' => false,
+                        'support' => false,
+                        'pricing' => false,
+                    ],
                     'is_live'        => true,
                 ] );
             }
-            
             return $ia_fs;
         }
-        
+
         // Init Freemius.
         IAWP_FS();
         // Signal that SDK was initiated.
         do_action( 'ia_fs_loaded' );
     }
-    
     // ... Your plugin's main file logic ...
     require_once rtrim( plugin_dir_path( __FILE__ ), DIRECTORY_SEPARATOR ) . '/iawp-bootstrap.php';
 }

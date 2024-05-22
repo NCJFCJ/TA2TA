@@ -50,7 +50,7 @@ class Icon_Directory
         if ($files === \false) {
             return [];
         }
-        $files = \array_diff($files, array('..', '.'));
+        $files = \array_diff($files, ['..', '.']);
         $files = \array_values($files);
         return $files;
     }

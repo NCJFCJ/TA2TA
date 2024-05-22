@@ -7,6 +7,7 @@ if ( ! class_exists( 'WPSE_CSV_API' ) ) {
 		public $uploads_dir             = null;
 		public $imports_dir             = null;
 		public $exports_dir             = null;
+		public $long_lived_dir          = null;
 		public $current_import_settings = array();
 		public $column_mappings_key     = 'vgse_import_column_mappings';
 		public $is_import_running       = false;
@@ -139,7 +140,7 @@ if ( ! class_exists( 'WPSE_CSV_API' ) ) {
 			do_action( 'wpse_delete_old_csvs', array( $this, 'delete_old_csvs' ) );
 			$this->delete_old_csvs();
 			$this->delete_old_directory();
-			$this->maybe_download_file();
+			add_action( 'admin_init', array( $this, 'maybe_download_file' ) );
 
 			add_filter( 'vg_sheet_editor/js_data', array( $this, 'add_settings_js' ), 9, 2 );
 		}
@@ -336,6 +337,12 @@ if ( ! class_exists( 'WPSE_CSV_API' ) ) {
 			if ( isset( $headers[0] ) ) {
 				$headers[0] = $this->remove_utf8_bom( $headers[0] );
 			}
+			
+			// Fix. When the first column contains quotes in the name, the fgetcsv won't
+			//parse the quotes because of the utf8bom, so we need to reparse the string as
+			// CSV again after we remove the utf8bom
+			$csv_headers = implode( ',', $headers );
+			$headers     = str_getcsv( $csv_headers );
 
 			if ( $start_position ) {
 				fseek( $handle, $start_position );
@@ -495,13 +502,90 @@ if ( ! class_exists( 'WPSE_CSV_API' ) ) {
 				'source'                       => sanitize_text_field( $_REQUEST['source'] ),
 				'file_position'                => isset( $_REQUEST['file_position'] ) ? intval( $_REQUEST['file_position'] ) : 0,
 			);
-			$out = $this->import_data( $settings );
+			$out      = $this->import_data( apply_filters( 'vg_sheet_editor/csv/import/params', $settings ) );
 
 			if ( is_wp_error( $out ) ) {
 				wp_send_json_error( array_merge( array( 'message' => $out->get_error_message() ), (array) $out->get_error_data() ) );
 			}
 
 			wp_send_json_success( $out );
+		}
+
+		function add_ids_to_rows_with_lookup( $rows, $post_type, $check_wp_fields, $writing_type ) {
+
+			$nonce         = wp_create_nonce( 'bep-nonce' );
+			$all_meta_keys = VGSE()->helpers->get_all_meta_keys( $post_type );
+			foreach ( $rows as $row_index => $row ) {
+				$search_args = array_filter( array_intersect_key( $row, array_combine( $check_wp_fields, array_fill( 0, count( $check_wp_fields ), '' ) ) ) );
+
+				$meta_query = array(
+					'meta_query' => array(),
+				);
+				// If the row has all the wp fields required for the search and they're not empty, make the search
+				if ( count( $search_args ) === count( $check_wp_fields ) && ! empty( $check_wp_fields ) ) {
+					$rows[ $row_index ]['ID'] = null;
+					foreach ( $check_wp_fields as $field_key ) {
+						// Allow to search by post name for the update
+						if ( $field_key === 'post_name__in' && ! empty( $row[ $field_key ] ) ) {
+							$search_value      = basename( $row[ $field_key ] );
+							$field_key         = 'post_name';
+							$row[ $field_key ] = $search_value;
+						}
+						$meta_query['meta_query'][] = array(
+							'key'     => $field_key,
+							'value'   => $row[ $field_key ],
+							'source'  => in_array( $field_key, $all_meta_keys ) ? 'meta' : 'post_data',
+							'compare' => '=',
+						);
+					}
+					$found_post_id = apply_filters( 'vg_sheet_editor/import/find_post_id', null, $row, $post_type, $meta_query, $writing_type, $check_wp_fields );
+					if ( is_null( $found_post_id ) ) {
+						$find_row_args       = apply_filters(
+							'vg_sheet_editor/import/find_post_id_args',
+							array(
+								'nonce'              => $nonce,
+								'post_type'          => $post_type,
+								'return_raw_results' => true,
+								'wp_query_args'      => array(
+									'posts_per_page' => 1,
+									'fields'         => 'ids',
+								),
+								'filters'            => wp_json_encode( $meta_query ),
+								'wpse_source'        => 'load_rows',
+							)
+						);
+						$_REQUEST['filters'] = $find_row_args['filters'];
+						$found               = VGSE()->helpers->get_rows( $find_row_args );
+
+						if ( is_array( $found ) && ! empty( $found[0] ) && is_numeric( $found[0] ) ) {
+							$found_post_id = $found[0];
+						}
+					}
+
+					// The find_post_id filter can return a single ID or array of IDs (in case we use a wp_check field
+					// that uses a search to match existing rows, so we might need to update multiple IDs
+					// In this case we duplicate the import row for every ID found
+					if ( ! empty( $found_post_id ) ) {
+						if ( is_int( $found_post_id ) ) {
+							$rows[ $row_index ]['ID'] = $found_post_id;
+						} elseif ( is_array( $found_post_id ) ) {
+							unset( $rows[ $row_index ] );
+							foreach ( $found_post_id as $found_post_id_single ) {
+								$row['ID'] = $found_post_id_single;
+								$rows[]    = $row;
+							}
+						}
+						if ( function_exists( 'WPSE_Logger_Obj' ) && ! empty( $settings['wpse_job_id'] ) ) {
+							WPSE_Logger_Obj()->entry( sprintf( 'Found existing ID for the update: %d', $found_post_id ), sanitize_text_field( $settings['wpse_job_id'] ) );
+						}
+					}
+				}
+			}
+			// We used this inside the previous foreach to make the advanced search work with get_rows()
+			if ( isset( $_REQUEST['filters'] ) ) {
+				unset( $_REQUEST['filters'] );
+			}
+			return $rows;
 		}
 
 		function import_data( $settings ) {
@@ -512,7 +596,7 @@ if ( ! class_exists( 'WPSE_CSV_API' ) ) {
 			$per_page                = ( empty( $settings['per_page'] ) && ! empty( VGSE()->options ) && ! empty( VGSE()->options['be_posts_per_page_save'] ) ) ? (int) VGSE()->options['be_posts_per_page_save'] : (int) $settings['per_page'];
 
 			if ( empty( $per_page ) ) {
-				$per_page = 4;
+				$per_page = 8;
 			}
 
 			$settings['per_page'] = $per_page;
@@ -662,77 +746,7 @@ if ( ! class_exists( 'WPSE_CSV_API' ) ) {
 					$rows[ $row_index ]['ID'] = null;
 				}
 			} else {
-				$all_meta_keys = VGSE()->helpers->get_all_meta_keys( $post_type );
-				foreach ( $rows as $row_index => $row ) {
-					$search_args = array_filter( array_intersect_key( $row, array_combine( $check_wp_fields, array_fill( 0, count( $check_wp_fields ), '' ) ) ) );
-
-					$meta_query = array(
-						'meta_query' => array(),
-					);
-					// If the row has all the wp fields required for the search and they're not empty, make the search
-					if ( count( $search_args ) === count( $check_wp_fields ) && ! empty( $check_wp_fields ) ) {
-						$rows[ $row_index ]['ID'] = null;
-						foreach ( $check_wp_fields as $field_key ) {
-							// Allow to search by post name for the update
-							if ( $field_key === 'post_name__in' && ! empty( $row[ $field_key ] ) ) {
-								$search_value      = basename( $row[ $field_key ] );
-								$field_key         = 'post_name';
-								$row[ $field_key ] = $search_value;
-							}
-							$meta_query['meta_query'][] = array(
-								'key'     => $field_key,
-								'value'   => $row[ $field_key ],
-								'source'  => in_array( $field_key, $all_meta_keys ) ? 'meta' : 'post_data',
-								'compare' => '=',
-							);
-						}
-						$found_post_id = apply_filters( 'vg_sheet_editor/import/find_post_id', null, $row, $post_type, $meta_query, $writing_type, $check_wp_fields );
-						if ( is_null( $found_post_id ) ) {
-							$find_row_args       = apply_filters(
-								'vg_sheet_editor/import/find_post_id_args',
-								array(
-									'nonce'              => $nonce,
-									'post_type'          => $post_type,
-									'return_raw_results' => true,
-									'wp_query_args'      => array(
-										'posts_per_page' => 1,
-										'fields'         => 'ids',
-									),
-									'filters'            => wp_json_encode( $meta_query ),
-									'wpse_source'        => 'load_rows',
-								)
-							);
-							$_REQUEST['filters'] = $find_row_args['filters'];
-							$found               = VGSE()->helpers->get_rows( $find_row_args );
-
-							if ( is_array( $found ) && ! empty( $found[0] ) && is_numeric( $found[0] ) ) {
-								$found_post_id = $found[0];
-							}
-						}
-
-						// The find_post_id filter can return a single ID or array of IDs (in case we use a wp_check field
-						// that uses a search to match existing rows, so we might need to update multiple IDs
-						// In this case we duplicate the import row for every ID found
-						if ( ! empty( $found_post_id ) ) {
-							if ( is_int( $found_post_id ) ) {
-								$rows[ $row_index ]['ID'] = $found_post_id;
-							} elseif ( is_array( $found_post_id ) ) {
-								unset( $rows[ $row_index ] );
-								foreach ( $found_post_id as $found_post_id_single ) {
-									$row['ID'] = $found_post_id_single;
-									$rows[]    = $row;
-								}
-							}
-							if ( function_exists( 'WPSE_Logger_Obj' ) && ! empty( $settings['wpse_job_id'] ) ) {
-								WPSE_Logger_Obj()->entry( sprintf( 'Found existing ID for the update: %d', $found_post_id ), sanitize_text_field( $settings['wpse_job_id'] ) );
-							}
-						}
-					}
-				}
-				// We used this inside the previous foreach to make the advanced search work with get_rows()
-				if ( isset( $_REQUEST['filters'] ) ) {
-					unset( $_REQUEST['filters'] );
-				}
+				$rows = $this->add_ids_to_rows_with_lookup( $rows, $post_type, $check_wp_fields, $writing_type );
 
 				if ( $writing_type === 'only_update' ) {
 					$rows = wp_list_filter( $rows, array( 'ID' => null ), 'NOT' );
@@ -996,7 +1010,7 @@ if ( ! class_exists( 'WPSE_CSV_API' ) ) {
 				return $out;
 			}
 
-			if ( ! empty( $clean_data['save_for_later'] ) && VGSE()->helpers->user_can_manage_options() ) {
+			if ( ! empty( $clean_data['save_for_later'] ) && VGSE()->helpers->user_can_manage_options() && apply_filters( 'vg_sheet_editor/exports/allow_to_save_for_later', true, $out, $clean_data, $wp_query_args, $spreadsheet_columns ) ) {
 				$this->save_export( $clean_data['save_for_later'] );
 			}
 

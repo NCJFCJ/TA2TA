@@ -59,8 +59,24 @@ class Recurrence {
 	 * @return string Updated Add recurrence button after markup.
 	 */
 	public function add_recurrence_not_supported_with_tickets_message( $template ) {
-		if ( ! class_exists( 'Tribe__Tickets__Main' ) ) {
+		if ( ! class_exists( 'Tribe__Tickets__Main', false ) ) {
 			return '';
+		}
+
+		if ( function_exists( 'tribe_get_ticket_label_plural_lowercase' ) ) {
+			$tickets_text = tribe_get_ticket_label_plural_lowercase();
+		}
+
+		if ( function_exists( 'tribe_get_rsvp_label_plural' ) ) {
+			$rsvps_text = tribe_get_rsvp_label_plural();
+		}
+
+		if ( empty( $tickets_text ) ) {
+			$tickets_text = __( 'tickets', 'tribe-events-calendar-pro' );
+		}
+
+		if ( empty( $rsvps_text ) ) {
+			$rsvps_text = __( 'RSVPs', 'tribe-events-calendar-pro' );
 		}
 
 		include __DIR__ . '/partials/recurrence-not-supported-with-tickets.php';

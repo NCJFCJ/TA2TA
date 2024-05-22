@@ -1,5 +1,6 @@
 import clsx from 'clsx';
 import { twMerge } from 'tailwind-merge';
+import { __ } from '@wordpress/i18n';
 
 export const classNames = ( ...classes ) => twMerge( clsx( classes ) );
 
@@ -54,19 +55,40 @@ export const getColorClass = ( percentage ) => {
 };
 
 export const SITE_CREATION_STATUS_CODES = {
-	A001: 'Downloading the images in media library...',
-	A002: 'Downloading the images in media library...',
-	A003: 'Adding interactive elements to engage visitors...',
-	A004: 'Crafting compelling copy that speaks to audience...',
-	A005: 'Optimizing website for performance and speed...',
-	A006: 'Adding essential features to engage visitors...',
-	A007: 'Optimizing SEO settings to boost online presence...',
-	A008: 'Finalizing website layout and structure...',
-	A009: 'Testing functionality across different browsers...',
-	A010: "It's taking a bit more than usual. Bear with us...",
-	A011: 'Done',
-	R001: 'Oops, Site creation hiccupped, we are trying one more time',
-	F001: "Oops, our site creation magic misfired! We couldn't create your site. Please try again...",
+	A001: __( 'Downloading the images in media library…', 'astra-sites' ),
+	A002: __( 'Downloading the images in media library…', 'astra-sites' ),
+	A003: __(
+		'Adding interactive elements to engage visitors…',
+		'astra-sites'
+	),
+	A004: __(
+		'Crafting compelling copy that speaks to audience…',
+		'astra-sites'
+	),
+	A005: __( 'Optimizing website for performance and speed…', 'astra-sites' ),
+	A006: __( 'Adding essential features to engage visitors…', 'astra-sites' ),
+	A007: __(
+		'Optimizing SEO settings to boost online presence…',
+		'astra-sites'
+	),
+	A008: __( 'Finalizing website layout and structure…', 'astra-sites' ),
+	A009: __(
+		'Testing functionality across different browsers…',
+		'astra-sites'
+	),
+	A010: __(
+		"It's taking a bit more than usual. Bear with us…",
+		'astra-sites'
+	),
+	A011: __( 'Done', 'astra-sites' ),
+	R001: __(
+		'Oops, Site creation hiccupped, we are trying one more time',
+		'astra-sites'
+	),
+	F001: __(
+		"Oops, our site creation magic misfired! We couldn't create your site. Please try again…",
+		'astra-sites'
+	),
 };
 
 export const toastBody = ( { title, message } ) => {

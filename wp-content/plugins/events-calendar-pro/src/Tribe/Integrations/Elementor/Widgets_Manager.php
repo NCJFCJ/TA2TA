@@ -1,4 +1,12 @@
 <?php
+/**
+ * Handles the widget integration with Elementor.
+ *
+ * @since   5.4.0
+ *
+ * @package Tribe\Events\Pro\Integrations\Elementor
+ */
+
 namespace Tribe\Events\Pro\Integrations\Elementor;
 
 use Elementor\Plugin as Elementor_Plugin;
@@ -13,6 +21,10 @@ use Elementor\Plugin as Elementor_Plugin;
 class Widgets_Manager extends Manager_Abstract {
 	/**
 	 * {@inheritdoc}
+	 *
+	 * @since 5.4.0
+	 *
+	 * @var string
 	 */
 	protected $type = 'widgets';
 

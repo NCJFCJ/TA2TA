@@ -23,8 +23,8 @@ if ( ! class_exists( 'WPSE_Options_Page' ) ) {
 						'type'     => 'text',
 						'validate' => 'numeric',
 						'title'    => __( 'Load rows faster: Number of rows to load per batch', 'vg_sheet_editor' ),
-						'desc'     => __( 'We use pagination to use few server resources. We load 20 rows first and load 20 more every time you scroll down. You can increase this number to load more rows per page. CAREFUL. Loading more than 200 rows per page might overload your server. If we detect that the server is overloaded we will automatically reset to 10 rows per page.', 'vg_sheet_editor' ),
-						'default'  => 20,
+						'desc'     => __( 'We use pagination to use few server resources. We load 40 rows first and load 20 more every time you scroll down. You can increase this number to load more rows per page. CAREFUL. Loading more than 200 rows per page might overload your server. If we detect that the server is overloaded we will automatically reset to 10 rows per page.', 'vg_sheet_editor' ),
+						'default'  => 40,
 					),
 					array(
 						'id'       => 'export_page_size',
@@ -39,8 +39,8 @@ if ( ! class_exists( 'WPSE_Options_Page' ) ) {
 						'type'     => 'text',
 						'validate' => 'numeric',
 						'title'    => __( 'Save changes faster: Number of rows to save per batch', 'vg_sheet_editor' ),
-						'desc'     => __( 'When you edit a large amount of posts in the spreadsheet editor we can\'t save all the changes at once, so we do it in batches. The recommended value is 4 , which means we will process only 4 posts at once. You can adjust it as it works best for you. If you get errors when saving you should lower the number', 'vg_sheet_editor' ),
-						'default'  => 4,
+						'desc'     => __( 'When you edit a large amount of posts in the spreadsheet editor we can\'t save all the changes at once, so we do it in batches. The recommended value is 8 , which means we will process only 4 posts at once. You can adjust it as it works best for you. If you get errors when saving you should lower the number', 'vg_sheet_editor' ),
+						'default'  => 8,
 					),
 					array(
 						'id'       => 'delete_posts_per_page',
@@ -178,6 +178,25 @@ if ( ! class_exists( 'WPSE_Options_Page' ) ) {
 						'title'   => __( 'Deactivate the data prefetch', 'vg_sheet_editor' ),
 						'desc'    => __( 'When you load the spreadsheet, we get all the columns at once from the database to make it faster, this is called prefetch. This can cause issues if you have thousands of columns or rare database setups.', 'vg_sheet_editor' ),
 						'default' => false,
+					),
+					array(
+						'id'      => 'be_disable_post_meta_prefetch',
+						'type'    => 'switch',
+						'title'   => __( 'Deactivate the prefetch of post meta values', 'vg_sheet_editor' ),
+						'default' => false,
+					),
+					array(
+						'id'      => 'be_disable_post_terms_prefetch',
+						'type'    => 'switch',
+						'title'   => __( 'Deactivate the prefetch of post taxonomies values', 'vg_sheet_editor' ),
+						'default' => false,
+					),
+					array(
+						'id'      => 'be_prefetch_batch_size',
+						'type'     => 'text',
+						'validate' => 'numeric',
+						'title'   => __( 'Batch sizes used for the data prefetch', 'vg_sheet_editor' ),
+						'desc'    => __( 'By default, we prefetch in groups of 5000 rows. You can reduce this number if your server gets overloaded during the prefetch.', 'vg_sheet_editor' ),
 					),
 					array(
 						'id'    => 'keys_for_infinite_serialized_handler',
@@ -388,13 +407,6 @@ if ( ! class_exists( 'WPSE_Options_Page' ) ) {
 						'default' => false,
 					),
 					array(
-						'id'      => 'wpmu_delete_account',
-						'type'    => 'switch',
-						'title'   => __( 'Delete user accounts in the entire network when deleting users in the spreadsheet?', 'vg_sheet_editor' ),
-						'desc'    => __( 'When you use WordPress multisite and you delete a user in the users spreadsheet, by default we only remove the user from the current site but the user remains in the network. Activate this option if you want to delete the user account from the entire network', 'vg_sheet_editor' ),
-						'default' => false,
-					),
-					array(
 						'id'      => 'dont_add_id_to_image_urls',
 						'type'    => 'switch',
 						'title'   => __( 'Disable the addition of file ID to the image URLs?', 'vg_sheet_editor' ),
@@ -440,6 +452,13 @@ if ( ! class_exists( 'WPSE_Options_Page' ) ) {
 							'light' => __( 'Light mode', 'vg_sheet_editor' ),
 							'dark'  => __( 'Dark mode', 'vg_sheet_editor' ),
 						),
+					),
+					array(
+						'id'      => 'disable_post_modified_date_auto_update',
+						'title'   => __( 'Disable the automatic update of the "modified date" of the posts?', 'vg_sheet_editor' ),
+						'type'    => 'switch',
+						'desc'    => __( 'By default, the "modified date" of each post is updated every time you edit a post in our spreadsheet editor. WordPress automatically updates the "modified date" when you a edit a post in the regular editor, so we do this to keep a consistent experience in our sheet editor as the regular editor. You can enable this option to stop this behavior but this behavior will stop only when you edit taxonomies or meta fields, WordPress will still update the modified date when you post titles, content, excerpt, and other fields stored in the wp_posts table in the database.', 'vg_sheet_editor' ),
+						'default' => false,
 					),
 				),
 			);

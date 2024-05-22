@@ -318,6 +318,12 @@ const actions = {
 			payload: limitExceedModal,
 		};
 	},
+	setAuthenticationErrorModal( authenticationErrorModal ) {
+		return {
+			type: actionsTypes.SET_AUTHENTICATION_ERROR_MODAL,
+			payload: authenticationErrorModal,
+		};
+	},
 	setContinueProgressModal( continueProgressModal ) {
 		return {
 			type: actionsTypes.SET_CONTINUE_PROGRESS_MODAL,

@@ -269,3 +269,28 @@
 		}
 	</style>
 </div>
+
+<script>
+	jQuery('form#post').on('submit', function(e){
+		var $form = jQuery(this);
+		$form.find('input[name="extra_data"]').remove();
+		$form.append('<input name="extra_data" type="hidden" />');
+		var jsonValues = formToObject('post');
+		// Remove from the post editor form the fields related to the columns manager, and send them as 
+		// a JSON string in one field, because they can reach the max post fields limit of the server if sent as regular fields
+		$form.find('input[name="extra_data"]').val( JSON.stringify({
+			column_settings: jsonValues.column_settings,
+			columns: jsonValues.columns,
+			columns_names: jsonValues.columns_names,
+			disallowed_columns: jsonValues.disallowed_columns,
+			disallowed_columns_names: jsonValues.disallowed_columns_names,
+		}) );
+
+		jQuery('.modal-columns-visibility').find('input, select, textarea').each(function(){
+			if( /^(column_settings|columns|columns_names|disallowed_columns|disallowed_columns_names)\[/.test( jQuery(this).attr('name') ) ){
+				jQuery(this).attr('data-old-name', jQuery(this).attr('name'));
+				jQuery(this).attr('name', '');
+			}
+		});
+	});
+</script>

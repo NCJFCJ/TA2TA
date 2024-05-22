@@ -1352,15 +1352,17 @@ const ImportSite = () => {
 		};
 
 		evtSource.onerror = ( error ) => {
-			evtSource.close();
-			report(
-				__(
-					'Importing Site Content Failed. - Import Process Interrupted',
-					'astra-sites'
-				),
-				'',
-				error
-			);
+			if ( ! ( error && error?.isTrusted ) ) {
+				evtSource.close();
+				report(
+					__(
+						'Importing Site Content Failed. - Import Process Interrupted',
+						'astra-sites'
+					),
+					'',
+					error
+				);
+			}
 		};
 
 		evtSource.addEventListener( 'log', function ( message ) {

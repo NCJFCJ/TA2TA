@@ -1,10 +1,10 @@
 === Document Library Pro ===
 Contributors: barn2media
 Tags: document, library, table, tables, shortcode, search, sort
-Requires at least: 5.2
-Tested up to: 6.3.1
-Requires PHP: 7.3.29
-Stable tag: 1.13.2
+Requires at least: 6.0
+Tested up to: 6.5
+Requires PHP: 7.4
+Stable tag: 1.13.6
 License: GNU General Public License v3.0
 License URI: http://www.gnu.org/licenses/gpl-3.0.html
 Update URI: https://barn2.com/wordpress-plugins/document-library-pro/
@@ -27,12 +27,54 @@ See refer to the [documentation](https://barn2.com/kb-categories/document-librar
 
 == Changelog ==
 
+= 1.13.6 =
+Release date 3 April 2024
+
+ * Fix: Fixed PHP warning message when no custom sorting column is added.
+ * Fix: Fixed responsive hidden row not closing after reset.
+ * Fix: Fixed bug that empty folders are being shown when doc_category is added to the shortcode.
+ * Fix: Fixed the grid search to only get results after a certain amount of keywords typed.
+ * Tweak: Added document_library_pro_form_redirect filter hook.
+ * Tweak: Added document_library_pro_download_checkboxes_should_display filter hook.
+ * Tweak: Updated the search_box attribute to work with true or false values.
+ * Tweak: Added show_page option to document library page settings.
+ * Tweak: Removed parsing the shortcode attribute values.
+ * Tweak: Auto-hide reset link.
+ * Tweak: Moved the totals position to the right in the grid layout.
+ * Tweak: Auto-hide the pagination on the grid layout.
+ * Tweak: Add grid totals singular and plural wording.
+ * Dev: Tested up to WordPress 6.4.3.
+
+<!--more-->
+
+= 1.13.5 =
+Release date 8 November 2023
+
+ * New: Added French translation (credit: Nicolas Zein).
+ * Fix: Fixed shortcodes adding extra space in excerpt.
+ * Dev: Added document_library_pro_enable_media_filter filter hook.
+ * Dev: Tested up to WordPress 6.4.
+
+= 1.13.4 =
+Release date 11 October 2023
+
+ * Fix: Fixed ACF fields not showing when importing.
+ * Tweak: Improved preview modal to support more themes.
+ * Tweak: Saving license key when clicking next in setup wizard.
+ * Dev: Reviewed parsing shortcode attribute values.
+
+= 1.13.3 =
+Release date 21 September 2023
+
+ * Tweak: Added ACF and EPT custom fields to import options.
+ * Tweak: Added folder category descriptions filter hook.
+ * Fix: Fixed loading icon not showing on folders.
+ * Dev: Normalized shortcode arguments.
+
 = 1.13.2 =
 Release date 14 September 2023
 
  * Fix: Turned post_object public to allow other plugins to use it.
-
-<!--more-->
 
 = 1.13.1 =
 Release date 13 September 2023

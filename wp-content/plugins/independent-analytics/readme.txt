@@ -1,11 +1,11 @@
 === Independent Analytics - Google Analytics Alternative for WordPress ===
 Contributors: bensibley, andrewmead
-Tags: analytics, wordpress analytics, google analytics, analytics dashboard, statistics, stats, tracking, google, ga, universal analytics, web stats, site visitors
+Tags: analytics, wordpress analytics, google analytics, analytics dashboard, statistics
 Donate link: https://independentwp.com
 Requires at least: 5.9
-Tested up to: 6.4.3
+Tested up to: 6.5.2
 Requires PHP: 7.3.33
-Stable tag: 2.3.2
+Stable tag: 2.4.3
 License: GPLv2 or later
 License URI: http://www.gnu.org/licenses/gpl-2.0.html
 
@@ -193,6 +193,32 @@ We use best practice techniques to filter out bot visits as efficiently as possi
 6. See the device types, browsers, and OSes your visitors are using
 
 == Changelog ==
+
+= 2.4.3 - April 25th, 2024 =
+
+* **Fix:** WooCommerce sales could be overcounted for pages in the Pages report
+
+= 2.4.2 - April 17th, 2024 =
+
+* **Fix:** Custom post type menu bug
+* **Fix:** Device data cache bug
+
+= 2.4.1 - April 15th, 2024 =
+
+* **Fix:** Custom post type menu bug
+* **Fix:** Migration bug fix for 2.4.0
+
+= 2.4.0 - April 15th, 2024 =
+
+* **Feature:** Added a Views column to the Posts menu
+* **Update:** 45% faster load times for analytics reports
+* **Update:** For multi-site installs, the iawp-geo-db.mmdb file is now added to the parent site’s uploads folder only
+* **Fix:** WooCommerce sales were overcounted for pages in the Pages report
+* **Fix:** Prevent potential 500 errors from traffic spikes and post updates
+* **Fix:** UI bug with notice from CookieYes plugin
+* **Fix:** Prevent UI bugs from plugins that load a Twitter Bootstrap stylesheet everywhere
+* **Fix:** Reworked device type caching mechanism to avoid false positives from security scanners
+* **Fix:** Removed symfony/console/ folder to prevent false positives from security scanners
 
 = 2.3.2 - April 1st, 2024 =
 

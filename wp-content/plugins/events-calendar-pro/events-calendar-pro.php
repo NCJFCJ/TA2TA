@@ -2,11 +2,13 @@
 /**
  * Plugin Name: The Events Calendar Pro
  * Description: The Events Calendar Pro, a premium add-on to the open source The Events Calendar plugin (required), enables recurring events, custom attributes, venue pages, new widgets and a host of other premium features.
- * Version: 6.3.1.1
+ * Version: 6.5.0
  * Author: The Events Calendar
  * Author URI: https://evnt.is/20
  * Text Domain: tribe-events-calendar-pro
  * License: GPLv2 or later
+ * Elementor tested up to: 3.21.4
+ * Elementor Pro tested up to: 3.21.2
  */
 
 /*
@@ -28,10 +30,10 @@ Foundation, Inc., 51 Franklin Street, Fifth Floor, Boston, MA  02110-1301, USA.
 */
 
 
-define( 'EVENTS_CALENDAR_PRO_DIR', dirname( __FILE__ ) );
+define( 'EVENTS_CALENDAR_PRO_DIR', __DIR__ );
 define( 'EVENTS_CALENDAR_PRO_FILE', __FILE__ );
 
-// Load the required php min version functions
+// Load the required php min version functions.
 require_once dirname( EVENTS_CALENDAR_PRO_FILE ) . '/src/functions/php-min-version.php';
 
 /**
@@ -45,7 +47,7 @@ if ( tribe_is_not_min_php_version() ) {
 	 *
 	 * @since  4.6
 	 *
-	 * @param  array $names current list of names
+	 * @param  array $names current list of names.
 	 *
 	 * @return array
 	 */
@@ -61,27 +63,26 @@ if ( tribe_is_not_min_php_version() ) {
 	return false;
 }
 
-// Register Plugin
+// Register Plugin.
 add_action( 'tribe_common_loaded', 'tribe_register_pro', 5 );
 
 /**
  * Attempt to Register Plugin
  *
  * @since 4.6
- *
  */
 function tribe_register_pro() {
 
-	//remove action if we run this hook through common
+	// Remove action if we run this hook through common.
 	remove_action( 'plugins_loaded', 'tribe_register_pro', 50 );
 
-	// if we do not have a dependency checker then shut down
+	// if we do not have a dependency checker then shut down.
 	if ( ! class_exists( 'Tribe__Abstract_Plugin_Register', false ) ) {
 
 		add_action( 'admin_notices', 'tribe_show_fail_message' );
 		add_action( 'network_admin_notices', 'tribe_show_fail_message' );
 
-		//prevent loading of Pro
+		// Prevent loading of Pro.
 		remove_action( 'tribe_common_loaded', 'tribe_events_calendar_pro_init' );
 
 		return;
@@ -90,17 +91,16 @@ function tribe_register_pro() {
 	tribe_init_events_pro_autoloading();
 
 	new Tribe__Events__Pro__Plugin_Register();
-
 }
+
 add_action( 'tribe_common_loaded', 'tribe_register_pro', 5 );
-// add action if Event Tickets or the Events Calendar is not active
+// add action if Event Tickets or the Events Calendar is not active.
 add_action( 'plugins_loaded', 'tribe_register_pro', 50 );
 
 /**
  * Instantiate class and set up WordPress actions on Common Loaded
  *
  * @since 4.6
- *
  */
 add_action( 'tribe_common_loaded', 'tribe_events_calendar_pro_init' );
 function tribe_events_calendar_pro_init() {
@@ -130,7 +130,7 @@ function tribe_events_calendar_pro_init() {
 	}
 	if ( ! $version_ok ) {
 
-		// if we have the plugin register the dependency check will handle the messages
+		// if we have the plugin register the dependency check will handle the messages.
 		if ( class_exists( 'Tribe__Abstract_Plugin_Register', false ) ) {
 
 			new Tribe__Events__Pro__PUE( __FILE__ );
@@ -152,14 +152,14 @@ function tribe_show_fail_message() {
 		return;
 	}
 
-	$mopath = trailingslashit( basename( dirname( __FILE__ ) ) ) . 'lang/';
+	$mopath = trailingslashit( basename( __DIR__ ) ) . 'lang/';
 	$domain = 'tribe-events-calendar-pro';
 
-	// If we don't have Common classes load the old fashioned way
+	// If we don't have Common classes load the old fashioned way.
 	if ( ! class_exists( 'Tribe__Main', false ) ) {
 		load_plugin_textdomain( $domain, false, $mopath );
 	} else {
-		// This will load `wp-content/languages/plugins` files first
+		// This will load `wp-content/languages/plugins` files first.
 		Tribe__Main::instance()->load_text_domain( $domain, $mopath );
 	}
 
@@ -172,7 +172,7 @@ function tribe_show_fail_message() {
 		esc_url( $url ),
 		esc_html__( 'The Events Calendar', 'tribe-events-calendar-pro' ),
 		esc_html__( 'The Events Calendar', 'tribe-events-calendar-pro' )
-		) .
+	) .
 	'</p></div>';
 }
 
@@ -189,10 +189,10 @@ function tribe_init_events_pro_autoloading() {
 
 	$autoloader = Tribe__Autoloader::instance();
 
-	$autoloader->register_prefix( 'Tribe__Events__Pro__', dirname( __FILE__ ) . '/src/Tribe', 'events-calendar-pro' );
+	$autoloader->register_prefix( 'Tribe__Events__Pro__', __DIR__ . '/src/Tribe', 'events-calendar-pro' );
 
-	// deprecated classes are registered in a class to path fashion
-	foreach ( glob( dirname( __FILE__ ) . '/src/deprecated/*.php' ) as $file ) {
+	// deprecated classes are registered in a class to path fashion.
+	foreach ( glob( __DIR__ . '/src/deprecated/*.php' ) as $file ) {
 		$class_name = str_replace( '.php', '', basename( $file ) );
 		$autoloader->register_class( $class_name, $file );
 	}
@@ -206,13 +206,14 @@ register_deactivation_hook( __FILE__, 'tribe_events_pro_deactivation' );
 function tribe_events_pro_deactivation( $network_deactivating ) {
 
 	if ( ! class_exists( 'Tribe__Abstract_Deactivation', false ) ) {
-		return; // can't do anything since core isn't around
+		return; // can't do anything since core isn't around.
 	}
 
-	require_once dirname( __FILE__ ) . '/src/Tribe/Main.php';
-	require_once dirname( __FILE__ ) . '/src/Tribe/Deactivation.php';
+	require_once __DIR__ . '/src/Tribe/Main.php';
+	require_once __DIR__ . '/src/Tribe/Deactivation.php';
 	Tribe__Events__Pro__Main::deactivate( $network_deactivating );
 }
+
 /**
  * Register Activation
  */
@@ -238,7 +239,6 @@ function tribe_events_pro_activation() {
  * Instantiate class and set up WordPress actions.
  *
  * @deprecated 4.6
- *
  */
 function Tribe_ECP_Load() {
 	_deprecated_function( __FUNCTION__, '4.6', '' );
@@ -253,17 +253,19 @@ function Tribe_ECP_Load() {
  *
  * @since 4.6
  *
+ * @param array $plugins the current list of plugins.
+ *
  * @return array $plugins the required info
  */
 function tribe_init_ecp_addon( $plugins ) {
 	_deprecated_function( __FUNCTION__, '4.6', '' );
 
-	$plugins['Tribe__Events__Pro__Main'] = array(
-		'plugin_name' => 'Events Calendar Pro',
+	$plugins['Tribe__Events__Pro__Main'] = [
+		'plugin_name'      => 'Events Calendar Pro',
 		'required_version' => Tribe__Events__Pro__Main::REQUIRED_TEC_VERSION,
-		'current_version' => Tribe__Events__Pro__Main::VERSION,
-		'plugin_dir_file' => basename( dirname( __FILE__ ) ) . '/events-calendar-pro.php',
-	);
+		'current_version'  => Tribe__Events__Pro__Main::VERSION,
+		'plugin_dir_file'  => basename( __DIR__ ) . '/events-calendar-pro.php',
+	];
 
 	return $plugins;
 }

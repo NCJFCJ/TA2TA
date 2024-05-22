@@ -6,6 +6,7 @@ class Theme_Utils {
 	}
 
 	public static function get_theme_slug( $new_theme_name ) {
+		$theme = wp_get_theme();
 
 		// If the source theme has a single-word slug but the new theme has a multi-word slug
 		// then function will look like: function apple-bumpkin_support() and that won't work.
@@ -13,7 +14,7 @@ class Theme_Utils {
 		// Due to the complexity of this situation (compared to the simplicity of the others)
 		// this will enforce the usage of a singleword slug for those themes.
 
-		$old_slug = wp_get_theme()->get( 'TextDomain' );
+		$old_slug = $theme->get( 'TextDomain' );
 		$new_slug = sanitize_title( $new_theme_name );
 		$new_slug = preg_replace( '/\s+/', '', $new_slug ); // Remove spaces
 
@@ -29,11 +30,9 @@ class Theme_Utils {
 		return $extension;
 	}
 
-	public static function replace_namespace( $content, $new_slug, $new_name ) {
-		$old_slug            = wp_get_theme()->get( 'TextDomain' );
+	public static function replace_namespace( $content, $old_slug, $new_slug, $old_name, $new_name ) {
 		$new_slug_underscore = str_replace( '-', '_', $new_slug );
 		$old_slug_underscore = str_replace( '-', '_', $old_slug );
-		$old_name            = wp_get_theme()->get( 'Name' );
 
 		// Generate placeholders
 		$placeholder_slug            = md5( $old_slug );
@@ -54,6 +53,10 @@ class Theme_Utils {
 	}
 
 	public static function clone_theme_to_folder( $location, $new_slug, $new_name ) {
+
+		$theme    = wp_get_theme();
+		$old_slug = $theme->get( 'TextDomain' );
+		$old_name = $theme->get( 'Name' );
 
 		// Get real path for our folder
 		$theme_path = get_stylesheet_directory();
@@ -95,91 +98,12 @@ class Theme_Utils {
 			if ( preg_match( "/\.({$valid_extensions_regex})$/", $relative_path ) ) {
 				// Replace namespace values if provided
 				if ( $new_slug ) {
-					$contents = self::replace_namespace( $contents, $new_slug, $new_name );
+					$contents = self::replace_namespace( $contents, $old_slug, $new_slug, $old_name, $new_name );
 				}
 			}
 
 			// Add current file to target
 			file_put_contents( $location . DIRECTORY_SEPARATOR . $relative_path, $contents );
-		}
-
-	}
-
-	public static function add_templates_to_folder( $location, $export_type, $new_slug ) {
-		$theme_templates = Theme_Templates::get_theme_templates( $export_type );
-
-		if ( $theme_templates->templates ) {
-			wp_mkdir_p( $location . DIRECTORY_SEPARATOR . 'templates' );
-		}
-
-		if ( $theme_templates->parts ) {
-			wp_mkdir_p( $location . DIRECTORY_SEPARATOR . 'parts' );
-		}
-
-		foreach ( $theme_templates->templates as $template ) {
-			$template = Theme_Blocks::make_template_images_local( $template );
-			$template = Theme_Templates::replace_template_namespace( $template, $new_slug );
-
-			// If there are images in the template, add it as a pattern
-			if ( count( $template->media ) > 0 ) {
-				$pattern                 = Theme_Patterns::pattern_from_template( $template, $new_slug );
-				$pattern_link_attributes = array(
-					'slug' => $pattern['slug'],
-				);
-				$template->content       = Theme_Patterns::create_pattern_link( $pattern_link_attributes );
-
-				// Add pattern to folder
-				$pattern_path = $location . DIRECTORY_SEPARATOR . 'patterns' . DIRECTORY_SEPARATOR . $template->slug . '.php';
-				file_put_contents( $pattern_path, $pattern['content'] );
-
-				// Add media assets to folder
-				self::add_media_to_folder( $location, $template->media );
-			}
-
-			// Add template to folder
-			$template_path = $location . DIRECTORY_SEPARATOR . 'templates' . DIRECTORY_SEPARATOR . $template->slug . '.html';
-			file_put_contents( $template_path, $template->content );
-
-		}
-
-		foreach ( $theme_templates->parts as $template_part ) {
-			$template_part = Theme_Blocks::make_template_images_local( $template_part );
-			$template_part = Theme_Templates::replace_template_namespace( $template_part, $new_slug );
-
-			// If there are images in the template, add it as a pattern
-			if ( count( $template_part->media ) > 0 ) {
-				$pattern                 = Theme_Patterns::pattern_from_template( $template_part, $new_slug );
-				$pattern_link_attributes = array(
-					'slug' => $pattern['slug'],
-				);
-				$template_part->content  = Theme_Patterns::create_pattern_link( $pattern_link_attributes );
-
-				// Add pattern to folder
-				$pattern_path = $location . DIRECTORY_SEPARATOR . 'patterns' . DIRECTORY_SEPARATOR . $template_part->slug . '.php';
-				file_put_contents( $pattern_path, $pattern['content'] );
-
-				// Add media assets to folder
-				self::add_media_to_folder( $location, $template_part->media );
-			}
-
-			// Add template part to folder
-			$template_path = $location . DIRECTORY_SEPARATOR . 'parts' . DIRECTORY_SEPARATOR . $template_part->slug . '.html';
-			file_put_contents( $template_path, $template_part->content );
-		}
-	}
-
-	public static function add_media_to_folder( $location, $media ) {
-		$media = array_unique( $media );
-		foreach ( $media as $url ) {
-			$folder_path   = Theme_Media::get_media_folder_path_from_url( $url );
-			$download_file = download_url( $url );
-			// If there was an error downloading the file, skip it.
-			// TODO: Implement a warning if the file is missing
-			if ( ! is_wp_error( $download_file ) ) {
-				$content_array  = file( $download_file );
-				$file_as_string = implode( '', $content_array );
-				file_put_contents( $location . DIRECTORY_SEPARATOR . $folder_path . basename( $url ), $file_as_string );
-			}
 		}
 	}
 
@@ -200,7 +124,65 @@ class Theme_Utils {
 		$readme_file_details['recommendedPlugins'] = $matches[1][0] ?? '';
 
 		return $readme_file_details;
+	}
 
+
+	/**
+	 * Relocate the theme to a new folder and activate the newly relocated theme.
+	 */
+	public static function relocate_theme( $new_theme_subfolder ) {
+
+		$current_theme_subfolder = '';
+		$theme_dir               = get_stylesheet();
+
+		$source      = get_theme_root() . DIRECTORY_SEPARATOR . $theme_dir;
+		$destination = get_theme_root() . DIRECTORY_SEPARATOR . $theme_dir;
+
+		if ( str_contains( get_stylesheet(), '/' ) ) {
+			$current_theme_subfolder = substr( get_stylesheet(), 0, strrpos( get_stylesheet(), '/' ) );
+			$theme_dir               = substr( get_stylesheet(), strrpos( get_stylesheet(), '/' ) + 1 );
+			$source                  = get_theme_root() . DIRECTORY_SEPARATOR . $current_theme_subfolder . DIRECTORY_SEPARATOR . $theme_dir;
+			$destination             = get_theme_root() . DIRECTORY_SEPARATOR . $theme_dir;
+		}
+
+		if ( $new_theme_subfolder ) {
+			$destination = get_theme_root() . DIRECTORY_SEPARATOR . $new_theme_subfolder . DIRECTORY_SEPARATOR . $theme_dir;
+			wp_mkdir_p( get_theme_root() . DIRECTORY_SEPARATOR . $new_theme_subfolder );
+		}
+
+		if ( $source === $destination ) {
+			return;
+		}
+
+		global $wp_filesystem;
+		if ( ! $wp_filesystem ) {
+			require_once ABSPATH . 'wp-admin/includes/file.php';
+			WP_Filesystem();
+		}
+
+		$success = move_dir( $source, $destination, false );
+
+		if ( ! $success ) {
+			return new \WP_Error( 'problem_moving', __( 'There was a problem moving the theme', 'create-block-theme' ) );
+		}
+
+		if ( $new_theme_subfolder ) {
+			switch_theme( $new_theme_subfolder . '/' . $theme_dir );
+		} else {
+			switch_theme( $theme_dir );
+		}
+	}
+
+	public static function is_valid_screenshot( $file ) {
+
+		$allowed_screenshot_types = array(
+			'png' => 'image/png',
+		);
+		$filetype                 = wp_check_filetype( $file['name'], $allowed_screenshot_types );
+		if ( is_uploaded_file( $file['tmp_name'] ) && in_array( $filetype['type'], $allowed_screenshot_types, true ) && $file['size'] < 2097152 ) {
+			return 1;
+		}
+		return 0;
 	}
 
 }

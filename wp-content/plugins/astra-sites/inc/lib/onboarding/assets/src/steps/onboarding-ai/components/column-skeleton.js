@@ -1,4 +1,5 @@
 import DotsLoader from './dots-loader';
+import { __ } from '@wordpress/i18n';
 
 const ColumnSkeleton = () => {
 	return (
@@ -32,7 +33,7 @@ const ColumnSkeleton = () => {
 				>
 					<DotsLoader />
 					<p className="!text-base !font-normal !text-zip-app-heading select-none">
-						Generating preview...
+						{ __( 'Generating preview…', 'astra-sites' ) }
 					</p>
 				</div>
 

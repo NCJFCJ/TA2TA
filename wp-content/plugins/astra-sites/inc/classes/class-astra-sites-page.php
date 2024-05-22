@@ -56,6 +56,7 @@ if ( ! class_exists( 'Astra_Sites_Page' ) ) {
 			}
 
 			add_action( 'wp_ajax_astra-sites-change-page-builder', array( $this, 'save_page_builder_on_ajax' ) );
+			add_action( 'wp_ajax_astra-sites-dismiss-ai-promotion', array( $this, 'dismiss_ai_promotion' ) );
 			add_action( 'admin_init', array( $this, 'getting_started' ) );
 		}
 
@@ -173,6 +174,36 @@ if ( ! class_exists( 'Astra_Sites_Page' ) ) {
 			$sites = $this->get_sites_by_page_builder( $new_data['page_builder'] );
 
 			wp_send_json_success( $sites );
+		}
+
+		/**
+		 * Dismiss AI Promotion
+		 *
+		 * @return void
+		 */
+		public function dismiss_ai_promotion() {
+
+			check_ajax_referer( 'astra-sites', '_ajax_nonce' );
+
+			// Only admins can save settings.
+			if ( ! current_user_can( 'manage_options' ) ) {
+				wp_send_json_error( __( 'You are not allowed to perform this action', 'astra-sites' ) );
+			}
+
+			// Stored Settings.
+			$stored_data = $this->get_settings();
+
+			// New settings.
+			$new_data = array(
+				'dismiss_ai_promotion' => ( isset( $_REQUEST['dismiss_ai_promotion'] ) ) ? sanitize_key( $_REQUEST['dismiss_ai_promotion'] ) : false,
+			);
+
+			// Merge settings.
+			$data = wp_parse_args( $new_data, $stored_data );
+
+			// Update settings.
+			update_option( 'astra_sites_settings', $data, 'no' );
+			wp_send_json_success( __( 'Notice Dismissed!', 'astra-sites' ) );
 		}
 
 		/**
@@ -681,7 +712,7 @@ if ( ! class_exists( 'Astra_Sites_Page' ) ) {
 
 			$cron_request['args']['blocking'] = true;
 
-			$result = wp_remote_post( $cron_request['url'], $cron_request['args'] );
+			$result = wp_safe_remote_post( $cron_request['url'], $cron_request['args'] );
 
 			if ( is_wp_error( $result ) ) {
 				return $result;

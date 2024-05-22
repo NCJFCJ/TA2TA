@@ -155,6 +155,12 @@ class Callback_Add_Edit extends Abstract_Callback {
 
 		$submission = $_POST;
 
+		// If the event ID is 0 use the post_ID from the submission as the truth.
+		if ( 0 === $this->event_id ) {
+			$event_id       = apply_filters( 'tec_events_community_event_form_post_id', (int) $_POST['post_ID'] );
+			$this->event_id = intval( $event_id );
+		}
+
 		$main    = tribe( 'community.main' );
 		$handler = new Tribe__Events__Community__Submission_Handler( $submission, $this->event_id );
 

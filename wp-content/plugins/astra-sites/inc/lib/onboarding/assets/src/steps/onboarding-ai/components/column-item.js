@@ -7,6 +7,7 @@ import { useStateValue } from '../../../store/store';
 import TemplateInfo from './template-info';
 import DotsLoader from './dots-loader';
 import { siteLogoDefault } from '../../../store/reducer';
+import { __ } from '@wordpress/i18n';
 
 export const ColumnItem = ( { template, isRecommended, position } ) => {
 	const [ , dispatch ] = useStateValue();
@@ -54,30 +55,17 @@ export const ColumnItem = ( { template, isRecommended, position } ) => {
 		if ( ! loadingSkeleton.current ) {
 			return;
 		}
-		const landscape = [];
-		const portrait = [];
-		selectedImages.forEach( ( image ) => {
-			if ( image.orientation === 'landscape' ) {
-				landscape.push( image );
-			} else {
-				portrait.push( image );
-			}
-		} );
 
-		if ( 0 === landscape.length ) {
-			landscape.push( astraSitesVars?.placeholder_images[ 0 ] );
-		}
-
-		if ( 0 === portrait.length ) {
-			portrait.push( astraSitesVars?.placeholder_images[ 1 ] );
+		if ( 0 === selectedImages.length ) {
+			selectedImages.push( astraSitesVars?.placeholder_images[ 0 ] );
+			selectedImages.push( astraSitesVars?.placeholder_images[ 1 ] );
 		}
 
 		sendPostMessage(
 			{
 				param: 'images',
 				data: {
-					landscape,
-					portrait,
+					...selectedImages,
 				},
 			},
 			uuid
@@ -215,7 +203,7 @@ export const ColumnItem = ( { template, isRecommended, position } ) => {
 					>
 						<DotsLoader />
 						<p className="!text-base !font-normal !text-zip-app-heading select-none">
-							Generating preview...
+							{ __( 'Generating preview…', 'astra-sites' ) }
 						</p>
 					</div>
 

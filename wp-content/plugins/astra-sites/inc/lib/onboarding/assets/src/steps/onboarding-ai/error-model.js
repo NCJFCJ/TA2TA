@@ -91,7 +91,7 @@ const ErrorModel = ( {
 							websiteInfo?.uuid,
 							error?.errorText ?? ''
 						) }
-						className="group flex items-center justify-center mt-6 text-base"
+						className="group flex items-center justify-center mt-6 text-button-bg hover:text-button-bg"
 						target="_blank"
 						rel="noopener noreferrer"
 					>

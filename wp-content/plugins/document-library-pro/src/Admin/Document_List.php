@@ -2,20 +2,20 @@
 
 namespace Barn2\Plugin\Document_Library_Pro\Admin;
 
-use Barn2\Plugin\Document_Library_Pro\Dependencies\Lib\Registerable,
-	Barn2\Plugin\Document_Library_Pro\Dependencies\Lib\Service,
-	Barn2\Plugin\Document_Library_Pro\Dependencies\Lib\Conditional,
-	Barn2\Plugin\Document_Library_Pro\Dependencies\Lib\Util,
-	Barn2\Plugin\Document_Library_Pro\Post_Type,
-	Barn2\Plugin\Document_Library_Pro\Taxonomies;
+use Barn2\Plugin\Document_Library_Pro\Dependencies\Lib\Registerable;
+use Barn2\Plugin\Document_Library_Pro\Dependencies\Lib\Service;
+use Barn2\Plugin\Document_Library_Pro\Dependencies\Lib\Conditional;
+use Barn2\Plugin\Document_Library_Pro\Dependencies\Lib\Util;
+use Barn2\Plugin\Document_Library_Pro\Post_Type;
+use Barn2\Plugin\Document_Library_Pro\Taxonomies;
 
 defined( 'ABSPATH' ) || exit;
 
 /**
  * Handles functionality on the Documents list table screen
  *
- * @package   Barn2/document-library-pro
- * @author    Barn2 Plugins <info@barn2.com>
+ * @package   Barn2\document-library-pro
+ * @author    Barn2 Plugins <support@barn2.com>
  * @license   GPL-3.0
  * @copyright Barn2 Media Ltd
  */

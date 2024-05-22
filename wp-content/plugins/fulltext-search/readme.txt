@@ -1,14 +1,14 @@
 ﻿=== WP Fast Total Search - The Power of Indexed Search ===
+
 Contributors: Epsiloncool
-Donate link: https://www.patreon.com/epsiloncool
-Tags: search pdf, search, better search, relevance, shortcode search, file search, relevant search, extended search
+Tags: search pdf, fulltext search, better search, relevant search, extended search
 Requires at least: 5.0
-Tested up to: 6.3.1
-Stable tag: trunk
+Tested up to: 6.4.3
+Stable tag: 1.60.213
 License: GPLv3
 License URI: http://www.gnu.org/licenses/gpl-3.0.html
 
-Extends the default fulltext search with relevance, jet speed and ability to search any posts, metadata, taxonomy, shortcode content and any piece of the wordpress data. No external software/service required.
+Extends the default fulltext search with relevance, jet speed and ability to search any posts, metadata, taxonomy, shortcode content and more data.
 
 == Description ==
 
@@ -69,6 +69,16 @@ Please refer [Documentation](https://fulltextsearch.org/documentation/ "WP Fast 
 
 Do not hesistate to write to us at [Contact Us](https://fulltextsearch.org/contact/ "Contact Us") page.
 
+= Where do I report security bugs found in this plugin? =
+
+Please report security bugs found in the source code of the WPFTS Fast Total Search plugin through the [Patchstack Vulnerability Disclosure  Program](https://patchstack.com/database/vdp/fulltext-search). The Patchstack team will assist you with verification, CVE assignment, and notify the developers of this plugin. # Security Policy ## Reporting Security Bugs Please report security bugs found in the YOUR_PLUGIN_NAME_HERE plugin's source code through the [Patchstack Vulnerability Disclosure Program](https://patchstack.com/database/vdp/fulltext-search). The Patchstack team will assist you with verification, CVE assignment, and notify the developers of this plugin.
+
+== Security Policy ==
+
+= Reporting Security Bugs =
+
+Please report security bugs found in the WP Fast Total Search plugin's source code through the [Patchstack Vulnerability Disclosure Program](https://patchstack.com/database/vdp/fulltext-search). The Patchstack team will assist you with verification, CVE assignment, and notify the developers of this plugin.
+
 == Screenshots ==
 
 1. Smart Excerpts (Google-like search results) and styling settings
@@ -81,6 +91,14 @@ Do not hesistate to write to us at [Contact Us](https://fulltextsearch.org/conta
 8. Live Search widget example
 
 == Changelog ==
+
+= 1.61.215 =
+* Added Flare re-connection to prevent falling back to the polling scheme after some time or when network lost
+* Fixed broken "default search logic" setting
+* Added experimental "Indexing Rules" tab
+
+= 1.60.213 =
+* Fixed Cross-site Scripting (XSS) Vulnerability issue in WPFTS :: Live Search widget. Thanks to [Ngô Thiên An (ancorn_ from VNPT-VCI)](https://patchstack.com/database/researcher/090515a6-9651-41fa-9465-fd542e38e526) for discovering this issue!
 
 = 1.59.211 =
 * Fixed another bug with "tp" table

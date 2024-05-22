@@ -42,50 +42,51 @@ class Tribe_Events extends Shortcode_Abstract {
 
 	/**
 	 * {@inheritDoc}
+	 *
+	 * @var string
 	 */
 	protected $slug = 'tribe_events';
 
 	/**
 	 * {@inheritDoc}
+	 *
+	 * @var array
 	 */
 	protected $default_arguments = [
-		'author'            => null,
-		'category'          => null,
-		'exclude-category'  => null,
-		'container-classes' => [],
-		'date'              => null,
-		'events_per_page'   => null,
-		'featured'          => null,
-		'filter-bar'        => false,
-		'hide_weekends'     => false,
-		'hide-datepicker'   => false,
-		'hide-export'       => false,
-		'id'                => null,
-		'is-widget'         => false,
-		'keyword'           => null,
-		'main-calendar'     => false,
-		'organizer'         => null,
-		'tag'               => null,
-		'exclude-tag'       => null,
-		'tax-operand'       => 'OR',
-		'tribe-bar'         => true,
-		'view'              => null,
-		'jsonld'            => true,
-		'venue'             => null,
-
-		'month_events_per_day' => null,
-		'week_events_per_day'  => null,
+		'author'               => null,
+		'category'             => null,
+		'container-classes'    => [],
+		'date'                 => null,
+		'events_per_page'      => null,
+		'exclude-category'     => null,
+		'exclude-tag'          => null,
+		'featured'             => null,
+		'filter-bar'           => false,
+		'hide_weekends'        => false,
+		'hide-datepicker'      => false,
+		'hide-export'          => false,
+		'id'                   => null,
+		'is-widget'            => false,
+		'jsonld'               => true,
+		'keyword'              => null,
 		'layout'               => 'vertical', // @todo Change to auto when we enable that option.
+		'main-calendar'        => false,
+		'month_events_per_day' => null,
+		'organizer'            => null,
+		'should_manage_url'    => false, // @todo @bordoni @lucatume @be Update this when shortcode URL management is fixed.
+		'tag'                  => null,
+		'tax-operand'          => 'OR',
+		'tribe-bar'            => true,
+		'venue'                => null,
+		'view'                 => null,
+		'week_events_per_day'  => null,
 		'week_offset'          => null,
-
-		/**
-		 * @todo @bordoni @lucatume @be Update this when shortcode URL management is fixed.
-		 */
-		'should_manage_url'    => false,
 	];
 
 	/**
 	 * {@inheritDoc}
+	 *
+	 * @var array
 	 */
 	protected $validate_arguments_map = [
 		'container-classes'    => [ self::class, 'validate_array_html_classes' ],
@@ -106,6 +107,8 @@ class Tribe_Events extends Shortcode_Abstract {
 
 	/**
 	 * {@inheritDoc}
+	 *
+	 * @var array
 	 */
 	protected $aliased_arguments = [
 		'cat'                           => 'category',
@@ -235,7 +238,8 @@ class Tribe_Events extends Shortcode_Abstract {
 		}
 
 		/* Week view & widget only. */
-		if ( 0 === stripos( $this->get_argument( 'view' ), \Tribe\Events\Pro\Views\V2\Views\Week_View::get_view_slug() ) ) {
+		$view = (string) $this->get_argument( 'view' );
+		if ( 0 === stripos( $view, \Tribe\Events\Pro\Views\V2\Views\Week_View::get_view_slug() ) ) {
 			// Allows for the "hide_weekends" attribute.
 			if ( tribe_is_truthy( $this->get_argument( 'hide_weekends' ) ) ) {
 				add_filter( 'tribe_get_option', [ $this, 'week_view_hide_weekends' ], 10, 2 );
@@ -249,8 +253,8 @@ class Tribe_Events extends Shortcode_Abstract {
 			tribe_is_truthy( $this->get_argument( 'hide-datepicker' ) )
 			|| tribe_is_truthy( $this->get_argument( 'is-widget' ) )
 		) {
-			add_filter( "tribe_template_html:events/v2/month/top-bar/datepicker", '__return_false' );
-			add_filter( "tribe_template_html:events-pro/v2/week/top-bar/datepicker", '__return_false' );
+			add_filter( 'tribe_template_html:events/v2/month/top-bar/datepicker', '__return_false' );
+			add_filter( 'tribe_template_html:events-pro/v2/week/top-bar/datepicker', '__return_false' );
 		}
 
 		if ( ! tribe_is_truthy( $this->get_argument( 'jsonld' ) ) ) {
@@ -264,12 +268,12 @@ class Tribe_Events extends Shortcode_Abstract {
 	 * @since 5.6.0
 	 *
 	 * @param mixed  $value      The value for the option.
-	 * @param string $optionName The name of the option.
+	 * @param string $option_name The name of the option.
 	 *
 	 * @return mixed The value for the option.
 	 */
-	public function week_view_hide_weekends( $value, $optionName ) {
-		if ( 'week_view_hide_weekends' !== $optionName ) {
+	public function week_view_hide_weekends( $value, $option_name ) {
+		if ( 'week_view_hide_weekends' !== $option_name ) {
 			return $value;
 		}
 
@@ -295,12 +299,12 @@ class Tribe_Events extends Shortcode_Abstract {
 		remove_filter( 'tribe_events_views_v2_view_next_url', [ $this, 'filter_view_url' ], 10 );
 		remove_filter( 'tribe_events_views_v2_view_prev_url', [ $this, 'filter_view_url' ], 10 );
 
-		remove_filter( 'tribe_template_html:events/v2/components/events-bar', '__return_false' ); // tribe-bar
-		remove_filter( 'tribe_template_html:events/v2/components/ical-link', '__return_false' ); // hide-export
-		remove_filter( 'tribe_template_html:events/v2/month/top-bar/datepicker', '__return_false' ); // hide-datepicker
-		remove_filter( "tribe_template_html:events-pro/v2/week/top-bar/datepicker", '__return_false' ); // hide-datepicker
+		remove_filter( 'tribe_template_html:events/v2/components/events-bar', '__return_false' ); // tribe-bar.
+		remove_filter( 'tribe_template_html:events/v2/components/ical-link', '__return_false' ); // hide-export.
+		remove_filter( 'tribe_template_html:events/v2/month/top-bar/datepicker', '__return_false' ); // hide-datepicker.
+		remove_filter( 'tribe_template_html:events-pro/v2/week/top-bar/datepicker', '__return_false' ); // hide-datepicker.
 
-		// Filter Bar
+		// Filter Bar.
 		remove_filter( 'tribe_events_filter_bar_views_v2_should_display_filters', '__return_false' );
 		remove_filter( 'tribe_events_filter_bar_views_v2_1_should_display_filters', '__return_false' );
 		remove_filter( 'tribe_events_filter_bar_views_v2_assets_should_enqueue_frontend', '__return_false' );
@@ -308,7 +312,7 @@ class Tribe_Events extends Shortcode_Abstract {
 		// Yes, add - we're adding it back.
 		if ( tribe()->isBound( 'filterbar.views.v2_1.hooks' ) ) {
 			add_filter( 'tribe_events_pro_shortcode_tribe_events_before_assets', [ tribe( 'filterbar.views.v2_1.hooks' ), 'action_include_assets' ] );
-		} else if ( tribe()->isBound( 'filterbar.views.v2.hooks' ) ) {
+		} elseif ( tribe()->isBound( 'filterbar.views.v2.hooks' ) ) {
 			add_filter( 'tribe_events_pro_shortcode_tribe_events_before_assets', [ tribe( 'filterbar.views.v2.hooks' ), 'action_include_assets' ] );
 		}
 
@@ -327,7 +331,6 @@ class Tribe_Events extends Shortcode_Abstract {
 	 * @param string           $slug    The current view Slug.
 	 * @param array            $params  Params so far that will be used to build this view.
 	 * @param \WP_REST_Request $request The rest request that generated this call.
-	 *
 	 */
 	public static function maybe_toggle_hooks_for_rest( $slug, $params, \WP_REST_Request $request ) {
 		$shortcode = Arr::get( $params, 'shortcode', false );
@@ -335,7 +338,7 @@ class Tribe_Events extends Shortcode_Abstract {
 		if ( ! $shortcode ) {
 			return;
 		}
-		$shortcode_instance = new static;
+		$shortcode_instance = new static();
 		$db_args            = $shortcode_instance->get_database_arguments( $shortcode );
 
 		// When no params were found it means it's not a valid Shortcode.
@@ -356,7 +359,7 @@ class Tribe_Events extends Shortcode_Abstract {
 	 * @return bool
 	 */
 	public function should_manage_url() {
-		// Defaults to true due to old behaviors on Views V1
+		// Defaults to true due to old behaviors on Views V1.
 		$should_manage_url = $this->get_argument( 'should_manage_url', $this->default_arguments['should_manage_url'] );
 
 		$disallowed_locations = [
@@ -373,9 +376,9 @@ class Tribe_Events extends Shortcode_Abstract {
 		 */
 		$disallowed_locations = apply_filters( 'tribe_events_pro_shortcode_tribe_events_manage_url_disallowed_locations', $disallowed_locations, $this );
 
-		// Block certain locations
+		// Block certain locations.
 		foreach ( $disallowed_locations as $location ) {
-			// If any we are in any of the disallowed locations
+			// If any we are in any of the disallowed locations.
 			if ( doing_filter( $location ) ) {
 				$should_manage_url = $this->default_arguments['should_manage_url'];
 			}
@@ -430,7 +433,7 @@ class Tribe_Events extends Shortcode_Abstract {
 	 * @return array The filtered View query args, with the shortcode ID added.
 	 */
 	public function filter_view_query_args( $query_args ) {
-		// Always add the id of the shortcode to the URLs
+		// Always add the id of the shortcode to the URLs.
 		$query_args['shortcode'] = $this->get_id();
 
 		return $query_args;
@@ -450,7 +453,7 @@ class Tribe_Events extends Shortcode_Abstract {
 		$transient_key       = static::TRANSIENT_PREFIX . $shortcode_id;
 		$transient_arguments = get_transient( $transient_key );
 
-		return $transient_arguments;
+		return (array) $transient_arguments;
 	}
 
 	/**
@@ -481,6 +484,7 @@ class Tribe_Events extends Shortcode_Abstract {
 	 * @since  4.7.9
 	 *
 	 * @param \Tribe__Context $context Context we will use to build the view.
+	 * @param array           $arguments Arguments to be used to alter the context.
 	 *
 	 * @return \Tribe__Context Context after shortcodes changes.
 	 */
@@ -530,9 +534,7 @@ class Tribe_Events extends Shortcode_Abstract {
 		 * Generate a string id based on the arguments used to setup the shortcode.
 		 * Note that arguments are sorted to catch substantially same shortcode w. diff. order argument.
 		 */
-		$hash = substr( md5( maybe_serialize( $arguments ) ), 0, 8 );
-
-		return $hash;
+		return substr( md5( maybe_serialize( $arguments ) ), 0, 8 );
 	}
 
 	/**
@@ -554,7 +556,7 @@ class Tribe_Events extends Shortcode_Abstract {
 				continue;
 			}
 
-			// Check if this location has a read for
+			// Check if this location has a read for.
 			if ( ! empty( $location['read'][ Context::REQUEST_VAR ] ) ) {
 				unset( $locations[ $key ]['read'][ Context::REQUEST_VAR ] );
 			}
@@ -687,11 +689,16 @@ class Tribe_Events extends Shortcode_Abstract {
 
 		$shortcode_object = $this;
 
-		add_filter( 'tribe_events_views_v2_view_cached_html', static function ( $cached_html, $view ) use ( $shortcode_object ) {
-			$shortcode_object->enqueue_assets_before_template( null, null, $view->get_template() );
+		add_filter(
+			'tribe_events_views_v2_view_cached_html',
+			static function ( $cached_html, $view ) use ( $shortcode_object ) {
+				$shortcode_object->enqueue_assets_before_template( null, null, $view->get_template() );
 
-			return $cached_html;
-		}, 15, 2 );
+				return $cached_html;
+			},
+			15,
+			2
+		);
 
 		add_action( 'tribe_template_before_include', [ $this, 'enqueue_assets_before_template' ], 15, 3 );
 
@@ -880,8 +887,8 @@ class Tribe_Events extends Shortcode_Abstract {
 			}
 
 			$items = [
-				'tag'              => 'post_tag',
-				'category'         => TEC::TAXONOMY,
+				'tag'      => 'post_tag',
+				'category' => TEC::TAXONOMY,
 			];
 
 			foreach ( $items as $key => $taxonomy ) {
@@ -1064,7 +1071,7 @@ class Tribe_Events extends Shortcode_Abstract {
 				tribe_is_truthy( $offset )
 				&& empty( $view_context->get( 'eventDate' ) )
 			) {
-				$start_date = $this->get_argument( 'date', 'now' );
+				$start_date  = $this->get_argument( 'date', 'now' );
 				$start_date  = Dates::build_date_object( $start_date );
 				$is_negative = '-' === substr( $offset, 0, 1 );
 				// Set up for negative weeks.
@@ -1092,7 +1099,7 @@ class Tribe_Events extends Shortcode_Abstract {
 				$arguments['date'] = $event_date;
 			}
 		} else {
-			// works for month view,
+			// Works for month view.
 			$arguments['date'] = $view_context->get( 'tribe-bar-date' );
 		}
 
@@ -1362,7 +1369,7 @@ class Tribe_Events extends Shortcode_Abstract {
 
 		$args = $this->get_database_arguments( $shortcode );
 
-		if ( ! empty( $args['category' ] ) ) {
+		if ( ! empty( $args['category'] ) ) {
 			$next_event = $next_event->where( 'category', (array) $args['category'] );
 		}
 
@@ -1389,7 +1396,6 @@ class Tribe_Events extends Shortcode_Abstract {
 		if ( ! empty( $args['venue'] ) ) {
 			$next_event = $next_event->where( 'venue', $args['venue'] );
 		}
-
 
 		return $next_event;
 	}

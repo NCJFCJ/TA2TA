@@ -210,8 +210,8 @@ class Astra_Sites_ZipWP_Helper {
 			return new \WP_Error( 'parse_url', 'Unable to parse URL' );
 		}
 
-		// Use basename to extract the file name from the path.
-		$image_name = basename( $path );
+		// Using $id to create image name instead of $path.
+		$image_name = 'zipwp-image-' . sanitize_title( $id );
 
 		// Fallback name.
 		$image_name = $image_name ? $image_name : sanitize_title( $id );

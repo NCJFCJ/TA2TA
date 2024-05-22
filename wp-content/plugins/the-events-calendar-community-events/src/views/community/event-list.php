@@ -4,15 +4,16 @@
  * The template for a list of a users events.
  *
  * Override this template in your own theme by creating a file at
- * [your-theme]/tribe-events/community/event-list.php
+ * [your-theme]/tribe/community/event-list.php
  *
- * @link https://evnt.is/1ao4 Help article for Community Events & Tickets template files.
+ * @link    https://evnt.is/1ao4 Help article for Community Events & Tickets template files.
  *
- * @version 4.10.14
+ * @version 4.10.17
  *
- * @since 4.10.14 Cleaned up file
- * @since 2.1
- * @since 4.8.2 Updated template link.
+ * @since   2.1
+ * @since   4.8.2 Updated template link.
+ * @since   4.10.14 Cleaned up file
+ * @since   4.10.17 Corrected template override path.
  *
  * @var $events
  * @var $paged
@@ -53,15 +54,23 @@ do_action( 'tribe_community_events_before_list_navigation' );
 <div class="tribe-event-list-search">
 	<form role="search" method="get" class="tribe-search-form" action="">
 		<div>
-			<label class="screen-reader-text"
-				   for="s"><?php esc_html_e( 'Search for:', 'tribe-events-community' ); ?></label>
-			<input type="search"
-				   value="<?php echo isset( $_GET['event-search'] ) ? esc_attr( $_GET['event-search'] ) : ''; ?>"
-				   name="event-search"
-				   placeholder="<?php esc_attr_e( 'Search Event Titles', 'tribe-events-community' ); ?>"/>
-			<input type="hidden"
-				   value="<?php echo empty( $_GET['eventDisplay'] ) ? 'list' : esc_attr( $_GET['eventDisplay'] ); ?>"
-				   name="eventDisplay"/>
+			<label
+				class="screen-reader-text"
+				for="s"
+			>
+				<?php esc_html_e( 'Search for:', 'tribe-events-community' ); ?>
+			</label>
+			<input
+				type="search"
+				value="<?php echo isset( $_GET['event-search'] ) ? esc_attr( $_GET['event-search'] ) : ''; ?>"
+				name="event-search"
+				placeholder="<?php esc_attr_e( 'Search Event Titles', 'tribe-events-community' ); ?>"
+			/>
+			<input
+				type="hidden"
+				value="<?php echo empty( $_GET['eventDisplay'] ) ? 'list' : esc_attr( $_GET['eventDisplay'] ); ?>"
+				name="eventDisplay"
+			/>
 			<input type="submit" id="search-submit" value="Search"/>
 		</div>
 	</form>
@@ -97,9 +106,11 @@ do_action( 'tribe_community_events_before_list_navigation' );
 							class="<?php echo sanitize_html_class( in_array( $column_slug, $blocked_columns ) ? 'tribe-hidden' : '' ) ?>"
 							for="<?php echo sanitize_html_class( 'tribe-toggle-column-' . $column_slug ); ?>"
 						>
-							<input class="tribe-toggle-column" type="checkbox"
-								   id="<?php echo sanitize_html_class( 'tribe-toggle-column-' . $column_slug ); ?>"
-								   checked/>
+							<input
+								class="tribe-toggle-column" type="checkbox"
+								id="<?php echo sanitize_html_class( 'tribe-toggle-column-' . $column_slug ); ?>"
+								checked
+							/>
 							<?php echo esc_html( $column_label ); ?>
 						</label>
 					</li>
@@ -134,7 +145,9 @@ do_action( 'tribe_community_events_before_list_table' );
 							data-depends="#<?php echo sanitize_html_class( 'tribe-toggle-column-' . $column_slug ); ?>"
 							data-condition-is-checked
 							class="tribe-dependent column-header <?php echo sanitize_html_class( 'column-header-' . $column_slug ); ?>"
-						><?php echo esc_html( $column_label ); ?></th>
+						>
+							<?php echo esc_html( $column_label ); ?>
+						</th>
 					<?php endforeach; ?>
 				</tr>
 			</thead>

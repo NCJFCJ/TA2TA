@@ -42,7 +42,7 @@ const SitePreview = () => {
 	const renderBrowserFrame = () => (
 		<div
 			className={ classNames(
-				'flex items-center justify-start py-3 px-4 bg-white shadow-sm rounded-t-lg mx-auto h-[44px] z-[1] relative',
+				'flex items-center justify-start py-3 px-4 bg-browser-bar shadow-sm rounded-t-lg mx-auto h-[44px] z-[1] relative',
 				'w-full mx-0'
 			) }
 		>

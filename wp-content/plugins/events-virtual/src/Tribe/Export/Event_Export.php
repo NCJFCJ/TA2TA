@@ -44,8 +44,19 @@ class Event_Export extends Abstract_Export {
 			return $fields;
 		}
 
-		// If there is a venue, return fields as is.
-		if ( isset( $event->venues[0] ) ) {
+		/**
+		 * Filters whether or not we should respect the Venue value to be listed on the location field. If
+		 * false the Venue will be preserved, if true the Virtual Event URL will replace it.
+		 *
+		 * @since 1.15.7
+		 *
+		 * @param boolean   Whether to override the venue location field with the virtual URL.
+		 * @param \WP_Post $event The WP_Post of this event.
+		 */
+		$should_override_venue = apply_filters( 'tec_events_virtual_export_should_override_venue_location', false, $event );
+
+		// If there is a venue and not overwritten, return fields as is.
+		if ( isset( $event->venues[0] ) && ! $should_override_venue ) {
 			return $fields;
 		}
 

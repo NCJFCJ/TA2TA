@@ -859,6 +859,11 @@ class GFFormDisplay {
 	 */
 	public static function post_render_script( $form_id, $current_page = 'current_page' ) {
 		$post_render_script = '
+			jQuery(document).trigger("gform_pre_post_render", [{ formId: "' . $form_id . '", currentPage: "' . $current_page . '", abort: function() { this.preventDefault(); } }]);
+	        
+	        if (event.defaultPrevented) {
+            	    return; 
+        	}
 	        const gformWrapperDiv = document.getElementById( "gform_wrapper_' . $form_id . '" );
 	        if ( gformWrapperDiv ) {
 	            const visibilitySpan = document.createElement( "span" );
@@ -918,6 +923,8 @@ class GFFormDisplay {
 	            triggerPostRender();
 	        }
 	    ';
+
+		$post_render_script = gf_apply_filters( array( 'gform_post_render_script', $form_id ), $post_render_script, $form_id, $current_page );
 
 		return str_replace( [ "\t", "\n", "\r" ], '', $post_render_script );
 	}
@@ -1249,12 +1256,13 @@ class GFFormDisplay {
 					 * @since 2.5
 					 *
 					 * @param string $message The required indicator legend.
-					 * @param array  $form    The current Form object.
+					 * @param array  $form    The current Form.
 					 */
 					$required_legend = gf_apply_filters(
 						array( 'gform_required_legend', $form['id'] ),
 						/* Translators: the text or symbol that indicates a field is required */
-						sprintf( esc_html__( '"%s" indicates required fields', 'gravityforms' ), GFFormsModel::get_required_indicator( $form_id ) )
+						sprintf( esc_html__( '"%s" indicates required fields', 'gravityforms' ), GFFormsModel::get_required_indicator( $form_id ) ),
+						$form
 					);
 					$form_string .= "
 							<p class='gform_required_legend'>{$required_legend}</p>";
@@ -5096,7 +5104,7 @@ class GFFormDisplay {
 		if ( gf_upgrade()->get_submissions_block() ) {
 			$validation_message_markup = "<h2 class='gf_submission_limit_message'>" . esc_html__( 'Your form was not submitted. Please try again in a few minutes.', 'gravityforms' ) . '</h2>';
 		} else {
-			$validation_message_markup = "<h2 class='gform_submission_error{$hide_summary_class}'><span class='gform-icon gform-icon--close'></span>" . esc_html__( 'There was a problem with your submission.', 'gravityforms' ) . ' ' . esc_html__( 'Please review the fields below.', 'gravityforms' ) . '</h2>';
+			$validation_message_markup = "<h2 class='gform_submission_error{$hide_summary_class}'><span class='gform-icon gform-icon--circle-error'></span>" . esc_html__( 'There was a problem with your submission.', 'gravityforms' ) . ' ' . esc_html__( 'Please review the fields below.', 'gravityforms' ) . '</h2>';
 			// Generate validation errors summary if required.
 			if ( $show_summary ) {
 				$errors = self::get_validation_errors( $form, $values );

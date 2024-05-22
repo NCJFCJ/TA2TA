@@ -2,19 +2,19 @@
 
 namespace Barn2\Plugin\Document_Library_Pro\Admin;
 
-use Barn2\Plugin\Document_Library_Pro\Dependencies\Lib\Registerable,
-	Barn2\Plugin\Document_Library_Pro\Dependencies\Lib\Service,
-	Barn2\Plugin\Document_Library_Pro\Util\Options,
-	Barn2\Plugin\Document_Library_Pro\Util\SVG_Icon,
-	Barn2\Plugin\Document_Library_Pro\Posts_Table_Pro\Table_Args as PTP_Table_Args;
+use Barn2\Plugin\Document_Library_Pro\Dependencies\Lib\Registerable;
+use Barn2\Plugin\Document_Library_Pro\Dependencies\Lib\Service;
+use Barn2\Plugin\Document_Library_Pro\Util\Options;
+use Barn2\Plugin\Document_Library_Pro\Util\SVG_Icon;
+use Barn2\Plugin\Document_Library_Pro\Posts_Table_Pro\Table_Args as PTP_Table_Args;
 
 defined( 'ABSPATH' ) || exit;
 
 /**
  * Settings Registry
  *
- * @package   Barn2/document-library-pro
- * @author    Barn2 Plugins <info@barn2.com>
+ * @package   Barn2\document-library-pro
+ * @author    Barn2 Plugins <support@barn2.com>
  * @license   GPL-3.0
  * @copyright Barn2 Media Ltd
  */
@@ -37,6 +37,7 @@ class Settings implements Registerable, Service {
 	public function register() {
 		add_action( 'admin_init', [ $this, 'register_settings' ] );
 		add_action( 'admin_init', [ $this, 'filter_allowed_options' ] );
+		add_action( 'current_screen', [ $this, 'backwards_compatibility' ] );
 	}
 
 	/**
@@ -318,7 +319,7 @@ class Settings implements Registerable, Service {
 			}
 
 			// Check bools
-			foreach ( [ 'lightbox', 'shortcodes', 'link_target', 'document_link', 'preview', 'folders', 'reset_button' ] as $arg ) {
+			foreach ( [ 'lightbox', 'shortcodes', 'link_target', 'document_link', 'preview', 'folders', 'reset_button', 'search_box' ] as $arg ) {
 				if ( ! isset( $args[ $arg ] ) ) {
 					$args[ $arg ] = false;
 				}
@@ -508,5 +509,22 @@ class Settings implements Registerable, Service {
 		}
 
 		return $existing_options;
+	}
+
+	/**
+	 * Add backwards compatibility for specific settings.
+	 * 
+	 * @return void
+	 */
+	public function backwards_compatibility() {
+		$current_screen = get_current_screen();
+		if ( isset( $current_screen->base ) && ( $current_screen->base === 'post-tables_page_posts_table' || $current_screen->base === 'toplevel_page_document_library_pro' ) ) {
+			add_filter( 'option_' . Options::SHORTCODE_OPTION_KEY, function( $value ) {
+				if ( isset( $value['search_box'] ) && ( $value['search_box'] === 'top' || $value['search_box'] === 'bottom' || $value['search_box'] === 'both' ) ) {
+					$value['search_box'] = true;
+				}
+				return $value;
+			} );
+		}
 	}
 }

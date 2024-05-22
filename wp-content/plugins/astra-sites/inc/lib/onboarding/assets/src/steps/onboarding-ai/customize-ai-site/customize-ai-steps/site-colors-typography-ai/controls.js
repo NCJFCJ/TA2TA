@@ -1,5 +1,5 @@
-import React, { useEffect, useState } from 'react';
 import { __ } from '@wordpress/i18n';
+import { useEffect, useState } from '@wordpress/element';
 import { useStateValue } from '../../../../../store/store';
 import ColorPalettes from '../../../../../components/color-palettes/color-palettes';
 import {

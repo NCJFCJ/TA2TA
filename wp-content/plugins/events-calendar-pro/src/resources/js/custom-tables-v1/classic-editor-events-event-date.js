@@ -17,6 +17,9 @@ window.tec = window.tec || {};
 tec.classicEditorEvents = tec.classicEditorEvents || {};
 tec.classicEditorEvents.eventDate = tec.classicEditorEvents.eventDate || {};
 
+dayjs.extend(window.dayjs_plugin_isoWeek);
+dayjs.extend(window.dayjs_plugin_customParseFormat);
+
 /**
  * Handles the event date cases of recurrence and exclusions.
  *
@@ -173,7 +176,10 @@ tec.classicEditorEvents.eventDate = tec.classicEditorEvents.eventDate || {};
 			obj.el.$eventStart = $document.find( obj.selectors.eventStartDate );
 		}
 
-		obj.eventStart.moment = moment( obj.el.$eventStart.val(), tribe_events_pro_admin.recurrence.date_format );
+		obj.eventStart.moment = dayjs(
+			obj.el.$eventStart.val(),
+			tribe_events_pro_admin.recurrence.date_format
+		);
 	};
 
 	/**

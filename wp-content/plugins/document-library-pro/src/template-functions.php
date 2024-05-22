@@ -3,17 +3,17 @@
  * Template functions for Document Library Pro
  *
  * @package   Barn2\document-library-pro
- * @author    Barn2 Plugins <info@barn2.com>
+ * @author    Barn2 Plugins <support@barn2.com>
  * @license   GPL-3.0
  * @copyright Barn2 Media Ltd
  */
 
-use Barn2\Plugin\Document_Library_Pro\Document,
-	Barn2\Plugin\Document_Library_Pro\Grid\Grid_Factory,
-	Barn2\Plugin\Document_Library_Pro\Posts_Table_Pro\Table_Factory,
-	Barn2\Plugin\Document_Library_Pro\Posts_Table_Pro\Table_Args,
-	Barn2\Plugin\Document_Library_Pro\Folder_Tree,
-	Barn2\Plugin\Document_Library_Pro\Util\Options;
+use Barn2\Plugin\Document_Library_Pro\Document;
+use Barn2\Plugin\Document_Library_Pro\Grid\Grid_Factory;
+use Barn2\Plugin\Document_Library_Pro\Posts_Table_Pro\Table_Factory;
+use Barn2\Plugin\Document_Library_Pro\Posts_Table_Pro\Table_Args;
+use Barn2\Plugin\Document_Library_Pro\Folder_Tree;
+use Barn2\Plugin\Document_Library_Pro\Util\Options;
 
 defined( 'ABSPATH' ) || exit;
 

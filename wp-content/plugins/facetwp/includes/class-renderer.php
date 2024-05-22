@@ -165,6 +165,8 @@ class FacetWP_Renderer
         // Debug
         if ( 'on' == FWP()->helper->get_setting( 'debug_mode', 'off' ) ) {
             $output['settings']['debug'] = $this->get_debug_info();
+        } else {
+            $output['settings']['debug'] = "Enable debug mode in [Settings > FacetWP > Settings]";
         }
 
         // Generate the template HTML
@@ -658,7 +660,7 @@ class FacetWP_Renderer
 
                         // ignore built-in hooks
                         if ( false === strpos( $filename, 'plugins/facetwp' ) ) {
-                            if ( false !== strpos( $filename, 'wp-content' ) ) {
+                            if ( false !== strpos( $filename, 'wp-content' ) || false !== strpos( $tag, 'facetwp' ) ) {
                                 $relevant_hooks[ $tag ][] = $filename . ':' . $ref->getStartLine();
                             }
                         }

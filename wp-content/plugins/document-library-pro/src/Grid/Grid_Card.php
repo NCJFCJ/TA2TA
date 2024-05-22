@@ -1,10 +1,10 @@
 <?php
 namespace Barn2\Plugin\Document_Library_Pro\Grid;
 
-use Barn2\Plugin\Document_Library_Pro\Document,
-	Barn2\Plugin\Document_Library_Pro\Template_Loader_Factory,
-	Barn2\Plugin\Document_Library_Pro\Posts_Table_Pro\Table_Args,
-	Barn2\Plugin\Document_Library_Pro\Posts_Table_Pro\Util\Util;
+use Barn2\Plugin\Document_Library_Pro\Document;
+use Barn2\Plugin\Document_Library_Pro\Template_Loader_Factory;
+use Barn2\Plugin\Document_Library_Pro\Posts_Table_Pro\Table_Args;
+use Barn2\Plugin\Document_Library_Pro\Posts_Table_Pro\Util\Util;
 use WP_Post;
 
 /**
@@ -118,7 +118,7 @@ class Grid_Card {
 		}
 
 		// Custom fields
-		if ( isset($this->grid_content['custom_fields']) ) {
+		if ( isset( $this->grid_content['custom_fields'] ) && $this->grid_content['custom_fields'] ) {
 			$html .= $this->templates['custom_fields'];
 		}
 

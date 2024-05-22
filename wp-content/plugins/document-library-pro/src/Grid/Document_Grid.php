@@ -1,10 +1,10 @@
 <?php
 namespace Barn2\Plugin\Document_Library_Pro\Grid;
 
-use Barn2\Plugin\Document_Library_Pro\Document,
-	Barn2\Plugin\Document_Library_Pro\Posts_Table_Pro\Util\Util as PTP_Util,
-	Barn2\Plugin\Document_Library_Pro\Posts_Table_Pro\Table_Args,
-	Barn2\Plugin\Document_Library_Pro\Posts_Table_Pro\Table_Hooks;
+use Barn2\Plugin\Document_Library_Pro\Document;
+use Barn2\Plugin\Document_Library_Pro\Posts_Table_Pro\Util\Util as PTP_Util;
+use Barn2\Plugin\Document_Library_Pro\Posts_Table_Pro\Table_Args;
+use Barn2\Plugin\Document_Library_Pro\Posts_Table_Pro\Table_Hooks;
 
 /**
  * Handles the display of a Document_Grid

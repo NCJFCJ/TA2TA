@@ -1,10 +1,10 @@
 <?php
 namespace Barn2\Plugin\Document_Library_Pro\Posts_Table_Pro;
 
-use Barn2\Plugin\Document_Library_Pro\Posts_Table_Pro\Table_Args,
-	Barn2\Plugin\Document_Library_Pro\Posts_Table_Pro\Posts_Table,
-	Barn2\Plugin\Document_Library_Pro\Posts_Table_Pro\Table_Query,
-	Barn2\Plugin\Document_Library_Pro\Posts_Table_Pro\Util\Options;
+use Barn2\Plugin\Document_Library_Pro\Posts_Table_Pro\Table_Args;
+use Barn2\Plugin\Document_Library_Pro\Posts_Table_Pro\Posts_Table;
+use Barn2\Plugin\Document_Library_Pro\Posts_Table_Pro\Table_Query;
+use Barn2\Plugin\Document_Library_Pro\Posts_Table_Pro\Util\Options;
 
 /**
  * Handles the caching for post tables.

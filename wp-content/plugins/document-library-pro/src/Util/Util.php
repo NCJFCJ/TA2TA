@@ -8,8 +8,8 @@ defined( 'ABSPATH' ) || exit;
 /**
  * Utilities
  *
- * @package   Barn2/document-library-pro
- * @author    Barn2 Plugins <info@barn2.com>
+ * @package   Barn2\document-library-pro
+ * @author    Barn2 Plugins <support@barn2.com>
  * @license   GPL-3.0
  * @copyright Barn2 Media Ltd
  */
@@ -223,6 +223,24 @@ final class Util {
 	}
 
 	/**
+	 * Check if the Advanced Custom Fields plugin is active.
+	 * 
+	 * @return bool
+	 */
+	public static function is_acf_active() {
+		return class_exists( '\ACF' );
+	}
+
+	/**
+	 * Check if the Easy Post Types plugin is active.
+	 * 
+	 * @return bool
+	 */
+	public static function is_ept_active() {
+		return class_exists( 'Barn2\Plugin\Easy_Post_Types_Fields\Util' );
+	}
+
+	/**
 	 * Normalize user arguments provided to shortcode.
 	 *
 	 * @param array $args
@@ -234,7 +252,7 @@ final class Util {
 		return Options::normalize_user_arguments( $args );
 	}
 
-		/**
+	/**
 	 * Retrive the Document post type fields.
 	 *
 	 * @return array

@@ -1102,9 +1102,15 @@ if ( ! class_exists( 'WP_Sheet_Editor_Columns_Manager' ) ) {
 			}
 			$column_options = array(
 				'custom_format'         => false,
-				'read_only'             => array( $this, 'render_read_only_option' ),
-				'required_capabilities' => array( $this, 'render_required_capabilities_options' ),
+				'read_only'             => false,
+				'required_capabilities' => false,
 			);
+			if ( ! empty( $column['allow_readonly_option_in_columns_manager'] ) ) {
+				$column_options['read_only'] = array( $this, 'render_read_only_option' );
+			}
+			if ( ! empty( $column['allow_role_restrictions_in_columns_manager'] ) ) {
+				$column_options['required_capabilities'] = array( $this, 'render_required_capabilities_options' );
+			}
 			if ( ! empty( $column['allow_custom_format'] ) ) {
 				$column_options['custom_format'] = array( $this, 'render_custom_format_options' );
 			}
@@ -1131,11 +1137,10 @@ if ( ! class_exists( 'WP_Sheet_Editor_Columns_Manager' ) ) {
 			?>
 
 			<div class="column-settings-field">					
-				<label for="<?php echo sanitize_html_class('column_settings' . $column['key'] . 'is_read_only'); ?>"><?php esc_html_e( 'Is read only?', 'vg_sheet_editor' ); ?></label>				
+				<label for="<?php echo sanitize_html_class('column_settings' . $column['key'] . 'is_read_only'); ?>"><?php esc_html_e( 'Is read only?', 'vg_sheet_editor' ); ?>  <a href="#" data-wpse-tooltip="right" aria-label="cm_readonly_tip">( ? )</a></label>
 
 				<select id="<?php echo sanitize_html_class('column_settings' . $column['key'] . 'is_read_only'); ?>" data-lazy-key="columnsManagerIsReadOnly" data-selected="<?php echo esc_attr( $column_settings['is_read_only'] ); ?>" name="column_settings[<?php echo esc_attr( $column['key'] ); ?>][is_read_only]">					
-				</select>
-				<p><?php esc_html_e( 'Read-only columns will display a lock and it won\'t be possible to edit them anywhere in the spreadsheet. This is not a security feature because people still can edit in the regular WP screens.', 'vg_sheet_editor' ); ?></p>				
+				</select>				
 			</div>
 			<?php
 		}
@@ -1144,10 +1149,10 @@ if ( ! class_exists( 'WP_Sheet_Editor_Columns_Manager' ) ) {
 			?>
 
 			<div class="column-settings-field">
-				<label for="<?php echo sanitize_html_class('column_settings' . $column['key'] . 'user_capabilities_can_read'); ?>"><?php esc_html_e( 'User capabilities that can read this column', 'vg_sheet_editor' ); ?> <a href="#" data-wpse-tooltip="right" aria-label="<?php esc_attr_e( 'The column will appear in the spreadsheet and exports if the user has a role with the required capability.', 'vg_sheet_editor' ); ?>">( ? )</a></label>
+				<label for="<?php echo sanitize_html_class('column_settings' . $column['key'] . 'user_capabilities_can_read'); ?>"><?php esc_html_e( 'User capabilities that can read this column', 'vg_sheet_editor' ); ?> <a href="#" data-wpse-tooltip="right" aria-label="cm_read_role_tip">( ? )</a></label>
 				<select id="<?php echo sanitize_html_class('column_settings' . $column['key'] . 'user_capabilities_can_read'); ?>"  data-lazy-key="columnsManagerUserCapabilities" data-selected="<?php echo esc_attr( $column_settings['user_capabilities_can_read'] ); ?>"   name="column_settings[<?php echo esc_attr( $column['key'] ); ?>][user_capabilities_can_read]"></select>
 
-				<label for="<?php echo sanitize_html_class('column_settings' . $column['key'] . 'user_capabilities_can_edit'); ?>"><?php esc_html_e( 'User capabilities that can edit this column', 'vg_sheet_editor' ); ?> <a href="#" data-wpse-tooltip="right" aria-label="<?php esc_attr_e( 'The column will be read only if the user doesn\'t have a role with the required capability.', 'vg_sheet_editor' ); ?>">( ? )</a></label>
+				<label for="<?php echo sanitize_html_class('column_settings' . $column['key'] . 'user_capabilities_can_edit'); ?>"><?php esc_html_e( 'User capabilities that can edit this column', 'vg_sheet_editor' ); ?> <a href="#" data-wpse-tooltip="right" aria-label="cm_edit_role_tip">( ? )</a></label>
 				<select id="<?php echo sanitize_html_class('column_settings' . $column['key'] . 'user_capabilities_can_edit'); ?>" data-lazy-key="columnsManagerUserCapabilities" data-selected="<?php echo esc_attr( $column_settings['user_capabilities_can_edit'] ); ?>"  name="column_settings[<?php echo esc_attr( $column['key'] ); ?>][user_capabilities_can_edit]"></select>			
 			</div>
 			<?php

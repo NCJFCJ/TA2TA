@@ -1,17 +1,17 @@
 <?php
 namespace Barn2\Plugin\Document_Library_Pro\Admin\Importer;
 
-use Barn2\Plugin\Document_Library_Pro\Post_Type,
-	Barn2\Plugin\Document_Library_Pro\Util\Util,
-	Barn2\Plugin\Document_Library_Pro\Dependencies\Lib\Util as Lib_Util;
+use Barn2\Plugin\Document_Library_Pro\Post_Type;
+use Barn2\Plugin\Document_Library_Pro\Util\Util;
+use Barn2\Plugin\Document_Library_Pro\Dependencies\Lib\Util as Lib_Util;
 
 defined( 'ABSPATH' ) || exit;
 
 /**
  * This class is the controller for the CSV Import
  *
- * @package   Barn2/document-library-pro
- * @author    Barn2 Plugins <info@barn2.com>
+ * @package   Barn2\document-library-pro
+ * @author    Barn2 Plugins <support@barn2.com>
  * @license   GPL-3.0
  * @copyright Barn2 Media Ltd
  */
@@ -531,7 +531,7 @@ class CSV_Controller {
 											<?php if ( is_array( $value ) ) : ?>
 												<optgroup label="<?php echo esc_attr( $value['name'] ); ?>">
 													<?php foreach ( $value['options'] as $sub_key => $sub_value ) : ?>
-														<option value="<?php echo esc_attr( $sub_key ); ?>" <?php selected( $mapped_value, $sub_key ); ?>><?php echo esc_html( $sub_value ); ?></option>
+														<option value="<?php echo esc_attr( $sub_key ); ?>" <?php selected( strtolower( str_replace( ' ', '-', str_replace( 'cf:dlp_document_', '', $mapped_value ) ) ), strtolower( str_replace( [ 'acf:', 'ept:', 'tax:dlp_document_' ], '', $sub_key ) ) ); ?>><?php echo esc_html( $sub_value ); ?></option>
 													<?php endforeach ?>
 												</optgroup>
 											<?php else : ?>
@@ -748,17 +748,17 @@ class CSV_Controller {
 			apply_filters(
 				'document_library_pro_csv_importer_mapping_default_columns',
 				[
-					__( 'Name', 'document-library-pro' )   => 'name',
-					__( 'Author', 'document-library-pro' ) => 'author_ids',
-					__( 'Published', 'document-library-pro' ) => 'published',
-					__( 'Excerpt', 'document-library-pro' ) => 'excerpt',
-					__( 'Content', 'document-library-pro' ) => 'content',
-					__( 'Categories', 'document-library-pro' ) => 'category_ids',
-					__( 'Tags', 'document-library-pro' )   => 'tag_ids',
-					__( 'File URL', 'document-library-pro' ) => 'file_url',
-					__( 'Direct URL', 'document-library-pro' ) => 'direct_url',
+					__( 'Name', 'document-library-pro' )               => 'name',
+					__( 'Published', 'document-library-pro' )          => 'published',
+					__( 'Excerpt', 'document-library-pro' )            => 'excerpt',
+					__( 'Content', 'document-library-pro' )            => 'content',
+					__( 'Categories', 'document-library-pro' )         => 'category_ids',
+					__( 'Tags', 'document-library-pro' )               => 'tag_ids',
+					__( 'Document Authors', 'document-library-pro' )   => 'author_ids',
+					__( 'File URL', 'document-library-pro' )           => 'file_url',
+					__( 'Direct URL', 'document-library-pro' )         => 'direct_url',
 					__( 'Featured Image URL', 'document-library-pro' ) => 'featured_image',
-					__( 'File Size', 'document-library-pro' ) => 'file_size',
+					__( 'File Size', 'document-library-pro' )          => 'file_size',
 				],
 				$raw_headers
 			)
@@ -859,30 +859,137 @@ class CSV_Controller {
 			$index = $matches[0];
 		}
 
-		// Properly format for meta field and taxonomies
-		$meta     = str_replace( 'cf:', '', $item );
-		$taxonomy = str_replace( 'tax:', '', $item );
-
 		// Available options.
 		$options = [
 			'name'             => __( 'Name', 'document-library-pro' ),
-			'author_ids'       => __( 'Author', 'document-library-pro' ),
 			'published'        => __( 'Published', 'document-library-pro' ),
 			'excerpt'          => __( 'Excerpt', 'document-library-pro' ),
 			'content'          => __( 'Content', 'document-library-pro' ),
 			'category_ids'     => __( 'Categories (comma or pipe separated)', 'document-library-pro' ),
 			'tag_ids'          => __( 'Tags (comma or pipe separated)', 'document-library-pro' ),
 			'tag_ids_spaces'   => __( 'Tags (space separated)', 'document-library-pro' ),
+			'author_ids'       => __( 'Document Authors', 'document-library-pro' ),
 			'file_url'         => __( 'File URL', 'document-library-pro' ),
 			'direct_url'       => __( 'Direct URL', 'document-library-pro' ),
 			'featured_image'   => __( 'Featured Image URL', 'document-library-pro' ),
 			'file_size'        => __( 'File Size', 'document-library-pro' ),
-			'cf:' . $meta      => __( 'Import as meta data', 'document-library-pro' ),
-			// translators: %s: Plural name of a taxonomy
-			'tax:' . $taxonomy => sprintf( __( '%s (comma or pipe separated)', 'document-library-pro' ), ucfirst( $taxonomy ) ),
 			'menu_order'       => __( 'Position', 'document-library-pro' ),
 		];
 
+		// Import as meta data.
+		if ( strpos( $item, 'cf:' ) === 0 ) {
+			$options = array_merge( $options, [
+				$item => sprintf( __( 'Import as meta data (%s)', 'document-library-pro' ), str_replace( 'cf:', '', $item ) ),
+			] );
+		}
+
+		// Import as taxonomy.
+		if ( strpos( $item, 'tax:' ) === 0 ) {
+			$options = array_merge( $options, [
+				$item => sprintf( __( 'Import as taxonnomy (%s)', 'document-library-pro' ), str_replace( 'tax:', '', $item ) ),
+			] );
+		}
+
+		// Custom fields.
+		$custom_fields = $this->get_custom_fields( 'dlp_document' );
+		if ( $custom_fields ) {
+			$custom_fields_options['custom_fields'] = [
+				'name'    => __( 'Custom fields', 'document-library-pro' ),
+				'options' => $custom_fields
+			];
+			$options = array_merge( $options, $custom_fields_options );
+		}
+
+		// Taxonomies.
+		$taxonomies = get_object_taxonomies( 'dlp_document', 'objects' );
+
+		unset( $taxonomies['doc_categories'] );
+		unset( $taxonomies['doc_tags'] );
+		unset( $taxonomies['doc_author'] );
+		unset( $taxonomies['file_type'] );
+
+		$taxonomies = array_map( function( $value ) {
+			return $value->label;
+		}, $taxonomies );
+
+		if ( $taxonomies ) {
+
+			foreach ( $taxonomies as $key => $taxonomy ) {
+				$tax[ 'tax:' . $key ] = sprintf( __( '%s (comma or pipe separated)', 'document-library-pro' ), $taxonomy );
+			}
+
+			$taxonomies_options['taxonomies'] = [
+				'name'    => __( 'Taxonomies', 'document-library-pro' ),
+				'options' => $tax
+			];
+			$options = array_merge( $options, $taxonomies_options );
+		}
+
 		return apply_filters( 'document_library_pro_csv_importer_mapping_options', $options, $item );
 	}
+
+	/**
+	 * Get custom fields.
+	 *
+	 * @param string $post_type
+	 * @return array
+	 */
+	private function get_custom_fields( $post_type ) {
+		$custom_fields = [];
+
+		// Get ACF custom fields.
+		if ( Util::is_acf_active() ) {
+			$custom_fields = $this->get_acf_custom_fields( $post_type );
+		}
+
+		// Get Easy Post Types custom fields.
+		if ( Util::is_ept_active() ) {
+			$custom_fields = array_merge( $custom_fields, $this->get_ept_custom_fields( $post_type ) );
+		}
+
+		// Sort fields by name.
+		asort( $custom_fields );
+
+		return $custom_fields;
+	}
+
+	/**
+	 * Get ACF custom fields.
+	 *
+	 * @param string $post_type
+	 * @return array
+	 */
+	private function get_acf_custom_fields( $post_type ) {
+		$acf_fields = [];
+
+		$groups = acf_get_field_groups( [ 'post_type' => $post_type ] );
+
+		foreach ( (array) $groups as $group ) {
+			$fields = acf_get_fields( $group['key'] );
+			foreach ( (array) $fields as $field ) {
+				$acf_fields[ 'acf:' . $field['name'] ] = $field['label'];
+			}
+		}
+
+		return $acf_fields;
+	}
+
+	/**
+	 * Get Easy Post Types custom fields.
+	 *
+	 * @param string $post_type
+	 * @return array
+	 */
+	private function get_ept_custom_fields( $post_type ) {
+		$ept_fields = [];
+
+		$fields = \Barn2\Plugin\Easy_Post_Types_Fields\Util::get_custom_fields( $post_type );
+
+		foreach ( (array) $fields as $field ) {
+			$ept_fields[ 'ept:' . $field['slug'] ] = $field['name'];
+		}
+
+		return $ept_fields;
+	}
+
 }

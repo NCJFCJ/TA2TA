@@ -144,6 +144,13 @@ class Astra_WXR_Importer {
 	 */
 	public function pre_process_post( $data, $meta, $comments, $terms ) {
 
+		if ( 'attachment' === $data['post_type'] && 'ai' === get_transient( 'astra_sites_current_import_template_type' ) ) {
+			$remote_url = ! empty( $data['attachment_url'] ) ? $data['attachment_url'] : $data['guid'];
+			if ( strpos( $remote_url, 'skip' ) === false ) {
+				return array();
+			}
+		}
+
 		if ( isset( $data['post_content'] ) ) {
 
 			$meta_data = wp_list_pluck( $meta, 'key' );
@@ -171,6 +178,26 @@ class Astra_WXR_Importer {
 				 */
 				$data['post_content'] = wp_slash( $data['post_content'] );
 			}
+
+			/**
+			 * Setting the publish date to current date.
+			 */
+			if ( isset( $data['post_date'] ) ) {
+				$post_modified     = current_time( 'mysql' );
+				$post_modified_gmt = current_time( 'mysql', 1 );
+				$data['post_date'] = $post_modified;
+				$data['post_date_gmt'] = $post_modified_gmt;
+			}
+		}
+
+		/**
+		 * Setting the publish date to current date.
+		 */
+		if ( isset( $data['post_date'] ) ) {
+			$post_modified     = current_time( 'mysql' );
+			$post_modified_gmt = current_time( 'mysql', 1 );
+			$data['post_date'] = $post_modified;
+			$data['post_date_gmt'] = $post_modified_gmt;
 		}
 
 		return $data;
@@ -249,6 +276,10 @@ class Astra_WXR_Importer {
 	 * @param array $terms Terms on the post.
 	 */
 	public function fix_image_duplicate_issue( $data, $meta, $comments, $terms ) {
+
+		if ( empty( $data ) ) {
+			return $data;
+		}
 
 		$remote_url   = ! empty( $data['attachment_url'] ) ? $data['attachment_url'] : $data['guid'];
 		$data['guid'] = $remote_url;
@@ -330,7 +361,7 @@ class Astra_WXR_Importer {
 		add_filter( 'wp_image_editors', array( $this, 'enable_wp_image_editor_gd' ) );
 
 		// Change GUID image URL.
-		add_filter( 'wxr_importer.pre_process.post', array( $this, 'fix_image_duplicate_issue' ), 10, 4 );
+		add_filter( 'wxr_importer.pre_process.post', array( $this, 'fix_image_duplicate_issue' ), 50, 4 );
 
 		// Are we allowed to create users?
 		add_filter( 'wxr_importer.pre_process.user', '__return_null' );

@@ -17,6 +17,8 @@ window.tec = window.tec || {};
  */
 tec.classicEditorEventsDialog = tec.classicEditorEventsDialog || {};
 
+dayjs.extend(window.dayjs_plugin_customParseFormat);
+
 /**
  * Adds a dialog confirmation to the Save, Publish and Update buttons to prompt the user about the
  * type of Update to perform on the Event.
@@ -210,7 +212,7 @@ tec.classicEditorEventsDialog = tec.classicEditorEventsDialog || {};
 			startDateTimeMomentFormat += ' H:mma';
 		}
 
-		const startDateTimeMoment = moment( startDateTime, startDateTimeMomentFormat );
+		const startDateTimeMoment = dayjs( startDateTime, startDateTimeMomentFormat );
 
 		// If moment is not valid, return label without start date time.
 		if ( ! startDateTimeMoment.isValid() ) {

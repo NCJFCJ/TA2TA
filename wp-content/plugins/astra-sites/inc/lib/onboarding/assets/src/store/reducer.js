@@ -109,6 +109,8 @@ export const initialState = {
 	// Search.
 	searchTerms: [],
 	searchTermsWithCount: [],
+	enabledFeatureIds: [],
+	dismissAINotice: astraSitesVars.dismiss_ai_notice,
 };
 
 const reducer = ( state = initialState, { type, ...rest } ) => {

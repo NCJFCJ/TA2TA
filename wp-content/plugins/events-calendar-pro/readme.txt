@@ -3,9 +3,9 @@
 Contributors: theeventscalendar, borkweb, bordoni, brianjessee, aguseo, camwynsp, GeoffBel, jentheo, leahkoerper, lucatume, neillmcshea, vicskf, zbtirrell, juanfra
 Tags: events, calendar, event, venue, organizer, dates, date, google maps, conference, workshop, concert, meeting, seminar, summit, class, the events calendar, widget, pro
 Donate link: https://evnt.is/29
-Requires at least: 6.2.0
-Stable tag: 6.3.1.1
-Tested up to: 6.4.3
+Requires at least: 6.3
+Stable tag: 6.5.0
+Tested up to: 6.5.3
 Requires PHP: 7.4
 License: GPLv2 or later
 License URI: http://www.gnu.org/licenses/gpl-2.0.html
@@ -131,7 +131,6 @@ The plugin is produced by <a href="https://evnt.is/45">The Events Calendar</a>.
 = Current Contributors =
 
 <a href="https://profiles.wordpress.org/brianjessee">Brian Jessee</a>
-<a href="https://profiles.wordpress.org/geoffgraham">Geoff Graham</a>
 <a href="https://profiles.wordpress.org/bordoni">Gustavo Bordoni</a>
 <a href="https://profiles.wordpress.org/leahkoerper">Leah Koerper</a>
 <a href="https://profiles.wordpress.org/lucatume">Luca Tumedei</a>
@@ -144,6 +143,7 @@ The plugin is produced by <a href="https://evnt.is/45">The Events Calendar</a>.
 = Past Contributors =
 
 <a href="https://profiles.wordpress.org/mitogh">Crisoforo Gaspar</a>
+<a href="https://profiles.wordpress.org/geoffgraham">Geoff Graham</a>
 <a href="https://profiles.wordpress.org/paulskim">Paul Kim</a>
 <a href="https://profiles.wordpress.org/peterchester">Peter Chester</a>
 <a href="https://profiles.wordpress.org/roblagatta">Rob La Gatta</a>
@@ -213,6 +213,49 @@ Previous versions of Events Calendar Pro are not cross-compatible with 6.X add-o
 Remember to always make a backup of your database and files before updating!
 
 == Changelog ==
+
+= [6.5.0] 2024-05-14 =
+
+* Version - Events Calendar PRO 6.5.0 is only compatible with The Events Calendar 6.5.0 and higher.
+* Fix - Upsell Notice for Event Tickets was not dismissible. [ECP-1685]
+* Fix - Use Google geolocation API to get proper address data for Venues when importing Events via Google Calendars. [TEC-5007]
+* Fix - Replace uses of the retired moment.js with Day.js [TEC-5011]
+* Tweak - Removed filters: `tribe_distance_units`
+
+= [6.4.0.1] 2024-05-06 =
+
+* Version - Events Calendar PRO 6.4.0.1 is only compatible with The Events Calendar 6.4.0.1 and higher.
+* Fix - Ensure Elementor compatibility doesn't load until the TEC Elementor compatibility has loaded. [ECP-1789]
+* Fix - Correct a user permissions check.
+* Language - 0 new strings added, 3 updated, 0 fuzzied, and 0 obsoleted
+
+= [6.4.0] 2024-04-30 =
+
+* Feature - Elementor Compatibility. Compatible with Elementor Free 3.21+ and Elementor Pro 3.20+.
+* Feature - Added component Elementor widgets for the single event page.
+* Feature - New widgets: Additional Fields and Related Events. Can be used outside of a single-event post by specifying an event ID or event query parameters.
+* Feature - Modified widgets: Event Organizer and Venue widgets support linking to the PRO Organizer and Venue pages, respectively.
+* Feature - All widgets utilize our PHP templating system, allowing customization of the widget templates.
+* Fix - Resolved an integration bug with Elementor and the ability to save widgets on a Recurring Event page. [ECP-1660]
+* Tweak - Added filters: `tec_events_pro_elementor_event_additional_fields_widget_label_text`, `tec_events_pro_elementor_event_related_events_widget_container_class`, `tec_events_pro_elementor_event_related_events_widget_header_class`, `tec_events_pro_elementor_event_related_events_widget_list_class`, `tec_events_pro_elementor_event_related_events_widget_image_link_class`, `tec_events_pro_elementor_event_related_events_widget_title_link_class`, `tec_events_pro_elementor_event_related_events_widget_list_item_class`, `tec_events_pro_elementor_event_related_events_widget_thumbnail_class`, `tec_events_pro_elementor_event_related_events_widget_info_class`, `tec_events_pro_elementor_event_related_events_widget_title_class`, `tec_events_pro_elementor_event_related_events_widget_datetime_class`
+* Tweak - Changed views: `integrations/elementor/widgets/event-additional-fields`, `integrations/elementor/widgets/event-additional-fields/field/label`, `integrations/elementor/widgets/event-additional-fields/field/value`, `integrations/elementor/widgets/event-additional-fields/fields`, `integrations/elementor/widgets/event-additional-fields/header`, `integrations/elementor/widgets/event-organizer/names`, `integrations/elementor/widgets/event-related`, `integrations/elementor/widgets/event-related/header`, `integrations/elementor/widgets/event-related/item/datetime`, `integrations/elementor/widgets/event-related/item/thumb`, `integrations/elementor/widgets/event-related/item/title`, `integrations/elementor/widgets/event-related/list-item`, `integrations/elementor/widgets/event-related/list`, `integrations/elementor/widgets/event-venue/name`
+* Language - 14 new strings added, 201 updated, 13 fuzzied, and 32 obsoleted
+
+= [6.3.3] 2024-04-09 =
+
+* Fix - Resolve some issues around [tribe_event_inline] content parsing. [ECP-1684]
+* Tweak - Added filters: `tec_events_pro_inline_excluded_placeholders`
+* Tweak - Removed filters: `tribe_events_pro_inline_placeholders`, `tribe_events_pro_inline_protected_placeholders`, `tribe_events_pro_inline_excluded_placeholders`, `tribe_events_pro_inline_output`, `tribe_events_pro_inline_event_multi_organizer_output`
+* Tweak - Changed views: `v2/map/top-bar/datepicker`, `v2/photo/top-bar/datepicker`, `v2/summary/top-bar/datepicker`, `v2/week/top-bar/datepicker`
+* Language - 1 new strings added, 2 updated, 0 fuzzied, and 0 obsoleted
+
+= [6.3.2] 2024-03-20 =
+
+* Feature - Adding Site Editor Single Venue template for use in themes that support Site Editor. [ECP-1620]
+* Fix - Site Editor themes did not properly display the venue Google Map. This has been resolved in ECP-1620. [TEC-4938]
+* Fix - Site Editor themes did not properly display venue details such as their addresses. This has been resolved in ECP-1620. [ECP-1534]
+* Fix - When Events Calendar Pro is active the admin menu does not highlight the correct items when viewing a post type index. [ECP-1682]
+* Language - 0 new strings added, 0 updated, 0 fuzzied, and 1 obsoleted
 
 = [6.3.1.1] 2024-02-22 =
 
@@ -1108,7 +1151,6 @@ Remember to always make a backup of your database and files before updating!
 * Language - 2 new strings added, 58 updated, 0 fuzzied, and 1 obsoleted
 
 = [4.5.2.1] 2019-01-14 =
-
 * Fix - Display recurrence section in classic editor for all users that don't have blocks [119912]
 
 = [4.5.2] 2018-12-19 =

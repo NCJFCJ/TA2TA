@@ -2,18 +2,16 @@
 /**
  * Displays the file field for the form.
  *
- * This template can be overridden by copying it to yourtheme/ptp_templates/form-fields/file-field.php.
+ * This template can be overridden by copying it to yourtheme/dlp_templates/form-fields/file-field.php.
  *
- * @package   Barn2/document-library-pro
- * @author    Barn2 Media <info@barn2.com>
+ * @version   1.9.0
+ * @package   Barn2\document-library-pro
+ * @author    Barn2 Plugins <support@barn2.com>
  * @license   GPL-3.0
  * @copyright Barn2 Media Ltd
  */
 
-// Prevent direct file access
-if ( ! defined( 'ABSPATH' ) ) {
-	exit;
-}
+defined( 'ABSPATH' ) || exit;
 
 $classes            = [ 'input-text' ];
 $allowed_mime_types = array_keys( ! empty( $field['allowed_mime_types'] ) ? $field['allowed_mime_types'] : get_allowed_mime_types() );

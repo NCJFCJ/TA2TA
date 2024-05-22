@@ -1,5 +1,6 @@
 import React from 'react';
 import { useSelect, useDispatch } from '@wordpress/data';
+import { __ } from '@wordpress/i18n';
 import LanguageOptions from './language-options';
 import { STORE_KEY } from './store';
 
@@ -18,7 +19,7 @@ const LanguageSelection = () => {
 	return (
 		<div className="flex flex-col items-start gap-x-2">
 			<h5 className="text-base flex font-semibold leading-6 items-center !mb-2">
-				The website will be in:
+				{ __( 'The website will be in:', 'astra-sites' ) }
 				<div className="ml-1 pt-1" />
 			</h5>
 			{ ! siteLanguageList || siteLanguageList.length === 0 ? (

@@ -964,3 +964,21 @@ body.step-import-site-done {
 		max-width: 100%;
 	}
 }
+
+.st-page-builder-filter .stc-toggle-dropdown-selected {
+	.stc-logo {
+		gap: 8px;
+		&-text {
+			display: contents;
+			&::after {
+				content: "";
+				width: 8px;
+				height: 8px;
+				display: block;
+				border-radius: 9999px;
+				background: linear-gradient( 90deg, #b809a7 0%, #e90b76 46.88%, #fc8536 100% );
+				margin-top: -10px;
+			}
+		}
+	}
+}

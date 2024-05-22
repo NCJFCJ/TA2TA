@@ -2,21 +2,21 @@
 
 namespace Barn2\Plugin\Document_Library_Pro\Admin;
 
-use Barn2\Plugin\Document_Library_Pro\Dependencies\Lib\Admin\Notices,
-	Barn2\Plugin\Document_Library_Pro\Dependencies\Lib\Registerable,
-	Barn2\Plugin\Document_Library_Pro\Dependencies\Lib\Service,
-	Barn2\Plugin\Document_Library_Pro\Document,
-	Barn2\Plugin\Document_Library_Pro\Post_Type,
-	Barn2\Plugin\Document_Library_Pro\Taxonomies,
-	Barn2\Plugin\Document_Library_Pro\Util\Media as Media_Util;
+use Barn2\Plugin\Document_Library_Pro\Dependencies\Lib\Admin\Notices;
+use Barn2\Plugin\Document_Library_Pro\Dependencies\Lib\Registerable;
+use Barn2\Plugin\Document_Library_Pro\Dependencies\Lib\Service;
+use Barn2\Plugin\Document_Library_Pro\Document;
+use Barn2\Plugin\Document_Library_Pro\Post_Type;
+use Barn2\Plugin\Document_Library_Pro\Taxonomies;
+use Barn2\Plugin\Document_Library_Pro\Util\Media as Media_Util;
 
 defined( 'ABSPATH' ) || exit;
 
 /**
  * Handles the Media Library bulk action
  *
- * @package   Barn2/document-library-pro
- * @author    Barn2 Plugins <info@barn2.com>
+ * @package   Barn2\document-library-pro
+ * @author    Barn2 Plugins <support@barn2.com>
  * @license   GPL-3.0
  * @copyright Barn2 Media Ltd
  */
@@ -26,8 +26,11 @@ class Media_Library implements Registerable, Service {
 	 * {@inheritdoc}
 	 */
 	public function register() {
+
 		// List View - Document Download Filter
-		add_action( 'restrict_manage_posts', [ $this, 'add_list_view_document_download_dropdown' ], 10, 1 );
+		if ( apply_filters( 'document_library_pro_enable_media_filter', true ) ) {
+			add_action( 'restrict_manage_posts', [ $this, 'add_list_view_document_download_dropdown' ], 10, 1 );
+		}	
 
 		// List View Bulk Action - Create Documents
 		add_filter( 'bulk_actions-upload', [ $this, 'add_bulk_action' ], 10, 1 );

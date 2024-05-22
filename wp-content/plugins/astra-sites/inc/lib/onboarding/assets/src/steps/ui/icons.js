@@ -406,6 +406,32 @@ export const ExclamationTriangleColorfulIcon = ( { className } ) => (
 	</svg>
 );
 
+export const Tiles = ( { className } ) => (
+	<svg
+		xmlns="http://www.w3.org/2000/svg"
+		width="30"
+		height="20"
+		viewBox="0 0 30 20"
+		fill="none"
+		className={ classNames( className ) }
+	>
+		<g clipPath="url(#clip0_25567_57211)">
+			<rect x="-1" y="-2" width="8" height="8" fill="#333E52" />
+			<rect x="15" y="-2" width="8" height="8" fill="#333E52" />
+			<rect x="-1" y="14" width="8" height="8" fill="#333E52" />
+			<rect x="15" y="14" width="8" height="8" fill="#333E52" />
+			<rect x="7" y="6" width="8" height="8" fill="#333E52" />
+			<rect x="23" y="6" width="8" height="8" fill="#333E52" />
+		</g>
+		<rect x="0.5" y="0.5" width="29" height="19" stroke="#94A3B8" />
+		<defs>
+			<clipPath id="clip0_25567_57211">
+				<rect width="30" height="20" fill="white" />
+			</clipPath>
+		</defs>
+	</svg>
+);
+
 export const FrameUI = ( { className } ) => (
 	<svg
 		className={ classNames( className ) }

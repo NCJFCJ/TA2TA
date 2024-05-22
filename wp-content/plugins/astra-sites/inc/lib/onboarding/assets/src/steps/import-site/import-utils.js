@@ -174,11 +174,13 @@ export const getAiDemo = async (
 };
 
 export const checkRequiredPlugins = async ( storedState ) => {
-	const [ {}, dispatch ] = storedState;
-
+	const [ { enabledFeatureIds }, dispatch ] = storedState;
 	const reqPlugins = new FormData();
 	reqPlugins.append( 'action', 'astra-required-plugins' );
 	reqPlugins.append( '_ajax_nonce', astraSitesVars._ajax_nonce );
+	if ( enabledFeatureIds.length !== 0 ) {
+		reqPlugins.append( 'features', JSON.stringify( enabledFeatureIds ) );
+	}
 
 	await fetch( ajaxurl, {
 		method: 'post',
@@ -335,6 +337,22 @@ export const setSiteTitle = async ( businessName ) => {
 	data.append( 'param', 'site-title' );
 	data.append( 'business-name', businessName );
 	data.append( 'security', nonce );
+
+	await fetch( ajaxurl, {
+		method: 'post',
+		body: data,
+	} );
+};
+
+export const setSiteLanguage = async ( siteLanguage = 'en_US' ) => {
+	if ( ! siteLanguage ) {
+		return;
+	}
+
+	const data = new FormData();
+	data.append( 'action', 'astra-sites-site-language' );
+	data.append( 'language', siteLanguage );
+	data.append( '_ajax_nonce', astraSitesVars._ajax_nonce );
 
 	await fetch( ajaxurl, {
 		method: 'post',

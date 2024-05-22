@@ -7,8 +7,8 @@ use Barn2\Plugin\Document_Library_Pro\Dependencies\Setup_Wizard\Steps\Welcome;
 /**
  * Welcome / License Step.
  *
- * @package   Barn2/document-library-pro
- * @author    Barn2 Plugins <info@barn2.com>
+ * @package   Barn2\document-library-pro
+ * @author    Barn2 Plugins <support@barn2.com>
  * @license   GPL-3.0
  * @copyright Barn2 Media Ltd
  */

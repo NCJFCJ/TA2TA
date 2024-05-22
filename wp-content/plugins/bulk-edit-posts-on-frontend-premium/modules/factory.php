@@ -56,6 +56,7 @@ if ( ! class_exists( 'WPSE_Sheet_Factory' ) ) {
 				$enabled_sheets  = $this->args['allow_to_enable_individual_sheets'] ? array_intersect( VGSE()->helpers->get_enabled_post_types(), $this->get_prop( 'post_type' ) ) : $this->get_prop( 'post_type' );
 
 				if ( ! empty( $enabled_sheets ) ) {
+					$current_provider = VGSE()->helpers->get_provider_from_query_string(false);
 					$this->sheets_bootstrap = new $bootstrap_class(
 						array(
 							'enabled_post_types'          => $enabled_sheets,
@@ -65,6 +66,8 @@ if ( ! class_exists( 'WPSE_Sheet_Factory' ) ) {
 							'register_admin_menus'        => true,
 							'register_spreadsheet_editor' => true,
 							'post_type_labels'            => array_combine( $this->get_prop( 'post_type' ), $this->get_prop( 'post_type_label' ) ),
+							// Set the first sheet of the factory as the default current provider, because when we initialize WPSE outside the context of the sheet page, it won\'t initialize factory sheets because it was using "post" as the current provider
+							'current_provider'               => $current_provider && in_array( $current_provider, $enabled_sheets, true ) ? $current_provider : current($enabled_sheets),
 						)
 					);
 				}

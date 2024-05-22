@@ -7,13 +7,13 @@
 }
 
 .astra-sites-welcome .astra-notice-container .notice-welcome-container {
-	background-image: url( "../images/starter-template-3-banner-image-background.png" );
+	background-image: url( "../images/st-banner-background.svg" );
 	justify-content: left;
 	overflow: hidden;
 	position: relative;
-	background-size: cover;
+	background-size: contain;
 	background-repeat: no-repeat;
-	background-position: center top;
+	background-position: left top;
 	display: flex;
 	flex-flow: row;
 	width: 100%;
@@ -26,15 +26,15 @@
 }
 
 .astra-sites-welcome .text-section {
-	flex: 0 0 51.5%;
+	flex: 0 0 51%;
 	display: flex;
 	flex-direction: column;
 	justify-content: center;
-	padding-right: 78px;
+	padding: 40px 40px 40px 0;
 }
 
 .astra-sites-welcome .showcase-section {
-	flex: 0 0 41.3%;
+	flex: 0 0 45%;
 	display: flex;
 	align-items: flex-end;
 	margin-top: 40px;
@@ -49,11 +49,33 @@
 	font-weight: 600;
 	font-size: 30px;
 	line-height: 36px;
-	color: #1f2937;
-	padding: 0;
-	margin-bottom: 12px;
+	color: #0f172a;
+	padding: 24px 0px 12px 0px;
 }
 
+.astra-sites-welcome .logo-section {
+	display: flex;
+	align-items: center;
+	gap: 8px;
+}
+.astra-sites-welcome .logo-section img {
+	width: 24px;
+}
+.astra-sites-welcome .logo-section h3 {
+	padding: 0;
+	margin: 0;
+	font-size: 20px;
+	font-weight: 600;
+	line-height: 30px;
+	text-align: right;
+	color: #030712;
+}
+
+.astra-sites-welcome .button-section {
+	display: flex;
+	flex-direction: column;
+	gap: 16px;
+}
 .astra-sites-welcome a.text-button {
 	font-weight: 500;
 	font-size: 16px;
@@ -63,8 +85,15 @@
 	padding: 10px 16px;
 	max-width: fit-content;
 	border-radius: 6px;
-	background: #492cdd;
+	background: #2271b1;
 	box-shadow: 0px 1px 2px 0px rgba( 0, 0, 0, 0.05 );
+}
+
+.astra-sites-welcome a.scratch-link {
+	color: #475569;
+	font-size: 13px;
+	font-weight: 400;
+	line-height: 20px;
 }
 
 .astra-sites-welcome .notice-content-container .content-section {
@@ -120,8 +149,7 @@
 
 .astra-sites-welcome .text-section p {
 	color: var( --Theme-Body, #475569 );
-	font-size: 18px;
-	font-style: normal;
+	font-size: 16px;
 	font-weight: 400;
 	line-height: 28px;
 }
@@ -184,10 +212,6 @@
 }
 
 @media only screen and ( min-width: 768px ) and ( max-width: 1024px ) {
-	.astra-sites-welcome .astra-notice-container .notice-welcome-container {
-		background-size: auto;
-		background-position: center bottom;
-	}
 	.astra-sites-welcome .text-section {
 		flex: 0 0 75.5%;
 		padding-right: 28px;
@@ -203,15 +227,9 @@
 }
 
 @media only screen and ( max-width: 767px ) {
-	.astra-sites-welcome .astra-notice-container .notice-welcome-container {
-		background-size: auto;
-		background-position: center bottom;
-	}
 	.astra-sites-welcome .text-section {
-		flex: 0 0 75.5%;
-		padding-right: 30px;
-		padding-top: 34px;
-		padding-bottom: 34px;
+		flex: 0 0 80.5%;
+		padding: 32px 32px 32px 0;
 	}
 	.astra-sites-welcome .showcase-section img {
 		display: none;
@@ -223,13 +241,19 @@
 
 @media only screen and ( max-width: 420px ) {
 	.astra-sites-welcome .text-section {
-		flex: 0 0 75.5%;
-		padding-right: 32px;
-		padding-top: 31px;
-		padding-bottom: 30px;
+		flex: 0 0 86.5%;
+		text-align: center;
+	}
+	.astra-sites-welcome .button-section {
+		justify-content: center;
+		align-items: center;
+	}
+	.astra-sites-welcome .logo-section {
+		justify-content: center;
 	}
 	.astra-sites-welcome h1.text-heading {
-		font-size: 26px;
+		font-size: 20px;
+		line-height: 24px;
 	}
 	.astra-sites-welcome .showcase-section img {
 		display: none;

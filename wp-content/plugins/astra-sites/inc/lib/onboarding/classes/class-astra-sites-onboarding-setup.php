@@ -139,7 +139,7 @@ if ( ! class_exists( 'Astra_Sites_Onboarding_Setup' ) ) :
 
 			do_action( 'st_before_sending_error_report', $api_args['body'] );
 
-			$request = wp_remote_post( $api_url, $api_args );
+			$request = wp_safe_remote_post( $api_url, $api_args );
 
 			do_action( 'st_after_sending_error_report', $api_args['body'], $request );
 

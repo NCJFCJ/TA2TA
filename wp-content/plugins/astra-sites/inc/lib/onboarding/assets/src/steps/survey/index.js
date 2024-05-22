@@ -558,10 +558,11 @@ const Survey = () => {
 	return (
 		<DefaultStep
 			content={
-				<div className="survey-container"> { defaultStepContent } </div>
-			}
-			actions={
 				<>
+					<div className="survey-container">
+						{ ' ' }
+						{ defaultStepContent }{ ' ' }
+					</div>
 					<PreviousStepLink before>
 						{ __( 'Back', 'astra-sites' ) }
 					</PreviousStepLink>

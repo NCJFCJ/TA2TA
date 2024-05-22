@@ -40,6 +40,11 @@ if ( ! class_exists( 'Tribe__Events__Filterbar__View' ) ) {
 		public $pluginPath;
 
 		/**
+		 * @var string The plugin URL.
+		 */
+		public $pluginUrl;
+
+		/**
 		 * @var Whether filters sidebar is being displayed or not.
 		 */
 		protected $sidebarDisplayed;
@@ -51,7 +56,7 @@ if ( ! class_exists( 'Tribe__Events__Filterbar__View' ) ) {
 		 */
 		protected static $defaultMuFilters;
 
-		const VERSION = '5.5.3';
+		const VERSION = '5.5.4';
 
 		/**
 		 * The Events Calendar Required Version

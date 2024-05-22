@@ -1,6 +1,6 @@
 <?php
 /**
- * Copyright (C) 2014-2023 ServMask Inc.
+ * Copyright (C) 2014-2018 ServMask Inc.
  *
  * This program is free software: you can redistribute it and/or modify
  * it under the terms of the GNU General Public License as published by
@@ -23,10 +23,6 @@
  * ╚══════╝╚══════╝╚═╝  ╚═╝  ╚═══╝  ╚═╝     ╚═╝╚═╝  ╚═╝╚══════╝╚═╝  ╚═╝
  */
 
-if ( ! defined( 'ABSPATH' ) ) {
-	die( 'Kangaroos cannot jump here' );
-}
-
 class Ai1wm_Directory {
 
 	/**
@@ -36,10 +32,6 @@ class Ai1wm_Directory {
 	 * @return boolean
 	 */
 	public static function create( $path ) {
-		if ( @is_dir( $path ) ) {
-			return true;
-		}
-
 		return @mkdir( $path, 0777, true );
 	}
 
@@ -50,28 +42,21 @@ class Ai1wm_Directory {
 	 * @return boolean
 	 */
 	public static function delete( $path ) {
-		if ( @is_dir( $path ) ) {
-			try {
-				// Iterate over directory
-				$iterator = new Ai1wm_Recursive_Directory_Iterator( $path );
+		// Iterate over directory
+		$iterator = new Ai1wm_Recursive_Directory_Iterator( $path );
 
-				// Recursively iterate over directory
-				$iterator = new Ai1wm_Recursive_Iterator_Iterator( $iterator, RecursiveIteratorIterator::CHILD_FIRST, RecursiveIteratorIterator::CATCH_GET_CHILD );
+		// Recursively iterate over directory
+		$iterator = new Ai1wm_Recursive_Iterator_Iterator( $iterator, RecursiveIteratorIterator::CHILD_FIRST, RecursiveIteratorIterator::CATCH_GET_CHILD );
 
-				// Remove files and directories
-				foreach ( $iterator as $item ) {
-					if ( $item->isDir() ) {
-						@rmdir( $item->getPathname() );
-					} else {
-						@unlink( $item->getPathname() );
-					}
-				}
-			} catch ( Exception $e ) {
+		// Remove files and directories
+		foreach ( $iterator as $item ) {
+			if ( $item->isDir() ) {
+				@rmdir( $item->getPathname() );
+			} else {
+				@unlink( $item->getPathname() );
 			}
-
-			return @rmdir( $path );
 		}
 
-		return false;
+		return @rmdir( $path );
 	}
 }

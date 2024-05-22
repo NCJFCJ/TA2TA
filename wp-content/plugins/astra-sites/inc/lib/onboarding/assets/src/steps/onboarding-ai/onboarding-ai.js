@@ -32,7 +32,6 @@ import Features from './features';
 import { Fragment } from 'react';
 import { AnimatePresence } from 'framer-motion';
 import BusinessDetails from './business-details';
-//import HeaderCreditStatus from './header-credit-status';
 
 const { logoUrl } = starterTemplates;
 
@@ -46,39 +45,32 @@ const steps = [
 	},
 	{
 		stepNumber: 1,
-		name: 'Let’s Start',
-		description: 'Name, language & type',
+		name: __( "Let's Start", 'astra-sites' ),
+		description: __( 'Name, language & type', 'astra-sites' ),
 		screen: 'type',
 		component: <BusinessDetails />,
 		hideCredits: false,
 	},
-	/* {
-		stepNumber: 2,
-		name: 'Name',
-		description: 'What is the name?',
-		screen: 'name',
-		component: <BusinessName />,
-	}, */
 	{
 		stepNumber: 2,
-		name: 'Describe',
-		description: 'Some details please',
+		name: __( 'Describe', 'astra-sites' ),
+		description: __( 'Some details please', 'astra-sites' ),
 		screen: 'details',
 		component: <DescribeBusiness />,
 		hideCredits: false,
 	},
 	{
 		stepNumber: 3,
-		name: 'Contact',
-		description: 'How can people get in touch',
+		name: __( 'Contact', 'astra-sites' ),
+		description: __( 'How can people get in touch', 'astra-sites' ),
 		screen: 'contact-details',
 		component: <BusinessContact />,
 		hideCredits: false,
 	},
 	{
 		stepNumber: 4,
-		name: 'Select Images',
-		description: 'Select relevant images as needed',
+		name: __( 'Select Images', 'astra-sites' ),
+		description: __( 'Select relevant images as needed', 'astra-sites' ),
 		screen: 'images',
 		contentClassName:
 			'px-0 pt-0 md:px-0 md:pt-0 lg:px-0 lg:pt-0 xl:px-0 xl:pt-0',
@@ -87,8 +79,8 @@ const steps = [
 	},
 	{
 		stepNumber: 5,
-		name: 'Design',
-		description: 'Choose a structure for your website',
+		name: __( 'Design', 'astra-sites' ),
+		description: __( 'Choose a structure for your website', 'astra-sites' ),
 		screen: 'template',
 		contentClassName:
 			'px-0 pt-0 md:px-0 md:pt-0 lg:px-0 lg:pt-0 xl:px-0 xl:pt-0',
@@ -96,19 +88,10 @@ const steps = [
 		component: <SelectTemplate />,
 		hideCredits: false,
 	},
-	/* {
-		name: 'Preview',
-		description: 'Preview your website',
-		screen: 'preview',
-		component: <PreviewWebsite />,
-		hideSidebar: true,
-		hideCloseIcon: true,
-		hideStep: true,
-	}, */
 	{
 		stepNumber: 6,
-		name: 'Features',
-		description: 'Select features as you need',
+		name: __( 'Features', 'astra-sites' ),
+		description: __( 'Select features as you need', 'astra-sites' ),
 		screen: 'features',
 		contentClassName:
 			'px-0 pt-0 md:px-0 md:pt-0 lg:px-0 lg:pt-0 xl:px-0 xl:pt-0',
@@ -117,10 +100,8 @@ const steps = [
 	},
 	{
 		stepNumber: 7,
-		// name: 'Building Website', // actual name
-		// description: 'Building your site',
-		name: 'Configure',
-		description: 'Personalize your website',
+		name: __( 'Configure', 'astra-sites' ),
+		description: __( 'Personalize your website', 'astra-sites' ),
 		screen: 'building-website',
 		hideCloseIcon: true,
 		component: <WebsiteBuilding />,
@@ -129,19 +110,19 @@ const steps = [
 	},
 	{
 		stepNumber: 8,
-		// name: 'Migrate', // actual name
-		// description: 'Migrating your site',
-		// screen: 'migrate',
-		name: 'Done',
-		description: 'Your website is ready!',
+		name: __( 'Done', 'astra-sites' ),
+		description: __( 'Your website is ready!', 'astra-sites' ),
 		screen: 'migration',
 		component: <ImportAiSIte />,
 		hideStep: true,
 		hideCredits: true,
 	},
 	{
-		name: 'Done',
-		description: 'Congratulations! Your website is ready!',
+		name: __( 'Done', 'astra-sites' ),
+		description: __(
+			'Congratulations! Your website is ready!',
+			'astra-sites'
+		),
 		screen: 'done',
 		contentClassName: 'pt-0 md:pt-0 lg:pt-0 xl:pt-0',
 		component: <BuildDone />,
@@ -166,7 +147,6 @@ const OnboardingAI = ( {
 	const urlParams = new URLSearchParams( window.location.search );
 	const authenticated = astraSitesVars?.zip_token_exists;
 
-	// const { setLimitExceedModal } = useDispatch( STORE_KEY );
 	const { continueProgressModal } = useSelect( ( select ) => {
 		const { getContinueProgressModalInfo } = select( STORE_KEY );
 		return {
@@ -368,9 +348,6 @@ const OnboardingAI = ( {
 			( typeof allSitesRemainingCount === 'number' &&
 				allSitesRemainingCount <= 0 )
 		) {
-			// setLimitExceedModal( {
-			// 	open: true,
-			// } );
 			if ( 'ai-builder' === builder ) {
 				dispatch( {
 					type: 'set',
@@ -397,6 +374,18 @@ const OnboardingAI = ( {
 	const getStepIndex = ( value, by = 'screen' ) => {
 		return steps.findIndex( ( item ) => item[ by ] === value ) + 1;
 	};
+	const handleStepClick = ( stepIndex ) => {
+		if ( stepIndex <= currentStep ) {
+			// Update the current step state
+			setAIStep( stepIndex );
+
+			// Update the URL to reflect the new step
+			urlParams.set( 'ai', stepIndex );
+			routerHistory(
+				`${ window.location.pathname }?${ urlParams.toString() }`
+			);
+		}
+	};
 
 	return (
 		<>
@@ -421,7 +410,8 @@ const OnboardingAI = ( {
 								{ /* Do not show on Site Creation & Migration step */ }
 								{ getStepIndex( 'migration' ) !== currentStep &&
 									getStepIndex( 'building-website' ) !==
-										currentStep && (
+										currentStep &&
+									getStepIndex( 'done' ) !== currentStep && (
 										<div className="absolute top-3 right-0">
 											<AiBuilderExitButton />
 										</div>
@@ -442,8 +432,18 @@ const OnboardingAI = ( {
 											<Fragment key={ stepIdx } />
 										) : (
 											<div
-												className="flex gap-3"
+												className={ classNames(
+													'flex gap-3',
+													stepIdx < currentStep
+														? 'cursor-pointer'
+														: 'cursor-default'
+												) }
 												key={ stepIdx }
+												onClick={ () =>
+													handleStepClick(
+														stepIdx + 1
+													)
+												} // Set cursor based on navigability
 											>
 												<div
 													className={ classNames(
@@ -537,23 +537,8 @@ const OnboardingAI = ( {
 								steps[ currentStep - 1 ]?.contentClassName
 							) }
 						>
-							{ /* { ! steps[ currentStep - 1 ]?.hideCloseIcon && (
-								<div
-									className="fixed top-0 right-0 z-50"
-									onClick={ handleClosePopup }
-									aria-hidden="true"
-								>
-									<div className="absolute top-5 right-5 cursor-pointer">
-										<XMarkIcon className="w-8 text-zip-app-inactive-icon hover:text-icon-secondary transition duration-150 ease-in-out" />
-									</div>
-								</div>
-							) } */ }
-							{ /* Step component will go here */ }
 							{ steps[ currentStep - 1 ]?.component }
 						</div>
-						{ /* { ! steps[ currentStep - 1 ]?.hideCredits && (
-							<HeaderCreditStatus />
-						) } */ }
 					</div>
 				</main>
 				<LimitExceedModal />

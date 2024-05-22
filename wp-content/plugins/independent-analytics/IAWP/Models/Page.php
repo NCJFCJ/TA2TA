@@ -33,12 +33,15 @@ abstract class Page
         $this->entrances = $row->entrances ?? 0;
         $this->exits = $row->exits ?? 0;
         $this->exit_percent = $row->exit_percent ?? 0;
+        // If $row is a full row from the database, use that for the cache
+        // Eventually, I'd like to avoid selecting resources.* and just get the cached_.*
+        //  fields for the rows that are going to be shown.
+        if (\is_string($row->cached_title ?? null)) {
+            $this->cache = $row;
+        }
         $this->set_view_stats($row);
         $this->set_wc_stats($row);
     }
-    //
-    // Below are required and optional methods that classes extending page can define
-    //
     protected abstract function resource_key();
     protected abstract function resource_value();
     protected abstract function calculate_is_deleted() : bool;
@@ -74,9 +77,20 @@ abstract class Page
     {
         return null;
     }
-    public final function is_resource_type($type) : bool
+    /**
+     * Get the id for the post. Null if the resource is not a post.
+     *
+     * @return int|null
+     */
+    public function get_post_id() : ?int
     {
-        return $this->resource == $type;
+        if ($this->resource_key() !== 'singular_id') {
+            return null;
+        }
+        if (\get_post_type($this->resource_value()) !== 'post') {
+            return null;
+        }
+        return $this->resource_value();
     }
     public final function is_deleted() : bool
     {

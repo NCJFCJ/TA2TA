@@ -352,7 +352,7 @@ const BusinessTypes = () => {
 				) }
 				<div className="max-h-[358px] w-full overflow-y-auto overflow-x-hidden">
 					<motion.div
-						className="w-full flex flex-col gap-1"
+						className="w-full flex flex-col gap-1 justify-start"
 						initial={ false }
 						animate={ openSuggestions ? 'open' : 'closed' }
 						variants={ container }
@@ -368,7 +368,8 @@ const BusinessTypes = () => {
 												'!bg-zip-app-light-bg !text-zip-app-heading':
 													typeItem.name ===
 													businessType,
-											}
+											},
+											'text-left'
 										) }
 										onClick={ () => {
 											setValue(

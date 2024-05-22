@@ -2,6 +2,7 @@
 
 namespace IAWP\Migrations;
 
+use IAWP\Database;
 use IAWP\Query;
 /** @internal */
 class Migration_22 extends \IAWP\Migrations\Step_Migration
@@ -23,7 +24,7 @@ class Migration_22 extends \IAWP\Migrations\Step_Migration
     private function remove_index() : ?string
     {
         $referrers_table = Query::get_table_name(Query::REFERRERS);
-        if (!self::has_index($referrers_table, 'referrers_domain_index')) {
+        if (!Database::has_index($referrers_table, 'referrers_domain_index')) {
             return null;
         }
         return "\n            ALTER TABLE {$referrers_table} DROP INDEX referrers_domain_index;\n        ";

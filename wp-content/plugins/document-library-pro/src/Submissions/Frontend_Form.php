@@ -619,7 +619,7 @@ class Frontend_Form implements Registerable, JsonSerializable {
 					( new Admin_Notification( $document ) )->send();
 				}
 
-				$redirect = add_query_arg( [ 'success' => true ], get_permalink() );
+				$redirect = apply_filters( 'document_library_pro_form_redirect', add_query_arg( [ 'success' => true ], get_permalink() ), $values, $document->get_id() );
 
 				wp_safe_redirect( $redirect );
 				exit;

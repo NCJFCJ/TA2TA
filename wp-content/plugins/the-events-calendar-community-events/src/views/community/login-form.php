@@ -3,18 +3,19 @@
  * Community Events: Login Form
  *
  * Override this template in your own theme by creating a file at:
- *     [your-theme]/tribe-events/community/login-form.php
+ *     [your-theme]/tribe/community/login-form.php
  *
  * See more documentation about our views templating system.
  *
+ * @version 4.10.17
  *
  * @since   4.10.14
+ * @since   4.10.17 Corrected template override path.
  *
- * @version 4.10.14
- *
- * @var $caption    string
+ * @var $caption      string
  * @var $page_slug    string
  */
+
 ?>
 
 <div class="tribe-community-events">

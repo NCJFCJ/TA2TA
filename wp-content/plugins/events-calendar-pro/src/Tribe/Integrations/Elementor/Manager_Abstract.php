@@ -1,7 +1,13 @@
 <?php
-namespace Tribe\Events\Pro\Integrations\Elementor;
+/**
+ * Abstract Manager class for Elementor integrations.
+ *
+ * @since   5.4.0
+ *
+ * @package Tribe\Events\Pro\Integrations\Elementor
+ */
 
-use Elementor\Plugin as Elementor_Plugin;
+namespace Tribe\Events\Pro\Integrations\Elementor;
 
 /**
  * Class Manager_Abstract

@@ -2,28 +2,29 @@
 
 namespace Barn2\Plugin\Document_Library_Pro\Admin;
 
-use Barn2\Plugin\Document_Library_Pro\Util\Util,
-	Barn2\Plugin\Document_Library_Pro\Util\Options,
-	Barn2\Plugin\Document_Library_Pro\Admin\Wizard\Setup_Wizard,
-	Barn2\Plugin\Document_Library_Pro\Dependencies\Lib\Registerable,
-	Barn2\Plugin\Document_Library_Pro\Dependencies\Lib\Service,
-	Barn2\Plugin\Document_Library_Pro\Dependencies\Lib\Service_Container,
-	Barn2\Plugin\Document_Library_Pro\Dependencies\Lib\Plugin\Licensed_Plugin,
-	Barn2\Plugin\Document_Library_Pro\Dependencies\Lib\Plugin\Admin\Admin_Links,
-	Barn2\Plugin\Document_Library_Pro\Dependencies\Lib\Admin\Plugin_Promo,
-	Barn2\Plugin\Document_Library_Pro\Dependencies\Lib\Admin\Settings_API_Helper;
+use Barn2\Plugin\Document_Library_Pro\Util\Util;
+use Barn2\Plugin\Document_Library_Pro\Util\Options;
+use Barn2\Plugin\Document_Library_Pro\Admin\Wizard\Setup_Wizard;
+use Barn2\Plugin\Document_Library_Pro\Dependencies\Lib\Registerable;
+use Barn2\Plugin\Document_Library_Pro\Dependencies\Lib\Service;
+use Barn2\Plugin\Document_Library_Pro\Dependencies\Lib\Service_Container;
+use Barn2\Plugin\Document_Library_Pro\Dependencies\Lib\Plugin\Licensed_Plugin;
+use Barn2\Plugin\Document_Library_Pro\Dependencies\Lib\Plugin\Admin\Admin_Links;
+use Barn2\Plugin\Document_Library_Pro\Dependencies\Lib\Admin\Plugin_Promo;
+use Barn2\Plugin\Document_Library_Pro\Dependencies\Lib\Admin\Settings_API_Helper;
 
 defined( 'ABSPATH' ) || exit;
 
 /**
  * General Admin Functions
  *
- * @package   Barn2/document-library-pro
- * @author    Barn2 Plugins <info@barn2.com>
+ * @package   Barn2\document-library-pro
+ * @author    Barn2 Plugins <support@barn2.com>
  * @license   GPL-3.0
  * @copyright Barn2 Media Ltd
  */
 class Admin implements Registerable, Service {
+
 	use Service_Container;
 
 	private $plugin;
@@ -37,6 +38,8 @@ class Admin implements Registerable, Service {
 	public function __construct( Licensed_Plugin $plugin ) {
 		$this->plugin  = $plugin;
 		$this->license = $this->plugin->get_license();
+
+		$this->add_services();
 	}
 
 	/**
@@ -47,35 +50,34 @@ class Admin implements Registerable, Service {
 
 		// Load admin scripts.
 		add_action( 'admin_enqueue_scripts', [ $this, 'load_scripts' ] );
-		add_action( 'wp_enqueue_media', [ $this, 'load_wpmedia_scripts' ] );
+
+		if ( apply_filters( 'document_library_pro_enable_media_filter', true ) ) {
+			add_action( 'wp_enqueue_media', [ $this, 'load_wpmedia_scripts' ] );
+		}
 	}
 
 	/**
 	 * {@inheritdoc}
 	 */
-	public function get_services() {
-		$services = [
-			'admin_links'   => new Admin_Links( $this->plugin ),
-			'plugin_promo'  => new Plugin_Promo( $this->plugin ),
-			'settings_api'  => new Settings_API_Helper( $this->plugin ),
-			'menu'          => new Menu( $this->plugin ),
-			'settings'      => new Settings( $this->plugin ),
-			'page/settings' => new Page\Settings( $this->plugin ),
-		];
+	public function add_services() {
+		$this->add_service( 'admin_links', new Admin_Links( $this->plugin ) );
+		$this->add_service( 'plugin_promo', new Plugin_Promo( $this->plugin ) );
+		$this->add_service( 'settings_api', new Settings_API_Helper( $this->plugin ) );
+		$this->add_service( 'menu', new Menu( $this->plugin ) );
+		$this->add_service( 'settings', new Settings( $this->plugin ) );
+		$this->add_service( 'page/settings', new Page\Settings( $this->plugin ) );
 
 		if ( $this->license->is_valid() ) {
-			$services['page/import']           = new Page\Import();
-			$services['page/import_csv']       = new Page\Import_CSV();
-			$services['metabox/document_link'] = new Metabox\Document_Link();
-			$services['metabox/file_size']     = new Metabox\File_Size();
-			$services['page_list']             = new Page_List();
-			$services['document_edit']         = new Document_Edit();
-			$services['document_list']         = new Document_List();
-			$services['media_library']         = new Media_Library();
-			$services['ajax_handler']          = new Ajax_Handler();
+			$this->add_service( 'page/import', new Page\Import() );
+			$this->add_service( 'page/import_csv', new Page\Import_CSV() );
+			$this->add_service( 'metabox/document_link', new Metabox\Document_Link() );
+			$this->add_service( 'metabox/file_size', new Metabox\File_Size() );
+			$this->add_service( 'page_list', new Page_List() );
+			$this->add_service( 'document_edit', new Document_Edit() );
+			$this->add_service( 'document_list', new Document_List() );
+			$this->add_service( 'media_library', new Media_Library() );
+			$this->add_service( 'ajax_handler', new Ajax_Handler() );
 		}
-
-		return $services;
 	}
 
 	/**

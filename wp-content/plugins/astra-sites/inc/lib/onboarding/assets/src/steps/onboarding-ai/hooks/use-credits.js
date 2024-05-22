@@ -5,7 +5,8 @@ import { STORE_KEY } from '../store';
 import { getColorClass, formatNumber } from '../utils/helpers';
 
 const useCredits = () => {
-	const { setCreditsDetails } = useDispatch( STORE_KEY );
+	const { setCreditsDetails, setAuthenticationErrorModal } =
+		useDispatch( STORE_KEY );
 	const {
 		percentage,
 		total,
@@ -31,9 +32,15 @@ const useCredits = () => {
 				setCreditsDetails( response?.data?.data );
 			} else {
 				//  Handle error.
+				setAuthenticationErrorModal( {
+					open: true,
+				} );
 			}
 		} catch ( error ) {
 			// Handle error.
+			setAuthenticationErrorModal( {
+				open: true,
+			} );
 		}
 	};
 

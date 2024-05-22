@@ -1,6 +1,6 @@
 <?php
 /**
- * Copyright (C) 2014-2023 ServMask Inc.
+ * Copyright (C) 2014-2018 ServMask Inc.
  *
  * This program is free software: you can redistribute it and/or modify
  * it under the terms of the GNU General Public License as published by
@@ -23,34 +23,23 @@
  * ╚══════╝╚══════╝╚═╝  ╚═╝  ╚═══╝  ╚═╝     ╚═╝╚═╝  ╚═╝╚══════╝╚═╝  ╚═╝
  */
 
-if ( ! defined( 'ABSPATH' ) ) {
-	die( 'Kangaroos cannot jump here' );
-}
-
 class Ai1wm_Cron {
 
 	/**
 	 * Schedules a hook which will be executed by the WordPress
 	 * actions core on a specific interval
 	 *
-	 * @param  string  $hook       Event hook
-	 * @param  string  $recurrence How often the event should reoccur
-	 * @param  integer $timestamp  Preferred timestamp (when the event shall be run)
-	 * @param  array   $args       Arguments to pass to the hook function(s)
+	 * @param  string $hook       Event hook
+	 * @param  string $recurrence How often the event should reoccur
+	 * @param  array  $args       Arguments to pass to the hook function(s)
 	 * @return mixed
 	 */
-	public static function add( $hook, $recurrence, $timestamp, $args = array() ) {
+	public static function add( $hook, $recurrence, $args = array() ) {
+		$args      = array_slice( func_get_args(), 2 );
 		$schedules = wp_get_schedules();
 
-		// Schedule event
 		if ( isset( $schedules[ $recurrence ] ) && ( $current = $schedules[ $recurrence ] ) ) {
-			if ( $timestamp <= ( $current_timestamp = time() ) ) {
-				while ( $timestamp <= $current_timestamp ) {
-					$timestamp += $current['interval'];
-				}
-			}
-
-			return wp_schedule_event( $timestamp, $recurrence, $hook, $args );
+			return wp_schedule_event( time() + $current['interval'], $recurrence, $hook, $args );
 		}
 	}
 
@@ -75,63 +64,6 @@ class Ai1wm_Cron {
 				if ( empty( $cron[ $timestamp ] ) ) {
 					unset( $cron[ $timestamp ] );
 				}
-			}
-		}
-
-		return update_option( AI1WM_CRON, $cron );
-	}
-
-	/**
-	 * Checks whether cronjob already exists
-	 *
-	 * @param  string $hook Event hook
-	 * @param  array  $args Event callback arguments
-	 * @return boolean
-	 */
-	public static function exists( $hook, $args = array() ) {
-		$cron = get_option( AI1WM_CRON, array() );
-		if ( empty( $cron ) ) {
-			return false;
-		}
-
-		foreach ( $cron as $timestamp => $hooks ) {
-			if ( empty( $args ) ) {
-				if ( isset( $hooks[ $hook ] ) ) {
-					return true;
-				}
-			} else {
-				if ( isset( $hooks[ $hook ][ md5( serialize( $args ) ) ] ) ) {
-					return true;
-				}
-			}
-		}
-
-		return false;
-	}
-
-	/**
-	 * Deletes cron event(s) if it exists
-	 *
-	 * @param  string $hook Event hook
-	 * @param  array  $args Event callback arguments
-	 * @return boolean
-	 */
-	public static function delete( $hook, $args = array() ) {
-		$cron = get_option( AI1WM_CRON, array() );
-		if ( empty( $cron ) ) {
-			return false;
-		}
-
-		$key = md5( serialize( $args ) );
-		foreach ( $cron as $timestamp => $hooks ) {
-			if ( isset( $cron[ $timestamp ][ $hook ][ $key ] ) ) {
-				unset( $cron[ $timestamp ][ $hook ][ $key ] );
-			}
-			if ( isset( $cron[ $timestamp ][ $hook ] ) && empty( $cron[ $timestamp ][ $hook ] ) ) {
-				unset( $cron[ $timestamp ][ $hook ] );
-			}
-			if ( empty( $cron[ $timestamp ] ) ) {
-				unset( $cron[ $timestamp ] );
 			}
 		}
 

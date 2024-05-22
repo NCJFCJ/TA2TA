@@ -4,14 +4,14 @@
  * This is used to edit an event venue.
  *
  * Override this template in your own theme by creating a file at
- * [your-theme]/tribe-events/community/edit-venue.php
+ * [your-theme]/tribe/community/edit-venue.php
  *
- * @link https://evnt.is/1ao4 Help article for Community Events & Tickets template files.
- *
- * @since 3.1
- * @since 4.8.2 Updated template link.
- *
+ * @link    https://evnt.is/1ao4 Help article for Community Events & Tickets template files.
  * @version 4.8.2
+ *
+ * @since   3.1
+ * @since   4.8.2 Updated template link.
+ * @since   4.10.17 Corrected template override path.
  *
  * @var $venue_id int
  */

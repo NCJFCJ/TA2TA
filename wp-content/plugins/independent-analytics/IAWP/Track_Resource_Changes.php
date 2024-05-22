@@ -3,23 +3,21 @@
 namespace IAWP;
 
 use IAWP\Models\Page_Author_Archive;
-use IAWP\Models\Page_Post_Type_Archive;
 use IAWP\Models\Page_Singular;
 use IAWPSCOPED\Illuminate\Database\Query\JoinClause;
-use IAWPSCOPED\Proper\Periodic;
 /** @internal */
 class Track_Resource_Changes
 {
     public function __construct()
     {
-        \add_action('wp_after_insert_post', [$this, 'handle_updated_post'], 10, 1);
+        \add_action('wp_after_insert_post', [$this, 'handle_updated_post'], 10, 3);
         \add_action('profile_update', [$this, 'handle_updated_author']);
-        if (Periodic::check('iawp_last_updated_post_type_cache', 'PT1M')) {
-            \add_action('registered_post_type', [$this, 'handle_registered_post_type']);
-        }
     }
-    public function handle_updated_post($post_id)
+    public function handle_updated_post($post_id, $post, $is_update)
     {
+        if (!$is_update) {
+            return;
+        }
         $post = \get_post($post_id);
         if (\is_null($post) || $post->post_status === 'trash') {
             return;
@@ -44,14 +42,8 @@ class Track_Resource_Changes
         $row = (object) ['resource' => 'author', 'author_id' => $user_id];
         $page = new Page_Author_Archive($row);
         $page->update_cache();
-    }
-    public function handle_registered_post_type($post_type)
-    {
-        $post_type_object = \get_post_type_object($post_type);
-        if ($post_type_object->_builtin == \false) {
-            $row = (object) ['resource' => 'post_type_archive', 'post_type' => $post_type];
-            $page = new Page_Post_Type_Archive($row);
-            $page->update_cache();
-        }
+        // TODO - This doesn't update resources where this author is attributed such as a singular
+        //  where this author is the author. It'll have the old user data, such as the old name,
+        //  until it's viewed.
     }
 }

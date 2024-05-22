@@ -12,5 +12,5 @@
         <li><?php esc_html_e('Reload this page and the analytics dashboard will appear', 'independent-analytics'); ?></li>
     </ol>
     <p><?php esc_html_e('If you need further guidance, please follow this tutorial:','independent-analytics'); ?></p>
-    <p><a href="" class="link-purple" target="_blank" style="text-decoration:underline;"><?php esc_html_e('Missing Database Tables: How to Fix this Error','independent-analytics'); ?></a></p>
+    <p><a href="https://independentwp.com/knowledgebase/common-questions/missing-database-tables-error/" class="link-purple" target="_blank" style="text-decoration:underline;"><?php esc_html_e('Missing Database Tables: How to Fix this Error','independent-analytics'); ?></a></p>
 </div>

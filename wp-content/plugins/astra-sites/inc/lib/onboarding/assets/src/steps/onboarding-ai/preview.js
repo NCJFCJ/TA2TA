@@ -19,6 +19,7 @@ import AiBuilderExitButton from './components/ai-builder-exit-button';
 import ResponsiveButtons, {
 	RESPONSIVE_MODES,
 } from './components/responsive-buttons';
+import CustomColorPalette from './components/custom-color-palette';
 import { useStateValue } from '../../store/store';
 import { getDataUri } from '../../utils/functions';
 import { motion, useAnimation } from 'framer-motion';
@@ -109,23 +110,9 @@ const SitePreview = ( { onClickContinue } ) => {
 	};
 
 	const handleIframeLoading = () => {
-		const landscape = [];
-		const portrait = [];
-
-		selectedImages.forEach( ( image ) => {
-			if ( image.orientation === 'landscape' ) {
-				landscape.push( image );
-			} else {
-				portrait.push( image );
-			}
-		} );
-
-		if ( 0 === landscape.length ) {
-			landscape.push( astraSitesVars?.placeholder_images[ 0 ] );
-		}
-
-		if ( 0 === portrait.length ) {
-			portrait.push( astraSitesVars?.placeholder_images[ 1 ] );
+		if ( 0 === selectedImages.length ) {
+			selectedImages.push( astraSitesVars?.placeholder_images[ 0 ] );
+			selectedImages.push( astraSitesVars?.placeholder_images[ 1 ] );
 		}
 
 		if ( aiSiteLogo?.url ) {
@@ -160,8 +147,7 @@ const SitePreview = ( { onClickContinue } ) => {
 		sendPostMessage( {
 			param: 'images',
 			data: {
-				landscape,
-				portrait,
+				...selectedImages,
 			},
 			preview_type: 'full',
 		} );
@@ -245,7 +231,7 @@ const SitePreview = ( { onClickContinue } ) => {
 	const renderBrowserFrame = () => (
 		<div
 			className={ classNames(
-				'flex items-center justify-start py-3 px-4 bg-white shadow-sm rounded-t-lg mx-auto h-[44px] z-[1] relative',
+				'flex items-center justify-start py-3 px-4 bg-browser-bar shadow-sm rounded-t-lg mx-auto h-[44px] z-[1] relative',
 				responsiveMode?.name === 'desktop' && 'w-full mx-0',
 				responsiveMode?.name === 'tablet' && 'w-[800px]',
 				responsiveMode?.name === 'mobile' && 'w-[400px]'
@@ -257,8 +243,10 @@ const SitePreview = ( { onClickContinue } ) => {
 				<div className="w-[14px] h-[14px] border border-solid border-border-primary rounded-full" />
 			</div>
 			<p className="!m-0 w-full truncate !text-sm !text-zip-body-text text-center">
-				This is just a sneak peek. The actual website and its content
-				will be created in the next step.
+				{ __(
+					'This is just a sneak peek. The actual website and its content will be created in the next step.',
+					'astra-sites'
+				) }
 			</p>
 		</div>
 	);
@@ -311,6 +299,11 @@ const SitePreview = ( { onClickContinue } ) => {
 								<div>
 									<FontSelector />
 								</div>
+								{ aiActivePallette?.slug === 'custom' && (
+									<div>
+										<CustomColorPalette />
+									</div>
+								) }
 							</div>
 						</div>
 						<div className="mt-8 mb-5 space-y-5">
@@ -320,7 +313,7 @@ const SitePreview = ( { onClickContinue } ) => {
 								variant="primary"
 								hasSuffixIcon
 							>
-								<span>Continue</span>
+								<span>{ __( 'Continue', 'astra-sites' ) }</span>
 								<ArrowRightIcon className="w-5 h-5" />
 							</Button>
 							<Button
@@ -330,14 +323,19 @@ const SitePreview = ( { onClickContinue } ) => {
 									setWebsiteSelectedTemplateAIStep( '' );
 								} }
 							>
-								<span>Back to Other Designs</span>
+								<span>
+									{ __(
+										'Back to Other Designs',
+										'astra-sites'
+									) }
+								</span>
 							</Button>
 						</div>
 
 						{ /* Responsive preview buttons */ }
 						<div className="mt-auto mb-6 flex items-center justify-between gap-3">
 							<span className="text-zip-dark-theme-body text-sm font-semibold">
-								Responsive Preview
+								{ __( 'Responsive Preview', 'astra-sites' ) }
 							</span>
 							<ResponsiveButtons
 								onChange={ setResponsiveMode }

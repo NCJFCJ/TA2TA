@@ -181,6 +181,10 @@ class Document_Grid_Html {
 
 		$filters_html = '<div class="dlp-grid-filters">';
 
+		if ( $search_position === 'true' || $search_position === true ) {
+			$search_position = 'top';
+		}
+
 		// Search Input
 		if ( in_array( $search_position, [ $context, 'both' ], true ) ) {
 			$filters_html .= $this->get_search_box();
@@ -240,10 +244,10 @@ class Document_Grid_Html {
 
 		if ( $this->query->get_total_posts() !== $this->query->get_total_filtered_posts() ) {
 			/* translators: %d: The total number of documents. */
-			$document_count = esc_html( sprintf( __( '%1$d %3$s (%2$d in total)', 'document-library-pro' ), $this->query->get_total_filtered_posts(), $this->query->get_total_posts(), $language_config['totalsPlural'] ) );
+			$document_count = esc_html( sprintf( __( '%1$d %3$s (%2$d in total)', 'document-library-pro' ), $this->query->get_total_filtered_posts(), $this->query->get_total_posts(), $this->query->get_total_filtered_posts() === 1 ? $language_config['totalsSingle'] : $language_config['totalsPlural'] ) );
 		} else {
 			/* translators: %d: The total number of documents. */
-			$document_count = esc_html( sprintf( __( '%1$d %2$s', 'document-library-pro' ), $this->query->get_total_filtered_posts(), $language_config['totalsPlural'] ) );
+			$document_count = esc_html( sprintf( __( '%1$d %2$s', 'document-library-pro' ), $this->query->get_total_filtered_posts(), $this->query->get_total_filtered_posts() === 1 ? $language_config['totalsSingle'] : $language_config['totalsPlural'] ) );
 		}
 
 		return sprintf( '<div class="dlp-grid-totals">%s</div>', $document_count );

@@ -260,8 +260,8 @@ if ( ! class_exists( 'WP_Sheet_Editor_WooCommerce' ) ) {
 				$prepared_values[] = '%' . $wpdb->esc_like( $phrase ) . '%';
 			}
 
-			$clauses['join'] .= " INNER JOIN {$wpdb->wc_product_meta_lookup} AS lookup ON $wpdb->posts.ID = lookup.product_id ";
-			$wc_query         = $wpdb->prepare( implode( '', $checks ), $prepared_values );
+			$clauses['join']     .= " INNER JOIN {$wpdb->wc_product_meta_lookup} AS lookup ON $wpdb->posts.ID = lookup.product_id ";
+			$wc_query             = $wpdb->prepare( implode( '', $checks ), $prepared_values );
 			$last_text_to_replace = ') ';
 			// Find the position of the last " )"
 			$last_parenthesis_position = strrpos( $clauses['where'], $last_text_to_replace );
@@ -479,6 +479,8 @@ if ( ! class_exists( 'WP_Sheet_Editor_WooCommerce' ) ) {
 						'_min_variation_regular_price',
 						'_min_variation_sale_price',
 						'^_price$',
+						// WPML WC Multilingual saves the price of each currency like _price_USD
+						'^_price_[A-Z]{3}$',
 						'^_visibility$',
 						'_wc_attachment_source',
 						'_product_version',
@@ -519,6 +521,10 @@ if ( ! class_exists( 'WP_Sheet_Editor_WooCommerce' ) ) {
 			if ( $post_type !== $this->post_type || ! empty( VGSE()->options['be_disable_woocommerce_inventory_stats'] ) ) {
 				return $items;
 			}
+			// Auto disable the inventory calculations if the store has > 50k products
+			if ( VGSE()->helpers->get_current_provider()->get_total( $post_type ) > 50000 ) {
+				return $items;
+			}
 			$items['wc-inventory-totals'] = array(
 				'label' => __( 'Inventory', 'vg_sheet_editor' ),
 				'value' => 0,
@@ -529,6 +535,10 @@ if ( ! class_exists( 'WP_Sheet_Editor_WooCommerce' ) ) {
 		function calculate_inventory_totals( $data, $qry ) {
 			global $wpdb;
 			if ( $qry['post_type'] !== $this->post_type || ! empty( VGSE()->options['be_disable_woocommerce_inventory_stats'] ) ) {
+				return $data;
+			}
+			// Auto disable the inventory calculations if the store has > 50k products
+			if ( VGSE()->helpers->get_current_provider()->get_total( $this->post_type ) > 50000 ) {
 				return $data;
 			}
 
@@ -787,13 +797,13 @@ if ( ! class_exists( 'WP_Sheet_Editor_WooCommerce' ) ) {
 					'title'                 => __( 'Sale start date', 'woocommerce' ),
 					'supports_formulas'     => true,
 					'formatted'             => array(
-						'data'             => '_sale_price_dates_from',
-						'type'             => 'date',
-						'dateFormatPhp'    => 'Y-m-d',
+						'data'                 => '_sale_price_dates_from',
+						'type'                 => 'date',
+						'dateFormatPhp'        => 'Y-m-d',
 						'customDatabaseFormat' => 'Y-m-d',
-						'correctFormat'    => true,
-						'defaultDate'      => '',
-						'datePickerConfig' => array(
+						'correctFormat'        => true,
+						'defaultDate'          => '',
+						'datePickerConfig'     => array(
 							'firstDay'       => 0,
 							'showWeekNumber' => true,
 							'numberOfMonths' => 1,
@@ -814,13 +824,13 @@ if ( ! class_exists( 'WP_Sheet_Editor_WooCommerce' ) ) {
 					'title'                 => __( 'Sale end date', 'woocommerce' ),
 					'supports_formulas'     => true,
 					'formatted'             => array(
-						'data'             => '_sale_price_dates_to',
-						'type'             => 'date',
-						'dateFormatPhp'    => 'Y-m-d',
+						'data'                 => '_sale_price_dates_to',
+						'type'                 => 'date',
+						'dateFormatPhp'        => 'Y-m-d',
 						'customDatabaseFormat' => 'Y-m-d',
-						'correctFormat'    => true,
-						'defaultDate'      => '',
-						'datePickerConfig' => array(
+						'correctFormat'        => true,
+						'defaultDate'          => '',
+						'datePickerConfig'     => array(
 							'firstDay'       => 0,
 							'showWeekNumber' => true,
 							'numberOfMonths' => 1,
@@ -1103,8 +1113,8 @@ if ( ! class_exists( 'WP_Sheet_Editor_WooCommerce' ) ) {
 				'total_sales',
 				$post_type,
 				array(
-					'data_type'     => 'meta_data',
-					'title'         => __( 'Total sales', 'woocommerce' ),
+					'data_type'         => 'meta_data',
+					'title'             => __( 'Total sales', 'woocommerce' ),
 					'allow_to_save'     => true,
 					'is_locked'         => true,
 					'lock_template_key' => 'enable_lock_cell_template',

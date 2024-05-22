@@ -6,7 +6,8 @@ import { BoltIcon } from '@heroicons/react/24/outline';
 import Button from './components/button';
 import { classNames, formatNumber } from './helpers';
 import useCredits from './hooks/use-credits';
-import ConfirmationPopup from './components/confirmation-popup';
+import ConfirmationPopup from '../onboarding-ai/components/confirmation-popup';
+import AuthenticationErrorModal from './components/authentication-error-modal';
 
 const HeaderCreditStatus = () => {
 	const { remaining, currentBalanceStatus } = useCredits();
@@ -37,7 +38,7 @@ const HeaderCreditStatus = () => {
 	const handleConfirmRevokeAccess = useCallback( async () => {
 		try {
 			const response = await apiFetch( {
-				path: '/gutenberg-templates/v1/revoke-access',
+				path: '/zipwp/v1/revoke-access',
 				method: 'POST',
 				headers: {
 					'X-WP-Nonce': astraSitesVars.rest_api_nonce,
@@ -48,9 +49,7 @@ const HeaderCreditStatus = () => {
 				window.location.reload();
 			}
 		} catch ( error ) {
-			// TODO: Handle error
-		} finally {
-			//setShowRevokePopup( false );
+			console.log( error );
 		}
 	}, [] );
 
@@ -113,10 +112,6 @@ const HeaderCreditStatus = () => {
 										}
 									</span>
 								</div>
-
-								{ /* <div className="w-full h-1 bg-border-primary rounded-sm">
-									<div className={ classNames( 'h-full bg-accent-spectra rounded-sm', currentBalanceStatus.warning && 'bg-credit-warning', currentBalanceStatus.danger && 'bg-credit-danger' ) } style={ { width: `${ percentage }%` } } />
-								</div> */ }
 							</div>
 							<p className="m-0 text-border-secondary text-sm font-normal leading-5">
 								{ revokeAccessPopup.moreCreditdesc }
@@ -157,6 +152,7 @@ const HeaderCreditStatus = () => {
 				onClickCancel={ () => setShowRevokePopup( false ) }
 				onClickConfirm={ handleConfirmRevokeAccess }
 			/>
+			<AuthenticationErrorModal />
 		</>
 	);
 };

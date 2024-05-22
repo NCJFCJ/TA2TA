@@ -45,7 +45,7 @@ class Geo_Database_Manager
     }
     public function delete() : void
     {
-        \wp_delete_file($this->path_to_database());
+        \wp_delete_file(self::path_to_database());
     }
     private function download_zip_database_and_extract() : void
     {
@@ -53,7 +53,7 @@ class Geo_Database_Manager
         try {
             $zip = new ZipArchive();
             if ($zip->open($this->path_to_database_zip()) === \true) {
-                $zip->extractTo(\IAWPSCOPED\iawp_upload_path_to(''));
+                $zip->extractTo(\IAWPSCOPED\iawp_upload_path_to('', \true));
                 $zip->close();
             }
         } catch (Throwable $e) {
@@ -63,15 +63,15 @@ class Geo_Database_Manager
     }
     private function download_raw_database() : void
     {
-        \wp_remote_get($this->raw_download_url, ['stream' => \true, 'filename' => $this->path_to_database(), 'timeout' => 60]);
+        \wp_remote_get($this->raw_download_url, ['stream' => \true, 'filename' => self::path_to_database(), 'timeout' => 60]);
     }
     private function is_existing_database_valid() : bool
     {
-        if (!\file_exists($this->path_to_database())) {
+        if (!\file_exists(self::path_to_database())) {
             return \false;
         }
         try {
-            return \verify_file_md5($this->path_to_database(), $this->database_checksum);
+            return \verify_file_md5(self::path_to_database(), $this->database_checksum);
         } catch (Throwable $e) {
             return \false;
         }
@@ -109,10 +109,10 @@ class Geo_Database_Manager
     }
     private function path_to_database_zip() : string
     {
-        return \IAWPSCOPED\iawp_upload_path_to('iawp-geo-db.zip');
+        return \IAWPSCOPED\iawp_upload_path_to('iawp-geo-db.zip', \true);
     }
-    private function path_to_database() : string
+    public static function path_to_database() : string
     {
-        return \IAWPSCOPED\iawp_upload_path_to('iawp-geo-db.mmdb');
+        return \IAWPSCOPED\iawp_upload_path_to('iawp-geo-db.mmdb', \true);
     }
 }

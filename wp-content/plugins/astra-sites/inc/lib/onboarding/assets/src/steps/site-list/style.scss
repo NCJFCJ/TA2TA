@@ -138,9 +138,25 @@
 	grid-gap: 40px;
 }
 
+.stc-extra-text.stc-logo {
+	align-items: flex-start;
+}
+.stc-extra-text::after {
+	background: linear-gradient( 90deg, #b809a7 0%, #e90b76 46.88%, #fc8536 100% );
+	-webkit-background-clip: text;
+	background-clip: text;
+	color: transparent;
+	font-size: 12px;
+	font-weight: 500;
+	line-height: 12px;
+	text-align: center;
+	content: attr( data-extratext );
+	text-align: left;
+	margin-left: 8px;
+}
+
 @media screen and ( min-width: 768px ) {
 	.st-other-filters {
 		padding-left: 22px;
-		padding-right: 22px;
 	}
 }

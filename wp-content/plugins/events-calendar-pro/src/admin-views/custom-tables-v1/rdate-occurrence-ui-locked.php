@@ -6,6 +6,7 @@
  *
  * @var string $link A link to the Event Occurrence that will allow the user to edit the recurrence rules.
  */
+
 ?>
 <div>
 	<p><strong><?php echo wp_kses( sprintf( _x(

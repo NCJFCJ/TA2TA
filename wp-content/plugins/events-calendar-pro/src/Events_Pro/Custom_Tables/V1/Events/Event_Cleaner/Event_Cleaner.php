@@ -1,4 +1,7 @@
 <?php
+/**
+ * Class Event_Cleaner_Scheduler
+ */
 
 namespace TEC\Events_Pro\Custom_Tables\V1\Events\Event_Cleaner;
 
@@ -40,7 +43,7 @@ class Event_Cleaner {
 
 		// If single event, don't dissect.
 		$is_single = Occurrence::where( 'post_id', $occurrence->post_id )
-		                       ->count() === 1;
+								->count() === 1;
 		if ( $is_single ) {
 			$post_id_to_trash = $occurrence->post_id;
 		} else {
@@ -57,7 +60,7 @@ class Event_Cleaner {
 	 *
 	 * @since 6.0.12
 	 *
-	 * @param string $sql The original query to retrieve expired events.
+	 * @param string $sql The original query to retrieve expired events. Unused, but required by the filter.
 	 *
 	 * @return string The modified CT1 query to retrieve expired events.
 	 */
@@ -71,10 +74,10 @@ class Event_Cleaner {
 		return "SELECT {$occurrence_table}.occurrence_id + $base AS provisional_id
 				FROM {$wpdb->posts}
 			    	INNER JOIN {$occurrence_table} ON {$wpdb->posts}.ID = {$occurrence_table}.post_id
-				WHERE {$wpdb->posts}.post_type = %s
-					AND {$occurrence_table}.end_date_utc <= DATE_SUB( CURRENT_TIMESTAMP(), INTERVAL %d %3s )
+				WHERE {$wpdb->posts}.post_type = '%1s'
+					AND {$occurrence_table}.end_date_utc <= DATE_SUB( CURRENT_TIMESTAMP(), INTERVAL %2d %3s )
 					AND {$wpdb->posts}.post_status != 'trash'
 				ORDER BY {$occurrence_table}.start_date_utc ASC, {$occurrence_table}.end_date_utc ASC
-				LIMIT %d";
+				LIMIT %3d";
 	}
 }

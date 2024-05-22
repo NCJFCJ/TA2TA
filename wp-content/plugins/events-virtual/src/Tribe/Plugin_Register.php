@@ -29,7 +29,7 @@ class Plugin_Register extends Abstract_Plugin_Register {
 	 *
 	 * @var string
 	 */
-	public const VERSION  = '1.15.6';
+	public const VERSION  = '1.15.8';
 
 	/**
 	 * The dependencies of the plugin.

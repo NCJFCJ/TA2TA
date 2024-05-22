@@ -1,6 +1,9 @@
 <?php
 /**
  * The template for the recurrence not supported with tickets message.
+ *
+ * @var string $tickets_text The "tickets" text.
+ * @var string $rsvps_text The "RSVPs" text.
  */
 ?>
 <tr class="recurrence-row tribe-recurrence-not-supported tec-events-pro-recurrence-not-supported">
@@ -25,8 +28,8 @@
 				/* translators: %1$s: event (plural), %2$s: ticket (plural), %3$s: RSVP (plural). */
 				__('Recurrence patterns are not yet supported for %1$s with %2$s or %3$s.', 'tribe-events-calendar-pro' ),
 				tribe_get_event_label_plural_lowercase(),
-				tribe_get_ticket_label_plural_lowercase(),
-				tribe_get_rsvp_label_plural()
+				esc_html( $tickets_text ),
+				esc_html( $rsvps_text )
 			)
 		);
 		?>

@@ -45,6 +45,10 @@
 				break;
 		}
 
+		if ( ! $( '#' + modalId ).parent().is( 'body' ) ) {
+			$( '#' + modalId ).appendTo( 'body' );
+		}
+
 		MicroModal.show( modalId, {
 			onShow: ( modal ) => dlpPreview.loadContent( modal, { title, type, url } ),
 			onClose: ( modal ) => dlpPreview.destroyContent( modal ),

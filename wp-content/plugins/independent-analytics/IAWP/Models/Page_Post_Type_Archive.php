@@ -32,6 +32,10 @@ class Page_Post_Type_Archive extends \IAWP\Models\Page
         if ($this->post_type === 'product') {
             return \esc_html__('Shop', 'independent-analytics');
         }
+        $post_type_object = \get_post_type_object($this->post_type);
+        if (\is_null($post_type_object)) {
+            return null;
+        }
         return \get_post_type_object($this->post_type)->labels->singular_name . ' ' . \esc_html__('Archive', 'independent-analytics');
     }
     protected function calculate_type()

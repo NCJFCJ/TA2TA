@@ -81,9 +81,8 @@ class Geoposition
     }
     private function fetch_geoposition(string $ip) : array
     {
-        $database_path = \trailingslashit(\wp_upload_dir()['basedir']) . 'iawp-geo-db.mmdb';
         try {
-            $reader = new Reader($database_path);
+            $reader = new Reader(\IAWP\Geo_Database_Manager::path_to_database());
             $geo = $reader->get($ip);
             $reader->close();
             return $geo;

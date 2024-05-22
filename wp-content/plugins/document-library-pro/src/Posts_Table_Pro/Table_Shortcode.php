@@ -36,6 +36,9 @@ class Table_Shortcode implements Service, Registerable, Conditional {
 
 		// Back-compat with free version of plugin
 		add_shortcode( 'posts_data_table', [ self::class, 'do_shortcode' ] );
+
+		// Change default shortcode attributes.
+		add_filter( 'shortcode_atts_posts_table', [ $this, 'change_default_shortcode_atts' ], 10, 4 );
 	}
 
 	/**
@@ -79,6 +82,24 @@ class Table_Shortcode implements Service, Registerable, Conditional {
 		}
 
 		return $args;
+	}
+
+	/**
+	 * Change the default shortcode attributes.
+	 * 
+	 * @param array  $out       The output array of shortcode attributes.
+	 * @param array  $pairs     The supported attributes and their defaults.
+	 * @param array  $atts      The user defined shortcode attributes.
+	 * @param string $shortcode The shortcode name.
+	 * @return array The output array of shortcode attributes.
+	 */
+	public function change_default_shortcode_atts( $out, $pairs, $atts, $shortcode ) {
+		// Sets the default WooCommerce orders status to any.
+		if ( $atts['post_type'] === 'shop_order' && class_exists( 'WooCommerce' ) && ! isset( $atts['status'] ) ) {
+			$out['status'] = 'any';
+		}
+
+		return $out;
 	}
 
 }

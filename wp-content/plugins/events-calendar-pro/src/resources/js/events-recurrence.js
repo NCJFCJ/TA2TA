@@ -7,6 +7,9 @@ tribe_events_pro_admin.recurrence = {
 	event: {}
 };
 
+dayjs.extend(window.dayjs_plugin_isoWeek);
+dayjs.extend(window.dayjs_plugin_customParseFormat);
+
 ( function( $, my ) {
 	'use strict';
 
@@ -162,14 +165,14 @@ tribe_events_pro_admin.recurrence = {
 		var is_new = 'undefined' === typeof data;
 
 		if ( 'undefined' !== typeof data && 'undefined' !== typeof data.end && data.end ) {
-			data.end = moment( data.end ).format( this.date_format );
+			data.end = dayjs( data.end ).format( this.date_format );
 		}
 
 		// Ensure the custom date - if set - is in the expected format
 		// @todo replace this with a common helper for retrieving deeply nested values once available
 		try {
 			if ( data.custom.date.date ) {
-				data.custom.date.date = moment( data.custom.date.date ).format( this.date_format );
+				data.custom.date.date = dayjs( data.custom.date.date ).format( this.date_format );
 			}
 		} catch ( e ) {} // eslint-disable-line no-empty
 
@@ -244,7 +247,7 @@ tribe_events_pro_admin.recurrence = {
 	my.setup_weekly_select = function ( $rule ) {
 		// default the weekly rule to pre-check the day of the week for the current event
 		var start_date = $( document.getElementById( 'EventStartDate' ) ).val(),
-			default_day_of_week = moment( start_date, this.date_format ).isoWeekday(),
+			default_day_of_week = dayjs( start_date, this.date_format ).isoWeekday(),
 			$days = $rule.find( '[data-field="custom-week-day"]' );
 
 		// If any are selected bail
@@ -268,7 +271,7 @@ tribe_events_pro_admin.recurrence = {
 
 		format = format.replace( 'm', 'MM' ).replace( 'd', 'DD' ).replace( 'Y', 'YYYY' );
 
-		var start_month = moment( $start_date.val(), format ).format( 'M' );
+		var start_month = dayjs( $start_date.val(), format ).format( 'M' );
 		var $select     = $rule.find( '[data-field="custom-year-month"]' );
 
 		// When you already have content we bail
@@ -332,7 +335,7 @@ tribe_events_pro_admin.recurrence = {
 
 			var $start_date = $( document.getElementById( 'EventStartDate' ) );
 			var format      = my.convert_date_format_php_to_moment( tribe_dynamic_help_text.datepicker_format );
-			var start_day   = moment( $start_date.val(), format ).format( 'D' );
+			var start_day   = dayjs( $start_date.val(), format ).format( 'D' );
 
 			$same_day_text.html( tribe_events_pro_recurrence_strings.recurrence['same-day-month-' + start_day] );
 		} );
@@ -408,10 +411,9 @@ tribe_events_pro_admin.recurrence = {
 	 */
 	my.add_exclusion = function( data ) {
 		var is_new = 'undefined' === typeof data;
-
 		if ( 'undefined' !== typeof data && 'undefined' !== typeof data.end && data.end ) {
-			var date_format = tribe_datepicker_opts.dateFormat.toUpperCase().replace( 'YY', 'YYYY' );
-			data.end = moment( data.end ).format( date_format );
+			var date_format = my.convert_date_format_php_to_moment( tribe_datepicker_opts.dateFormat );
+			data.end = dayjs( data.end ).format( date_format );
 		}
 
 		this.$exclusion_staging.append( this.exclusion_template( data ) );
@@ -846,8 +848,8 @@ tribe_events_pro_admin.recurrence = {
 		var end_time    = $end_time.val().toUpperCase();
 		end_date       += ' ' + end_time;
 
-		var start_moment  = moment( start_date, date_format );
-		var end_moment    = moment( end_date, date_format );
+		var start_moment  = dayjs( start_date, date_format );
+		var end_moment    = dayjs( end_date, date_format );
 		var single_moment = start_moment;
 
 		// The specific start time for this rule depends on whether or not it takes
@@ -943,7 +945,7 @@ tribe_events_pro_admin.recurrence = {
 				return;
 			}
 
-			var single_moment = moment( single_date, date_format ); // eslint-disable-line no-redeclare,max-len
+			var single_moment = dayjs( single_date, this.date_format ); // eslint-disable-line no-redeclare,max-len
 		}
 
 		// For single date rules, 'after' or 'never' will not be required
@@ -978,20 +980,19 @@ tribe_events_pro_admin.recurrence = {
 			return;
 		}
 
-		var end = $rule.find( '[data-field="end"]' ).val();
+		var end = dayjs( $rule.find( '[data-field="end"]' ).val(), this.date_format );
 		if ( ! end ) {
 			end = $rule.find( '[data-field="end"]' ).attr( 'placeholder' );
 		}
 
 		/**
 		 * Gets the lang attribute of the page’s <html> element, which is set by WP
-		 * on the server, then passes the value to moment js to ensure that all the
+		 * on the server, then passes the value to dayjs to ensure that all the
 		 * strings output are translatable.
 		 */
-		moment.locale( document.documentElement.getAttribute( 'lang' ) );
+		dayjs.locale( document.documentElement.getAttribute( 'lang' ) );
 
-		var series_end_moment = moment( end, date_format );
-
+		var series_end_moment = dayjs( end, date_format );
 		var display_format = this.convert_date_format_php_to_moment( tribe_dynamic_help_text.date_with_year );
 
 		text = text.replace( '[count]', end_count );

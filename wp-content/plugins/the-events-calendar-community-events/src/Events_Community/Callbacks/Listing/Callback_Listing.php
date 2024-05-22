@@ -103,13 +103,15 @@ class Callback_Listing extends Abstract_Callback {
 	/**
 	 * Return the HTML that will be displayed when the callback() is called.
 	 *
+	 * @since 4.10.16 Fixed the $paged variable not being overwritten correctly.
+	 *
 	 * @return string
 	 */
 	public function display_events() {
 
 		global $paged;
 
-		if ( empty( $paged ) && ! empty( $page ) ) {
+		if ( empty( $paged ) ) {
 			$paged = $this->get_page_args( 'listPage' );
 		}
 

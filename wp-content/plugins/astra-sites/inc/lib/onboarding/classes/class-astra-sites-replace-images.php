@@ -28,19 +28,7 @@ class Astra_Sites_Replace_Images {
 	 * @since 4.1.0
 	 * @var array<string,int>
 	 */
-	public static $image_index = [
-		'landscape' => 0,
-		'portrait'  => 0,
-		'square'    => 0,
-	];
-
-	/**
-	 * Filtered Images
-	 *
-	 * @since 4.1.0
-	 * @var array<string,array<string, string>>
-	 */
-	public static $filtered_images = array();
+	public static $image_index = 0;
 
 	/**
 	 * Old Images ids
@@ -56,6 +44,13 @@ class Astra_Sites_Replace_Images {
 	 * @var array<int,int>
 	 */
 	public static $reusable_blocks = array();
+
+	/**
+	 * Filtered images.
+	 * 
+	 * @var array<string, array<string, string>>
+	 */
+	public static $filtered_images = array();
 
     /**
      * Initiator
@@ -102,9 +97,9 @@ class Astra_Sites_Replace_Images {
 		$images = Astra_Sites_ZipWP_Helper::get_business_details('images');
 
 		if ( empty( $images ) ) {
-			wp_send_json_error(
+			wp_send_json_success(
 				array(
-					'data' => 'Image not downloaded!',
+					'data' => 'No images selected to download!',
 					'status'  => true,
 				)
 			);
@@ -113,9 +108,9 @@ class Astra_Sites_Replace_Images {
 		$image = $images[ $index ];
 
 		if( empty( $image ) ){
-			wp_send_json_error(
+			wp_send_json_success(
 				array(
-					'data' => 'Image not downloaded!',
+					'data' => 'No image to download!',
 					'status'  => true,
 				)
 			);
@@ -124,7 +119,7 @@ class Astra_Sites_Replace_Images {
 		$prepare_image = array(
 			'id'  => $image['id'],
 			'url' => $image['url'],
-			'description'  => $image['description'],
+			'description'  => isset( $image['description'] ) ? $image['description'] : '',
 		);
 
 		Astra_Sites_Importer_Log::add( 'Downloading Image ' . $image['url'] );
@@ -188,8 +183,7 @@ class Astra_Sites_Replace_Images {
 	 */
 	public function parse_featured_image( $post ) {
 
-		$orientation = 'landscape';
-		$image       = $this->get_image( $orientation, self::$image_index[ $orientation ] );
+		$image       = $this->get_image( self::$image_index );
 
 		if ( empty( $image ) || ! is_array( $image ) || is_bool( $image ) ) {
 			return;
@@ -207,11 +201,11 @@ class Astra_Sites_Replace_Images {
 			return;
 		}
 
-		Astra_Sites_Importer_Log::add( 'Replacing thumbnail Image to ' . $attachment['url'] . ' with orientation "' . $orientation . '" with index "' . self::$image_index[ $orientation ] . '"' );
+		Astra_Sites_Importer_Log::add( 'Replacing thumbnail Image to ' . $attachment['url'] . '" with index "' . self::$image_index . '"' );
 
 		set_post_thumbnail( $post, $attachment['id'] );
 
-		$this->increment_image_index( $orientation );
+		$this->increment_image_index();
 	}
 
 	/**
@@ -437,8 +431,7 @@ class Astra_Sites_Replace_Images {
 		if ( 0 === $image_id ) {
 			return $obj;
 		}
-		$orientation = $this->get_image_orientation( (int) $image_id );
-		$image       = $this->get_image( $orientation, self::$image_index[ $orientation ] );
+		$image       = $this->get_image( self::$image_index );
 
 		if ( empty( $image ) || ! is_array( $image ) || is_bool( $image ) ) {
 			return $obj;
@@ -457,7 +450,7 @@ class Astra_Sites_Replace_Images {
 		$obj['desktop']['background-image'] = $attachment['url'];
 		$obj['desktop']['background-media'] = $attachment['id'];
 
-		$this->increment_image_index( $orientation );
+		$this->increment_image_index();
 
 		return $obj;
 	}
@@ -826,7 +819,7 @@ class Astra_Sites_Replace_Images {
 	 * @return array<mixed> $block Block.
 	 */
 	public function parse_spectra_container( $block ) {
-		$orientation = 'landscape';
+		
 		if (
 			! isset( $block['attrs']['backgroundImageDesktop'] ) ||
 			empty( $block['attrs']['backgroundImageDesktop'] ) ||
@@ -835,8 +828,7 @@ class Astra_Sites_Replace_Images {
 			return $block;
 		}
 
-		$orientation = $this->get_image_orientation( $block['attrs']['backgroundImageDesktop'] );
-		$image       = $this->get_image( $orientation, self::$image_index[ $orientation ] );
+		$image       = $this->get_image( self::$image_index );
 		if ( empty( $image ) || ! is_array( $image ) || is_bool( $image ) ) {
 			return $block;
 		}
@@ -854,9 +846,9 @@ class Astra_Sites_Replace_Images {
 		}
 
 		self::$old_image_urls[] = $block['attrs']['backgroundImageDesktop']['url'];
-		Astra_Sites_Importer_Log::add( 'Replacing Image from ' . $block['attrs']['backgroundImageDesktop']['url'] . ' to "' . $attachment['url'] . '" for ' . $block['blockName'] . ' with orientation "' . $orientation . '" with index "' . self::$image_index[ $orientation ] . '"' );
+		Astra_Sites_Importer_Log::add( 'Replacing Image from ' . $block['attrs']['backgroundImageDesktop']['url'] . ' to "' . $attachment['url'] . '" for ' . $block['blockName'] . '" with index "' . self::$image_index . '"' );
 		$block['attrs']['backgroundImageDesktop'] = $attachment;
-		$this->increment_image_index( $orientation );
+		$this->increment_image_index();
 
 		return $block;
 	}
@@ -869,7 +861,7 @@ class Astra_Sites_Replace_Images {
 	 * @return array<mixed> $block Block.
 	 */
 	public function parse_spectra_infobox( $block ) {
-		$orientation = 'landscape';
+		
 		if (
 			! isset( $block['attrs']['iconImage'] ) ||
 			empty( $block['attrs']['iconImage'] ) ||
@@ -878,8 +870,7 @@ class Astra_Sites_Replace_Images {
 			return $block;
 		}
 
-		$orientation = $this->get_image_orientation( $block['attrs']['iconImage'] );
-		$image       = $this->get_image( $orientation, self::$image_index[ $orientation ] );
+		$image       = $this->get_image( self::$image_index );
 		if ( empty( $image ) || ! is_array( $image ) || is_bool( $image ) ) {
 			return $block;
 		}
@@ -900,7 +891,7 @@ class Astra_Sites_Replace_Images {
 		self::$old_image_urls[] = $block['attrs']['iconImage']['url'];
 		if ( ! empty( $block['attrs']['iconImage']['url'] ) ) {
 
-			Astra_Sites_Importer_Log::add( 'Replacing Image from ' . $block['attrs']['iconImage']['url'] . ' to "' . $attachment['url'] . '" for ' . $block['blockName'] . ' with orientation "' . $orientation . '" with index "' . self::$image_index[ $orientation ] . '"' );
+			Astra_Sites_Importer_Log::add( 'Replacing Image from ' . $block['attrs']['iconImage']['url'] . ' to "' . $attachment['url'] . '" for ' . $block['blockName'] . '" with index "' . self::$image_index . '"' );
 			$block['innerHTML'] = str_replace( $block['attrs']['iconImage']['url'], $attachment['url'], $block['innerHTML'] );
 		}
 
@@ -912,7 +903,7 @@ class Astra_Sites_Replace_Images {
 			$block['innerContent'][ $key ] = str_replace( $block['attrs']['iconImage']['url'], $attachment['url'], $block['innerContent'][ $key ] );
 		}
 		$block['attrs']['iconImage'] = $attachment;
-		$this->increment_image_index( $orientation );
+		$this->increment_image_index();
 
 		return $block;
 	}
@@ -925,7 +916,7 @@ class Astra_Sites_Replace_Images {
 	 * @return array<mixed> $block Block.
 	 */
 	public function parse_spectra_image( $block ) {
-		$orientation = 'landscape';
+		
 		if (
 			! isset( $block['attrs']['url'] ) ||
 			$this->is_skipable( $block['attrs']['url'] )
@@ -933,8 +924,7 @@ class Astra_Sites_Replace_Images {
 			return $block;
 		}
 
-		$orientation = $this->get_image_orientation( $block['attrs']['id'] );
-		$image       = $this->get_image( $orientation, self::$image_index[ $orientation ] );
+		$image       = $this->get_image( self::$image_index );
 
 		if ( empty( $image ) || ! is_array( $image ) ) {
 			return $block;
@@ -953,7 +943,7 @@ class Astra_Sites_Replace_Images {
 		}
 
 		self::$old_image_urls[] = $block['attrs']['url'];
-		Astra_Sites_Importer_Log::add( 'Replacing Image from ' . $block['attrs']['url'] . ' to "' . $attachment['url'] . '" for ' . $block['blockName'] . ' with orientation "' . $orientation . '" with index "' . self::$image_index[ $orientation ] . '"' );
+		Astra_Sites_Importer_Log::add( 'Replacing Image from ' . $block['attrs']['url'] . ' to "' . $attachment['url'] . '" for ' . $block['blockName'] . '" with index "' . self::$image_index . '"' );
 		$block['innerHTML'] = str_replace( $block['attrs']['url'], $attachment['url'], $block['innerHTML'] );
 
 		$tablet_size_slug = ! empty( $block['attrs']['sizeSlugTablet'] ) ? $block['attrs']['sizeSlugTablet'] : '';
@@ -1003,7 +993,7 @@ class Astra_Sites_Replace_Images {
 		$block['attrs']['id']  = $attachment['id'];
 
 
-		$this->increment_image_index( $orientation );
+		$this->increment_image_index();
 
 		return $block;
 	}
@@ -1027,9 +1017,8 @@ class Astra_Sites_Replace_Images {
 			) {
 				continue;
 			}
-			$orientation = 'landscape';
-			$orientation = $this->get_image_orientation( $image['id'] );
-			$new_image   = $this->get_image( $orientation, self::$image_index[ $orientation ] );
+			
+			$new_image   = $this->get_image( self::$image_index );
 
 			if ( empty( $new_image ) || ! is_array( $new_image ) || is_bool( $new_image ) ) {
 				continue;
@@ -1051,7 +1040,7 @@ class Astra_Sites_Replace_Images {
 			$gallery_ids[] = $attachment['id'];
 			self::$old_image_urls[] = $image['url'];
 
-			Astra_Sites_Importer_Log::add( 'Replacing Image from ' . $image['url'] . ' to "' . $attachment['url'] . '" for ' . $block['blockName'] . ' with orientation "' . $orientation . '" with index "' . self::$image_index[ $orientation ] . '"' );
+			Astra_Sites_Importer_Log::add( 'Replacing Image from ' . $image['url'] . ' to "' . $attachment['url'] . '" for ' . $block['blockName'] . '" with index "' . self::$image_index . '"' );
 			$image['url']     = ! empty( $attachment['url'] ) ? $attachment['url'] : $image['url'];
 			$image['sizes']   = ! empty( $attachment['sizes'] ) ? $attachment['sizes'] : $image['sizes'];
 			$image['mime']    = ! empty( $attachment['mime'] ) ? $attachment['mime'] : $image['mime'];
@@ -1061,35 +1050,12 @@ class Astra_Sites_Replace_Images {
 			$image['alt']     = ! empty( $attachment['alt'] ) ? $attachment['alt'] : $image['alt'];
 			$image['link']    = ! empty( $attachment['link'] ) ? $attachment['link'] : $image['link'];
 
-			$this->increment_image_index( $orientation );
+			$this->increment_image_index();
 		}
 		$block['attrs']['mediaGallery'] = $images;
 		$block['attrs']['mediaIDs']     = $gallery_ids;
 
 		return $block;
-	}
-
-    	/**
-	 * Get image orientation of the specified image.
-	 *
-	 * @param array | int $image_object Image object or attachment ID.
-	 * @return string Image orientation.
-	 * @since 4.1.0
-	 */
-	public static function get_image_orientation( $image_object ) {
-
-		// If image array is provided.
-		if ( is_array( $image_object ) && isset( $image_object['sizes']['full']['orientation'] ) ) {
-			return $image_object['sizes']['full']['orientation'];
-		}
-
-		// If attachmanet ID is provided.
-		if ( is_int( $image_object ) ) {
-			$image = wp_prepare_attachment_for_js( absint( $image_object ) );
-			return $image['sizes']['full']['orientation'] ?? 'landscape';
-		}
-
-		return 'landscape';
 	}
 
     /**
@@ -1107,18 +1073,17 @@ class Astra_Sites_Replace_Images {
 	}
 
     /**
-	 * Get Image for the specified index and orientation
+	 * Get Image for the specified index
 	 *
-	 * @param string $orientation Orientation of the image.
 	 * @param int    $index Index of the image.
 	 * @return array|boolean Array of images or false.
 	 * @since 4.1.0
 	 */
-	public function get_image( $orientation = 'landscape', $index = 0 ) {
+	public function get_image( $index = 0 ) {
 
 		$this->set_images();
-		Astra_Sites_Importer_Log::add( 'Fetching ' . $orientation . ' image with index ' . $index );
-		return ( isset( self::$filtered_images[ $orientation ][ $index ] ) ) ? self::$filtered_images[ $orientation ][ $index ] : false;
+		Astra_Sites_Importer_Log::add( 'Fetching image with index ' . $index );
+		return ( isset( self::$filtered_images[ $index ] ) ) ? self::$filtered_images[ $index ] : false;
 	}
 
 	/**
@@ -1131,14 +1096,12 @@ class Astra_Sites_Replace_Images {
 			$images = Astra_Sites_ZipWP_Helper::get_business_details('images');
 			if( ! empty( $images ) ){
 				foreach ( $images as $image ) {
-					if( isset( $image['orientation'] ) ){
-						self::$filtered_images[ $image['orientation'] ][] = $image;
-					}
+					self::$filtered_images[] = $image;
 				}
 			} else {
 				$placeholder_images = Astra_Sites_ZipWP_Helper::get_image_placeholders();
-				self::$filtered_images[ 'landscape' ][] = $placeholder_images[0];
-				self::$filtered_images[ 'portrait' ][] = $placeholder_images[1];
+				self::$filtered_images[] = $placeholder_images[0];
+				self::$filtered_images[] = $placeholder_images[1];
 			}
 		}
 	}
@@ -1146,21 +1109,20 @@ class Astra_Sites_Replace_Images {
     /**
 	 * Increment Image index
 	 *
-	 * @param string $orientation Orientation of the image.
 	 *
 	 * @return void
 	 */
-	public function increment_image_index( $orientation = 'landscape' ) {
+	public function increment_image_index() {
 
 		$this->set_images();
 
-		$new_index = self::$image_index[ $orientation ] + 1;
+		$new_index = self::$image_index + 1;
 
-		if ( ! isset( self::$filtered_images[ $orientation ][ $new_index ] ) ) {
+		if ( ! isset( self::$filtered_images[ $new_index ] ) ) {
 			$new_index = 0;
 		}
 
-		self::$image_index[ $orientation ] = $new_index;
+		self::$image_index = $new_index;
 	}
 
 	/**

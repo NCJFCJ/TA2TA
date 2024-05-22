@@ -1,6 +1,6 @@
 <?php
 /**
- * Copyright (C) 2014-2023 ServMask Inc.
+ * Copyright (C) 2014-2018 ServMask Inc.
  *
  * This program is free software: you can redistribute it and/or modify
  * it under the terms of the GNU General Public License as published by
@@ -22,14 +22,10 @@
  * ███████║███████╗██║  ██║ ╚████╔╝ ██║ ╚═╝ ██║██║  ██║███████║██║  ██╗
  * ╚══════╝╚══════╝╚═╝  ╚═╝  ╚═══╝  ╚═╝     ╚═╝╚═╝  ╚═╝╚══════╝╚═╝  ╚═╝
  */
-
-if ( ! defined( 'ABSPATH' ) ) {
-	die( 'Kangaroos cannot jump here' );
-}
 ?>
 
 <div id="ai1wm-modal-dialog-<?php echo esc_attr( $modal ); ?>" class="ai1wm-modal-dialog">
-	<div class="ai1wm-modal-container" role="dialog">
+	<div class="ai1wm-modal-container">
 		<h2><?php _e( 'Enter your Purchase ID', AI1WM_PLUGIN_NAME ); ?></h2>
 		<p><?php _e( 'To update your plugin/extension to the latest version, please fill your Purchase ID below.', AI1WM_PLUGIN_NAME ); ?></p>
 		<p class="ai1wm-modal-error"></p>
@@ -53,5 +49,5 @@ if ( ! defined( 'ABSPATH' ) ) {
 <span id="ai1wm-update-section-<?php echo esc_attr( $modal ); ?>">
 	<i class="ai1wm-icon-update"></i>
 	<?php _e( 'There is an update available. To update, you must enter your', AI1WM_PLUGIN_NAME ); ?>
-	<a class="ai1wm-modal-dialog-purchase-id" href="#ai1wm-modal-dialog-<?php echo esc_attr( $modal ); ?>"><?php _e( 'Purchase ID', AI1WM_PLUGIN_NAME ); ?></a>.
+	<a href="#ai1wm-modal-dialog-<?php echo esc_attr( $modal ); ?>"><?php _e( 'Purchase ID', AI1WM_PLUGIN_NAME ); ?></a>.
 </span>

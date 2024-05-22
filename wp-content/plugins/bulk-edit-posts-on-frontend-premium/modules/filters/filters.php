@@ -272,7 +272,9 @@ if ( ! class_exists( 'WP_Sheet_Editor_Filters' ) ) {
 			}
 
 			$post_type = VGSE()->helpers->get_provider_from_query_string();
-			$columns   = VGSE()->helpers->get_unfiltered_provider_columns( $post_type );
+
+			// Cache variable that will hold the unfiltered columns that we get and use below
+			$columns = null;
 
 			foreach ( $filters as $filter_key => $filter ) {
 				if ( empty( $filter ) || empty( $filter_key ) ) {
@@ -322,6 +324,9 @@ if ( ! class_exists( 'WP_Sheet_Editor_Filters' ) ) {
 							$meta_query['value'] = '';
 						}
 
+						if ( is_null( $columns ) ) {
+							$columns = VGSE()->helpers->get_unfiltered_provider_columns( $post_type );
+						}
 						$is_date_filter = isset( $columns[ $meta_query['key'] ] ) && $columns[ $meta_query['key'] ]['value_type'] === 'date';
 						if ( $is_date_filter ) {
 							$date_format_for_db = isset( $columns[ $meta_query['key'] ]['formatted']['customDatabaseFormat'] ) ? $columns[ $meta_query['key'] ]['formatted']['customDatabaseFormat'] : $columns[ $meta_query['key'] ]['formatted']['dateFormatPhp'];

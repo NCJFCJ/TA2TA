@@ -26,17 +26,18 @@ get_header();
 
 ?>
 	<div>
-	<main
-		id="tribe-events-pg-template"
-		<?php tribe_classes( $classes ); ?>
-	>
-		<?php
-		while ( have_posts() ) {
-			the_post();
-			the_content();
-		}
-		?>
-	</main> <!-- #tribe-events-pg-template -->
+		<main
+			id="tribe-events-pg-template"
+			<?php tribe_classes( $classes ); ?>
+		>
+			<?php
+			while ( have_posts() ) {
+				the_post();
+				the_content();
+			}
+			?>
+		</main> <!-- #tribe-events-pg-template -->
+	</div>
 <?php
 
 get_footer();

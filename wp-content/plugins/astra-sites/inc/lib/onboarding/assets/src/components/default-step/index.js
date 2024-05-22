@@ -60,14 +60,14 @@ const DefaultStep = ( { preview, content, controls, actions, stepName } ) => {
 				>
 					<div
 						className={ `content-wrapper
-					${ currentIndex === 5 ? 'flex flex-col items-start h-full' : '' }
+					${ currentIndex === 4 ? 'flex flex-col items-start h-full' : '' }
 					` }
 					>
 						{ content && content }
 						{ controls && (
 							<div
 								className={ `step-controls
-							${ currentIndex === 5 ? 'flex flex-col items-start h-full w-full' : '' }
+							${ currentIndex === 4 ? 'flex flex-col items-start h-full w-full' : '' }
 							` }
 								/* eslint-disable-next-line jsx-a11y/tabindex-no-positive -- This is a used for keyboard navigation support. */
 								tabIndex="1"

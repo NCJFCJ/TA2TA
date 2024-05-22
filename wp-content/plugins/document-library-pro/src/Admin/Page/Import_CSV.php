@@ -1,19 +1,19 @@
 <?php
 namespace Barn2\Plugin\Document_Library_Pro\Admin\Page;
 
-use Barn2\Plugin\Document_Library_Pro\Dependencies\Lib\Registerable,
-	Barn2\Plugin\Document_Library_Pro\Dependencies\Lib\Service,
-	Barn2\Plugin\Document_Library_Pro\Dependencies\Lib\Conditional,
-	Barn2\Plugin\Document_Library_Pro\Dependencies\Lib\Util as Lib_Util,
-	Barn2\Plugin\Document_Library_Pro\Admin\Importer;
+use Barn2\Plugin\Document_Library_Pro\Dependencies\Lib\Registerable;
+use Barn2\Plugin\Document_Library_Pro\Dependencies\Lib\Service;
+use Barn2\Plugin\Document_Library_Pro\Dependencies\Lib\Conditional;
+use Barn2\Plugin\Document_Library_Pro\Dependencies\Lib\Util as Lib_Util;
+use Barn2\Plugin\Document_Library_Pro\Admin\Importer;
 
 defined( 'ABSPATH' ) || exit;
 
 /**
  * This class handles our plugin import CSV page in the admin.
  *
- * @package   Barn2/document-library-pro
- * @author    Barn2 Plugins <info@barn2.com>
+ * @package   Barn2\document-library-pro
+ * @author    Barn2 Plugins <support@barn2.com>
  * @license   GPL-3.0
  * @copyright Barn2 Media Ltd
  */

@@ -162,6 +162,11 @@ class FacetWP_Integration_SearchWP
                 $return = 'continue';
             }
             elseif ( ! empty( FWP()->unfiltered_post_ids ) ) {
+
+                if ( 'no' == $facet['enable_relevance'] ) {
+                    add_filter( 'facetwp_use_search_relevancy', '__return_false' );
+                }
+                
                 $swp_query = $this->run_query([
                     's' => $selected_values,
                     'engine' => substr( $engine, 4 ),

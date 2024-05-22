@@ -164,6 +164,11 @@ class Util {
 		return preg_replace( '/[^\w+\-\/%:,.]+/u', '', (string) $value );
 	}
 
+	public static function sanitize_list_and_space( $value ) {
+		// Allows any Unicode letter, digit, underscore, hyphen, comma, plus sign, full-stop, colon, percent, forward slash and space.
+		return preg_replace( '/[^\w+\-\/%:,. ]+/u', '', (string) $value );
+	}
+
 	public static function sanitize_numeric_list( $value ) {
 		if ( is_string( $value ) ) {
 			// Allows decimal digit or comma

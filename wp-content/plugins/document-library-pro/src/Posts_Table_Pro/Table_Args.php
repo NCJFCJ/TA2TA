@@ -152,7 +152,7 @@ class Table_Args {
 		'no_posts_filtered_message' => '',
 		'paging_type'               => 'numbers',
 		'page_length'               => 'bottom',
-		'search_box'                => 'top',
+		'search_box'                => true,
 		'totals'                    => 'bottom',
 		'pagination'                => 'bottom',
 		'reset_button'              => true,
@@ -284,6 +284,11 @@ class Table_Args {
 			'options' => [ Util::class, 'sanitize_list' ]
 		];
 
+		$sanitize_list_and_space = [
+			'filter'  => FILTER_CALLBACK,
+			'options' => [ Util::class, 'sanitize_list_and_space' ]
+		];
+
 		$sanitize_numeric_list = [
 			'filter'  => FILTER_CALLBACK,
 			'options' => [ Util::class, 'sanitize_numeric_list' ]
@@ -311,7 +316,7 @@ class Table_Args {
 				'responsive_display'        => $sanitize_enum,
 				'wrap'                      => FILTER_VALIDATE_BOOLEAN,
 				'show_footer'               => FILTER_VALIDATE_BOOLEAN,
-				'search_on_click'           => FILTER_VALIDATE_BOOLEAN,
+				'search_on_click'           => $sanitize_list,
 				'filters'                   => FILTER_DEFAULT,
 				'scroll_offset'             => [
 					'filter'  => FILTER_VALIDATE_INT,
@@ -381,7 +386,7 @@ class Table_Args {
 				'term'                      => $sanitize_list,
 				'exclude_term'              => $sanitize_list,
 				'numeric_terms'             => FILTER_VALIDATE_BOOLEAN,
-				'cf'                        => FILTER_DEFAULT,
+				'cf'                        => $sanitize_list_and_space,
 				'year'                      => [
 					'filter'  => FILTER_VALIDATE_INT,
 					'options' => [
@@ -493,10 +498,14 @@ class Table_Args {
 		}
 
 		// Display options (page length, etc).
-		foreach ( [ 'page_length', 'search_box', 'totals', 'pagination' ] as $display_option ) {
+		foreach ( [ 'page_length', 'totals', 'pagination' ] as $display_option ) {
 			if ( ! in_array( $this->$display_option, [ 'top', 'bottom', 'both', false ], true ) ) {
 				$this->$display_option = $defaults[ $display_option ];
 			}
+		}
+
+		if ( ! in_array( $this->search_box, [ 'top', 'bottom', 'both', true, false ], true ) ) {
+			$this->search_box = $defaults[ 'search_box' ];
 		}
 
 		// Links - controls whether certain items are shown as links or plain text.
@@ -507,7 +516,11 @@ class Table_Args {
 		} elseif ( false === $this->links || 'none' === $this->links ) {
 			$this->links = [];
 		} else {
-			$linkable_columns = apply_filters( 'document_library_pro_linkable_columns', [ 'id', 'author', 'terms', 'tags', 'categories', 'title', 'image' ] );
+			$taxonomies = get_object_taxonomies( sanitize_text_field( $this->post_type ), 'names' );
+			$tax = array_map( function( $tax ) {
+				return 'tax:' . $tax;
+			}, $taxonomies );
+			$linkable_columns = apply_filters( 'document_library_pro_linkable_columns', array_merge( [ 'id', 'author', 'terms', 'tags', 'categories', 'title', 'image' ], $tax ) );
 			$this->links      = array_intersect( explode( ',', $this->links ), $linkable_columns );
 		}
 

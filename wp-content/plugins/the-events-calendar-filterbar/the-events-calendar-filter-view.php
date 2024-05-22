@@ -2,7 +2,7 @@
 /*
 Plugin Name: The Events Calendar: Filter Bar
 Description: Creates an advanced filter panel on the frontend of your events list views.
-Version: 5.5.3
+Version: 5.5.4
 Author: The Events Calendar
 Author URI: http://evnt.is/25
 Text Domain: tribe-events-filter-view

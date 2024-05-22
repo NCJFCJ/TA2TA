@@ -27,14 +27,19 @@ if ( ! class_exists( 'Tribe__Events__Filterbar__PUE' ) ) {
 		private static $plugin_file;
 
 		/**
+		 * @var object The PUE instance.
+		 */
+		private $pue_instance;
+
+		/**
 		 * Constructor function. a.k.a. Let's get this party started!
 		 *
 		 * @param string $plugin_file file path.
 		 */
 		public function __construct( $plugin_file ) {
 			self::$plugin_file = $plugin_file;
-			add_action( 'tribe_helper_activation_complete', array( $this, 'load_plugin_update_engine' ) );
-			register_activation_hook( self::$plugin_file, array( $this, 'register_uninstall_hook' ) );
+			add_action( 'tribe_helper_activation_complete', [ $this, 'load_plugin_update_engine' ] );
+			register_activation_hook( self::$plugin_file, [ $this, 'register_uninstall_hook' ] );
 		}
 
 		/**

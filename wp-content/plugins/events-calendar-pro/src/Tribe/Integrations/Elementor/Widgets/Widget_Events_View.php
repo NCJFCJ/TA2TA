@@ -15,29 +15,49 @@ use Elementor\Group_Control_Text_Shadow;
 use Elementor\Group_Control_Border;
 use Elementor\Group_Control_Css_Filter;
 use Elementor\Group_Control_Box_Shadow;
-use Tribe\Events\Pro\Integrations\Elementor\Traits;
 use Tribe\Events\Views\V2\Assets;
 use Tribe\Events\Views\V2\Manager;
 use Tribe\Events\Views\V2\Views\Day_View;
 use Tribe\Events\Views\V2\Views\List_View;
 use Tribe\Events\Views\V2\Views\Month_View;
+use TEC\Events\Integrations\Plugins\Elementor\Traits as Elementor_Traits;
 
+/**
+ * Class Widget_Events_View
+ *
+ * @since   5.4.0
+ *
+ * @package Tribe\Events\Pro\Integrations\Elementor\Widgets
+ */
 class Widget_Events_View extends Widget_Abstract {
-	use Traits\Categories;
-	use Traits\Tags;
+	use Elementor_Traits\Categories;
+	use Elementor_Traits\Tags;
 
 	/**
 	 * {@inheritdoc}
+	 *
+	 * @since 5.4.0
+	 *
+	 * @var string
 	 */
 	protected static $widget_slug = 'events_view';
 
 	/**
 	 * {@inheritdoc}
+	 *
+	 * @since 5.4.0
+	 *
+	 * @var string
 	 */
 	protected $widget_icon = 'eicon-calendar';
 
 	/**
 	 * {@inheritdoc}
+	 *
+	 * @since 5.4.0
+	 *
+	 * @param array $data Widget data.
+	 * @param null  $args Widget args.
 	 */
 	public function __construct( $data = [], $args = null ) {
 		parent::__construct( $data, $args );
@@ -99,7 +119,7 @@ class Widget_Events_View extends Widget_Abstract {
 			]
 		);
 
-		echo do_shortcode( '[tribe_events ' . $settings_string . ']' );
+		echo do_shortcode( '[tribe_events ' . $settings_string . ']' ); // phpcs:ignore WordPress.Security.EscapeOutput.OutputNotEscaped,StellarWP.XSS.EscapeOutput.OutputNotEscaped
 	}
 
 	/**
@@ -109,10 +129,10 @@ class Widget_Events_View extends Widget_Abstract {
 	 * @since 5.14.5 modularized.
 	 */
 	protected function register_controls() {
-		// Content panel
+		// Content panel.
 		$this->do_content_panel();
 
-		// Style panel
+		// Style panel.
 		$this->do_style_panel();
 	}
 
@@ -133,14 +153,17 @@ class Widget_Events_View extends Widget_Abstract {
 		$views = tribe( Manager::class )->get_registered_views();
 		$views = array_filter(
 			$views,
-			static function ( $view_class, $slug ) {
+			static function ( $view_class, $slug ) { // phpcs:ignore Generic.CodeAnalysis.UnusedFunctionParameter.FoundAfterLastUsed
 				return (bool) call_user_func( [ $view_class, 'is_publicly_visible' ] );
 			},
 			ARRAY_FILTER_USE_BOTH
 		);
-		$views = array_map( static function ( $value ) {
-			return tribe( Manager::class )->get_view_label_by_class( $value );
-		}, $views );
+		$views = array_map(
+			static function ( $value ) {
+				return tribe( Manager::class )->get_view_label_by_class( $value );
+			},
+			$views
+		);
 
 		asort( $views );
 
@@ -207,7 +230,7 @@ class Widget_Events_View extends Widget_Abstract {
 						'title' => __( 'Include', 'tribe-events-calendar-pro' ),
 						'icon'  => 'fa fa-plus',
 					],
-					'exclude' => [
+					'exclude' => [ // phpcs:ignore WordPressVIPMinimum.Performance.WPQueryParams.PostNotIn_exclude
 						'title' => __( 'Exclude', 'tribe-events-calendar-pro' ),
 						'icon'  => 'fa fa-minus',
 					],
@@ -853,7 +876,7 @@ class Widget_Events_View extends Widget_Abstract {
 			[
 				'name'     => 'events_month_view_events_title_typography',
 				'label'    => esc_html__( 'Typography', 'tribe-events-calendar-pro' ),
-				'selector' => '{{WRAPPER}} .tribe-events-calendar-month__calendar-event-title'
+				'selector' => '{{WRAPPER}} .tribe-events-calendar-month__calendar-event-title',
 			]
 		);
 
@@ -882,7 +905,7 @@ class Widget_Events_View extends Widget_Abstract {
 			[
 				'name'     => 'events_month_view_events_time_typography',
 				'label'    => esc_html__( 'Typography', 'tribe-events-calendar-pro' ),
-				'selector' => '{{WRAPPER}} .tribe-events-calendar-month__calendar-event-datetime'
+				'selector' => '{{WRAPPER}} .tribe-events-calendar-month__calendar-event-datetime',
 			]
 		);
 
@@ -953,7 +976,7 @@ class Widget_Events_View extends Widget_Abstract {
 			[
 				'name'     => 'events_list_view_event_title_typography',
 				'label'    => esc_html__( 'Typography', 'tribe-events-calendar-pro' ),
-				'selector' => '{{WRAPPER}} .tribe-events-calendar-list__event-title'
+				'selector' => '{{WRAPPER}} .tribe-events-calendar-list__event-title',
 			]
 		);
 
@@ -982,7 +1005,7 @@ class Widget_Events_View extends Widget_Abstract {
 			[
 				'name'     => 'events_list_view_event_time_typography',
 				'label'    => esc_html__( 'Typography', 'tribe-events-calendar-pro' ),
-				'selector' => '{{WRAPPER}} .tribe-events-calendar-list__event-datetime'
+				'selector' => '{{WRAPPER}} .tribe-events-calendar-list__event-datetime',
 			]
 		);
 
@@ -1011,7 +1034,7 @@ class Widget_Events_View extends Widget_Abstract {
 			[
 				'name'     => 'events_list_view_event_description_typography',
 				'label'    => esc_html__( 'Typography', 'tribe-events-calendar-pro' ),
-				'selector' => '{{WRAPPER}} .tribe-events-calendar-list__event-description p'
+				'selector' => '{{WRAPPER}} .tribe-events-calendar-list__event-description p',
 			]
 		);
 
@@ -1040,7 +1063,7 @@ class Widget_Events_View extends Widget_Abstract {
 			[
 				'name'     => 'events_list_view_event_venue_typography',
 				'label'    => esc_html__( 'Typography', 'tribe-events-calendar-pro' ),
-				'selector' => '{{WRAPPER}} .tribe-events-calendar-list__event-venue'
+				'selector' => '{{WRAPPER}} .tribe-events-calendar-list__event-venue',
 			]
 		);
 
@@ -1069,7 +1092,7 @@ class Widget_Events_View extends Widget_Abstract {
 			[
 				'name'     => 'events_list_view_event_cost_typography',
 				'label'    => esc_html__( 'Typography', 'tribe-events-calendar-pro' ),
-				'selector' => '{{WRAPPER}} .tribe-events-calendar-list__event-cost'
+				'selector' => '{{WRAPPER}} .tribe-events-calendar-list__event-cost',
 			]
 		);
 
@@ -1121,8 +1144,7 @@ class Widget_Events_View extends Widget_Abstract {
 			[
 				'name'     => 'events_list_view_event_date_tag_typography',
 				'label'    => esc_html__( 'Day of Week Typography', 'tribe-events-calendar-pro' ),
-				'label'    => esc_html__( 'Typography', 'tribe-events-calendar-pro' ),
-				'selector' => '{{WRAPPER}} .tribe-events-calendar-list__event-date-tag-weekday'
+				'selector' => '{{WRAPPER}} .tribe-events-calendar-list__event-date-tag-weekday',
 			]
 		);
 
@@ -1142,8 +1164,7 @@ class Widget_Events_View extends Widget_Abstract {
 			[
 				'name'     => 'events_list_view_event_daynum_typography',
 				'label'    => esc_html__( 'Day Number Typography', 'tribe-events-calendar-pro' ),
-				'label'    => esc_html__( 'Typography', 'tribe-events-calendar-pro' ),
-				'selector' => '{{WRAPPER}} .tribe-events-calendar-list__event-date-tag-daynum'
+				'selector' => '{{WRAPPER}} .tribe-events-calendar-list__event-date-tag-daynum',
 			]
 		);
 
@@ -1172,7 +1193,7 @@ class Widget_Events_View extends Widget_Abstract {
 			[
 				'name'     => 'events_list_view_event_month_separator_typography',
 				'label'    => esc_html__( 'Typography', 'tribe-events-calendar-pro' ),
-				'selector' => '{{WRAPPER}} .tribe-events-calendar-list__month-separator-text'
+				'selector' => '{{WRAPPER}} .tribe-events-calendar-list__month-separator-text',
 			]
 		);
 
@@ -1187,7 +1208,7 @@ class Widget_Events_View extends Widget_Abstract {
 			]
 		);
 
-		// Start featured image settings
+		// Start featured image settings.
 		$this->add_control(
 			'heading_events_list_view_featured_image',
 			[
@@ -1384,13 +1405,13 @@ class Widget_Events_View extends Widget_Abstract {
 			Group_Control_Box_Shadow::get_type(),
 			[
 				'name'     => 'events_list_view_featured_image_box_shadow',
-				'exclude'  => [
+				'exclude'  => [ // phpcs:ignore WordPressVIPMinimum.Performance.WPQueryParams.PostNotIn_exclude
 					'box_shadow_position',
 				],
 				'selector' => '{{WRAPPER}} .tribe-events-calendar-list__event-featured-image',
 			]
 		);
-		// End featured image settings
+		// End featured image settings.
 
 		$this->end_controls_section();
 	}
@@ -1437,7 +1458,7 @@ class Widget_Events_View extends Widget_Abstract {
 			[
 				'name'     => 'events_summary_view_event_title_typography',
 				'label'    => esc_html__( 'Typography', 'tribe-events-calendar-pro' ),
-				'selector' => '{{WRAPPER}} .tribe-events-pro-summary__event-title'
+				'selector' => '{{WRAPPER}} .tribe-events-pro-summary__event-title',
 			]
 		);
 
@@ -1466,7 +1487,7 @@ class Widget_Events_View extends Widget_Abstract {
 			[
 				'name'     => 'events_summary_view_event_time_typography',
 				'label'    => esc_html__( 'Typography', 'tribe-events-calendar-pro' ),
-				'selector' => '{{WRAPPER}} .tribe-events-pro-summary__event-datetime'
+				'selector' => '{{WRAPPER}} .tribe-events-pro-summary__event-datetime',
 			]
 		);
 
@@ -1495,7 +1516,7 @@ class Widget_Events_View extends Widget_Abstract {
 			[
 				'name'     => 'events_summary_view_event_cost_typography',
 				'label'    => esc_html__( 'Typography', 'tribe-events-calendar-pro' ),
-				'selector' => '{{WRAPPER}} .tribe-events-pro-summary__event-cost'
+				'selector' => '{{WRAPPER}} .tribe-events-pro-summary__event-cost',
 			]
 		);
 
@@ -1544,8 +1565,7 @@ class Widget_Events_View extends Widget_Abstract {
 			[
 				'name'     => 'events_summary_view_event_date_tag_typography',
 				'label'    => esc_html__( 'Day of Week Typography', 'tribe-events-calendar-pro' ),
-				'label'    => esc_html__( 'Typography', 'tribe-events-calendar-pro' ),
-				'selector' => '{{WRAPPER}} .tribe-events-pro-summary__event-date-tag-weekday'
+				'selector' => '{{WRAPPER}} .tribe-events-pro-summary__event-date-tag-weekday',
 			]
 		);
 
@@ -1565,8 +1585,7 @@ class Widget_Events_View extends Widget_Abstract {
 			[
 				'name'     => 'heading_events_summary_view_event_daynum_typography',
 				'label'    => esc_html__( 'Day Number Typography', 'tribe-events-calendar-pro' ),
-				'label'    => esc_html__( 'Typography', 'tribe-events-calendar-pro' ),
-				'selector' => '{{WRAPPER}} .tribe-events-pro-summary__event-date-tag-daynum'
+				'selector' => '{{WRAPPER}} .tribe-events-pro-summary__event-date-tag-daynum',
 			]
 		);
 
@@ -1595,7 +1614,7 @@ class Widget_Events_View extends Widget_Abstract {
 			[
 				'name'     => 'events_summary_view_event_month_separator_typography',
 				'label'    => esc_html__( 'Typography', 'tribe-events-calendar-pro' ),
-				'selector' => '{{WRAPPER}} .tribe-events-pro-summary__month-separator-text'
+				'selector' => '{{WRAPPER}} .tribe-events-pro-summary__month-separator-text',
 			]
 		);
 
@@ -1655,7 +1674,7 @@ class Widget_Events_View extends Widget_Abstract {
 			[
 				'name'     => 'events_day_view_event_title_typography',
 				'label'    => esc_html__( 'Typography', 'tribe-events-calendar-pro' ),
-				'selector' => '{{WRAPPER}} .tribe-events-calendar-day__event-title'
+				'selector' => '{{WRAPPER}} .tribe-events-calendar-day__event-title',
 			]
 		);
 
@@ -1684,7 +1703,7 @@ class Widget_Events_View extends Widget_Abstract {
 			[
 				'name'     => 'events_day_view_event_time_typography',
 				'label'    => esc_html__( 'Typography', 'tribe-events-calendar-pro' ),
-				'selector' => '{{WRAPPER}} .tribe-events-calendar-day__event-datetime'
+				'selector' => '{{WRAPPER}} .tribe-events-calendar-day__event-datetime',
 			]
 		);
 
@@ -1713,7 +1732,7 @@ class Widget_Events_View extends Widget_Abstract {
 			[
 				'name'     => 'events_day_view_event_description_typography',
 				'label'    => esc_html__( 'Typography', 'tribe-events-calendar-pro' ),
-				'selector' => '{{WRAPPER}} .tribe-events-calendar-day__event-description p'
+				'selector' => '{{WRAPPER}} .tribe-events-calendar-day__event-description p',
 			]
 		);
 
@@ -1742,7 +1761,7 @@ class Widget_Events_View extends Widget_Abstract {
 			[
 				'name'     => 'events_day_view_event_venue_typography',
 				'label'    => esc_html__( 'Typography', 'tribe-events-calendar-pro' ),
-				'selector' => '{{WRAPPER}} .tribe-events-calendar-day__event-venue'
+				'selector' => '{{WRAPPER}} .tribe-events-calendar-day__event-venue',
 			]
 		);
 
@@ -1771,7 +1790,7 @@ class Widget_Events_View extends Widget_Abstract {
 			[
 				'name'     => 'events_day_view_event_cost_typography',
 				'label'    => esc_html__( 'Typography', 'tribe-events-calendar-pro' ),
-				'selector' => '{{WRAPPER}} .tribe-events-calendar-day__event-cost'
+				'selector' => '{{WRAPPER}} .tribe-events-calendar-day__event-cost',
 			]
 		);
 
@@ -1823,8 +1842,7 @@ class Widget_Events_View extends Widget_Abstract {
 			[
 				'name'     => 'events_day_view_event_date_tag_typography',
 				'label'    => esc_html__( 'Day of Week Typography', 'tribe-events-calendar-pro' ),
-				'label'    => esc_html__( 'Typography', 'tribe-events-calendar-pro' ),
-				'selector' => '{{WRAPPER}} .tribe-events-calendar-day__event-date-tag-weekday'
+				'selector' => '{{WRAPPER}} .tribe-events-calendar-day__event-date-tag-weekday',
 			]
 		);
 
@@ -1853,7 +1871,7 @@ class Widget_Events_View extends Widget_Abstract {
 			[
 				'name'     => 'events_day_view_event_month_separator_typography',
 				'label'    => esc_html__( 'Typography', 'tribe-events-calendar-pro' ),
-				'selector' => '{{WRAPPER}} .tribe-events-calendar-day__time-separator-text'
+				'selector' => '{{WRAPPER}} .tribe-events-calendar-day__time-separator-text',
 			]
 		);
 
@@ -1870,7 +1888,7 @@ class Widget_Events_View extends Widget_Abstract {
 			]
 		);
 
-		// Start featured image settings
+		// Start featured image settings.
 		$this->add_control(
 			'heading_events_day_view_featured_image',
 			[
@@ -2067,13 +2085,13 @@ class Widget_Events_View extends Widget_Abstract {
 			Group_Control_Box_Shadow::get_type(),
 			[
 				'name'     => 'events_day_view_featured_image_box_shadow',
-				'exclude'  => [
+				'exclude'  => [ // phpcs:ignore WordPressVIPMinimum.Performance.WPQueryParams.PostNotIn_exclude
 					'box_shadow_position',
 				],
 				'selector' => '{{WRAPPER}} .tribe-events-calendar-day__event-featured-image',
 			]
 		);
-		// End featured image settings
+		// End featured image settings.
 
 		$this->end_controls_section();
 	}
@@ -2120,7 +2138,7 @@ class Widget_Events_View extends Widget_Abstract {
 			[
 				'name'     => 'events_photo_view_event_title_typography',
 				'label'    => esc_html__( 'Typography', 'tribe-events-calendar-pro' ),
-				'selector' => '{{WRAPPER}} .tribe-events-pro-photo__event-title'
+				'selector' => '{{WRAPPER}} .tribe-events-pro-photo__event-title',
 			]
 		);
 
@@ -2149,7 +2167,7 @@ class Widget_Events_View extends Widget_Abstract {
 			[
 				'name'     => 'events_photo_view_event_time_typography',
 				'label'    => esc_html__( 'Typography', 'tribe-events-calendar-pro' ),
-				'selector' => '{{WRAPPER}} .tribe-events-pro-photo__event-datetime'
+				'selector' => '{{WRAPPER}} .tribe-events-pro-photo__event-datetime',
 			]
 		);
 
@@ -2178,7 +2196,7 @@ class Widget_Events_View extends Widget_Abstract {
 			[
 				'name'     => 'events_photo_view_event_cost_typography',
 				'label'    => esc_html__( 'Typography', 'tribe-events-calendar-pro' ),
-				'selector' => '{{WRAPPER}} .tribe-events-pro-photo__event-cost'
+				'selector' => '{{WRAPPER}} .tribe-events-pro-photo__event-cost',
 			]
 		);
 
@@ -2229,8 +2247,7 @@ class Widget_Events_View extends Widget_Abstract {
 			[
 				'name'     => 'events_photo_view_event_date_tag_typography',
 				'label'    => esc_html__( 'Month Label Typography', 'tribe-events-calendar-pro' ),
-				'label'    => esc_html__( 'Typography', 'tribe-events-calendar-pro' ),
-				'selector' => '{{WRAPPER}} .tribe-events-pro-photo__event-date-tag-month'
+				'selector' => '{{WRAPPER}} .tribe-events-pro-photo__event-date-tag-month',
 			]
 		);
 
@@ -2250,12 +2267,11 @@ class Widget_Events_View extends Widget_Abstract {
 			[
 				'name'     => 'events_photo_view_event_daynum_typography',
 				'label'    => esc_html__( 'Day Number Typography', 'tribe-events-calendar-pro' ),
-				'label'    => esc_html__( 'Typography', 'tribe-events-calendar-pro' ),
-				'selector' => '{{WRAPPER}} .tribe-events-pro-photo__event-date-tag-daynum'
+				'selector' => '{{WRAPPER}} .tribe-events-pro-photo__event-date-tag-daynum',
 			]
 		);
 
-		// Start featured image settings
+		// Start featured image settings.
 		$this->add_control(
 			'heading_events_photo_view_featured_image',
 			[
@@ -2452,13 +2468,13 @@ class Widget_Events_View extends Widget_Abstract {
 			Group_Control_Box_Shadow::get_type(),
 			[
 				'name'     => 'events_photo_view_featured_image_box_shadow',
-				'exclude'  => [
+				'exclude'  => [ // phpcs:ignore WordPressVIPMinimum.Performance.WPQueryParams.PostNotIn_exclude
 					'box_shadow_position',
 				],
 				'selector' => '{{WRAPPER}} .tribe-events-pro-photo__event-featured-image',
 			]
 		);
-		// End featured image settings
+		// End featured image settings.
 
 		$this->end_controls_section();
 	}
@@ -2516,7 +2532,7 @@ class Widget_Events_View extends Widget_Abstract {
 			[
 				'name'     => 'events_map_view_event_title_typography',
 				'label'    => esc_html__( 'Typography', 'tribe-events-calendar-pro' ),
-				'selector' => '{{WRAPPER}} .tribe-events-pro-map__event-title'
+				'selector' => '{{WRAPPER}} .tribe-events-pro-map__event-title',
 			]
 		);
 
@@ -2545,7 +2561,7 @@ class Widget_Events_View extends Widget_Abstract {
 			[
 				'name'     => 'events_map_view_event_time_typography',
 				'label'    => esc_html__( 'Typography', 'tribe-events-calendar-pro' ),
-				'selector' => '{{WRAPPER}} .tribe-events-pro-map__event-datetime-wrapper'
+				'selector' => '{{WRAPPER}} .tribe-events-pro-map__event-datetime-wrapper',
 			]
 		);
 
@@ -2574,7 +2590,7 @@ class Widget_Events_View extends Widget_Abstract {
 			[
 				'name'     => 'events_map_view_event_venue_typography',
 				'label'    => esc_html__( 'Typography', 'tribe-events-calendar-pro' ),
-				'selector' => '{{WRAPPER}} .tribe-events-pro-map__event-venue'
+				'selector' => '{{WRAPPER}} .tribe-events-pro-map__event-venue',
 			]
 		);
 
@@ -2625,8 +2641,7 @@ class Widget_Events_View extends Widget_Abstract {
 			[
 				'name'     => 'events_map_view_event_date_tag_typography',
 				'label'    => esc_html__( 'Month Label Typography', 'tribe-events-calendar-pro' ),
-				'label'    => esc_html__( 'Typography', 'tribe-events-calendar-pro' ),
-				'selector' => '{{WRAPPER}} .tribe-events-pro-map__event-date-tag-month'
+				'selector' => '{{WRAPPER}} .tribe-events-pro-map__event-date-tag-month',
 			]
 		);
 
@@ -2646,12 +2661,11 @@ class Widget_Events_View extends Widget_Abstract {
 			[
 				'name'     => 'events_map_view_event_daynum_typography',
 				'label'    => esc_html__( 'Day Number Typography', 'tribe-events-calendar-pro' ),
-				'label'    => esc_html__( 'Typography', 'tribe-events-calendar-pro' ),
-				'selector' => '{{WRAPPER}} .tribe-events-pro-map__event-date-tag-daynum'
+				'selector' => '{{WRAPPER}} .tribe-events-pro-map__event-date-tag-daynum',
 			]
 		);
 
-		// Start featured image settings
+		// Start featured image settings.
 		$this->add_control(
 			'heading_events_map_view_featured_image',
 			[
@@ -2848,13 +2862,13 @@ class Widget_Events_View extends Widget_Abstract {
 			Group_Control_Box_Shadow::get_type(),
 			[
 				'name'     => 'events_map_view_featured_image_box_shadow',
-				'exclude'  => [
+				'exclude'  => [ // phpcs:ignore WordPressVIPMinimum.Performance.WPQueryParams.PostNotIn_exclude
 					'box_shadow_position',
 				],
 				'selector' => '{{WRAPPER}} .tribe-events-pro-map__event-featured-image',
 			]
 		);
-		// End featured image settings
+		// End featured image settings.
 
 		$this->end_controls_section();
 	}
@@ -2936,7 +2950,7 @@ class Widget_Events_View extends Widget_Abstract {
 			[
 				'name'     => 'events_week_view_event_title_typography',
 				'label'    => esc_html__( 'Typography', 'tribe-events-calendar-pro' ),
-				'selector' => '{{WRAPPER}} .tribe-events-pro-week-grid__event-title'
+				'selector' => '{{WRAPPER}} .tribe-events-pro-week-grid__event-title',
 			]
 		);
 
@@ -2965,7 +2979,7 @@ class Widget_Events_View extends Widget_Abstract {
 			[
 				'name'     => 'events_week_view_event_time_typography',
 				'label'    => esc_html__( 'Typography', 'tribe-events-calendar-pro' ),
-				'selector' => '{{WRAPPER}} .tribe-events-pro-week-grid__event-datetime'
+				'selector' => '{{WRAPPER}} .tribe-events-pro-week-grid__event-datetime',
 			]
 		);
 
@@ -3016,7 +3030,7 @@ class Widget_Events_View extends Widget_Abstract {
 			[
 				'name'     => 'events_week_view_event_time_tag_typography',
 				'label'    => esc_html__( 'Typography', 'tribe-events-calendar-pro' ),
-				'selector' => '{{WRAPPER}} .tribe-events-pro-week-grid__events-time-tag'
+				'selector' => '{{WRAPPER}} .tribe-events-pro-week-grid__events-time-tag',
 			]
 		);
 
@@ -3045,8 +3059,7 @@ class Widget_Events_View extends Widget_Abstract {
 			[
 				'name'     => 'events_week_view_event_date_tag_typography',
 				'label'    => esc_html__( 'Day of Week Typography', 'tribe-events-calendar-pro' ),
-				'label'    => esc_html__( 'Typography', 'tribe-events-calendar-pro' ),
-				'selector' => '{{WRAPPER}} .tribe-events-pro-week-grid__header-column-weekday'
+				'selector' => '{{WRAPPER}} .tribe-events-pro-week-grid__header-column-weekday',
 			]
 		);
 
@@ -3066,8 +3079,7 @@ class Widget_Events_View extends Widget_Abstract {
 			[
 				'name'     => 'events_week_view_event_daynum_typography',
 				'label'    => esc_html__( 'Day Number Typography', 'tribe-events-calendar-pro' ),
-				'label'    => esc_html__( 'Typography', 'tribe-events-calendar-pro' ),
-				'selector' => '{{WRAPPER}} .tribe-events-pro-week-grid__header-column-daynum'
+				'selector' => '{{WRAPPER}} .tribe-events-pro-week-grid__header-column-daynum',
 			]
 		);
 
@@ -3179,7 +3191,7 @@ class Widget_Events_View extends Widget_Abstract {
 			[
 				'name'     => 'events_subscribe_to_calendar_dropdown_typography',
 				'label'    => esc_html__( 'Typography', 'tribe-events-calendar-pro' ),
-				'selector' => '{{WRAPPER}} .tribe-events-c-subscribe-dropdown__list-item'
+				'selector' => '{{WRAPPER}} .tribe-events-c-subscribe-dropdown__list-item',
 			]
 		);
 
@@ -3238,9 +3250,10 @@ class Widget_Events_View extends Widget_Abstract {
 	 * @return array<string,mixed>
 	 */
 	public function filter_template_vars_to_override_is_initial_load( $template_vars ) {
+
 		if (
-			! empty( $_POST['action'] )
-			&& 'elementor_ajax' === $_POST['action']
+			! empty( $_POST['action'] ) // phpcs:ignore WordPress.Security.NonceVerification.Missing
+			&& 'elementor_ajax' === $_POST['action'] // phpcs:ignore WordPress.Security.NonceVerification.Missing
 		) {
 			$template_vars['is_initial_load'] = true;
 		}

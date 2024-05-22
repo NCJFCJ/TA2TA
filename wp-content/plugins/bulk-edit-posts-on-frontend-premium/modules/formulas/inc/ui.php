@@ -1128,6 +1128,7 @@ if ( ! class_exists( 'WPSE_Formulas_UI' ) ) {
 										'data-remote'      => 'true',
 										'data-action'      => 'vgse_get_taxonomy_terms',
 										'data-extra_ajax_parameters' => '{"taxonomy_key": "{column_key}"}',
+										'multiple'         => 'multiple',
 									),
 								),
 							),

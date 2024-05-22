@@ -63,6 +63,7 @@ if ( ! class_exists( 'Astra_Sites_Importer' ) ) {
 			add_action( 'wp_ajax_astra-sites-import-options', array( $this, 'import_options' ) );
 			add_action( 'wp_ajax_astra-sites-import-widgets', array( $this, 'import_widgets' ) );
 			add_action( 'wp_ajax_astra-sites-import-end', array( $this, 'import_end' ) );
+			add_action( 'wp_ajax_astra-sites-site-language', array( $this, 'set_site_language' ) );
 
 			// Hooks in AJAX.
 			add_action( 'astra_sites_import_complete', array( $this, 'clear_related_cache' ) );
@@ -99,7 +100,9 @@ if ( ! class_exists( 'Astra_Sites_Importer' ) ) {
 		 */
 		public function delete_related_transient() {
 			delete_transient( 'astra_sites_batch_process_started' );
-			delete_option( 'astra_sites_import_data' );
+			Astra_Sites_File_System::get_instance()->delete_demo_content();
+			delete_option( 'ast_ai_import_current_url' );
+			delete_option( 'astra_sites_ai_import_started' );
 		}
 
 		/**
@@ -423,6 +426,8 @@ if ( ! class_exists( 'Astra_Sites_Importer' ) ) {
 						'account_url'       => '', // if you do not pass this it will default to the site url.
 						'email'             => '', // optional.
 						'source_account_id' => $id,
+						'source' => 'starter-templates',
+						'seed' => true,
 					)
 				);
 				if ( ! is_wp_error( $result ) ) {
@@ -666,7 +671,7 @@ if ( ! class_exists( 'Astra_Sites_Importer' ) ) {
 				}
 			}
 
-			$demo_data = get_option( 'astra_sites_import_data', array() );
+			$demo_data = Astra_Sites_File_System::get_instance()->get_demo_content();
 			// Set permalink structure to use post name.
 			update_option( 'permalink_structure', '/%postname%/' );
 			
@@ -734,7 +739,7 @@ if ( ! class_exists( 'Astra_Sites_Importer' ) ) {
 			$demo_api_uri = add_query_arg( $request_params, trailingslashit( $demo_api_uri ) );
 
 			// API Call.
-			$response = wp_remote_get( $demo_api_uri, $api_args );
+			$response = wp_safe_remote_get( $demo_api_uri, $api_args );
 
 			if ( is_wp_error( $response ) || ( isset( $response->status ) && 0 === $response->status ) ) {
 				if ( isset( $response->status ) ) {
@@ -1081,6 +1086,61 @@ if ( ! class_exists( 'Astra_Sites_Importer' ) ) {
 			} elseif ( wp_doing_ajax() ) {
 				wp_send_json_success( $message );
 			}
+		}
+		
+		
+		/**
+		 * Set site language.
+		 *
+		 * @since 4.2.0
+		 * @return void
+		 */
+		public function set_site_language() {
+			if ( ! defined( 'WP_CLI' ) && wp_doing_ajax() ) {
+				// Verify Nonce.
+				check_ajax_referer( 'astra-sites', '_ajax_nonce' );
+
+				if ( ! current_user_can( 'customize' ) ) {
+					wp_send_json_error( __( 'You are not allowed to perform this action', 'astra-sites' ) );
+				}
+			}
+
+			if ( ! wp_doing_ajax() ) {
+				wp_send_json_error( __( 'You are not allowed to perform this action', 'astra-sites' ) );
+			}
+
+			$language = isset( $_POST['language'] ) ? sanitize_text_field( $_POST['language'] ) : 'en_US';
+			$result = $this->set_language( $language );
+
+			if ( ! $result ) {
+				wp_send_json_error( __( 'Failed to set the site language.', 'astra-sites' ) );
+			}
+
+			wp_send_json_success();
+		}
+
+		/**
+		 * Set the site language.
+		 * 
+		 * @since 4.2.0
+		 * 
+		 * @param string $language  The language code.
+		 * @return bool
+		 */
+		public function set_language( $language = 'en_US' ) {
+			require_once ABSPATH . 'wp-admin/includes/translation-install.php';
+
+			$locale_code = 'en_US' === $language ? '' : $language;
+			if ( '' !== $locale_code && wp_can_install_language_pack() ) {
+				$language = wp_download_language_pack( $locale_code );
+			}
+			if ( ( '' === $locale_code ) || ( '' !== $locale_code && $language ) ) {
+				update_option( 'WPLANG', $locale_code );
+				load_default_textdomain( $locale_code );
+				return switch_to_locale( $locale_code );
+			}
+
+			return false;
 		}
 
 	}

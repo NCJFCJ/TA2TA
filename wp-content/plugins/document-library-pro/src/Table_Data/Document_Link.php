@@ -1,8 +1,8 @@
 <?php
 namespace Barn2\Plugin\Document_Library_Pro\Table_Data;
 
-use Barn2\Plugin\Document_Library_Pro\Posts_Table_Pro\Data\Abstract_Table_Data,
-	Barn2\Plugin\Document_Library_Pro\Document;
+use Barn2\Plugin\Document_Library_Pro\Posts_Table_Pro\Data\Abstract_Table_Data;
+use Barn2\Plugin\Document_Library_Pro\Document;
 
 defined( 'ABSPATH' ) || exit;
 /**
@@ -63,7 +63,9 @@ class Document_Link extends Abstract_Table_Data {
 			$html .= $document->get_preview_button( $this->preview_text, $this->preview_style, 'table' );
 		}
 
-		if ( $this->document_link && in_array( $this->accessing_documents, [ 'both', 'checkbox' ], true ) && $document->get_link_type() === 'file' ) {
+		$should_display = apply_filters( 'document_library_pro_download_checkboxes_should_display', true, $document, $this->link_text, $this->link_style, $this->link_destination );
+
+		if ( $should_display && $this->document_link && in_array( $this->accessing_documents, [ 'both', 'checkbox' ], true ) && $document->get_link_type() === 'file' ) {
 			$html .= sprintf( '<input type="checkbox" name="zip-urls" data-download-url="%1$s" data-download-id="%2$d" />', $document->get_download_url(), $this->post->ID );
 		}
 

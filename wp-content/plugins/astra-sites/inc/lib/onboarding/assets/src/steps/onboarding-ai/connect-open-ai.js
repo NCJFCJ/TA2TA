@@ -2,6 +2,7 @@ import { ChevronRightIcon } from '@heroicons/react/24/outline';
 import { useForm } from 'react-hook-form';
 import { useEffect } from '@wordpress/element';
 import { withDispatch, useSelect } from '@wordpress/data';
+import { __ } from '@wordpress/i18n';
 import { compose } from '@wordpress/compose';
 import apiFetch from '@wordpress/api-fetch';
 import Heading from './heading';
@@ -59,7 +60,7 @@ const ConnectOpenAI = ( { onClickContinue, onLater } ) => {
 			/>
 			<div className="flex">
 				<Button type="submit" variant="primary">
-					<span>Authorize</span>
+					<span>{ __( 'Authorize', 'astra-sites' ) }</span>
 					<ChevronRightIcon className="w-6 h-6" />
 				</Button>
 				<Button
@@ -68,7 +69,7 @@ const ConnectOpenAI = ( { onClickContinue, onLater } ) => {
 					variant="link"
 					onClick={ () => doItLater() }
 				>
-					I’ll do it later
+					{ __( "I'll do it later", 'astra-sites' ) }
 				</Button>
 			</div>
 		</form>

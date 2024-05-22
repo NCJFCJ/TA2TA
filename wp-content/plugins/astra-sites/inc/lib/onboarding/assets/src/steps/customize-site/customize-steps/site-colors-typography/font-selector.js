@@ -183,7 +183,6 @@ const FontSelector = ( { options, onSelect, selected } ) => {
 	} );
 	const defaultFonts = fonts.filter( ( font ) => font.default );
 	const otherFonts = fonts.filter( ( font ) => ! font.default );
-	// let premiumTemplate = false;
 
 	/**
 	 * 8. Update the website as per the customizations selected by the user.
@@ -209,28 +208,6 @@ const FontSelector = ( { options, onSelect, selected } ) => {
 
 	const nextStep = () => {
 		customizeWebsite();
-		// if ( ! importError ) {
-		// 	premiumTemplate = 'free' !== templateResponse[ 'astra-site-type' ];
-		// 	if ( premiumTemplate && ! licenseStatus ) {
-		// 		if ( astraSitesVars.isPro ) {
-		// 			dispatch( {
-		// 				type: 'set',
-		// 				validateLicenseStatus: true,
-		// 				currentCustomizeIndex: currentCustomizeIndex + 1,
-		// 			} );
-		// 		} else {
-		// 			dispatch( {
-		// 				type: 'set',
-		// 				currentCustomizeIndex: currentCustomizeIndex + 1,
-		// 			} );
-		// 		}
-		// 	} else {
-		// 		dispatch( {
-		// 			type: 'set',
-		// 			currentIndex: currentIndex + 1,
-		// 		} );
-		// 	}
-		// }
 	};
 
 	const lastStep = () => {

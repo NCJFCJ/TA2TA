@@ -53,14 +53,8 @@ export const defaultOnboardingAIState = {
 		keywords: aiStepValues?.image_keywords || [],
 		selectedImages: !! selectedImages?.length
 			? selectedImages
-			: [
-					...( aiStepValues?.images?.landscape ?? [] ),
-					...( aiStepValues?.images?.portrait ?? [] ),
-			  ],
-		imagesPreSelected:
-			!! aiStepValues?.images?.landscape?.length ||
-			!! aiStepValues?.images?.portrait?.length ||
-			false,
+			: [ ...( aiStepValues?.images ?? [] ) ],
+		imagesPreSelected: !! aiStepValues?.images || false,
 		businessContact: {
 			phone: aiStepValues?.business_phone || '',
 			email: aiStepValues?.business_email || '',
@@ -592,6 +586,14 @@ const reducer = ( state = initialState, action ) => {
 			onboardingAI: {
 				...state.onboardingAI,
 				limitExceedModal: action.payload,
+			},
+		};
+	} else if ( action.type === actionTypes.SET_AUTHENTICATION_ERROR_MODAL ) {
+		return {
+			...state,
+			onboardingAI: {
+				...state.onboardingAI,
+				authenticationErrorModal: action.payload,
 			},
 		};
 	} else if ( action.type === actionTypes.SET_CONTINUE_PROGRESS_MODAL ) {

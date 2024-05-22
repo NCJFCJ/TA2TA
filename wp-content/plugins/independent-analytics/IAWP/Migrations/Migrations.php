@@ -2,6 +2,7 @@
 
 namespace IAWP\Migrations;
 
+use IAWP\Database;
 use IAWP\Query;
 use IAWP\Utils\Dir;
 use IAWP\Utils\Server;
@@ -40,7 +41,7 @@ class Migrations
             new \IAWP\Migrations\Migration_19();
             new \IAWP\Migrations\Migration_20();
             new \IAWP\Migrations\Migration_21();
-            $completed = self::run_step_migrations([new \IAWP\Migrations\Migration_22(), new \IAWP\Migrations\Migration_23(), new \IAWP\Migrations\Migration_24(), new \IAWP\Migrations\Migration_25(), new \IAWP\Migrations\Migration_26(), new \IAWP\Migrations\Migration_27()]);
+            $completed = self::run_step_migrations([new \IAWP\Migrations\Migration_22(), new \IAWP\Migrations\Migration_23(), new \IAWP\Migrations\Migration_24(), new \IAWP\Migrations\Migration_25(), new \IAWP\Migrations\Migration_26(), new \IAWP\Migrations\Migration_27(), new \IAWP\Migrations\Migration_28(), new \IAWP\Migrations\Migration_29(), new \IAWP\Migrations\Migration_30()]);
             if ($completed === \true) {
                 \update_option('iawp_is_migrating', '0');
                 \delete_option('iawp_last_finished_migration_step');
@@ -61,14 +62,14 @@ class Migrations
     {
         $db_version = \get_option('iawp_db_version', '0');
         $is_migrating = \get_option('iawp_is_migrating') === '1';
-        $is_current = \version_compare($db_version, '27', '=');
+        $is_current = \version_compare($db_version, '30', '=');
         $is_outdated = !$is_current;
         return $is_outdated || $is_migrating;
     }
     public static function is_database_ahead_of_plugin() : bool
     {
         $db_version = \get_option('iawp_db_version', '0');
-        return \version_compare($db_version, '27', '>');
+        return \version_compare($db_version, '30', '>');
     }
     public static function is_actually_migrating() : bool
     {
@@ -81,7 +82,7 @@ class Migrations
     {
         $db_version = \get_option('iawp_db_version', '0');
         $is_migrating = \get_option('iawp_is_migrating') === '1';
-        $is_current = \version_compare($db_version, '27', '=');
+        $is_current = \version_compare($db_version, '30', '=');
         $is_outdated = !$is_current;
         return $is_outdated && !$is_migrating;
     }
@@ -110,12 +111,29 @@ class Migrations
         $last_finished_step = \get_option('iawp_last_finished_migration_step', '0');
         $has_error = \get_option('iawp_migration_error_query', null) !== null && \get_option('iawp_migration_error', null) !== null;
         $referrers_table = Query::get_table_name(Query::REFERRERS);
-        $has_index = \IAWP\Migrations\Step_Migration::has_index($referrers_table, 'referrers_domain_index');
+        $has_index = Database::has_index($referrers_table, 'referrers_domain_index');
         if ($db_version === '21' && $is_migrating && $last_finished_step === '0' && $has_error && !$has_index) {
             \update_option('iawp_is_migrating', '0');
             \delete_option('iawp_last_finished_migration_step');
             \delete_option('iawp_migration_error');
             \delete_option('iawp_migration_error_query');
+        }
+    }
+    public static function handle_migration_29_error() : void
+    {
+        global $wpdb;
+        $db_version = \get_option('iawp_db_version', '0');
+        $is_migrating = \get_option('iawp_is_migrating', '0') === '1';
+        $last_finished_step = \get_option('iawp_last_finished_migration_step', '0');
+        $has_error = \get_option('iawp_migration_error_query', null) !== null && \get_option('iawp_migration_error', null) !== null;
+        if ($db_version === '28' && $is_migrating && $last_finished_step === '5' && $has_error) {
+            $sessions_table = Query::get_table_name(Query::SESSIONS);
+            $wpdb->query("ALTER TABLE {$sessions_table} DROP COLUMN visitor_id");
+            $wpdb->query("ALTER TABLE {$sessions_table} CHANGE COLUMN old_visitor_id visitor_id varchar(32)");
+            \delete_option('iawp_last_finished_migration_step');
+            \delete_option('iawp_migration_error');
+            \delete_option('iawp_migration_error_query');
+            \update_option('iawp_is_migrating', '0');
         }
     }
     /**

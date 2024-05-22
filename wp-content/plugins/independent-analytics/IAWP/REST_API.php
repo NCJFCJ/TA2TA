@@ -114,6 +114,7 @@ class REST_API
         }
         \IAWP\Migrations\Migrations::handle_migration_18_error();
         \IAWP\Migrations\Migrations::handle_migration_22_error();
+        \IAWP\Migrations\Migrations::handle_migration_29_error();
         \IAWP\Migrations\Migrations::create_or_migrate();
         if (\IAWP\Migrations\Migrations::is_migrating()) {
             return;

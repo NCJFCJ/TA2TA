@@ -30,7 +30,80 @@ if ( ! class_exists( 'WPSE_WPML_Posts' ) ) {
 			add_filter( 'vg_sheet_editor/woocommerce/wc_rest_api_product_args', array( $this, 'add_current_language_to_wc_rest_api_requests' ) );
 			add_action( 'vg_sheet_editor/add_new_posts/after_all_posts_created', array( $this, 'set_current_language_to_new_rows' ), 10, 2 );
 			add_filter( 'vg_sheet_editor/import/save_rows_args', array( $this, 'remove_sku_from_wc_product_translations_import' ) );
+
+			add_action( 'vg_sheet_editor/save_rows/after_saving_post', array( $this, 'product_updated_on_spreadsheet' ), 10, 4 );
+			add_action( 'vg_sheet_editor/formulas/execute_formula/after_execution_on_field', array( $this, 'product_updated_with_formula' ), 10, 8 );
+			add_action( 'vg_sheet_editor/formulas/execute_formula/after_sql_execution', array( $this, 'product_updated_with_sql_formula' ), 10, 5 );
 		}
+
+		function product_updated_with_sql_formula( $column, $formula, $post_type, $spreadsheet_columns, $post_ids ) {
+			if ( $post_type !== VGSE()->WC->post_type ) {
+				return;
+			}
+
+			foreach ( $post_ids as $post_id ) {
+				$this->_trigger_wpml_hook_after_wc_prices_updated( $post_id, array( $column ) );
+			}
+		}
+
+		function product_updated_with_formula( $post_id, $initial_data, $modified_data, $column, $formula, $post_type, $cell_args, $spreadsheet_columns ) {
+			if ( $post_type !== VGSE()->WC->post_type ) {
+				return;
+			}
+
+			$this->_trigger_wpml_hook_after_wc_prices_updated( $post_id, array( $column ) );
+		}
+
+		function product_updated_on_spreadsheet( $product_id, $item, $data, $post_type ) {
+			if ( ! in_array( $post_type, array( VGSE()->WC->post_type, 'product_variation' ), true ) ) {
+				return;
+			}
+
+			$this->_trigger_wpml_hook_after_wc_prices_updated( $product_id, array_keys( $item ) );
+		}
+
+		function _trigger_wpml_hook_after_wc_prices_updated( $post_id, $updated_keys ) {
+			global $woocommerce_wpml;
+
+			if ( ! is_object( $woocommerce_wpml ) || ! is_object( $woocommerce_wpml->multi_currency ) ) {
+				return;
+			}
+
+			$keywords_that_require_sync_regex = '/(sale_price|regular_price|wcml_schedule|sale_price_dates_from|sale_price_dates_to)/';
+			if ( ! preg_match( $keywords_that_require_sync_regex, implode( ',', $updated_keys ) ) ) {
+				return;
+			}
+
+			$currencies = $woocommerce_wpml->multi_currency->get_currencies();
+			foreach ( $currencies as $code => $currency ) {
+				$sale_price    = wc_format_decimal( get_post_meta( $post_id, '_sale_price_' . $code, true ) );
+				$regular_price = wc_format_decimal( get_post_meta( $post_id, '_regular_price_' . $code, true ) );
+
+				$schedule  = get_post_meta( $post_id, '_wcml_schedule_' . $code, true );
+				$date_from = get_post_meta( $post_id, '_sale_price_dates_from_' . $code, true );
+				$date_to   = get_post_meta( $post_id, '_sale_price_dates_to_' . $code, true );
+
+				$date_from = $schedule && ! empty( $date_from ) ? $date_from : '';
+				$date_to   = $schedule && ! empty( $date_to ) ? $date_to : '';
+
+				$custom_prices = apply_filters(
+					'wcml_update_custom_prices_values',
+					array(
+						'_regular_price'         => $regular_price,
+						'_sale_price'            => $sale_price,
+						'_wcml_schedule'         => $schedule,
+						'_sale_price_dates_from' => $date_from,
+						'_sale_price_dates_to'   => $date_to,
+					),
+					$code,
+					$post_id
+				);
+				$product_price = $woocommerce_wpml->multi_currency->custom_prices->update_custom_prices( $post_id, $custom_prices, $code );
+
+				do_action( 'wcml_after_save_custom_prices', $post_id, $product_price, $custom_prices, $code );
+			}
+		}
+
 
 		/**
 		 * Don't import SKUs on WooCommerce product translations

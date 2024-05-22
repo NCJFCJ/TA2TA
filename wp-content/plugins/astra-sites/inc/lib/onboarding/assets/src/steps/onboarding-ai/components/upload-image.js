@@ -4,8 +4,9 @@ import { useDispatch, useSelect } from '@wordpress/data';
 import { MediaUpload } from '@wordpress/media-utils';
 import { STORE_KEY } from '../store';
 import { classNames } from '../helpers';
+import { __ } from '@wordpress/i18n';
 
-const UploadImage = () => {
+const UploadImage = ( { render } ) => {
 	const { setWebsiteImagesAIStep } = useDispatch( STORE_KEY );
 
 	const {
@@ -22,20 +23,24 @@ const UploadImage = () => {
 			<MediaUpload
 				mode="upload"
 				allowedTypes={ [ 'image' ] }
-				render={ ( { open } ) => (
-					<button
-						type="button"
-						onClick={ open }
-						className={ classNames(
-							'flex flex-col items-center justify-center gap-3 py-[50px] px-[78px] aspect-video bg-zip-app-light-bg border border-solid border-[#D8DFE9] rounded cursor-pointer'
-						) }
-					>
-						<ArrowUpTrayIcon className="w-6 h-6 text-accent-st" />
-						<span className="min-w-fit break-keep text-nowrap whitespace-nowrap text-base font-semibold text-zip-body-text">
-							Upload images
-						</span>
-					</button>
-				) }
+				render={
+					typeof render === 'function'
+						? render
+						: ( { open } ) => (
+								<button
+									type="button"
+									onClick={ open }
+									className={ classNames(
+										'flex flex-col items-center justify-center gap-3 py-[50px] px-[78px] aspect-video bg-zip-app-light-bg border border-solid border-border-tertiary rounded cursor-pointer'
+									) }
+								>
+									<ArrowUpTrayIcon className="w-6 h-6 text-accent-st" />
+									<span className="min-w-fit break-keep text-nowrap whitespace-nowrap text-base font-semibold text-zip-body-text">
+										{ __( 'Upload images', 'astra-sites' ) }
+									</span>
+								</button>
+						  )
+				}
 				onSelect={ ( media ) => {
 					const uploadedImages = media
 						.map( ( image ) => ( {

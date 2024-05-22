@@ -1,4 +1,5 @@
 import { ArrowRightIcon } from '@heroicons/react/24/outline';
+import { sprintf, __ } from '@wordpress/i18n';
 import { useCallback, useEffect } from 'react';
 import Button from './components/button';
 import Confetti from './components/Confetti';
@@ -42,13 +43,23 @@ const BuildDone = () => {
 						<span>🥳</span>
 					</span>
 					<div className="space-y-3 text-center">
-						<h1>
-							Woohoo, your website
-							<br /> is ready!
-						</h1>
+						<h1
+							dangerouslySetInnerHTML={ {
+								__html: sprintf(
+									/* translators: %s: line break */
+									__(
+										`Woohoo, your website %1$s is ready!`,
+										'astra-sites'
+									),
+									'<br />'
+								),
+							} }
+						/>
 						<p className="text-app-text text-base text-center font-normal leading-6">
-							You did it! Your brand new website is all set to
-							shine online.
+							{ __(
+								'You did it! Your brand new website is all set to shine online.',
+								'astra-sites'
+							) }
 						</p>
 					</div>
 					<div className="w-full flex flex-col justify-center items-center gap-5 flex-wrap md:flex-nowrap">
@@ -58,7 +69,9 @@ const BuildDone = () => {
 							size="l"
 							className="w-full min-w-fit min-h-[48px]"
 						>
-							<span>See Your Website</span>
+							<span>
+								{ __( 'See Your Website', 'astra-sites' ) }
+							</span>
 						</Button>
 						<Button
 							onClick={ handleClickVisitDashboard }
@@ -66,12 +79,13 @@ const BuildDone = () => {
 							size="l"
 							className="w-full min-w-fit py-0 text-accent-st"
 						>
-							<span>Visit Dashboard</span>
+							<span>
+								{ __( 'Visit Dashboard', 'astra-sites' ) }
+							</span>
 							<ArrowRightIcon className="w-5 h-5" />
 						</Button>
 					</div>
 				</div>
-				{ /* Confetti firework */ }
 				<Confetti />
 			</div>
 		</div>

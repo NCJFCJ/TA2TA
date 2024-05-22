@@ -8,11 +8,13 @@ if (!class_exists('WP_Sheet_Editor_WooCommerce_Variations')) {
 	class WP_Sheet_Editor_WooCommerce_Variations {
 
 		static private $instance = false;
-		var $post_type = null;
-		var $variation_post_type = 'product_variation';
-		var $wc_variation_columns = null;
-		var $posts_to_inject_query = null;
-		var $parent_attribute_terms = array();
+		public $post_type = null;
+		public $variation_post_type = 'product_variation';
+		public $wc_variation_columns = null;
+		public $posts_to_inject_query = null;
+		public $parent_attribute_terms = array();
+		public $wc_variation_only_columns = array();
+		public $wc_core_variation_columns = array();
 
 		private function __construct() {
 			
@@ -37,9 +39,39 @@ if (!class_exists('WP_Sheet_Editor_WooCommerce_Variations')) {
 				'type' => 'switch', // html | switch | button
 				'content' => __('Display variations', 'vg_sheet_editor' ),
 				'id' => 'display-variations',
-				'help_tooltip' => __('When this is enabled the products variations will be displayed and you will be able to edit them.', 'vg_sheet_editor' ),
 				'default_value' => false
 					), $this->post_type);
+
+					$editor->args['toolbars']->register_item(
+						'display_all_variations',
+						array(
+							'type' => 'button', // html | switch | button
+							'content' => __('Display all the variations', 'vg_sheet_editor' ),
+							'allow_in_frontend' => true,
+							'parent'            => 'display_variations',
+						),
+						$this->post_type
+					);
+					$editor->args['toolbars']->register_item(
+						'display_selected_products_variations',
+						array(
+							'type' => 'button', // html | switch | button
+							'content' => __('Display the variations of selected products', 'vg_sheet_editor' ),
+							'allow_in_frontend' => true,
+							'parent'            => 'display_variations',
+						),
+						$this->post_type
+					);
+					$editor->args['toolbars']->register_item(
+						'only_display_selected_products_variations',
+						array(
+							'type' => 'button', // html | switch | button
+							'content' => __('Only display the selected products with variations', 'vg_sheet_editor' ),
+							'allow_in_frontend' => true,
+							'parent'            => 'display_variations',
+						),
+						$this->post_type
+					);
 		}
 
 		/**
@@ -52,6 +84,7 @@ if (!class_exists('WP_Sheet_Editor_WooCommerce_Variations')) {
 		 * @return array
 		 */
 		function maybe_lock_general_columns_in_variations($posts, $wp_query, $spreadsheet_columns) {
+			global $wpdb;
 			if (VGSE()->helpers->get_provider_from_query_string() !== $this->post_type || empty($posts) || !is_array($posts) || VGSE()->helpers->is_plain_text_request()) {
 				return $posts;
 			}
@@ -66,6 +99,31 @@ if (!class_exists('WP_Sheet_Editor_WooCommerce_Variations')) {
 			if (empty($products)) {
 				return $posts;
 			}
+
+			$post_ids = wp_list_pluck( $posts, 'ID');
+			$ids_in_query_placeholders = implode( ', ', array_fill( 0, count( $post_ids ), '%d' ) );
+			$variations_count = (int) $wpdb->get_var( $wpdb->prepare("SELECT COUNT(*) FROM $wpdb->posts p
+			WHERE ID IN ($ids_in_query_placeholders) AND post_type = 'product_variation'", $post_ids) );
+
+			$variable_product_ids = $wpdb->get_col( $wpdb->prepare( "SELECT p.ID FROM $wpdb->posts p 
+			LEFT JOIN $wpdb->term_relationships r 
+			ON r.object_id = p.ID 
+			LEFT JOIN $wpdb->term_taxonomy tt 
+			ON tt.term_taxonomy_id = r.term_taxonomy_id 
+			LEFT JOIN $wpdb->terms t 
+			ON t.term_id = tt.term_id 
+			WHERE ID IN ($ids_in_query_placeholders)
+			AND post_type = 'product'
+			AND tt.taxonomy = 'product_type' 
+			AND t.slug = 'variable'", $post_ids ) );
+
+			// If this list of rows doesn't contain any parent variable product or variation, return early because we don't need to lock any cells
+			if( ! $variations_count && empty( $variable_product_ids ) ){
+				return $posts;
+			}
+
+
+			$variable_product_ids = array_map('intval', $variable_product_ids);
 			$first_product_keys = array_keys(current($products));
 
 			$whitelist_variations = $this->get_variation_whitelisted_columns();
@@ -91,11 +149,10 @@ if (!class_exists('WP_Sheet_Editor_WooCommerce_Variations')) {
 				if (isset($posts[$index]['_stock'])) {
 					$posts[$index]['_stock'] = (int) $posts[$index]['_stock'];
 				}
-				$product_type = !empty($post['product_type']) ? $post['product_type'] : VGSE()->WC->get_product_type($post['ID']);
 				// We are locking keys here because the automatic locking works with fields 
 				// used by all parent products or all variations, not fields used by some parents only.
 				// That's why in this case, we need to check the product type and disable them manually
-				if ($product_type === 'variable') {
+				if ( in_array( (int) $post['ID'], $variable_product_ids, true )) {
 					$locked_keys[] = '_regular_price';
 					$locked_keys[] = '_sale_price';
 					$locked_keys[] = '_sale_price_dates_from';
@@ -310,7 +367,7 @@ if (!class_exists('WP_Sheet_Editor_WooCommerce_Variations')) {
 					), 10, 2);
 
 			add_action('woocommerce_rest_insert_product_variation_object', array($this, 'add_variation_meta_after_copy'), 10, 2);
-			add_filter('vg_sheet_editor/provider/post/get_items_terms', array($this, 'get_variation_attributes'), 10, 3);
+			add_filter('vg_sheet_editor/provider/post/get_items_terms/product_variation', array($this, 'get_variation_attributes'), 10, 3);
 
 			add_filter('vg_sheet_editor/filters/after_fields', array($this, 'add_search_on_variations_field'), 10, 2);
 			add_filter('vg_sheet_editor/load_rows/wp_query_args', array($this, 'search_on_variations_query'), 20, 2);
@@ -335,7 +392,51 @@ if (!class_exists('WP_Sheet_Editor_WooCommerce_Variations')) {
 			add_action('vg_sheet_editor/save_rows/before_saving_cell', array($this, 'save_bulk_edit_of_global_attribute_with_proper_format'), 10, 6);
 			add_filter('vg_sheet_editor/custom_columns/post_type_for_sample_values', array($this, 'include_variation_post_type_for_custom_column_samples'), 10, 3);
 			add_filter('vg_sheet_editor/filters/sanitize_request_filters', array($this, 'register_custom_filters'), 10, 2);
+
+			add_action('wp_ajax_vgse_load_variations_per_product', array($this, 'load_variations_per_product'));
 		}
+
+		
+		function load_variations_per_product() {
+
+			if (!VGSE()->helpers->verify_nonce_from_request() || !VGSE()->helpers->user_can_edit_post_type($this->post_type)) {
+				wp_send_json_error(array('message' => __('You dont have enough permissions to load rows.', 'vg_sheet_editor' )));
+			}
+			if (empty($_REQUEST['product_ids'])) {
+				wp_send_json_error(array('message' => __('Please select a product.', 'vg_sheet_editor' )));
+			}
+			$product_ids = sanitize_text_field($_REQUEST['product_ids']);
+			$request_data = array(
+				'nonce'                     => sanitize_text_field( VGSE()->helpers->get_nonce_from_request() ),
+				'post_type'                 => VGSE()->helpers->sanitize_table_key( $this->post_type ),
+				'paged'                     => 1,
+				'wpse_source' => 'wc_display_selected_products_variations',
+				'filters' => array(					
+					'post__in' => $product_ids,
+					'wc_display_variations' => 'yes'
+				),
+				'wpse_source_suffix'        => '',
+			);
+			$_REQUEST['filters'] = $request_data['filters'];
+
+			$rows = VGSE()->helpers->get_rows( $request_data );
+
+			if ( is_wp_error( $rows ) ) {
+				wp_send_json_error(
+					wp_parse_args(
+						array(
+							'message' => $rows->get_error_message(),
+						),
+						$rows->get_error_data()
+					)
+				);
+			}
+
+			$rows['rows']    = array_values( $rows['rows'] );
+			$rows['deleted'] = array_unique( VGSE()->deleted_rows_ids );
+			wp_send_json_success( $rows );
+		}
+
 
 		function include_variation_post_type_for_custom_column_samples($post_types_for_sample_values, $meta_keys, $editor) {
 			$post_type = $editor->args['provider'];
@@ -438,6 +539,8 @@ if (!class_exists('WP_Sheet_Editor_WooCommerce_Variations')) {
 			}
 
 			$keys = array_merge($keys, $wpdb->get_col("SELECT meta_key FROM $wpdb->postmeta WHERE meta_key LIKE 'attribute_%' AND meta_value <> '' GROUP BY meta_key LIMIT 100"));
+			// Get 500 meta keys used by variations, because the parent products might not use those fields and we still need them for the advanced filters
+			$keys = array_merge($keys, VGSE()->helpers->get_all_meta_keys( $this->variation_post_type, 500 ) );
 
 			return $keys;
 		}
@@ -867,10 +970,9 @@ if (!class_exists('WP_Sheet_Editor_WooCommerce_Variations')) {
 		}
 
 		function get_variation_attributes($terms, $id, $taxonomy) {
-			if (get_post_type($id) !== $this->variation_post_type || strpos($taxonomy, 'pa_') === false) {
+			if (strpos($taxonomy, 'pa_') === false) {
 				return $terms;
 			}
-
 
 			$term_slug = VGSE()->helpers->get_current_provider()->get_item_meta($id, 'attribute_' . $taxonomy, true);
 

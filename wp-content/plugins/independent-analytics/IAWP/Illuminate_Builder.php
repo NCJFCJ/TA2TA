@@ -23,12 +23,14 @@ class Illuminate_Builder
         }
         return new Builder(self::$connection);
     }
-    public static function get_query_with_bindings(Builder $builder) : string
+    public static function ray(Builder $builder)
     {
         $add_slashes = \str_replace('?', "'?'", $builder->toSql());
         $escape_mysql_format_percentages = \str_replace('%', '%%', $add_slashes);
         $replace_question_marks = \str_replace('?', '%s', $escape_mysql_format_percentages);
-        return \vsprintf($replace_question_marks, $builder->getBindings());
+        if (\function_exists('IAWPSCOPED\\ray')) {
+            return ray(\vsprintf($replace_question_marks, $builder->getBindings()));
+        }
     }
     private static function get_connection() : Connection
     {

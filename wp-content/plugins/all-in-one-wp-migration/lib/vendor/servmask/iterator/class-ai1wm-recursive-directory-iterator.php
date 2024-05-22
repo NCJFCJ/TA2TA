@@ -1,6 +1,6 @@
 <?php
 /**
- * Copyright (C) 2014-2023 ServMask Inc.
+ * Copyright (C) 2014-2018 ServMask Inc.
  *
  * This program is free software: you can redistribute it and/or modify
  * it under the terms of the GNU General Public License as published by
@@ -23,10 +23,6 @@
  * ╚══════╝╚══════╝╚═╝  ╚═╝  ╚═══╝  ╚═╝     ╚═╝╚═╝  ╚═╝╚══════╝╚═╝  ╚═╝
  */
 
-if ( ! defined( 'ABSPATH' ) ) {
-	die( 'Kangaroos cannot jump here' );
-}
-
 class Ai1wm_Recursive_Directory_Iterator extends RecursiveDirectoryIterator {
 
 	public function __construct( $path ) {
@@ -36,7 +32,6 @@ class Ai1wm_Recursive_Directory_Iterator extends RecursiveDirectoryIterator {
 		$this->skipdots();
 	}
 
-	#[\ReturnTypeWillChange]
 	public function rewind() {
 		parent::rewind();
 
@@ -44,7 +39,6 @@ class Ai1wm_Recursive_Directory_Iterator extends RecursiveDirectoryIterator {
 		$this->skipdots();
 	}
 
-	#[\ReturnTypeWillChange]
 	public function next() {
 		parent::next();
 
@@ -60,7 +54,6 @@ class Ai1wm_Recursive_Directory_Iterator extends RecursiveDirectoryIterator {
 	 *
 	 * @return bool
 	 */
-	#[\ReturnTypeWillChange]
 	public function hasChildren( $allow_links = true ) {
 		return parent::hasChildren( $allow_links );
 	}

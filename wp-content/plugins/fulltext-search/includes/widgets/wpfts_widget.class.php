@@ -1,7 +1,7 @@
 <?php
 
 /**  
- * Copyright 2013-2023 Epsiloncool
+ * Copyright 2013-2024 Epsiloncool
  *
  *  This program is free software: you can redistribute it and/or modify
  *  it under the terms of the GNU General Public License as published by
@@ -22,7 +22,7 @@
  *  It will keep me working further on this useful product.
  ******************************************************************************
  * 
- *  @copyright 2013-2023
+ *  @copyright 2013-2024
  *  @license GPLv3
  *  @package WP Fast Total Search
  *  @author Epsiloncool <info@e-wm.org>
@@ -90,20 +90,20 @@ class WPFTS_Custom_Widget extends WP_Widget
 
 		echo isset($args['before_widget']) ? $args['before_widget'] : '';
 
-		?><div class="wpfts_widget wpfts_search_widget presetid-<?php echo $preset_id2; ?><?php echo strlen($class) > 0 ? ' '.$class : ''; ?>">
+		?><div class="wpfts_widget wpfts_search_widget presetid-<?php echo esc_attr($preset_id2); ?><?php echo strlen($class) > 0 ? ' '.esc_attr($class) : ''; ?>">
 				<?php
 					if ($title) {
-						echo (isset($args['before_title']) ? $args['before_title'] : '') . $title . (isset($args['after_title']) ? $args['after_title'] : '');
+						echo (isset($args['before_title']) ? $args['before_title'] : '') . esc_attr($title) . (isset($args['after_title']) ? $args['after_title'] : '');
 					}
 				?>
-		<form role="search" class="wpfts_search_form-<?php echo htmlspecialchars($preset_id2); ?> search-form <?php echo $preset['autocomplete_mode'] ? ' wpfts_autocomplete': ''; ?>" action="<?php echo htmlspecialchars($preset['results_url']); ?>" method="get">
-			<?php echo (strlen($preset_id) > 0) ? '<input type="hidden" name="wpfts_wdgt" value="'.htmlspecialchars($preset_id).'">' : ''; ?>
+		<form role="search" class="wpfts_search_form-<?php echo esc_attr($preset_id2); ?> search-form <?php echo $preset['autocomplete_mode'] ? ' wpfts_autocomplete': ''; ?>" action="<?php echo htmlspecialchars($preset['results_url']); ?>" method="get">
+			<?php echo (strlen($preset_id) > 0) ? '<input type="hidden" name="wpfts_wdgt" value="'.esc_attr($preset_id).'">' : ''; ?>
 			<label>
 				<span class="screen-reader-text"><?php echo __('Search for:', 'fulltext-search'); ?></span>
-				<input type="search" class="search-field" placeholder="<?php echo $placeholder; ?>" value="<?php echo get_search_query(); ?>" name="s">
+				<input type="search" class="search-field" placeholder="<?php echo htmlspecialchars($placeholder); ?>" value="<?php echo esc_attr(get_search_query()); ?>" name="s">
 			</label>
 			<?php if ($hide_button != 1) {
-				?><input type="submit" class="search-submit" value="<?php echo $button_text; ?>"><?php
+				?><input type="submit" class="search-submit" value="<?php echo esc_attr($button_text); ?>"><?php
 			}
 			?>
 		</form>
@@ -161,10 +161,10 @@ class WPFTS_Custom_Widget extends WP_Widget
 		</p>
 
 		<p>
-			<label for="<?php echo $wpfts_wdgt_id; ?>">
+			<label for="<?php echo esc_attr($wpfts_wdgt_id); ?>">
 				<?php echo __('Preset:', 'fulltext-search'); ?>
-					<a href="#" id="<?php echo $wpfts_wdgt_id.'_edtpst'; ?>" target="_blank"><?php echo __('Edit Presets', 'fulltext-search'); ?></a> 
-					<select class="widefat" id="<?php echo $wpfts_wdgt_id; ?>" name="<?php echo $this->get_field_name('wpfts_wdgt'); ?>">
+					<a href="#" id="<?php echo esc_attr($wpfts_wdgt_id).'_edtpst'; ?>" target="_blank"><?php echo __('Edit Presets', 'fulltext-search'); ?></a> 
+					<select class="widefat" id="<?php echo esc_attr($wpfts_wdgt_id); ?>" name="<?php echo esc_attr($this->get_field_name('wpfts_wdgt')); ?>">
 					<?php
 						foreach ($widget_list as $k => $d) {
 							echo '<option value="'.esc_attr($k).'"'.($k == $wpfts_wdgt ? ' selected="selected"' : '').'>'.htmlspecialchars($d).'</option>';
@@ -175,32 +175,32 @@ class WPFTS_Custom_Widget extends WP_Widget
 		</p>
 
 		<p>
-			<label for="<?php echo $this->get_field_id('placeholder'); ?>">
+			<label for="<?php echo esc_attr($this->get_field_id('placeholder')); ?>">
 				<?php echo __('Placeholder Text:', 'fulltext-search'); ?> 
-				<input class="widefat" id="<?php echo $this->get_field_id('placeholder'); ?>" name="<?php echo $this->get_field_name('placeholder'); ?>" type="text" value="<?php echo esc_attr($placeholder); ?>" />
+				<input class="widefat" id="<?php echo esc_attr($this->get_field_id('placeholder')); ?>" name="<?php echo esc_attr($this->get_field_name('placeholder')); ?>" type="text" value="<?php echo esc_attr($placeholder); ?>" />
 			</label>
 		</p>
 
 		<p>
-			<label for="<?php echo $this->get_field_id('button_text'); ?>">
+			<label for="<?php echo esc_attr($this->get_field_id('button_text')); ?>">
 				<?php echo __('Button Text:', 'fulltext-search'); ?> 
-				<input class="widefat" id="<?php echo $this->get_field_id('button_text'); ?>" name="<?php echo $this->get_field_name('button_text'); ?>" type="text" value="<?php echo esc_attr($button_text); ?>" />
+				<input class="widefat" id="<?php echo esc_attr($this->get_field_id('button_text')); ?>" name="<?php echo esc_attr($this->get_field_name('button_text')); ?>" type="text" value="<?php echo esc_attr($button_text); ?>" />
 			</label>
-			<label for="<?php echo $this->get_field_id('hide_button'); ?>">
-				<input type="checkbox" value="1" id="<?php echo $this->get_field_id('hide_button'); ?>" name="<?php echo $this->get_field_name('hide_button'); ?>" <?php echo ($hide_button == 1) ? ' checked="checked"' : ''; ?> />&nbsp;
+			<label for="<?php echo esc_attr($this->get_field_id('hide_button')); ?>">
+				<input type="checkbox" value="1" id="<?php echo esc_attr($this->get_field_id('hide_button')); ?>" name="<?php echo esc_attr($this->get_field_name('hide_button')); ?>" <?php echo ($hide_button == 1) ? ' checked="checked"' : ''; ?> />&nbsp;
 				<?php echo __('Hide Button', 'fulltext-search'); ?> 
 			</label>
 		</p>
 
 		<p>
-			<label for="<?php echo $this->get_field_id('class'); ?>">
+			<label for="<?php echo esc_attr($this->get_field_id('class')); ?>">
 				<?php echo __('CSS Class:', 'fulltext-search'); ?> 
-				<input class="widefat" id="<?php echo $this->get_field_id('class'); ?>" name="<?php echo $this->get_field_name('class'); ?>" type="text" value="<?php echo esc_attr($class); ?>" />
+				<input class="widefat" id="<?php echo esc_attr($this->get_field_id('class')); ?>" name="<?php echo esc_attr($this->get_field_name('class')); ?>" type="text" value="<?php echo esc_attr($class); ?>" />
 			</label>
 		</p>
 
 		<style type="text/css">
-		<?php echo '#'.$wpfts_wdgt_id.'_edtpst'; ?> {
+		<?php echo '#'.esc_attr($wpfts_wdgt_id).'_edtpst'; ?> {
 			display: inline-block;
     		position: absolute;
     		right: 20px;
@@ -223,12 +223,12 @@ class WPFTS_Custom_Widget extends WP_Widget
 	{
 		$instance          = $old_instance;
 		$new_instance      = wp_parse_args((array) $new_instance, array('title' => '', 'wpfts_wdgt' => ''));
-		$instance['title'] = sanitize_text_field($new_instance['title']);
-		$instance['wpfts_wdgt'] = sanitize_text_field($new_instance['wpfts_wdgt']);
-		$instance['placeholder'] = sanitize_text_field($new_instance['placeholder']);
-		$instance['button_text'] = sanitize_text_field($new_instance['button_text']);
-		$instance['hide_button'] = sanitize_text_field($new_instance['hide_button']);
-		$instance['class'] = sanitize_text_field($new_instance['class']);
+		$instance['title'] = sanitize_text_field(isset($new_instance['title']) ? $new_instance['title'] : '');
+		$instance['wpfts_wdgt'] = sanitize_text_field(isset($new_instance['wpfts_wdgt']) ? $new_instance['wpfts_wdgt'] : '');
+		$instance['placeholder'] = sanitize_text_field(isset($new_instance['placeholder']) ? $new_instance['placeholder'] : '');
+		$instance['button_text'] = sanitize_text_field(isset($new_instance['button_text']) ? $new_instance['button_text'] : '');
+		$instance['hide_button'] = sanitize_text_field(isset($new_instance['hide_button']) ? $new_instance['hide_button'] : '');
+		$instance['class'] = sanitize_text_field(isset($new_instance['class']) ? $new_instance['class'] : '');
 		return $instance;
 	}
 }

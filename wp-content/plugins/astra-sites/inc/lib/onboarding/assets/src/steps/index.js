@@ -13,6 +13,8 @@ import { getLocalStorageItem } from './onboarding-ai/helpers';
 const { adminUrl } = starterTemplates;
 const $ = jQuery;
 
+const pageBuilders = [ 'gutenberg', 'elementor', 'beaver-builder' ];
+
 const Steps = () => {
 	const [ stateValue, dispatch ] = useStateValue();
 	const {
@@ -122,10 +124,18 @@ const Steps = () => {
 	useEffect( () => {
 		const currentUrlParams = new URLSearchParams( window.location.search );
 		const urlIndex = parseInt( currentUrlParams.get( 'ci' ) ) || 0;
+		const builderValue = currentUrlParams.get( 'builder' ) || '';
 
 		if ( currentIndex === 0 ) {
 			currentUrlParams.delete( 'ci' );
 			currentUrlParams.delete( 'ai' );
+			currentUrlParams.delete( 'builder' );
+			if ( builderValue && pageBuilders.includes( builderValue ) ) {
+				dispatch( {
+					type: 'set',
+					builder: builderValue,
+				} );
+			}
 			history(
 				window.location.pathname + '?' + currentUrlParams.toString()
 			);
@@ -218,7 +228,7 @@ const Steps = () => {
 
 	return (
 		<div className={ `st-step ${ current.class }` }>
-			{ ! [ 1, 2, 5 ].includes( currentIndex ) && (
+			{ ! [ 1, 2, 4 ].includes( currentIndex ) && (
 				<div className="step-header">
 					{ current.header ? (
 						current.header

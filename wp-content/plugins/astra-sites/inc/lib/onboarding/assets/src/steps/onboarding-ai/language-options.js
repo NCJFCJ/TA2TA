@@ -5,6 +5,7 @@ import {
 	MagnifyingGlassIcon,
 	InformationCircleIcon,
 } from '@heroicons/react/24/outline';
+import { __ } from '@wordpress/i18n';
 import { useSelect } from '@wordpress/data';
 import { CheckCircleColorfulIcon } from '../ui/icons';
 import { classNames } from './utils/helpers';
@@ -149,7 +150,7 @@ const LanguageOptions = ( {
 										htmlFor="search-field"
 										className="sr-only"
 									>
-										Search
+										{ __( 'Search', 'astra-sites' ) }
 									</label>
 									<MagnifyingGlassIcon
 										className="pointer-events-none absolute inset-y-0 left-2.5 h-full w-5 text-app-inactive-icon group-focus-within:text-app-active-icon transition duration-150 ease-in-out"
@@ -236,7 +237,10 @@ const LanguageOptions = ( {
 
 									{ filteredLanguages.length === 0 && (
 										<div className="relative cursor-default select-none py-2 px-4 text-base font-normal text-app-text">
-											Nothing found
+											{ __(
+												'Nothing found',
+												'astra-sites'
+											) }
 										</div>
 									) }
 								</div>

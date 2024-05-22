@@ -2,6 +2,7 @@ import { useForm } from 'react-hook-form';
 import { useEffect, useState, useRef } from '@wordpress/element';
 import { withDispatch, useDispatch, useSelect } from '@wordpress/data';
 import { compose } from '@wordpress/compose';
+import { __ } from '@wordpress/i18n';
 import SocialMediaAdd from './components/social-media';
 import Textarea from './components/textarea';
 import Input from './components/input';
@@ -65,7 +66,10 @@ const BusinessContact = ( {
 					( value ) =>
 						value === '' || EMAIL_VALIDATION_REGEX.test( value ),
 					{
-						message: 'Please enter a valid email',
+						message: __(
+							'Please enter a valid email',
+							'astra-sites'
+						),
 					}
 				),
 			phone: zod
@@ -74,7 +78,10 @@ const BusinessContact = ( {
 					( value ) =>
 						value === '' || PHONE_VALIDATION_REGEX.test( value ),
 					{
-						message: 'Please enter a valid phone number',
+						message: __(
+							'Please enter a valid phone number',
+							'astra-sites'
+						),
 					}
 				),
 			address: zod.string().optional(),
@@ -153,19 +160,21 @@ const BusinessContact = ( {
 
 	return (
 		<form
-			className="w-full max-w-container flex flex-col gap-8 pb-10"
+			className="w-full max-w-container flex flex-col gap-4 pb-10"
 			action="#"
 			onSubmit={ handleSubmit( handleSubmitForm ) }
 		>
 			{ /* Heading */ }
 			<div className="text-[2rem] font-semibold leading-[140%]">
-				How can people get in touch with{ ' ' }
+				{ __( 'How can people get in touch with ', 'astra-sites' ) }
 				<StyledText text={ businessName } />?
 			</div>
 			{ /* Subheading */ }
 			<div className="text-zip-body-text text-[16px] font-normal leading-6">
-				Please provide the contact information details below. These will
-				be used on the website.
+				{ __(
+					'Please provide the contact information details below. These will be used on the website.',
+					'astra-sites'
+				) }
 			</div>
 
 			<div className="space-y-5">
@@ -175,14 +184,17 @@ const BusinessContact = ( {
 						type="text"
 						name="email"
 						id="email"
-						label="Email"
-						placeholder="Your email"
+						label={ __( 'Email', 'astra-sites' ) }
+						placeholder={ __( 'Your email', 'astra-sites' ) }
 						register={ register }
 						error={ errors.email }
 						validations={ {
 							pattern: {
 								value: EMAIL_VALIDATION_REGEX,
-								message: 'Please enter a valid email',
+								message: __(
+									'Please enter a valid email',
+									'astra-sites'
+								),
 							},
 						} }
 						height="[48px]"
@@ -192,14 +204,17 @@ const BusinessContact = ( {
 						type="text"
 						name="phone"
 						id="phone"
-						label="Phone Number"
-						placeholder="Your phone number"
+						label={ __( 'Phone Number', 'astra-sites' ) }
+						placeholder={ __( 'Your phone number', 'astra-sites' ) }
 						register={ register }
 						error={ errors.phone }
 						validations={ {
 							pattern: {
 								value: PHONE_VALIDATION_REGEX,
-								message: 'Please enter a valid phone number',
+								message: __(
+									'Please enter a valid phone number',
+									'astra-sites'
+								),
 							},
 						} }
 						height="[48px]"
@@ -209,7 +224,7 @@ const BusinessContact = ( {
 					rows={ 4 }
 					name="address"
 					id="address"
-					label="Address"
+					label={ __( 'Address', 'astra-sites' ) }
 					placeholder=""
 					register={ register }
 					error={ errors.address }

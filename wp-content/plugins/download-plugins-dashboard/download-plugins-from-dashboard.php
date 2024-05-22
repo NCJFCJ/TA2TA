@@ -3,9 +3,9 @@
 Plugin Name: Download Plugins and Themes from Dashboard
 Plugin URI: https://wpfactory.com/item/download-plugins-and-themes-from-dashboard/
 Description: Download installed plugins and themes ZIP files directly from your admin dashboard without using FTP.
-Version: 1.8.5
+Version: 1.8.7
 Author: WPFactory
-Copyright: © 2023 WPFactory
+Copyright: © 2024 WPFactory
 Author URI: https://wpfactory.com
 Text Domain: download-plugins-dashboard
 Domain Path: /langs
@@ -34,7 +34,7 @@ if ( 'download-plugins-from-dashboard.php' === basename( __FILE__ ) ) {
 
 // Plugin version constant
 if ( ! defined( 'ALG_DOWNLOAD_PLUGINS_VERSION' ) ) {
-	define( 'ALG_DOWNLOAD_PLUGINS_VERSION', '1.8.5' );
+	define( 'ALG_DOWNLOAD_PLUGINS_VERSION', '1.8.7' );
 }
 
 // Plugin file constant

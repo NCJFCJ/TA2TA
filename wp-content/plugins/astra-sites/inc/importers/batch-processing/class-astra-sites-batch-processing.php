@@ -145,9 +145,6 @@ if ( ! class_exists( 'Astra_Sites_Batch_Processing' ) ) :
 			// Prepare Misc.
 			require_once ASTRA_SITES_DIR . 'inc/importers/batch-processing/class-astra-sites-batch-processing-misc.php';
 
-			// Prepare Images.
-			require_once ASTRA_SITES_DIR . 'inc/importers/batch-processing/class-astra-sites-batch-processing-images.php';
-
 			// Prepare Cleanup.
 			require_once ASTRA_SITES_DIR . 'inc/importers/batch-processing/class-astra-sites-batch-processing-cleanup.php';
 
@@ -382,7 +379,7 @@ if ( ! class_exists( 'Astra_Sites_Batch_Processing' ) ) :
 				'timeout' => 60,
 			);
 
-			$response = wp_remote_get( trailingslashit( Astra_Sites::get_instance()->get_api_domain() ) . 'wp-json/astra-sites/v1/get-last-export-checksums', $api_args );
+			$response = wp_safe_remote_get( trailingslashit( Astra_Sites::get_instance()->get_api_domain() ) . 'wp-json/astra-sites/v1/get-last-export-checksums', $api_args );
 			if ( ! is_wp_error( $response ) || wp_remote_retrieve_response_code( $response ) === 200 ) {
 				$result = json_decode( wp_remote_retrieve_body( $response ), true );
 
@@ -715,7 +712,7 @@ if ( ! class_exists( 'Astra_Sites_Batch_Processing' ) ) :
 				'timeout' => 60,
 			);
 
-			$response = wp_remote_get( trailingslashit( Astra_Sites::get_instance()->get_api_domain() ) . 'wp-json/astra-sites/v1/get-total-pages/?per_page=15', $api_args );
+			$response = wp_safe_remote_get( trailingslashit( Astra_Sites::get_instance()->get_api_domain() ) . 'wp-json/astra-sites/v1/get-total-pages/?per_page=15', $api_args );
 			if ( ! is_wp_error( $response ) || wp_remote_retrieve_response_code( $response ) === 200 ) {
 				$total_requests = json_decode( wp_remote_retrieve_body( $response ), true );
 
@@ -756,7 +753,7 @@ if ( ! class_exists( 'Astra_Sites_Batch_Processing' ) ) :
 
 			$api_url = add_query_arg( $query_args, trailingslashit( Astra_Sites::get_instance()->get_api_domain() ) . 'wp-json/astra-blocks/v1/get-blocks-count/' );
 
-			$response = wp_remote_get( $api_url, $api_args );
+			$response = wp_safe_remote_get( $api_url, $api_args );
 			if ( ! is_wp_error( $response ) || wp_remote_retrieve_response_code( $response ) === 200 ) {
 				$total_requests = json_decode( wp_remote_retrieve_body( $response ), true );
 
@@ -954,21 +951,6 @@ if ( ! class_exists( 'Astra_Sites_Batch_Processing' ) ) :
 
 			// Add "customizer" in import [queue].
 			$classes[] = Astra_Sites_Batch_Processing_Customizer::get_instance();
-
-			$all_attachments = get_option( 'st_attachments', array() );
-			$count = count( $all_attachments );
-
-			if ( ! empty( $count ) ) {
-				$no_of_times = (int) ceil( $count / 10 ); // Divide in chunks of 10.
-
-				for ( $i = 1; $i <= $no_of_times; $i++ ) {
-					// Add Image Processing in chunks of 10.
-					$classes[] = new Astra_Sites_Batch_Processing_Images();
-				}
-
-				$classes[] = new Astra_Sites_Batch_Processing_Cleanup();
-			}
-
 			if ( defined( 'WP_CLI' ) ) {
 				WP_CLI::line( 'Batch Process Started..' );
 				// Process all classes.

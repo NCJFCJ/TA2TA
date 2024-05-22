@@ -1,13 +1,16 @@
 
 #{$table-class} {
 
+	&.visible {
+		visibility: visible;
+	}
+
 	// Button column
 	td a.posts-table-button {
 		font-size: inherit;
 		display: inline-block;
 		line-height: 1.4;
 		padding: 7px 20px;
-		visibility: visible;
 		word-break: normal;
 		text-decoration: none;
 

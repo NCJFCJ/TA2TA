@@ -53,7 +53,6 @@ const ClassicPreview = () => {
 	const setNextStep = () => {
 		dispatch( {
 			type: 'set',
-			// currentCustomizeIndex: currentCustomizeIndex + 1,
 			currentIndex: currentIndex + 1,
 		} );
 	};

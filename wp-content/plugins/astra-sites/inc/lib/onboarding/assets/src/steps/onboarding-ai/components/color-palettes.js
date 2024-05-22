@@ -7,13 +7,11 @@ import {
 	DARK_PALETTES,
 } from '../../customize-site/customize-steps/site-colors-typography/colors';
 import { useStateValue } from '../../../store/store';
-// import {
-// 	getColorScheme,
-// 	getDefaultColorPalette,
-// } from '../../../utils/functions';
 import { sendPostMessage as dispatchPostMessage } from '../utils/helpers';
 import { STORE_KEY } from '../store';
 import DropdownList from './dropdown-list';
+import { Tiles } from '../../ui/icons';
+import { __ } from '@wordpress/i18n';
 
 const getColorScheme = ( value ) => {
 	if ( Array.isArray( value ) ) {
@@ -46,6 +44,9 @@ const ColorPalettes = () => {
 	};
 
 	const handleChange = ( palette ) => {
+		if ( palette?.slug === selectedPalette?.slug ) {
+			return;
+		}
 		sendPostMessage( {
 			param: 'colorPalette',
 			data: palette,
@@ -68,46 +69,29 @@ const ColorPalettes = () => {
 					slug: 'default',
 					title:
 						defaultColorPalettes.length > 1
-							? `Default Colors ${ index + 1 }`
-							: 'Default Colors',
+							? `Original ${ index + 1 }`
+							: 'Original',
 					colors: palette,
 			  } ) )
 			: [];
 		const scheme = getColorScheme( selectedTemplateItem?.color_scheme );
 
-		/* const customColors =
-			templateResponse?.[ 'astra-custom-palettes' ] || [];
-		if ( customColors.length && customColors.length % 2 === 0 ) {
-			let colors = customColors;
+		const customColorsOptions = {
+			slug: 'custom',
+			title: 'Custom',
+			colors: [],
+		};
 
-			const customColorsSet = [];
-			colors.map( ( value ) => {
-				const obj = {
-					slug: value.slug,
-					title: value.slug,
-				};
-				const sampleColors = [ ...scheme[ 0 ].colors ];
-				sampleColors[ 0 ] = value.colors[ 0 ];
-				sampleColors[ 1 ] = value.colors[ 1 ];
-				obj.colors = sampleColors;
-				customColorsSet.push( obj );
-				return customColorsSet;
-			} );
-			colors = [ ...customColorsSet, ...scheme ];
-			colors.map( ( value, i ) => {
-				colors[ i ].title = 'Style' + ( i + 1 );
-				colors[ i ].slug = 'style-' + ( i + 1 );
-				return colors;
-			} );
-
-			scheme = colors;
-		} */
-
-		setColorScheme( [ ...defaultPaletteValues, ...scheme ] );
+		setColorScheme( [
+			...defaultPaletteValues,
+			...scheme,
+			customColorsOptions,
+		] );
 		if ( ! selectedPalette ) {
 			dispatch( {
 				type: 'set',
 				aiActivePallette: defaultPaletteValues[ 0 ],
+				defaultPalette: defaultPaletteValues[ 0 ],
 			} );
 		}
 	}, [] );
@@ -134,7 +118,7 @@ const ColorPalettes = () => {
 				<>
 					<div className="flex items-center justify-between">
 						<DropdownList.Label className="text-zip-dark-theme-heading text-sm font-normal">
-							Color Palette
+							{ __( 'Color Palette', 'astra-sites' ) }
 						</DropdownList.Label>
 						<button
 							key="reset-to-default-colors"
@@ -157,20 +141,28 @@ const ColorPalettes = () => {
 						<DropdownList.Button className="text-sm text-zip-dark-theme-heading font-semibold bg-transparent border border-solid border-zip-dark-theme-border">
 							<div className="flex justify-start items-center gap-3">
 								<div className="w-[30px] h-5">
-									<span
-										className="inline-block w-[20px] h-full"
-										style={ {
-											background:
-												selectedPalette?.colors?.[ 1 ],
-										} }
-									/>
-									<span
-										className="inline-block w-[10px] h-full"
-										style={ {
-											background:
-												selectedPalette?.colors?.[ 0 ],
-										} }
-									/>
+									{ selectedPalette?.colors?.length !== 0 ? (
+										<>
+											<span
+												className="inline-block w-[20px] h-full"
+												style={ {
+													background:
+														selectedPalette
+															?.colors?.[ 1 ],
+												} }
+											/>
+											<span
+												className="inline-block w-[10px] h-full"
+												style={ {
+													background:
+														selectedPalette
+															?.colors?.[ 0 ],
+												} }
+											/>
+										</>
+									) : (
+										<Tiles className="!shrink-0 w-full h-full" />
+									) }
 								</div>
 								<span className="block truncate">
 									{ selectedPalette?.title }
@@ -202,22 +194,29 @@ const ColorPalettes = () => {
 									{ ( { selected } ) => (
 										<>
 											<div className="w-[30px] h-5">
-												<span
-													className="inline-block w-[20px] h-full"
-													style={ {
-														background:
-															colorPalette
-																?.colors?.[ 1 ],
-													} }
-												/>
-												<span
-													className="inline-block w-[10px] h-full"
-													style={ {
-														background:
-															colorPalette
-																?.colors?.[ 0 ],
-													} }
-												/>
+												{ colorPalette?.colors
+													?.length !== 0 ? (
+													<>
+														<span
+															className="inline-block w-[20px] h-full"
+															style={ {
+																background:
+																	colorPalette
+																		?.colors?.[ 1 ],
+															} }
+														/>
+														<span
+															className="inline-block w-[10px] h-full"
+															style={ {
+																background:
+																	colorPalette
+																		?.colors?.[ 0 ],
+															} }
+														/>
+													</>
+												) : (
+													<Tiles className="!shrink-0 w-full h-full" />
+												) }
 											</div>
 											<span
 												className={ classNames(

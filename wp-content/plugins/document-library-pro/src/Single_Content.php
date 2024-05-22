@@ -157,7 +157,28 @@ class Single_Content implements Registerable, Service {
 						add_filter( 'post_thumbnail_html', [ $this, 'remove_featured_image' ], 999, 1 );
 
 						echo '</div>';
-					endif; ?>
+
+					else:
+						$attachment_id = get_post_meta(get_the_ID(), '_dlp_attached_file_id', true);
+						$attachment = wp_get_attachment_url($attachment_id);
+						$image_url = str_replace('.pdf','-pdf.jpg', $attachment);
+						$image_url = str_replace('--pdf','-pdf', $image_url); //some cases have double -- causes image not to be found
+						echo '<div class="container-image-document"><img class="image-document" src="' . $image_url . '" /></div>';
+					endif; 
+					?>
+
+					<?php if ( in_array( 'custom-fields', $display_options, true ) && $custom_fields = $document->get_custom_fields_list() ) : ?>
+					<?php foreach ( $custom_fields as $custom_field ){ ?>
+					<div class="dlp-document-info-custom-fields">
+						<span class="dlp-document-info-title"><?php echo $custom_field['label']; ?>:</span>
+						<?php echo $custom_field['value']; ?>
+					</div>
+					<?php } 
+					 endif; 
+				?>
+
+
+
 				<?php 
 					if ( $document->get_download_url() ) :
 						Frontend_Scripts::load_download_count_scripts(); 
@@ -203,14 +224,7 @@ class Single_Content implements Registerable, Service {
 					</div>
 				<?php endif; ?>
 
-				<?php if ( in_array( 'custom-fields', $display_options, true ) && $custom_fields = $document->get_custom_fields_list() ) : ?>
-					<?php foreach ( $custom_fields as $custom_field ){ ?>
-					<div class="dlp-document-info-custom-fields">
-						<span class="dlp-document-info-title"><?php echo $custom_field['label']; ?>:</span>
-						<?php echo $custom_field['value']; ?>
-					</div>
-					<?php } ?>
-				<?php endif; ?>
+				
 
 				<?php if ( in_array( 'download_count', $display_options, true ) && $document->get_download_count() ) : ?>
 					<div class="dlp-document-info-downloads">

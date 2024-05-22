@@ -168,21 +168,23 @@
     margin: 20px 0;
 }
 
-.dlp-grid-header {
-    justify-content: space-between;
-}
-
+.dlp-grid-header,
 .dlp-grid-footer {
     justify-content: flex-end;
 
     > div {
         margin-left: 25px;
     }
+
+    > .dlp-grid-filters {
+        margin-left: 0;
+    }
 }
 
 .dlp-grid-filters {
     display: flex;
     align-items: center;
+    margin-right: auto;
 }
 
 .dlp-grid-search input[type="search"],
@@ -215,6 +217,7 @@
 
 .dlp-grid-reset {
     margin-left: 20px;
+    display: none;
 
     a {
         display: flex;

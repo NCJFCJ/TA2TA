@@ -36,8 +36,6 @@ if ( ! class_exists( 'WP_Sheet_Editor_Serialized_Field' ) ) {
 			// Priority 12 to allow to instantiate from another editor/before_init function
 			add_action( 'vg_sheet_editor/editor/register_columns', array( $this, 'register_columns' ), $this->settings['column_init_priority'] );
 
-			add_filter( 'vg_sheet_editor/provider/user/get_item_meta', array( $this, 'filter_cell_data_for_readings_user' ), 10, 5 );
-			add_filter( 'vg_sheet_editor/provider/post/get_item_meta', array( $this, 'filter_cell_data_for_readings_post' ), 10, 5 );
 			add_filter( 'vg_sheet_editor/formulas/sql_execution/can_execute', array( $this, 'can_execute_sql_formula' ), 10, 4 );
 
 			if ( ! empty( $this->settings['allow_in_wc_product_variations'] ) ) {
@@ -63,20 +61,6 @@ if ( ! class_exists( 'WP_Sheet_Editor_Serialized_Field' ) ) {
 			return false;
 		}
 
-		function filter_cell_data_for_readings_user( $value, $id, $key, $single, $context ) {
-			if ( strpos( $key, $this->settings['sample_field_key'] ) === false || $context !== 'read' || ! $this->post_type_has_serialized_field( 'user' ) ) {
-				return $value;
-			}
-			return $this->filter_cell_data_for_readings( $value, $id, $key );
-		}
-
-		function filter_cell_data_for_readings_post( $value, $id, $key, $single, $context ) {
-			if ( strpos( $key, $this->settings['sample_field_key'] ) === false || $context !== 'read' || ! $this->post_type_has_serialized_field( get_post_type( $id ) ) ) {
-				return $value;
-			}
-			return $this->filter_cell_data_for_readings( $value, $id, $key );
-		}
-
 		function preload_all_subfield_column_data( $data, $posts, $wp_query_args, $settings, $spreadsheet_columns ) {
 			if ( ! $this->post_type_has_serialized_field( $settings['post_type'] ) ) {
 				return $data;
@@ -91,8 +75,6 @@ if ( ! class_exists( 'WP_Sheet_Editor_Serialized_Field' ) ) {
 				return $data;
 			}
 
-			remove_filter( 'vg_sheet_editor/provider/user/get_item_meta', array( $this, 'filter_cell_data_for_readings_user' ), 10, 5 );
-			remove_filter( 'vg_sheet_editor/provider/post/get_item_meta', array( $this, 'filter_cell_data_for_readings_post' ), 10, 5 );
 			foreach ( $posts as $post ) {
 				$serialized_columns_values = $this->_get_serialized_column_values( $post->ID );
 				$serialized_columns_values = array_intersect_key( $serialized_columns_values, $enabled_sub_columns );

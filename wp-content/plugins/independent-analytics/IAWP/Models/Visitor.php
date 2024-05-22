@@ -3,6 +3,7 @@
 namespace IAWP\Models;
 
 use IAWP\Geoposition;
+use IAWP\Illuminate_Builder;
 use IAWP\Query;
 use IAWP\Utils\Salt;
 /**
@@ -30,7 +31,7 @@ class Visitor
      */
     public function __construct(string $ip, string $user_agent)
     {
-        $this->id = self::calculate_id($ip, $user_agent);
+        $this->id = $this->fetch_visitor_id($this->calculate_hash($ip, $user_agent));
         $this->geoposition = new Geoposition($ip);
     }
     public function geoposition() : Geoposition
@@ -42,12 +43,28 @@ class Visitor
      *
      * @return int|null
      */
-    public function most_recent_view_id() : ?int
+    public function current_view_id() : ?int
     {
         global $wpdb;
         $views_table = Query::get_table_name(Query::VIEWS);
         $sessions_table = Query::get_table_name(Query::SESSIONS);
         $id = $wpdb->get_var($wpdb->prepare("\n                SELECT views.id as id\n                FROM {$views_table} AS views\n                         LEFT JOIN {$sessions_table} AS sessions ON sessions.session_id = views.session_id\n                WHERE sessions.visitor_id = %s\n                ORDER BY views.viewed_at DESC\n                LIMIT 1\n                ", $this->id()));
+        if (\is_null($id)) {
+            return null;
+        }
+        return \intval($id);
+    }
+    /**
+     * Get the id for the most recent view for a visitor
+     *
+     * @return int|null
+     */
+    public function current_session_initial_view_id() : ?int
+    {
+        global $wpdb;
+        $views_table = Query::get_table_name(Query::VIEWS);
+        $sessions_table = Query::get_table_name(Query::SESSIONS);
+        $id = $wpdb->get_var($wpdb->prepare("\n                    SELECT sessions.initial_view_id as id\n                    FROM {$views_table} AS views\n                             LEFT JOIN {$sessions_table} AS sessions ON sessions.session_id = views.session_id\n                    WHERE sessions.visitor_id = %s\n                    ORDER BY views.viewed_at DESC\n                    LIMIT 1\n                    ", $this->id()));
         if (\is_null($id)) {
             return null;
         }
@@ -67,10 +84,16 @@ class Visitor
      * @param string $user_agent
      * @return string
      */
-    private function calculate_id(string $ip, string $user_agent) : string
+    private function calculate_hash(string $ip, string $user_agent) : string
     {
         $salt = Salt::visitor_token_salt();
         $result = $salt . $ip . $user_agent;
         return \md5($result);
+    }
+    private function fetch_visitor_id(string $hash) : int
+    {
+        $visitors_table = Query::get_table_name(Query::VISITORS);
+        Illuminate_Builder::get_builder()->from($visitors_table)->insertOrIgnore([['hash' => $hash]]);
+        return Illuminate_Builder::get_builder()->from($visitors_table)->where('hash', '=', $hash)->value('visitor_id');
     }
 }

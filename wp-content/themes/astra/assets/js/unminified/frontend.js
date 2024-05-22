@@ -285,17 +285,24 @@ astScrollToTopHandler = function ( masthead, astScrollTop ) {
 
 		}
 
-		for ( var j = 0; j < parent_li_sibling.length; j++ ) {
-
-			parent_li_sibling[j].classList.remove('ast-submenu-expanded');
-
-			var all_sub_menu = parent_li_sibling[j].querySelectorAll('.sub-menu');
-			for ( var k = 0; k < all_sub_menu.length; k++ ) {
-				all_sub_menu[k].style.display = 'none';
-			}
-		}
-
-		var popupTrigger = document.querySelectorAll( '.menu-toggle' );
+		parent_li_sibling.forEach((li_sibling) => {
+			li_sibling.classList.remove('ast-submenu-expanded');
+		
+			const all_sub_menu = Array.from(li_sibling.querySelectorAll('.sub-menu'));
+			all_sub_menu.forEach((sub_menu) => {
+				if (!sub_menu.hasAttribute('data-initial-display')) {
+					sub_menu.setAttribute('data-initial-display', window.getComputedStyle(sub_menu).display);
+				}
+		
+				if (sub_menu.getAttribute('data-initial-display') === 'block') {
+					sub_menu.style.display = 'block';
+				} else {
+					sub_menu.style.display = 'none';
+				}
+			});
+		});
+		
+        var popupTrigger = document.querySelectorAll( '.menu-toggle' );
 
 		document.body.classList.remove( 'ast-main-header-nav-open', 'ast-popup-nav-open' );
 		document.documentElement.classList.remove( 'ast-off-canvas-active' );
@@ -597,27 +604,31 @@ astScrollToTopHandler = function ( masthead, astScrollTop ) {
 		// Account login form popup.
 		var header_account_trigger =  document.querySelectorAll( '.ast-account-action-login' );
 
-		if ( undefined !== header_account_trigger ) {
+		if (!header_account_trigger.length) {
+			return;
+		}
 
-			var header_account__close_trigger =  document.querySelectorAll( '#ast-hb-login-close' );
-			var login_popup = document.querySelectorAll('#ast-hb-account-login-wrap');
-			if ( 0 < header_account__close_trigger.length ) {
-				for ( let index = 0; index < header_account_trigger.length; index++ ) {
+		const formWrapper = document.querySelector('#ast-hb-account-login-wrap');
 
-					header_account_trigger[ index ].onclick = function (event) {
-						event.preventDefault();
-						event.stopPropagation();
-						if ( ! login_popup[ index ].classList.contains('show')) {
-							login_popup[ index ].classList.add('show');
-						}
-					};
+		if (!formWrapper) {
+			return;
+		}
 
-					header_account__close_trigger[ index ].onclick = function (event) {
-						event.preventDefault();
-						login_popup[ index ].classList.remove('show');
-					};
-				}
-			}
+		const formCloseBtn = document.querySelector('#ast-hb-login-close');
+
+		header_account_trigger.forEach(function(_trigger) {
+			_trigger.addEventListener('click', function(e) {
+				e.preventDefault();
+
+				formWrapper.classList.add('show');
+			});
+		});
+
+		if (formCloseBtn) {
+			formCloseBtn.addEventListener('click', function(e) {
+				e.preventDefault();
+				formWrapper.classList.remove('show');
+			});
 		}
 	}
 
@@ -1267,4 +1278,18 @@ astScrollToTopHandler = function ( masthead, astScrollTop ) {
 			}
 		});
 	}
+
+	/**
+	 * To remove the blank space when the store notice gets dismissed.
+	 *
+	 * @since x.x.x
+	 */
+	window.addEventListener('DOMContentLoaded', (event) => {
+		document
+			.querySelector('.woocommerce-store-notice__dismiss-link')
+			?.addEventListener('click', () =>
+				!wp?.customize && document.body.classList.remove('ast-woocommerce-store-notice-hanged')
+			);
+	});
+
 })();

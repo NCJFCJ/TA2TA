@@ -151,7 +151,7 @@ if ( ! class_exists( 'Astra_Sites_Batch_Processing_Gutenberg' ) ) :
 			}
 
 			// This replaces the category ID in UAG Post blocks.
-			$site_options = get_option( 'astra_sites_import_data', array() );
+			$site_options = Astra_Sites_File_System::get_instance()->get_demo_content();
 
 			if ( isset( $site_options['astra-site-taxonomy-mapping'] ) ) {
 
@@ -256,7 +256,7 @@ if ( ! class_exists( 'Astra_Sites_Batch_Processing_Gutenberg' ) ) :
 
 			// Step 2: Replace the demo site URL with live site URL.
 			if ( ! empty( $other_links ) ) {
-				$demo_data = get_option( 'astra_sites_import_data', array() );
+				$demo_data = Astra_Sites_File_System::get_instance()->get_demo_content();
 				if ( isset( $demo_data['astra-site-url'] ) ) {
 					$site_url = get_site_url();
 					foreach ( $other_links as $key => $link ) {
@@ -267,10 +267,13 @@ if ( ! class_exists( 'Astra_Sites_Batch_Processing_Gutenberg' ) ) :
 
 			// Step 3: Replace mapping links.
 			foreach ( $link_mapping as $old_url => $new_url ) {
+				if ( ! is_string( $old_url ) ) {
+					continue;
+				}
 				$content = str_replace( $old_url, $new_url, $content );
 
 				// Replace the slashed URLs if any exist.
-				$old_url = str_replace( '/', '/\\', $old_url );
+				$old_url = str_replace( '/', '/\\', (string) $old_url );
 				$new_url = str_replace( '/', '/\\', $new_url );
 				$content = str_replace( $old_url, $new_url, $content );
 			}

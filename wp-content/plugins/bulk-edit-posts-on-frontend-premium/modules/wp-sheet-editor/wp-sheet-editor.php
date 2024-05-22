@@ -32,7 +32,7 @@ if ( ! class_exists( 'WP_Sheet_Editor' ) ) {
 	class WP_Sheet_Editor {
 
 		private $post_type;
-		public $version     = '2.25.9';
+		public $version     = '2.25.13';
 		public $textname    = 'vg_sheet_editor';
 		public $options_key = 'vg_sheet_editor';
 		public $plugin_url  = null;
@@ -50,6 +50,7 @@ if ( ! class_exists( 'WP_Sheet_Editor' ) ) {
 		public $registered_columns = null;
 		public $toolbar            = null;
 		public $columns            = null;
+		public $WC                 = null;
 		public $support_links      = array();
 		public $extensions         = array();
 		public $bundles            = array();
@@ -57,7 +58,8 @@ if ( ! class_exists( 'WP_Sheet_Editor' ) ) {
 		private static $instance   = null;
 		public $current_provider   = null;
 		/**
-		 * Registered editors instances
+		 * Registered editors instances grouped by provider key
+		 * I.e. all the editors that use the "post" provider, would appear as enabled_post_types in the "post" WP_Sheet_Editor_Factory instance
 		 *
 		 * @var WP_Sheet_Editor_Factory[]
 		 */
@@ -95,7 +97,7 @@ if ( ! class_exists( 'WP_Sheet_Editor' ) ) {
 		}
 
 		public static function allow_to_initialize() {
-			if ( ! is_admin() && ! ( defined( 'WP_CLI' ) && WP_CLI ) && ! wp_doing_cron() && ! apply_filters( 'vg_sheet_editor/allowed_on_frontend', false ) ) { 
+			if ( ! is_admin() && ! ( defined( 'WP_CLI' ) && WP_CLI ) && ! wp_doing_cron() && ! apply_filters( 'vg_sheet_editor/allowed_on_frontend', false ) ) {
 				return false;
 			}
 			return true;
@@ -145,10 +147,10 @@ if ( ! class_exists( 'WP_Sheet_Editor' ) ) {
 				'be_post_types'              => array(
 					'post',
 				),
-				'be_posts_per_page'          => 20,
+				'be_posts_per_page'          => 40,
 				'be_load_items_on_scroll'    => 1,
 				'be_fix_columns_left'        => 2,
-				'be_posts_per_page_save'     => 4,
+				'be_posts_per_page_save'     => 8,
 				'be_timeout_between_batches' => 6,
 				'be_disable_post_actions'    => 0,
 			);
@@ -163,7 +165,7 @@ if ( ! class_exists( 'WP_Sheet_Editor' ) ) {
 
 			do_action( 'vg_sheet_editor/initialized' );
 
-			$post_type = $options['be_post_types'];
+			$post_type       = $options['be_post_types'];
 			$this->post_type = $post_type;
 
 			$this->plugin_url = plugins_url( '/', __FILE__ );
@@ -277,7 +279,7 @@ if ( ! class_exists( 'WP_Sheet_Editor' ) ) {
 						'bundle'                => false,
 						'class_function_name'   => 'VGSE_WC_ORDERS_IS_PREMIUM',
 						'wp_org_slug'           => '',
-						'post_types'            => array( 'shop_order', $GLOBALS['wpdb']->prefix . 'wc_orders' ),
+						'post_types'            => array( 'shop_order', $GLOBALS['wpdb']->prefix . 'wc_orders', 'shop_subscription' ),
 						'extension_id'          => 79,
 					),
 					'comments'            => array(
@@ -657,6 +659,23 @@ if ( ! class_exists( 'WP_Sheet_Editor' ) ) {
 			add_action( 'user_register', array( $this, 'clear_cache_after_user_created' ), 10, 1 );
 			add_action( 'vg_sheet_editor/on_uninstall', array( $this, 'on_uninstall' ) );
 			add_action( 'admin_page_access_denied', array( $this, 'catch_license_page_error' ) );
+			$this->maybe_auto_enable_sheet();
+		}
+
+		function maybe_auto_enable_sheet() {
+			if ( empty( $_GET['wpse_auto_enable_sheet'] ) || ! is_admin() || ! VGSE()->helpers->user_can_manage_options() || ! VGSE()->helpers->is_editor_page() || ! VGSE()->helpers->verify_nonce_from_request( '_wpnonce' ) ) {
+				return;
+			}
+
+			$post_types        = VGSE()->get_option( 'be_post_types' );
+			$current_sheet_key = VGSE()->helpers->get_provider_from_query_string( false );
+			if ( $current_sheet_key && ! in_array( $current_sheet_key, $post_types, true ) ) {
+				$post_types[] = $current_sheet_key;
+				VGSE()->update_option( 'be_post_types', $post_types );
+				$redirect_to = esc_url_raw( remove_query_arg( array( '_wpnonce', 'wpse_auto_enable_sheet' ) ) );
+				wp_safe_redirect( $redirect_to );
+				exit();
+			}
 		}
 
 		function catch_license_page_error() {
@@ -1412,7 +1431,7 @@ if ( ! function_exists( 'VGSE' ) ) {
 	if ( is_admin() || wp_doing_cron() || ( defined( 'WP_CLI' ) && WP_CLI ) ) {
 		add_action( 'wp_loaded', 'vgse_init', 999 );
 	} else {
-		// Priority 9 because the Google Sheets Sync needs the WPSE core to initialize before the front end forms save their submissions to be able to detect the changes and sync 
+		// Priority 9 because the Google Sheets Sync needs the WPSE core to initialize before the front end forms save their submissions to be able to detect the changes and sync
 		add_action( 'wp', 'vgse_init', 9 );
 	}
 }

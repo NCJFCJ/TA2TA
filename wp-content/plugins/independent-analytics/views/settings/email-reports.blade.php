@@ -6,7 +6,6 @@
         </a>
         <div class="pro-tag"><?php esc_html_e('Pro', 'independent-analytics'); ?></div>
     </div>
-    <p><?php esc_html_e('The HTML email report is automatically scheduled for the 1st of every month.', 'independent-analytics'); ?></p>
     <form method='post' action='options.php' id="email-reports-form" class="email-reports-form">
         <input type='hidden' name='option_page' value='iawp_email_report_settings'/>
         <input type="hidden" name="action" value="update"/>
@@ -14,6 +13,22 @@
                value="/wp-admin/admin.php?page=independent-analytics-settings">
         <?php wp_nonce_field('iawp_email_report_settings-options'); ?>
         <div class="inner">
+            <p id="next-email" class="next-email <?php echo $is_scheduled ? 'scheduled' : 'no-email'; ?>" 
+                data-test-date="<?php echo wp_strip_all_tags($date_comparison); ?>">
+                <span class="dashicons dashicons-yes-alt"></span><span class="dashicons dashicons-dismiss"></span> 
+                <?php echo wp_kses_post($scheduled_date); ?>
+            </p>
+            <div class="delivery-interval iawp-section">
+                <h3><?php esc_html_e('Delivery Interval', 'independent-analytics'); ?></h3>
+                <select id="iawp_email_report_interval" name="iawp_email_report_interval">
+                    <option value="monthly" <?php selected($interval, 'monthly', true); ?>><?php esc_html_e('Monthly', 'independent-analytics'); ?></option>
+                    <option value="weekly" <?php selected($interval, 'weekly', true); ?>><?php esc_html_e('Weekly', 'independent-analytics'); ?></option>
+                    <option value="daily" <?php selected($interval, 'daily', true); ?>><?php esc_html_e('Daily', 'independent-analytics'); ?></option>
+                </select>
+                <p id="monthly-interval-note" class="interval-note"><?php esc_html_e('The email will be delivered on the 1st of every month.', 'independent-analytics'); ?></p>
+                <p id="weekly-interval-note" class="interval-note"><?php esc_html_e('The email will be delivered on the first day of the week (selected in the settings above).', 'independent-analytics'); ?></p>
+                <p id="daily-interval-note" class="interval-note"><?php esc_html_e('The email will be delivered every day.', 'independent-analytics'); ?></p>
+            </div>
             <div class="delivery-time iawp-section">
                 <h3><?php esc_html_e('Delivery Time', 'independent-analytics'); ?></h3>
                 <select id="iawp_email_report_time" name="iawp_email_report_time">
@@ -106,10 +121,15 @@
                 </div>
             </div>
             <div class="save-button-container">
-                <?php submit_button(esc_html__('Save settings', 'independent-analytics'), 'iawp-button purple', 'save-email-report-settings', false); ?>
-                <button id="test-email" class="test-email iawp-button ghost-purple"><?php esc_html_e('Send test email', 'independent-analytics'); ?></button>
+                <?php submit_button(esc_html__('Save settings', 'independent-analytics'), 'save-email iawp-button purple', 'save-email-report-settings', false); ?>
+                <button id="preview-email" class="preview-email iawp-button ghost-purple"><span class="dashicons dashicons-visibility"></span> <?php esc_html_e('Preview email', 'independent-analytics'); ?></button>
+                <button id="test-email" class="test-email iawp-button ghost-purple"><span class="dashicons dashicons-email-alt2"></span> <?php esc_html_e('Send test email', 'independent-analytics'); ?></button>
                 <p class="warning-message"><span class="dashicons dashicons-warning"></span> <?php esc_html_e('Unsaved changes', 'independent-analytics'); ?></p>
             </div>
         </div>
     </form>
+</div>
+<div id="email-preview-container" class="email-preview-container">
+    <div id="email-preview" class="email-preview"></div>
+    <button id="close-email-preview" class="close-email-preview"><span class="dashicons dashicons-dismiss"></span></button>
 </div>

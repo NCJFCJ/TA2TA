@@ -3,15 +3,13 @@ import { ArrowPathIcon, ChevronDownIcon } from '@heroicons/react/24/outline';
 import { useSelect } from '@wordpress/data';
 import { classNames } from '../helpers';
 import { FONTS } from '../../customize-site/customize-steps/site-colors-typography/other-fonts';
-import {
-	// getDefaultTypography,
-	getHeadingFonts,
-} from '../../../utils/functions';
+import { getHeadingFonts } from '../../../utils/functions';
 import { getFontName } from '../customize-ai-site/customize-ai-steps/site-colors-typography-ai/font-selector';
 import { useStateValue } from '../../../store/store';
 import { sendPostMessage as dispatchPostMessage } from '../utils/helpers';
 import { STORE_KEY } from '../store';
 import DropdownList from './dropdown-list';
+import { __ } from '@wordpress/i18n';
 
 const FontSelector = () => {
 	const [ { aiActiveTypography }, dispatch ] = useStateValue();
@@ -194,7 +192,7 @@ const FontSelector = () => {
 				<>
 					<div className="flex items-center justify-between">
 						<DropdownList.Label className="text-zip-dark-theme-heading text-sm font-semibold">
-							Font Pair
+							{ __( 'Font Pair', 'astra-sites' ) }
 						</DropdownList.Label>
 						<button
 							key="reset-to-default-fonts"

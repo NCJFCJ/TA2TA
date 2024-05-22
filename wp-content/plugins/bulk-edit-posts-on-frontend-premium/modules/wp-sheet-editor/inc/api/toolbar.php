@@ -4,15 +4,15 @@ if ( ! class_exists( 'WP_Sheet_Editor_Toolbar' ) ) {
 
 	class WP_Sheet_Editor_Toolbar {
 
-		private $registered_items = array();
+		private static $registered_items = array();
 
 		function __construct() {
 
 		}
 
 		function remove_item( $key, $toolbar_key, $provider ) {
-			if ( isset( $this->registered_items[ $provider ][ $toolbar_key ][ $key ] ) ) {
-				unset( $this->registered_items[ $provider ][ $toolbar_key ][ $key ] );
+			if ( isset( self::$registered_items[ $provider ][ $toolbar_key ][ $key ] ) ) {
+				unset( self::$registered_items[ $provider ][ $toolbar_key ][ $key ] );
 			}
 		}
 
@@ -23,8 +23,8 @@ if ( ! class_exists( 'WP_Sheet_Editor_Toolbar' ) ) {
 		 * @param string $provider
 		 */
 		function register_item( $key, $args = array(), $provider = 'post', $update_existing = false ) {
-			if ( $update_existing && isset( $this->registered_items[ $provider ][ $args['toolbar_key'] ][ $key ] ) ) {
-				$args = wp_parse_args( $args, $this->registered_items[ $provider ][ $args['toolbar_key'] ][ $key ] );
+			if ( $update_existing && isset( self::$registered_items[ $provider ][ $args['toolbar_key'] ][ $key ] ) ) {
+				$args = wp_parse_args( $args, self::$registered_items[ $provider ][ $args['toolbar_key'] ][ $key ] );
 			}
 			$defaults = array(
 				'type'                       => 'button', // html | switch | button
@@ -67,13 +67,13 @@ if ( ! class_exists( 'WP_Sheet_Editor_Toolbar' ) ) {
 				return;
 			}
 
-			if ( empty( $this->registered_items[ $provider ] ) ) {
-				$this->registered_items[ $provider ] = array();
+			if ( empty( self::$registered_items[ $provider ] ) ) {
+				self::$registered_items[ $provider ] = array();
 			}
-			if ( empty( $this->registered_items[ $provider ][ $args['toolbar_key'] ] ) ) {
-				$this->registered_items[ $provider ][ $args['toolbar_key'] ] = array();
+			if ( empty( self::$registered_items[ $provider ][ $args['toolbar_key'] ] ) ) {
+				self::$registered_items[ $provider ][ $args['toolbar_key'] ] = array();
 			}
-			$this->registered_items[ $provider ][ $args['toolbar_key'] ][ $key ] = $args;
+			self::$registered_items[ $provider ][ $args['toolbar_key'] ][ $key ] = $args;
 		}
 
 		/**
@@ -219,7 +219,7 @@ if ( ! class_exists( 'WP_Sheet_Editor_Toolbar' ) ) {
 		 * @return array
 		 */
 		function get_items() {
-			$items = apply_filters( 'vg_sheet_editor/toolbar/get_items', $this->registered_items );
+			$items = apply_filters( 'vg_sheet_editor/toolbar/get_items', self::$registered_items );
 
 			return $items;
 		}

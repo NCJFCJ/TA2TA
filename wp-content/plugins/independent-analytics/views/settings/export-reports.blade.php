@@ -38,7 +38,7 @@
     <button class="iawp-button purple" data-export-reports-target="submitButton" data-action="export-reports#export" disabled>{{__('Export Reports', 'independent-analytics')}}</button>
 </div>
 
-<div class="settings-container import-reports" data-controller="import-reports" data-import-reports-database-version-value="{{'27'}}">
+<div class="settings-container import-reports" data-controller="import-reports" data-import-reports-database-version-value="{{'30'}}">
     <div class="heading">
         <h2><?php esc_html_e('Import Custom Reports', 'independent-analytics'); ?></h2>
         <a class="tutorial-link" href="https://independentwp.com/knowledgebase/dashboard/export-import-custom-reports/" target="_blank">

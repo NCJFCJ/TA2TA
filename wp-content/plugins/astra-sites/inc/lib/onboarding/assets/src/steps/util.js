@@ -5,11 +5,11 @@ import SiteList from './site-list';
 import SiteListHeader from './site-list/header';
 import CustomizeSite from './customize-site';
 import ImportSite from './import-site';
-import PageBuilder from './page-builder';
 import Survey from './survey';
 import SiteType from './site-type';
 import OnboardingAi from './onboarding-ai/onboarding-ai';
 import CustomizeAiSite from './onboarding-ai/customize-ai-site';
+import FeaturesStep from './features';
 
 export const STEPS = [
 	{
@@ -27,10 +27,6 @@ export const STEPS = [
 		class: 'step-customizer',
 	},
 	{
-		content: <PageBuilder />,
-		class: 'step-page-builder',
-	},
-	{
 		header: <SiteListHeader />,
 		content: <SiteList />,
 		class: 'step-site-list',
@@ -38,6 +34,10 @@ export const STEPS = [
 	{
 		content: <CustomizeSite />,
 		class: 'step-customizer',
+	},
+	{
+		content: <FeaturesStep />,
+		class: 'step-feature',
 	},
 	{
 		content: <Survey />,

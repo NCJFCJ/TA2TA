@@ -1,17 +1,17 @@
 <?php
 namespace Barn2\Plugin\Document_Library_Pro\Util;
 
-use Barn2\Plugin\Document_Library_Pro\Posts_Table_Pro\Table_Args,
-	Barn2\Plugin\Document_Library_Pro\Posts_Table_Pro\Util\Options as PTP_Options,
-	Barn2\Plugin\Document_Library_Pro\Posts_Table_Pro\Util\Util as PTP_Util;
+use Barn2\Plugin\Document_Library_Pro\Posts_Table_Pro\Table_Args;
+use Barn2\Plugin\Document_Library_Pro\Posts_Table_Pro\Util\Options as PTP_Options;
+use Barn2\Plugin\Document_Library_Pro\Posts_Table_Pro\Util\Util as PTP_Util;
 
 defined( 'ABSPATH' ) || exit;
 
 /**
  * Settings Options Utilities
  *
- * @package   Barn2/document-library-pro
- * @author    Barn2 Plugins <info@barn2.com>
+ * @package   Barn2\document-library-pro
+ * @author    Barn2 Plugins <support@barn2.com>
  * @license   GPL-3.0
  * @copyright Barn2 Media Ltd
  */
@@ -91,7 +91,7 @@ final class Options {
 
 		// Sanitize sort by option.
 		if ( isset( $options['sort_by'] ) && 'custom' === $options['sort_by'] ) {
-			$options['sort_by'] = ! empty( $options['sort_by_custom'] ) ? $options['sort_by_custom'] : $defaults['sort_by'];
+			$options['sort_by'] = ! empty( $options['sort_by_custom'] ) ? $options['sort_by_custom'] : ( $defaults['sort_by'] ?? '' );
 		}
 
 		unset( $options['sort_by_custom'] );
@@ -344,22 +344,22 @@ final class Options {
 
 		// handle shared attributes
 		if ( isset( $args['layout'] ) && in_array( $args['layout'], [ 'table', 'grid' ], true ) ) {
-			$layout = $args['layout'];
+			$args['layout'] = $args['layout'];
 		} else {
-			$layout = Table_Args::get_site_defaults()['layout'];
+			$args['layout'] = Table_Args::get_site_defaults()['layout'];
 		}
 
 		if ( isset( $args['content'] ) ) {
-			if ( $layout === 'grid' ) {
+			if ( $args['layout'] === 'grid' ) {
 				$args['grid_content'] = $args['content'];
 				unset( $args['content'] );
-			} elseif ( $layout === 'table' ) {
+			} elseif ( $args['layout'] === 'table' ) {
 				$args['columns'] = $args['content'];
 				unset( $args['content'] );
 			}
 		}
 
-		if ( isset( $args['folder_status'] ) && 'open' !== $args['folder_status'] && 'close' !== $args['folder_status'] ) {
+		if ( isset( $args['folder_status'] ) && 'open' !== $args['folder_status'] && 'closed' !== $args['folder_status'] ) {
 			$args['folder_status_custom'] = $args['folder_status'];
 			$args['folder_status']        = 'custom';
 		}

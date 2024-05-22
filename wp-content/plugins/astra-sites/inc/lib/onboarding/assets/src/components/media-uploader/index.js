@@ -84,6 +84,9 @@ const MediaUploader = () => {
 			const rangeControl = document.querySelector(
 				'.components-range-control__wrapper'
 			);
+			if ( rangeControl === null ) {
+				return;
+			}
 
 			// Range control slider styling for RTL.
 			const currentValue = rangeControl.children[ 3 ].style.left;

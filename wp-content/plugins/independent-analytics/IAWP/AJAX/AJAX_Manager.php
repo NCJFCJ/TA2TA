@@ -27,6 +27,7 @@ class AJAX_Manager
         $this->instances[] = new \IAWP\AJAX\Filter();
         $this->instances[] = new \IAWP\AJAX\Import_Reports();
         $this->instances[] = new \IAWP\AJAX\Migration_Status();
+        $this->instances[] = new \IAWP\AJAX\Preview_Email();
         $this->instances[] = new \IAWP\AJAX\Real_Time_Data();
         $this->instances[] = new \IAWP\AJAX\Rename_Report();
         $this->instances[] = new \IAWP\AJAX\Reset_Analytics();

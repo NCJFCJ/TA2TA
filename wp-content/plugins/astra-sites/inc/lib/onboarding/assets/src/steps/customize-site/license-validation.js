@@ -1,5 +1,5 @@
 import React, { useEffect, useState } from 'react';
-import { __ } from '@wordpress/i18n';
+import { __, sprintf } from '@wordpress/i18n';
 import { useStateValue } from '../../store/store';
 import { useForm } from 'react-hook-form';
 import Button from '../../components/button/button';
@@ -21,7 +21,6 @@ const LicenseValidation = ( param ) => {
 		{ templateId, currentIndex, validateLicenseStatus, builder },
 		dispatch,
 	] = storedState;
-	//const [ { builder, validateLicenseStatus, templateId }, dispatch ] = useStateValue();
 	const [ alreadyPurchasedClicked, setAlreadyPurchasedClicked ] =
 		useState( false );
 	const [ processing, setProcessing ] = useState( false );
@@ -34,12 +33,12 @@ const LicenseValidation = ( param ) => {
 	}, [] );
 
 	const accessLinkOutput = __(
-		`Get access to this template, and all other templates starting at just $79.`,
+		`Access this template and all others with Essentials & Business Toolkit package starting at just $79.`,
 		'astra-sites'
 	);
 
 	const alreadyPurchasedOutput = __(
-		`Already have purchased Premium Starter Templates? Enter your license key.`,
+		`Please enter your licence key.`,
 		'astra-sites'
 	);
 
@@ -90,6 +89,25 @@ const LicenseValidation = ( param ) => {
 		} );
 	};
 	const processingClass = processing ? 'processing' : '';
+	const StoreLink = sprintf(
+		//translators: %1$s Opening anchor tag %2$s Closing anchor tag.
+		__(
+			`If you have already purchased the Essential or Business Toolkit, please install the premium version of the Starter Templates plugin from our %1$sstore%2$s.`,
+			'astra-sites'
+		),
+		`<a href="https://wpastra.com/support/free-support/" target="_blank">`,
+		`</a>`
+	);
+
+	const SupportTeam = sprintf(
+		//translators: %1$s Opening anchor tag %2$s Closing anchor tag.
+		__(
+			'Need help? feel free to get in touch with our %1$ssupport team%2$s.',
+			'astra-sites'
+		),
+		'<a href="https://wpastra.com/support/free-support/" target="_blank">',
+		'</a>'
+	);
 
 	return (
 		<>
@@ -98,64 +116,82 @@ const LicenseValidation = ( param ) => {
 					<div className="flex gap-2 items-center">
 						<span className="w-5 h-5">{ ICONS.premiumIcon }</span>
 						<h4 className="text-base font-semibold text-16 leading-24 tracking-normal text-left">
-							Premium Template
+							{ __( 'Premium Template', 'astra-sites' ) }
 						</h4>
 					</div>
 					<p>
-						{ ! alreadyPurchasedClicked
-							? accessLinkOutput
-							: alreadyPurchasedOutput }
+						{ ! alreadyPurchasedClicked ? accessLinkOutput : ' ' }
 					</p>
 				</div>
+				{ alreadyPurchasedClicked && ! validateLicenseStatus && (
+					<p>
+						{ __(
+							'You are currently using the Free version.',
+							'astra-sites'
+						) }
+						<br />
+						<span
+							dangerouslySetInnerHTML={ { __html: StoreLink } }
+						/>
+						<br />
+						<span
+							dangerouslySetInnerHTML={ { __html: SupportTeam } }
+						/>
+					</p>
+				) }
+
 				{ alreadyPurchasedClicked && validateLicenseStatus && (
 					<>
+						<p>{ alreadyPurchasedOutput }</p>
 						<form className="" onSubmit={ validateKey }>
-							<Input
-								className="w-full"
-								inputClassName="pr-10"
-								height="12"
-								name="license-key"
-								placeholder="Enter your license key"
-								onChange={ ( e ) => {
-									setLicenseKey( e.target.value );
-									param.setErrorCB( '' );
-								} }
-								value={ licenseKey }
-								suffixIcon={
-									<button
-										type="button"
-										className={ `w-auto h-auto p-0 pl-2 flex items-center justify-center cursor-pointer bg-transparent border-0 focus:outline-none ${ processingClass }` }
-										onClick={ validateKey }
-									>
-										{ ! processing ? (
-											<ArrowRightIcon className="w-5 h-5" />
-										) : (
-											ICONS.spinner
-										) }
-									</button>
-								}
-							/>
+							<div style={ { position: 'relative' } }>
+								<Input
+									className="w-full"
+									inputClassName="pr-10"
+									height="12"
+									name="license-key"
+									placeholder={ __(
+										'License key',
+										'astra-sites'
+									) }
+									onChange={ ( e ) => {
+										setLicenseKey( e.target.value );
+										param.setErrorCB( '' );
+									} }
+									value={ licenseKey }
+								/>
+								<button
+									type="button"
+									className={ `absolute right-0 top-0 h-full p-1 pl-2 flex items-center justify-center cursor-pointer bg-transparent border-0 focus:outline-none ${ processingClass }` }
+									onClick={ validateKey }
+								>
+									{ ! processing ? (
+										<ArrowRightIcon className="w-5 h-5" />
+									) : (
+										ICONS.spinner
+									) }
+								</button>
+							</div>
 						</form>
-						<div className="flex gap-2 flex-col">
-							<a
-								href="https://store.brainstormforce.com/login/"
-								target="_blank"
-								className="w-fill h-hug"
-								rel="noreferrer"
-							>
-								{ __(
-									'Download ST Premium Plugin',
-									'astra-sites'
-								) }
-							</a>
-							<a
-								href="https://wpastra.com/support/free-support/"
-								target="_blank"
-								className="w-fill h-hug"
-								rel="noreferrer"
-							>
-								{ __( 'Need help?', 'astra-sites' ) }
-							</a>
+						<div className="text-xs flex gap-6 flex-row">
+							<p>
+								<a
+									href="https://store.brainstormforce.com/login/"
+									target="_blank"
+									rel="noreferrer"
+								>
+									{ __( 'Get your key here', 'astra-sites' ) }
+								</a>
+							</p>
+							<p>
+								<a
+									href="https://wpastra.com/support/free-support/"
+									target="_blank"
+									rel="noreferrer"
+								>
+									{ __( 'Need help?', 'astra-sites' ) }
+								</a>
+							</p>
 						</div>
 					</>
 				) }
@@ -178,7 +214,7 @@ const LicenseValidation = ( param ) => {
 								className="w-fill h-hug"
 								onClick={ handleClick }
 							>
-								{ __( 'Already a purchased?', 'astra-sites' ) }
+								{ __( 'Already purchased?', 'astra-sites' ) }
 							</a>
 						</div>
 					</>

@@ -91,16 +91,12 @@ const DescribeBusiness = ( { onClickContinue, onClickPrevious } ) => {
 				},
 			} );
 			if ( response.success ) {
-				// setValue( 'businessDetails', response.data?.data, {
-				// 	shouldValidate: true,
-				// } );
 				const description = response.data?.data || [];
 				if ( description !== undefined ) {
 					newDescList.push( description );
 
 					addDescriptionToList( newDescList );
 
-					// setBusinessDesc( description );
 					setValue( 'businessDetails', description, {
 						shouldValidate: true,
 					} );
@@ -156,11 +152,11 @@ const DescribeBusiness = ( { onClickContinue, onClickPrevious } ) => {
 		}
 
 		return (
-			<h1>
+			<div className="text-[2rem] font-semibold leading-[45px]">
 				{ strings[ 0 ] }
 				<StyledText text={ businessName } />
 				{ strings[ 1 ] }
-			</h1>
+			</div>
 		);
 	};
 
@@ -243,7 +239,7 @@ const DescribeBusiness = ( { onClickContinue, onClickPrevious } ) => {
 
 		const newList = [ ...descriptionList ];
 
-		// check if user has made changes to current description and save that change in new slot
+		// Check if user has made changes to current description and save that change in new slot.
 		if ( descriptionList[ currentPageIndex ] !== formBusinessDetails ) {
 			newList[ currentPageIndex ] = formBusinessDetails;
 		}
@@ -260,18 +256,6 @@ const DescribeBusiness = ( { onClickContinue, onClickPrevious } ) => {
 				},
 			},
 		} );
-
-		// dispatch( {
-		// 	type: 'set',
-		// 	createWebsiteFormData: {
-		// 		...createWebsiteFormData,
-		// 		descriptionListStore: {
-		// 			...descriptionListStore,
-		// 			list: newList,
-		// 			currentPage: newPageNumber,
-		// 		},
-		// 	},
-		// } );
 	};
 
 	const addDescriptionToList = ( descList ) => {
@@ -299,18 +283,6 @@ const DescribeBusiness = ( { onClickContinue, onClickPrevious } ) => {
 				templateList: [],
 			},
 		} );
-
-		// dispatch( {
-		// 	type: 'set',
-		// 	createWebsiteFormData: {
-		// 		...createWebsiteFormData,
-		// 		descriptionListStore: {
-		// 			list: newDescList,
-		// 			currentPage: newDescList.length,
-		// 		},
-		// 		description,
-		// 	},
-		// } );
 	};
 
 	const setBusinessDesc = ( descriptionValue, isOnSubmit ) => {
@@ -329,27 +301,8 @@ const DescribeBusiness = ( { onClickContinue, onClickPrevious } ) => {
 					imagesPreSelected: false,
 				} ),
 				templateList: [],
-				// templateKeywords: [],
 			},
 		} );
-
-		// dispatch( {
-		// 	type: 'set',
-		// 	createWebsiteFormData: {
-		// 		...createWebsiteFormData,
-		// 		description: descriptionValue,
-		// 		...( ! isOnSubmit && {
-		// 			keywords: [],
-		// 			selectedImages: [],
-		// 			imagesPreSelected: false,
-		// 		} ),
-		// 	},
-		// 	createSiteInfo: {
-		// 		...createSiteInfo,
-		// 		templateList: [],
-		// 		templateKeywords: [],
-		// 	},
-		// } );
 	};
 
 	useEffect( () => {
@@ -383,8 +336,10 @@ const DescribeBusiness = ( { onClickContinue, onClickPrevious } ) => {
 					) }
 					name="businessDetails"
 					register={ register }
+					maxLength={ 1000 }
 					validations={ {
-						required: 'Details are required',
+						required: __( 'Details are required', 'astra-sites' ),
+						maxLength: 1000,
 					} }
 					error={ errors.businessDetails }
 					disabled={ isLoading }
@@ -398,7 +353,6 @@ const DescribeBusiness = ( { onClickContinue, onClickPrevious } ) => {
 					) }
 				>
 					{ isLoading && (
-						// <div className="loader border-2 border-t-gray-300 rounded-full border-t-2 border-blue-500 w-[15px] h-[15px] animate-spin" />
 						<LoadingSpinner className="text-accent-st" />
 					) }
 					{ ! isLoading && (
@@ -410,8 +364,11 @@ const DescribeBusiness = ( { onClickContinue, onClickPrevious } ) => {
 								<WandIcon className="w-5 h-5 transition duration-150 ease-in-out text-accent-st" />
 								<span className="font-semibold text-sm transition duration-150 ease-in-out text-accent-st">
 									{ formBusinessDetails?.trim() === ''
-										? 'Write Using AI'
-										: 'Improve Using AI' }
+										? __( 'Write Using AI', 'astra-sites' )
+										: __(
+												'Improve Using AI',
+												'astra-sites'
+										  ) }
 								</span>
 							</div>
 

@@ -10,8 +10,15 @@
 namespace Tribe\Events\Pro\Integrations\Elementor\Widgets;
 
 use Elementor\Widget_Base;
-use Tribe\Events\Pro\Integrations\Elementor\Traits as Elementor_Traits;
+use TEC\Events\Integrations\Plugins\Elementor\Traits as Elementor_Traits;
 
+/**
+ * Class Widget_Abstract
+ *
+ * @since   5.4.0
+ *
+ * @package Tribe\Events\Pro\Integrations\Elementor\Widgets
+ */
 abstract class Widget_Abstract extends Widget_Base {
 	use Elementor_Traits\Categories;
 
@@ -43,7 +50,16 @@ abstract class Widget_Abstract extends Widget_Base {
 	protected $widget_title;
 
 	/**
-	 * Widget icon.
+	 * Widget class.
+	 *
+	 * @since 5.4.0
+	 *
+	 * @var string
+	 */
+	public $widget_class;
+
+	/**
+	 * Widget icon class.
 	 *
 	 * @since 5.4.0
 	 *
@@ -59,13 +75,6 @@ abstract class Widget_Abstract extends Widget_Base {
 	 * @var array<string>
 	 */
 	protected $widget_categories = [ 'the-events-calendar' ];
-
-	/**
-	 * {@inheritdoc}
-	 */
-	public function __construct( $data = [], $args = null ) {
-		parent::__construct( $data, $args );
-	}
 
 	/**
 	 * Gets the name (aka slug) of the widget.
@@ -138,8 +147,8 @@ abstract class Widget_Abstract extends Widget_Base {
 	 *
 	 * @since 5.4.0
 	 *
-	 * @param $settings Elementor widget settings.
-	 * @param array<string> $allowed Allowed settings for shortcode.
+	 * @param array<string,mixed> $settings Elementor widget settings.
+	 * @param array<string>       $allowed Allowed settings for shortcode.
 	 *
 	 * @return string
 	 */
@@ -170,7 +179,7 @@ abstract class Widget_Abstract extends Widget_Base {
 	/**
 	 * Gets settings while removing the prefix from keys.
 	 *
-	 * @param null $setting_key
+	 * @param ?string $setting_key The key to get the setting for.
 	 *
 	 * @return array
 	 */

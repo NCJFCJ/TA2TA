@@ -2,7 +2,7 @@
 
 namespace IAWP;
 
-// App data manager?
+use IAWP\Custom_WordPress_Columns\Views_Column;
 use IAWP\Migrations\Migrations;
 /** @internal */
 class Database_Manager
@@ -11,12 +11,14 @@ class Database_Manager
     {
         \delete_option('iawp_db_version');
         Migrations::create_or_migrate();
+        $this->delete_all_post_meta();
     }
     public function delete_all_data() : void
     {
         $this->delete_all_iawp_options();
         $this->delete_all_iawp_user_metadata();
         $this->delete_all_iawp_tables();
+        $this->delete_all_post_meta();
     }
     private function delete_all_iawp_options() : void
     {
@@ -42,5 +44,9 @@ class Database_Manager
         foreach ($rows as $row) {
             $wpdb->query('DROP TABLE ' . $row->table_name);
         }
+    }
+    private function delete_all_post_meta() : void
+    {
+        \delete_post_meta_by_key(Views_Column::$meta_key);
     }
 }

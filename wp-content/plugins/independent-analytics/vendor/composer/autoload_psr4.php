@@ -32,7 +32,6 @@ return array(
     'IAWPSCOPED\\Illuminate\\Contracts\\' => array($vendorDir . '/illuminate/contracts'),
     'IAWPSCOPED\\Illuminate\\Container\\' => array($vendorDir . '/illuminate/container'),
     'IAWPSCOPED\\Doctrine\\Inflector\\' => array($vendorDir . '/doctrine/inflector/lib/Doctrine/Inflector'),
-    'IAWPSCOPED\\Doctrine\\Common\\Cache\\' => array($vendorDir . '/doctrine/cache/lib/Doctrine/Common/Cache'),
     'IAWPSCOPED\\DeviceDetector\\' => array($vendorDir . '/matomo/device-detector'),
     'IAWPSCOPED\\Carbon\\Doctrine\\' => array($vendorDir . '/carbonphp/carbon-doctrine-types/src/Carbon/Doctrine'),
     'IAWPSCOPED\\Carbon\\' => array($vendorDir . '/nesbot/carbon/src/Carbon'),

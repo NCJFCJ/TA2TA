@@ -198,11 +198,19 @@ AND pm.meta_key = %s",
 				'item'  => array(),
 			);
 		}
-		$new_terms                 = $this->_get_all_terms( $post_ids, $post_type, $spreadsheet_columns );
-		self::$data_store['terms'] = ( ! empty( self::$data_store['terms'] ) ) ? array_merge( self::$data_store['terms'], $new_terms ) : $new_terms;
+		// Prefetch in groups of posts
+		$post_groups = array_chunk( $post_ids, VGSE()->get_option( 'be_prefetch_batch_size', 5000 ) );
+		foreach ( $post_groups as $group ) {
+			if ( ! VGSE()->get_option( 'be_disable_post_terms_prefetch', false ) ) {
+				$new_terms                 = $this->_get_all_terms( $group, $post_type, $spreadsheet_columns );
+				self::$data_store['terms'] = ( ! empty( self::$data_store['terms'] ) ) ? array_merge( self::$data_store['terms'], $new_terms ) : $new_terms;
+			}
 
-		$new_meta                 = $this->_get_all_meta( $post_ids, $post_type, $spreadsheet_columns );
-		self::$data_store['meta'] = ( ! empty( self::$data_store['meta'] ) ) ? array_merge( self::$data_store['meta'], $new_meta ) : $new_meta;
+			if ( ! VGSE()->get_option( 'be_disable_post_meta_prefetch', false ) ) {
+				$new_meta                 = $this->_get_all_meta( $group, $post_type, $spreadsheet_columns );
+				self::$data_store['meta'] = ( ! empty( self::$data_store['meta'] ) ) ? array_merge( self::$data_store['meta'], $new_meta ) : $new_meta;
+			}
+		}
 	}
 
 	function _get_all_meta( $post_ids, $post_type, $spreadsheet_columns ) {
@@ -382,7 +390,8 @@ ORDER BY t.name ASC",
 			sort( $terms );
 			$raw_value = implode( $separator . ' ', $terms );
 		}
-		return apply_filters( 'vg_sheet_editor/provider/post/get_items_terms', $raw_value, $post_id, $taxonomy );
+		$post_type = $this->get_item_data( $post_id, 'post_type' );
+		return apply_filters( 'vg_sheet_editor/provider/post/get_items_terms/' . $post_type, $raw_value, $post_id, $taxonomy );
 	}
 
 	function get_statuses() {
@@ -497,6 +506,10 @@ ORDER BY t.name ASC",
 	function update_modified_date( $ids ) {
 		global $wpdb;
 		if ( empty( $ids ) ) {
+			return;
+		}
+
+		if ( ! empty( VGSE()->get_option( 'disable_post_modified_date_auto_update', false ) ) ) {
 			return;
 		}
 

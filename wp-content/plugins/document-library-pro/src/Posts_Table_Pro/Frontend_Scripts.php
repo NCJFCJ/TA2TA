@@ -85,7 +85,7 @@ class Frontend_Scripts implements Service, Registerable, Conditional {
 
 		wp_register_script(
 			self::SCRIPT_HANDLE,
-			Util::get_asset_url( "js/posts-table-pro.js" ),
+			Util::get_asset_url( 'js/posts-table-pro.js' ),
 			[ 'jquery', 'jquery-datatables-ptp', 'jquery-blockui', 'select2-ptp' ],
 			$this->script_version,
 			true
@@ -105,22 +105,23 @@ class Frontend_Scripts implements Service, Registerable, Conditional {
 					'lengthMenu'        => __( 'Show _MENU_ per page', 'document-library-pro' ),
 					'search'            => apply_filters( 'document_library_pro_search_label', __( 'Search:', 'document-library-pro' ) ),
 					'searchPlaceholder' => apply_filters( 'document_library_pro_search_placeholder', '' ),
-					'paginate'     => [
+					'paginate'          => [
 						'first'    => __( 'First', 'document-library-pro' ),
 						'last'     => __( 'Last', 'document-library-pro' ),
 						'next'     => __( 'Next', 'document-library-pro' ),
 						'previous' => __( 'Previous', 'document-library-pro' ),
 					],
-					'thousands'    => _x( ',', 'thousands separator', 'document-library-pro' ),
-					'decimal'      => _x( '.', 'decimal mark', 'document-library-pro' ),
-					'aria'         => [
+					'thousands'         => _x( ',', 'thousands separator', 'document-library-pro' ),
+					'decimal'           => _x( '.', 'decimal mark', 'document-library-pro' ),
+					'aria'              => [
 						/* translators: ARIA text for sorting column in ascending order */
 						'sortAscending'  => __( ': activate to sort column ascending', 'document-library-pro' ),
 						/* translators: ARIA text for sorting column in descending order */
 						'sortDescending' => __( ': activate to sort column descending', 'document-library-pro' ),
 					],
-					'filterBy'     => apply_filters( 'document_library_pro_search_filter_label', '' ),
-					'resetButton'  => apply_filters( 'document_library_pro_reset_button', __( 'Reset', 'document-library-pro' ) )
+					'filterBy'          => apply_filters( 'document_library_pro_search_filter_label', '' ),
+					'emptyFilter'       => __( 'No results found', 'document-library-pro' ),
+					'resetButton'       => apply_filters( 'document_library_pro_reset_button', __( 'Reset', 'document-library-pro' ) ),
 				]
 			),
 		];
@@ -137,7 +138,6 @@ class Frontend_Scripts implements Service, Registerable, Conditional {
 			sprintf( 'var posts_table_params = %s;', wp_json_encode( apply_filters( 'document_library_pro_script_params', $script_params ) ) ),
 			'before'
 		);
-
 	}
 
 	public function load_head_scripts() {

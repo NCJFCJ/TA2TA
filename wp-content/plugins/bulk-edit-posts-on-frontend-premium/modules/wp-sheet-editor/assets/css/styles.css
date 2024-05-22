@@ -3317,6 +3317,18 @@ html.wpse-loading-tinymce iframe#editpost_ifr {
 .vgse-dark-mode .modal-google-sheets .connection-status-disconnected {
     color: #f76363;
 }
+
+.export-csv-form .export-response {
+    word-break: break-word;
+}
+
+.modal-google-sheets-create-file label {
+    display: block;
+}
+
+.modal-google-sheets-create-file .field {
+    margin-bottom: 15px;
+}
 .be-loading-anim {
     position: relative;
     width: 50px;

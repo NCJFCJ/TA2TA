@@ -12,6 +12,7 @@ if ( ! class_exists( 'WP_Sheet_Editor_Helpers' ) ) {
 		public $terms_use_commas        = false;
 		public $is_saving_cells         = false;
 		public $allowed_post_types      = array();
+		public $cached_attachment_url   = array();
 
 		private function __construct() {
 
@@ -508,7 +509,7 @@ if ( ! class_exists( 'WP_Sheet_Editor_Helpers' ) ) {
 		public function get_provider_columns( $post_type, $run_callbacks = false ) {
 
 			$current_editor = VGSE()->helpers->get_provider_editor( $post_type );
-			if ( ! $current_editor ) {
+			if ( ! $current_editor || ! in_array( $post_type, $current_editor->args['enabled_post_types'], true ) ) {
 				return array();
 			}
 			return $current_editor->get_provider_items( $post_type, $run_callbacks );
@@ -597,7 +598,12 @@ if ( ! class_exists( 'WP_Sheet_Editor_Helpers' ) ) {
 			VGSE()->current_provider          = VGSE()->helpers->get_data_provider( $post_type );
 			$spreadsheet_columns              = VGSE()->helpers->get_provider_columns( $post_type );
 			$columns_with_custom_sanitization = array_filter( wp_list_pluck( $spreadsheet_columns, 'custom_sanitization_before_saving', 'key' ) );
-			$data                             = wp_unslash( $data );
+
+			if ( self::current_user_can( 'unfiltered_html' ) && ! empty( VGSE()->options['be_allow_raw_content_unfiltered_html_capability'] ) ) {
+				$columns_with_custom_sanitization['post_content'] = 'strval';
+			}
+
+			$data = wp_unslash( $data );
 			if ( ! empty( $columns_with_custom_sanitization ) ) {
 				foreach ( $data as $index => $row ) {
 					foreach ( $row as $column_key => $column_value ) {
@@ -888,29 +894,12 @@ if ( ! class_exists( 'WP_Sheet_Editor_Helpers' ) ) {
 			VGSE()->helpers->increase_counter( 'processed', count( $data ) );
 
 			$this->is_saving_cells = false;
+			// This hook can be used for saving data that was skipped by our CORE saving process, it can return true on success or WP_Error on failure
 			return apply_filters( 'vg_sheet_editor/save_rows/response', true, $data, $post_type, $spreadsheet_columns, $settings );
 		}
 
 		public function get_uuid() {
-			return sprintf(
-				'%04x%04x-%04x-%04x-%04x-%04x%04x%04x',
-				// 32 bits for "time_low"
-					mt_rand( 0, 0xffff ),
-				mt_rand( 0, 0xffff ),
-				// 16 bits for "time_mid"
-					mt_rand( 0, 0xffff ),
-				// 16 bits for "time_hi_and_version",
-					// four most significant bits holds version number 4
-					mt_rand( 0, 0x0fff ) | 0x4000,
-				// 16 bits, 8 bits for "clk_seq_hi_res",
-					// 8 bits for "clk_seq_low",
-					// two most significant bits holds zero and one for variant DCE1.1
-					mt_rand( 0, 0x3fff ) | 0x8000,
-				// 48 bits for "node"
-					mt_rand( 0, 0xffff ),
-				mt_rand( 0, 0xffff ),
-				mt_rand( 0, 0xffff )
-			);
+			return wp_generate_uuid4();
 		}
 		public function sanitize_integer( $integer ) {
 			if ( is_string( $integer ) ) {
@@ -941,7 +930,7 @@ if ( ! class_exists( 'WP_Sheet_Editor_Helpers' ) ) {
 				$meta_columns        = wp_list_filter( $spreadsheet_columns, array( 'data_type' => 'meta_data' ) );
 				ksort( $meta_columns );
 				foreach ( $meta_columns as $key => $column ) {
-					if ( ! empty( $column['serialized_field_original_key'] ) || ! empty( $column['prepare_value_for_database'] ) || in_array( $column['type'], array( 'handsontable', 'metabox', 'view_post', 'boton_gallery_multiple' ), true ) || strpos( $key, 'wpse_' ) !== false ) {
+					if ( empty( $column['allow_for_global_sort'] ) || ! empty( $column['serialized_field_original_key'] ) || ! empty( $column['prepare_value_for_database'] ) || in_array( $column['type'], array( 'handsontable', 'metabox', 'view_post', 'boton_gallery_multiple' ), true ) || strpos( $key, 'wpse_' ) !== false ) {
 						unset( $meta_columns[ $key ] );
 					}
 				}
@@ -973,7 +962,7 @@ if ( ! class_exists( 'WP_Sheet_Editor_Helpers' ) ) {
 			} elseif ( ! empty( VGSE()->options ) && ! empty( VGSE()->options['be_posts_per_page'] ) ) {
 				$posts_per_page = (int) VGSE()->options['be_posts_per_page'];
 			} else {
-				$posts_per_page = 20;
+				$posts_per_page = 40;
 			}
 			$post_type_object = get_post_type_object( $settings['post_type'] );
 
@@ -1143,7 +1132,15 @@ if ( ! class_exists( 'WP_Sheet_Editor_Helpers' ) ) {
 				}
 				$posts = apply_filters( 'vg_sheet_editor/load_rows/found_posts', $query->posts, $wp_query_args, $settings, $spreadsheet_columns );
 
+				if ( function_exists( 'WPSE_Profiler_Obj' ) ) {
+					WPSE_Profiler_Obj()->record( 'After vg_sheet_editor/load_rows/found_posts ' . __FUNCTION__ );
+				}
+
 				$data = apply_filters( 'vg_sheet_editor/load_rows/preload_data', $data, $posts, $wp_query_args, $settings, $spreadsheet_columns );
+
+				if ( function_exists( 'WPSE_Profiler_Obj' ) ) {
+					WPSE_Profiler_Obj()->record( 'After vg_sheet_editor/load_rows/preload_data ' . __FUNCTION__ );
+				}
 
 				$post_ids = wp_list_pluck( $posts, 'ID' );
 
@@ -1179,10 +1176,6 @@ if ( ! class_exists( 'WP_Sheet_Editor_Helpers' ) ) {
 
 					$post_id = $post->ID;
 
-					if ( ! apply_filters( 'vg_sheet_editor/load_rows/can_edit_item', true, $post, $wp_query_args, $spreadsheet_columns ) ) {
-						continue;
-					}
-
 					$data[ $post_id ]['post_type'] = $post->post_type;
 					$data[ $post_id ]['provider']  = $post->post_type;
 
@@ -1194,14 +1187,31 @@ if ( ! class_exists( 'WP_Sheet_Editor_Helpers' ) ) {
 						$allowed_columns_for_post = $spreadsheet_columns;
 					}
 
+					if ( VGSE()->helpers->get_current_provider()->is_post_type ) {
+						$external_button_variables_search  = array(
+							'{ID}',
+							'{post_title}',
+							'{post_content}',
+							'{post_type}',
+							'{post_status}',
+							'{post_url}',
+							'{parent_post_url}',
+							'{post_parent}',
+						);
+						$external_button_variables_replace = array(
+							$post->ID,
+							$post->post_title,
+							$post->post_content,
+							$post->post_type,
+							$post->post_status,
+							get_permalink( $post->ID ),
+							get_permalink( $post->post_parent ),
+							$post->post_parent,
+						);
+					}
+
 					foreach ( $allowed_columns_for_post as $column_key => $column_settings ) {
 						if ( isset( $data[ $post_id ][ $column_key ] ) ) {
-							continue;
-						}
-						$item_custom_data = apply_filters( 'vg_sheet_editor/load_rows/get_cell_data', false, $post, $column_key, $column_settings );
-
-						if ( ! is_bool( $item_custom_data ) ) {
-							$data[ $post_id ][ $column_key ] = $item_custom_data;
 							continue;
 						}
 
@@ -1245,29 +1255,11 @@ if ( ! class_exists( 'WP_Sheet_Editor_Helpers' ) ) {
 							}
 						} else {
 							if ( $column_settings['type'] === 'external_button' && ! empty( $column_settings['external_button_template'] ) ) {
-								$data[ $post_id ][ $column_key ] = str_replace(
-									array(
-										'{ID}',
-										'{post_title}',
-										'{post_content}',
-										'{post_type}',
-										'{post_status}',
-										'{post_url}',
-										'{parent_post_url}',
-										'{post_parent}',
-									),
-									array(
-										$post->ID,
-										$post->post_title,
-										$post->post_content,
-										$post->post_type,
-										$post->post_status,
-										get_permalink( $post->ID ),
-										get_permalink( $post->post_parent ),
-										$post->post_parent,
-									),
-									$column_settings['external_button_template']
-								);
+								if ( VGSE()->helpers->get_current_provider()->is_post_type ) {
+									$data[ $post_id ][ $column_key ] = str_replace( $external_button_variables_search, $external_button_variables_replace, $column_settings['external_button_template'] );
+								} else {
+									$data[ $post_id ][ $column_key ] = $column_settings['external_button_template'];
+								}
 							}
 							if ( in_array( $column_settings['type'], apply_filters( 'vg_sheet_editor/get_rows/cell_content/custom_modal_editor_types', array( 'metabox', 'handsontable' ) ) ) ) {
 								$data[ $post_id ][ $column_key ] = VGSE()->helpers->get_custom_modal_editor_cell_content( $post->ID, $column_key, $column_settings );
@@ -1327,6 +1319,7 @@ if ( ! class_exists( 'WP_Sheet_Editor_Helpers' ) ) {
 					array(
 						'request'        => VGSE()->helpers->user_can_manage_options() && is_object( $query ) && property_exists( $query, 'request' ) ? $query->request : null,
 						'rows_not_found' => true,
+						'status'         => 404,
 					)
 				);
 			}
@@ -1356,7 +1349,14 @@ if ( ! class_exists( 'WP_Sheet_Editor_Helpers' ) ) {
 				WPSE_Profiler_Obj()->finish();
 			}
 
-			return apply_filters( 'vg_sheet_editor/load_rows/full_output', $out, $wp_query_args, $spreadsheet_columns, $settings );
+			try {
+				$out = apply_filters( 'vg_sheet_editor/load_rows/full_output', $out, $wp_query_args, $spreadsheet_columns, $settings );
+
+			} catch ( Exception $e ) {
+				$exception_message = $e->getMessage();
+				$out               = new WP_Error( 'wpse', $exception_message );
+			}
+			return $out;
 		}
 
 		public function get_term_separator() {
@@ -1864,12 +1864,6 @@ if ( ! class_exists( 'WP_Sheet_Editor_Helpers' ) ) {
 				$post_id = $post->ID;
 			}
 
-			$item_custom_data = apply_filters( 'vg_sheet_editor/load_rows/get_cell_data', false, $post, $column_key, $column_settings );
-
-			if ( ! is_bool( $item_custom_data ) ) {
-				return $item_custom_data;
-			}
-
 			// Use column callback to retrieve the cell value
 			$out = '';
 			if ( ! empty( $column_settings['get_value_callback'] ) && is_callable( $column_settings['get_value_callback'] ) ) {
@@ -2236,6 +2230,30 @@ if ( ! class_exists( 'WP_Sheet_Editor_Helpers' ) ) {
 			}
 		}
 
+		function get_cached_attachment_url( $file_id ) {
+			if ( isset( $this->cached_attachment_url[ $file_id ] ) ) {
+				return $this->cached_attachment_url[ $file_id ];
+			}
+
+			$image_size = ( VGSE()->helpers->is_plain_text_request() ) ? 'full' : 'medium';
+			if ( is_numeric( $file_id ) ) {
+				$url = wp_attachment_is_image( $file_id ) ? wp_get_attachment_image_url( $file_id, $image_size ) : wp_get_attachment_url( $file_id );
+				if ( empty( VGSE()->options['dont_add_id_to_image_urls'] ) ) {
+					$url = esc_url( add_query_arg( 'wpId', $file_id, $url ) );
+				}
+			} elseif ( strpos( $file_id, WP_CONTENT_URL ) !== false ) {
+				$url = $file_id;
+			} else {
+				$url     = $file_id;
+				$file_id = '';
+			}
+			// Fix. Needed when using cloudflare flexible ssl
+			$url = ( ! empty( $_SERVER['HTTPS'] ) && $_SERVER['HTTPS'] === 'on' ) ? str_replace( 'http://', 'https://', $url ) : $url;
+
+			$this->cached_attachment_url[ $file_id ] = $url;
+			return $this->cached_attachment_url[ $file_id ];
+		}
+
 		/**
 		 * Get image gallery cell content (html)
 		 * @param int $id
@@ -2254,30 +2272,13 @@ if ( ! class_exists( 'WP_Sheet_Editor_Helpers' ) ) {
 				}
 			}
 
-			$image_size = ( VGSE()->helpers->is_plain_text_request() ) ? 'full' : 'medium';
 			$final_urls = array();
-			$first_url  = '';
 			if ( ! empty( $current_value ) ) {
 				$current_value = ( is_array( $current_value ) ) ? implode( ',', $current_value ) : $current_value;
 				$file_ids      = array_map( 'trim', explode( ',', $current_value ) );
 				foreach ( $file_ids as $file_id ) {
-					if ( is_numeric( $file_id ) ) {
-						$medium_url = wp_get_attachment_image_url( $file_id, $image_size );
-						$url        = wp_attachment_is_image( $file_id ) && $medium_url ? $medium_url : wp_get_attachment_url( $file_id );
-						if ( empty( VGSE()->options['dont_add_id_to_image_urls'] ) ) {
-							$url = esc_url( add_query_arg( 'wpId', $file_id, $url ) );
-						}
-					} elseif ( strpos( $file_id, WP_CONTENT_URL ) !== false ) {
-						$url     = $file_id;
-						$file_id = VGSE()->helpers->get_attachment_id_from_url( $file_id );
-					} else {
-						$url     = $file_id;
-						$file_id = '';
-					}
-					// Fix. Needed when using cloudflare flexible ssl
-					$final_urls[] = ( ! empty( $_SERVER['HTTPS'] ) && $_SERVER['HTTPS'] === 'on' ) ? str_replace( 'http://', 'https://', $url ) : $url;
+					$final_urls[] = $this->get_cached_attachment_url( $file_id );
 				}
-				$first_url = current( $final_urls );
 			}
 
 			return implode( ', ', $final_urls );

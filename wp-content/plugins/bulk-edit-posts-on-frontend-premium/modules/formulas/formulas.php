@@ -826,7 +826,7 @@ if ( ! class_exists( 'WP_Sheet_Editor_Formulas' ) ) {
 			$formula                    = wp_unslash( $request_data['formula'] );
 			$post_type                  = $request_data['post_type'];
 			$page                       = (int) $request_data['page'];
-			$per_page                   = ! empty( $request_data['per_page'] ) ? (int) $request_data['per_page'] : VGSE()->get_option( 'be_posts_per_page_save', 4 );
+			$per_page                   = ! empty( $request_data['per_page'] ) ? (int) $request_data['per_page'] : VGSE()->get_option( 'be_posts_per_page_save', 8 );
 			$bulk_edit_id               = 'wpsebe' . $request_data['wpse_job_id'];
 			$editor                     = VGSE()->helpers->get_provider_editor( $post_type );
 			VGSE()->current_provider    = $editor->provider;

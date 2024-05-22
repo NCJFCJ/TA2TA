@@ -1,1 +1,0 @@
-!function(t,n,e){"use strict";tinymce.PluginManager.add("poststablepro",(function(t,n){t.addButton("poststablepro",{title:"Insert Posts Table",cmd:"insertPostsTable",icon:"dashicon dashicons-editor-table"}),t.addCommand("insertPostsTable",(function(){t.execCommand("mceInsertContent",!1,"[posts_table]")}))}))}(window,document);

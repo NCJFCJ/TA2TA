@@ -52,11 +52,15 @@
 									<input type="hidden" name="columns[]" class="js-column-key" value="<?php echo esc_attr($column_key); ?>" />
 									<input type="hidden" name="columns_names[]" class="js-column-title" value="<?php echo esc_attr($title); ?>" />
 
+									<?php if( wp_doing_ajax()){ ?>
+									<!-- Insert extra buttons here with JS -->
+									<?php } else { ?>
 									<?php if (VGSE()->helpers->user_can_manage_options()) { ?>
 										<button class="remove-column column-action" title="<?php echo esc_attr(__('Remove column completely. If you want to use it later you can disable it by dragging and dropping to the right column', 'vg_sheet_editor' )); ?>"><i class="fa fa-remove"></i></button>
 									<?php } ?>
 									<button class="deactivate-column column-action" title="<?php echo esc_attr(__('Disable column. You can enable it later.', 'vg_sheet_editor' )); ?>"><i class="fa fa-arrow-right"></i></button>
 									<button class="enable-column column-action" title="<?php echo esc_attr(__('Enable column', 'vg_sheet_editor' )); ?>"><i class="fa fa-arrow-left"></i></button>
+									<?php } ?>
 									<?php do_action('vg_sheet_editor/columns_visibility/enabled/after_column_action', $column, $post_type); ?>
 								</li>
 							<?php }
@@ -93,15 +97,21 @@
 										$column_title = $columns[$column_key]['title'];
 									}
 									?>
-									<li><span class="handle">::</span> <span class="column-title" title="<?php echo esc_attr($column_title); ?>"><?php echo esc_html($column_title); ?></span>  <i class="fa fa-refresh"  data-wpse-tooltip="right" aria-label="<?php _e('Enabling this column requires a page reload', 'vg_sheet_editor' ); ?>">&#xf021;</i>
+									<li><span class="handle">::</span> <span class="column-title" title="<?php echo esc_attr($column_title); ?>"><?php echo esc_html($column_title); ?></span>  <i class="fa fa-refresh"  data-wpse-tooltip="right" aria-label="cm_requires_reload">&#xf021;</i>
 										<input type="hidden" name="disallowed_columns[]" class="js-column-key" value="<?php echo esc_attr($column_key); ?>" />
 										<input type="hidden" name="disallowed_columns_names[]" class="js-column-title" value="<?php echo esc_attr($column_title); ?>" />
-										<?php if (VGSE()->helpers->user_can_manage_options()) { ?>
-											<button class="remove-column column-action" title="<?php echo esc_attr(__('Remove column completely. If you want to use it later you can disable it by dragging and dropping to the right column', 'vg_sheet_editor' )); ?>"><i class="fa fa-remove"></i></button>
-										<?php } ?>
-										<button class="deactivate-column column-action" title="<?php echo esc_attr(__('Disable column. You can enable it later.', 'vg_sheet_editor' )); ?>"><i class="fa fa-arrow-right"></i></button>
-										<button class="enable-column column-action" title="<?php echo esc_attr(__('Enable column', 'vg_sheet_editor' )); ?>"><i class="fa fa-arrow-left"></i></button>
-										<?php do_action('vg_sheet_editor/columns_visibility/disabled/after_column_action', $column, $post_type); ?>
+										
+
+									<?php if( wp_doing_ajax()){ ?>
+									<!-- Insert extra buttons here with JS -->
+									<?php } else { ?>
+									<?php if (VGSE()->helpers->user_can_manage_options()) { ?>
+										<button class="remove-column column-action" title="<?php echo esc_attr(__('Remove column completely. If you want to use it later you can disable it by dragging and dropping to the right column', 'vg_sheet_editor' )); ?>"><i class="fa fa-remove"></i></button>
+									<?php } ?>
+									<button class="deactivate-column column-action" title="<?php echo esc_attr(__('Disable column. You can enable it later.', 'vg_sheet_editor' )); ?>"><i class="fa fa-arrow-right"></i></button>
+									<button class="enable-column column-action" title="<?php echo esc_attr(__('Enable column', 'vg_sheet_editor' )); ?>"><i class="fa fa-arrow-left"></i></button>
+									<?php } ?>
+									<?php do_action('vg_sheet_editor/columns_visibility/disabled/after_column_action', $column, $post_type); ?>
 									</li>
 									<?php
 								}

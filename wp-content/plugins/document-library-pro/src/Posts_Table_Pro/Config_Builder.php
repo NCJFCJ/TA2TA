@@ -133,7 +133,7 @@ class Config_Builder {
 		];
 
 		foreach ( $display_options as $letter => $option ) {
-			if ( 'top' === $this->args->$option || 'both' === $this->args->$option ) {
+			if ( ( true === $this->args->$option && 'search_box' === $option ) || 'top' === $this->args->$option || 'both' === $this->args->$option ) {
 				$dom_top .= $letter;
 			}
 			if ( 'bottom' === $this->args->$option || 'both' === $this->args->$option ) {

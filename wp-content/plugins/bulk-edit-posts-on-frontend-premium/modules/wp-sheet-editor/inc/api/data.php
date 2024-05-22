@@ -6,6 +6,7 @@ if ( ! class_exists( 'WP_Sheet_Editor_Data' ) ) {
 
 		private static $instance         = false;
 		var $friendly_terms_to_ids_cache = array();
+		public $all_statuses             = array();
 
 		private function __construct() {
 
@@ -18,7 +19,6 @@ if ( ! class_exists( 'WP_Sheet_Editor_Data' ) ) {
 		 * @return mixed
 		 */
 		function get_post_data( $item, $id ) {
-
 			$out = VGSE()->helpers->get_current_provider()->get_item_data( $id, $item );
 			if ( VGSE()->helpers->get_current_provider()->is_post_type ) {
 				$post = VGSE()->helpers->get_current_provider()->get_item( $id );
@@ -42,23 +42,27 @@ if ( ! class_exists( 'WP_Sheet_Editor_Data' ) ) {
 					$out    = ( $author ) ? $author->user_login : '';
 				} elseif ( $item === 'post_status' ) {
 
-					// We include the custom statuses added by other plugins
-					// The provider get_statuses() is used for the internal capability checks
-					$all_statuses    = get_post_stati( array( 'show_in_admin_status_list' => true ), 'objects' );
-					$custom_statuses = array();
-					foreach ( $all_statuses as $status_key => $status ) {
-						if ( ! empty( $status->label_count['domain'] ) ) {
-							$custom_statuses[ $status_key ] = $status->label;
+					// Prepare the list of statuses once
+					if ( empty( $this->all_statuses ) ) {
+						// We include the custom statuses added by other plugins
+						// The provider get_statuses() is used for the internal capability checks
+						$all_statuses    = get_post_stati( array( 'show_in_admin_status_list' => true ), 'objects' );
+						$custom_statuses = array();
+						foreach ( $all_statuses as $status_key => $status ) {
+							if ( ! empty( $status->label_count['domain'] ) ) {
+								$custom_statuses[ $status_key ] = $status->label;
+							}
+						}
+
+						// If the post status is found in the public post statuses we return it directly,
+						// otherwise we return it with a lock icon because the cell will be read-only
+						$this->all_statuses = array_merge( VGSE()->helpers->get_current_provider()->get_statuses(), $custom_statuses );
+						if ( ! isset( $this->all_statuses['trash'] ) ) {
+							$this->all_statuses['trash'] = 'Trash';
 						}
 					}
 
-					// If the post status is found in the public post statuses we return it directly,
-					// otherwise we return it with a lock icon because the cell will be read-only
-					$statuses = array_merge( VGSE()->helpers->get_current_provider()->get_statuses(), $custom_statuses );
-					if ( ! isset( $statuses['trash'] ) ) {
-						$statuses['trash'] = 'Trash';
-					}
-					$out = ( isset( $statuses[ $post->post_status ] ) || VGSE()->helpers->is_plain_text_request() ) ? $post->post_status : '<i class="fa fa-lock vg-cell-blocked"></i> ' . $post->post_status;
+					$out = ( isset( $this->all_statuses[ $post->post_status ] ) || VGSE()->helpers->is_plain_text_request() ) ? $post->post_status : '<i class="fa fa-lock vg-cell-blocked"></i> ' . $post->post_status;
 				} elseif ( $item === 'post_parent' ) {
 					if ( VGSE()->get_option( 'manage_post_parents_with_id' ) ) {
 						$out = (int) $post->post_parent;

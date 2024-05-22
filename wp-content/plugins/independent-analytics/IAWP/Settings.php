@@ -28,7 +28,7 @@ class Settings
             for ($i = 0; $i < \count($saved); $i++) {
                 $input_defaults[$i] = $saved[$i];
             }
-            echo \IAWPSCOPED\iawp_blade()->run('settings.email-reports', ['time' => \IAWPSCOPED\iawp()->get_option('iawp_email_report_time', 9), 'emails' => \IAWPSCOPED\iawp()->get_option('iawp_email_report_email_addresses', []), 'default_colors' => $defaults, 'input_default' => $input_defaults]);
+            echo \IAWPSCOPED\iawp_blade()->run('settings.email-reports', ['is_scheduled' => \wp_next_scheduled('iawp_send_email_report'), 'scheduled_date' => \IAWPSCOPED\iawp()->email_reports->get_next_scheduled_email_date_formatted(), 'date_comparison' => \IAWPSCOPED\iawp()->email_reports->get_next_scheduled_email_date_formatted(\false), 'interval' => \IAWPSCOPED\iawp()->get_option('iawp_email_report_interval', 'monthly'), 'time' => \IAWPSCOPED\iawp()->get_option('iawp_email_report_time', 9), 'emails' => \IAWPSCOPED\iawp()->get_option('iawp_email_report_email_addresses', []), 'default_colors' => $defaults, 'input_default' => $input_defaults]);
         }
         $ip = Request::ip();
         $ips = \IAWPSCOPED\iawp()->get_option('iawp_blocked_ips', []);
@@ -54,6 +54,8 @@ class Settings
         \add_settings_field('iawp_disable_admin_toolbar_analytics', \esc_html__('Admin toolbar stats', 'independent-analytics'), [$this, 'disable_admin_toolbar_analytics_callback'], 'independent-analytics-settings', 'iawp-settings-section');
         \register_setting('iawp_settings', 'iawp_disable_widget', $args);
         \add_settings_field('iawp_disable_widget', \esc_html__('Dashboard widget', 'independent-analytics'), [$this, 'disable_widget_callback'], 'independent-analytics-settings', 'iawp-settings-section');
+        \register_setting('iawp_settings', 'iawp_disable_views_column', $args);
+        \add_settings_field('iawp_disable_views_column', \esc_html__('Views column', 'independent-analytics'), [$this, 'disable_views_column_callback'], 'independent-analytics-settings', 'iawp-settings-section');
         $args = ['type' => 'integer', 'default' => 0, 'sanitize_callback' => 'absint'];
         \register_setting('iawp_settings', 'iawp_dow', $args);
         \add_settings_field('iawp_dow', \esc_html__('First day of week', 'independent-analytics'), [$this, 'starting_dow_callback'], 'independent-analytics-settings', 'iawp-settings-section', ['class' => 'dow']);
@@ -76,6 +78,10 @@ class Settings
     public function disable_widget_callback()
     {
         echo \IAWPSCOPED\iawp_blade()->run('settings.disable-widget', ['value' => \IAWPSCOPED\iawp()->get_option('iawp_disable_widget', \false)]);
+    }
+    public function disable_views_column_callback() : void
+    {
+        echo \IAWPSCOPED\iawp_blade()->run('settings.disable-views-column', ['value' => \IAWPSCOPED\iawp()->get_option('iawp_disable_views_column', \false)]);
     }
     public function starting_dow_callback()
     {
@@ -180,12 +186,10 @@ class Settings
     {
         \add_settings_section('iawp-email-report-settings-section', \esc_html__('Scheduled Email Reports', 'independent-analytics'), function () {
         }, 'iawp-email-report-settings');
-        $args = ['type' => 'number', 'default' => 9, 'sanitize_callback' => [$this, 'sanitize_email_report_time']];
-        \register_setting('iawp_email_report_settings', 'iawp_email_report_time', $args);
-        $args = ['type' => 'array', 'default' => [], 'sanitize_callback' => [$this, 'sanitize_email_addresses']];
-        \register_setting('iawp_email_report_settings', 'iawp_email_report_email_addresses', $args);
-        $args = ['type' => 'array', 'default' => $this->email_report_colors(), 'sanitize_callback' => [$this, 'sanitize_email_report_colors']];
-        \register_setting('iawp_email_report_settings', 'iawp_email_report_colors', $args);
+        \register_setting('iawp_email_report_settings', 'iawp_email_report_interval', ['type' => 'string', 'default' => 'monthly', 'sanitize_callback' => [$this, 'sanitize_email_report_interval']]);
+        \register_setting('iawp_email_report_settings', 'iawp_email_report_time', ['type' => 'number', 'default' => 9, 'sanitize_callback' => [$this, 'sanitize_email_report_time']]);
+        \register_setting('iawp_email_report_settings', 'iawp_email_report_email_addresses', ['type' => 'array', 'default' => [], 'sanitize_callback' => [$this, 'sanitize_email_addresses']]);
+        \register_setting('iawp_email_report_settings', 'iawp_email_report_colors', ['type' => 'array', 'default' => $this->email_report_colors(), 'sanitize_callback' => [$this, 'sanitize_email_report_colors']]);
     }
     public function register_block_by_role_settings()
     {
@@ -261,6 +265,14 @@ class Settings
             }
         }
         return $to_save;
+    }
+    public function sanitize_email_report_interval($input)
+    {
+        if (\in_array($input, ['monthly', 'weekly', 'daily'])) {
+            return $input;
+        } else {
+            return 'monthly';
+        }
     }
     public function sanitize_email_report_time($user_time)
     {

@@ -46,21 +46,13 @@ class WooCommerce_Order
             $wpdb->update($wc_orders_table, ['total' => $this->total, 'total_refunded' => $this->total_refunded, 'total_refunds' => $this->total_refunds, 'status' => $this->status], ['order_id' => $this->order_id]);
             return;
         }
-        $most_recent_view_id = $this->most_recent_view_id();
-        if (\is_null($most_recent_view_id)) {
+        $visitor = new Visitor(Request::ip(), Request::user_agent());
+        $most_recent_view_id = $visitor->current_view_id();
+        $initial_view_id = $visitor->current_session_initial_view_id();
+        if (\is_null($most_recent_view_id) || \is_null($initial_view_id)) {
             return;
         }
-        $wpdb->insert($wc_orders_table, ['order_id' => $this->order_id, 'view_id' => $most_recent_view_id, 'total' => $this->total, 'total_refunded' => $this->total_refunded, 'total_refunds' => $this->total_refunds, 'status' => $this->status, 'created_at' => (new \DateTime())->format('Y-m-d H:i:s')]);
-    }
-    /**
-     * Get the ID of the most recent view so the order can be associated with that view
-     *
-     * @return int|null ID of the most recent view
-     */
-    private function most_recent_view_id() : ?int
-    {
-        $visitor = new Visitor(Request::ip(), Request::user_agent());
-        return $visitor->most_recent_view_id();
+        $wpdb->insert($wc_orders_table, ['order_id' => $this->order_id, 'view_id' => $most_recent_view_id, 'initial_view_id' => $initial_view_id, 'total' => $this->total, 'total_refunded' => $this->total_refunded, 'total_refunds' => $this->total_refunds, 'status' => $this->status, 'created_at' => (new \DateTime())->format('Y-m-d H:i:s')]);
     }
     public static function initialize_order_tracker()
     {

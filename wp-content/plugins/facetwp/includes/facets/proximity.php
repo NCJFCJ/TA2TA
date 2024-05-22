@@ -29,6 +29,7 @@ class FacetWP_Facet_Proximity_Core extends FacetWP_Facet
         $facet = $params['facet'];
         $value = $params['selected_values'];
         $unit = empty( $facet['unit'] ) ? 'mi' : $facet['unit'];
+        $unit_display = 'km' == $facet['unit'] ? __( 'km', 'fwp-front' ) : ( 'mi' == $facet['unit'] ? __( 'mi', 'fwp-front' ) : $facet['unit'] );
         $placeholder = empty( $facet['placeholder'] ) ? __( 'Enter location', 'fwp-front' ) : $facet['placeholder'];
         $placeholder = facetwp_i18n( $placeholder );
 
@@ -75,7 +76,7 @@ class FacetWP_Facet_Proximity_Core extends FacetWP_Facet
         <select class="facetwp-radius facetwp-radius-dropdown">
             <?php foreach ( $radius_options as $radius ) : ?>
             <?php $selected = ( $chosen_radius == $radius ) ? ' selected' : ''; ?>
-            <option value="<?php echo $radius; ?>"<?php echo $selected; ?>><?php echo "$radius $unit"; ?></option>
+            <option value="<?php echo $radius; ?>"<?php echo $selected; ?>><?php echo $radius . ' ' . facetwp_i18n( $unit_display ); ?></option>
             <?php endforeach; ?>
         </select>
 
@@ -89,7 +90,7 @@ class FacetWP_Facet_Proximity_Core extends FacetWP_Facet
             />
             <div class="facetwp-radius-label">
                 <span class="facetwp-radius-dist"><?php echo $chosen_radius; ?></span>
-                <span class="facetwp-radius-unit"><?php echo $facet['unit']; ?></span>
+                <span class="facetwp-radius-unit"><?php echo facetwp_i18n( $unit_display ); ?></span>
             </div>
         </div>
 

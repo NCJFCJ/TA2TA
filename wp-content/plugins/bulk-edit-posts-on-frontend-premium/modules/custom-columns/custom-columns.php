@@ -14,6 +14,7 @@ if ( ! class_exists( 'WP_Sheet_Editor_Custom_Columns' ) ) {
 		public $required_column_settings                = null;
 		public $found_columns                           = array();
 		public $bool_column_settings                    = null;
+		public $true_default_column_settings            = null;
 		public $automatic_column_post_types_initialized = array();
 		public $serialized_field_templates              = array();
 

@@ -4,7 +4,7 @@
 
 namespace Composer\Autoload;
 
-class ComposerStaticInitbc9c690d911c37a140f4139d4472cff0
+class ComposerStaticInit8316016c0738a6a73925986e2c813912
 {
     public static $files = array (
         '0e6d7bf4a5811bfa5cf40c5ccd6fae6a' => __DIR__ . '/..' . '/symfony/polyfill-mbstring/bootstrap.php',
@@ -53,7 +53,6 @@ class ComposerStaticInitbc9c690d911c37a140f4139d4472cff0
             'IAWPSCOPED\\Illuminate\\Contracts\\' => 32,
             'IAWPSCOPED\\Illuminate\\Container\\' => 32,
             'IAWPSCOPED\\Doctrine\\Inflector\\' => 30,
-            'IAWPSCOPED\\Doctrine\\Common\\Cache\\' => 33,
             'IAWPSCOPED\\DeviceDetector\\' => 26,
             'IAWPSCOPED\\Carbon\\Doctrine\\' => 27,
             'IAWPSCOPED\\Carbon\\' => 18,
@@ -169,10 +168,6 @@ class ComposerStaticInitbc9c690d911c37a140f4139d4472cff0
         array (
             0 => __DIR__ . '/..' . '/doctrine/inflector/lib/Doctrine/Inflector',
         ),
-        'IAWPSCOPED\\Doctrine\\Common\\Cache\\' => 
-        array (
-            0 => __DIR__ . '/..' . '/doctrine/cache/lib/Doctrine/Common/Cache',
-        ),
         'IAWPSCOPED\\DeviceDetector\\' => 
         array (
             0 => __DIR__ . '/..' . '/matomo/device-detector',
@@ -201,9 +196,9 @@ class ComposerStaticInitbc9c690d911c37a140f4139d4472cff0
     public static function getInitializer(ClassLoader $loader)
     {
         return \Closure::bind(function () use ($loader) {
-            $loader->prefixLengthsPsr4 = ComposerStaticInitbc9c690d911c37a140f4139d4472cff0::$prefixLengthsPsr4;
-            $loader->prefixDirsPsr4 = ComposerStaticInitbc9c690d911c37a140f4139d4472cff0::$prefixDirsPsr4;
-            $loader->classMap = ComposerStaticInitbc9c690d911c37a140f4139d4472cff0::$classMap;
+            $loader->prefixLengthsPsr4 = ComposerStaticInit8316016c0738a6a73925986e2c813912::$prefixLengthsPsr4;
+            $loader->prefixDirsPsr4 = ComposerStaticInit8316016c0738a6a73925986e2c813912::$prefixDirsPsr4;
+            $loader->classMap = ComposerStaticInit8316016c0738a6a73925986e2c813912::$classMap;
 
         }, null, ClassLoader::class);
     }

@@ -70,7 +70,7 @@ abstract class Abstract_Table_Data implements Table_Data_Interface {
 			foreach ( $terms as $term ) {
 				$term_html = sprintf( '<span data-slug="%s">%s</span>', esc_attr( $term->slug ), esc_html( $term->name ) );
 
-				if ( $show_links ) {
+				if ( in_array( 'all', $show_links, true ) || in_array( 'terms', $show_links, true ) || in_array( $column, $show_links, true ) ) {
 					$term_url = get_term_link( $term, $term->taxonomy );
 
 					if ( ! is_wp_error( $term_url ) ) {

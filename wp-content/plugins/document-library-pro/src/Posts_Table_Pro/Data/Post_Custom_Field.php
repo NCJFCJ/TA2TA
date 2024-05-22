@@ -28,7 +28,7 @@ class Post_Custom_Field extends Abstract_Table_Data {
 		$this->image_size       = $image_size ?: 'thumbnail';
 		$this->date_format      = $date_format;
 		$this->date_columns     = (array) $date_columns;
-		$this->acf_field_object = Util::get_acf_field_object( $this->field, $this->post->ID ) ?: Util::get_acf_field_object( $this->field );
+		$this->acf_field_object = Util::get_acf_field_object( $this->field, $this->post->ID );
 		$this->is_acf_field     = (bool) $this->acf_field_object;
 	}
 

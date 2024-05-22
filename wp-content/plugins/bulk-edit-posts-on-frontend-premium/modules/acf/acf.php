@@ -4,15 +4,16 @@ if ( ! class_exists( 'WP_Sheet_Editor_ACF' ) ) {
 
 	class WP_Sheet_Editor_ACF {
 
-		private static $instance              = false;
-		static $checkbox_keys                 = array();
-		static $map_keys                      = array();
-		public $gallery_field_keys            = array();
-		public $repeater_keys                 = array();
-		public $flexible_content_keys         = array();
-		public $flexible_content_columns_keys = array();
-		public $group_keys                    = array();
-		public $excluded_serialized_keys      = array();
+		private static $instance                     = false;
+		static $checkbox_keys                        = array();
+		static $map_keys                             = array();
+		public $gallery_field_keys                   = array();
+		public $repeater_keys                        = array();
+		public $flexible_content_keys                = array();
+		public $flexible_content_columns_keys        = array();
+		public $flexible_content_columns_keys_parsed = array();
+		public $group_keys                           = array();
+		public $excluded_serialized_keys             = array();
 
 		private function __construct() {
 
@@ -57,6 +58,7 @@ if ( ! class_exists( 'WP_Sheet_Editor_ACF' ) ) {
 					}
 					add_filter( 'get_post_metadata', array( $this, 'get_flexible_content_field_value' ), 10, 4 );
 					add_filter( 'get_user_metadata', array( $this, 'get_flexible_content_field_value' ), 10, 4 );
+					add_filter( 'vgse_sheet_editor/provider/post/prefetch/meta_keys', array( $this, 'remove_flexible_content_columns_from_prefetch' ), 10, 2 );
 				}
 			);
 
@@ -171,28 +173,18 @@ if ( ! class_exists( 'WP_Sheet_Editor_ACF' ) ) {
 		}
 
 		public function get_flexible_content_field_data_from_wpse_key( $key ) {
-			$out = array(
-				'main_key'    => null,
-				'field_regex' => null,
-				'layout_key'  => null,
-				'row_index'   => null,
-			);
-			foreach ( $this->flexible_content_keys as $main_key => $layouts ) {
-				foreach ( $layouts as $layout_key => $fields ) {
-					foreach ( $fields as $flexible_content_key_regex ) {
-						if ( preg_match( $flexible_content_key_regex, $key ) ) {
-							$out['layout_key']  = $layout_key;
-							$out['field_regex'] = $flexible_content_key_regex;
-							$out['main_key']    = $main_key;
-							$out['row_index']   = (int) preg_replace( '/^.+=(\d+)=.+$/', '$1', $key );
-							return $out;
-						}
-					}
-				}
-			}
-			return false;
+			return isset( $this->flexible_content_columns_keys_parsed[ $key ] ) ? $this->flexible_content_columns_keys_parsed[ $key ] : false;
 		}
 
+		public function remove_flexible_content_columns_from_prefetch( $column_keys, $post_type ) {
+			$regex = '/^(' . implode( '|', array_keys( $this->flexible_content_keys ) ) . ')=\d/';
+			foreach ( $column_keys as $index => $column_key ) {
+				if ( preg_match( $regex, $column_key ) ) {
+					unset( $column_keys[ $index ] );
+				}
+			}
+			return $column_keys;
+		}
 		public function get_flexible_content_field_value( $value, $object_id, $key, $single ) {
 			if ( empty( $this->flexible_content_keys ) || strpos( $key, '_' ) === 0 || ! preg_match( '/=\d+=/', $key ) ) {
 				return $value;
@@ -475,7 +467,7 @@ if ( ! class_exists( 'WP_Sheet_Editor_ACF' ) ) {
 					$post_type_fields = false;
 					$location         = serialize( $acf['location'] );
 					if ( $editor->provider->is_post_type ) {
-						if( $post_type === 'attachment' && strpos( $location, '"attachment"' ) ){
+						if ( $post_type === 'attachment' && strpos( $location, '"attachment"' ) ) {
 							$post_type_fields = true;
 						} elseif ( strpos( $location, '"post_type"' ) !== false && strpos( $location, '"' . $post_type . '"' ) !== false ) {
 							$post_type_fields = true;
@@ -492,7 +484,7 @@ if ( ! class_exists( 'WP_Sheet_Editor_ACF' ) ) {
 								$location_value = explode( ':', $post_taxonomy_location['value'] );
 								$taxonomy_key   = current( $location_value );
 
-								if ( in_array( $post_type, get_taxonomy( $taxonomy_key )->object_type, true ) ) {
+								if ( taxonomy_exists( $taxonomy_key ) && in_array( $post_type, get_taxonomy( $taxonomy_key )->object_type, true ) ) {
 									$post_type_fields = true;
 									break;
 								}
@@ -538,7 +530,7 @@ if ( ! class_exists( 'WP_Sheet_Editor_ACF' ) ) {
 						);
 
 					} elseif ( $editor->provider->key === 'user' ) {
-						$post_type_fields = preg_match('/(user_role|user_form)/', $location) > 0;
+						$post_type_fields = preg_match( '/(user_role|user_form)/', $location ) > 0;
 					} else {
 						$post_type_fields = true;
 					}
@@ -684,7 +676,15 @@ if ( ! class_exists( 'WP_Sheet_Editor_ACF' ) ) {
 		}
 
 		public function _register_columns_for_acf_fields( $acf_group, $post_type, $editor, $default_args = array() ) {
+			$unnecessary_acf_field_keys = array_flip( array( 'wrapper', 'conditional_logic', 'class', 'instructions', 'aria-label', 'menu_order', 'maxlength', 'prepend', 'append', '_valid' ) );
+			if ( empty( $default_args ) ) {
+				$default_args = array(
+					'allow_custom_format' => true,
+				);
+			}
 			foreach ( $acf_group as $acf_field_index => $acf_field ) {
+				$acf_field = array_diff_key( $acf_field, $unnecessary_acf_field_keys );
+
 				// We don't register the text fields and unsupported fields because
 				// they will appear automatically. The custom columns module registers
 				// all custom fields as plain text. We only register fields with special format here.
@@ -704,7 +704,6 @@ if ( ! class_exists( 'WP_Sheet_Editor_ACF' ) ) {
 								'supports_sql_formulas' => false,
 								'allow_plain_text'      => true,
 								'acf_field'             => $acf_field,
-								'allow_custom_format'   => true,
 							)
 						)
 					);
@@ -760,7 +759,6 @@ if ( ! class_exists( 'WP_Sheet_Editor_ACF' ) ) {
 								'supports_sql_formulas' => false,
 								'allow_plain_text'      => true,
 								'acf_field'             => $acf_field,
-								'allow_custom_format'   => true,
 								'value_type'            => $value_type,
 							)
 						)
@@ -802,7 +800,6 @@ if ( ! class_exists( 'WP_Sheet_Editor_ACF' ) ) {
 								'supports_sql_formulas' => false,
 								'allow_plain_text'      => true,
 								'acf_field'             => $acf_field,
-								'allow_custom_format'   => true,
 								'formatted'             => array(
 									'renderer'          => 'wp_tinymce',
 									'wpse_template_key' => 'tinymce_cell_template',
@@ -825,7 +822,6 @@ if ( ! class_exists( 'WP_Sheet_Editor_ACF' ) ) {
 								'supports_sql_formulas' => false,
 								'allow_plain_text'      => true,
 								'acf_field'             => $acf_field,
-								'allow_custom_format'   => true,
 								'default_value'         => $acf_field['default_value'],
 								'formatted'             => array(
 									'editor'        => 'select',
@@ -854,7 +850,7 @@ if ( ! class_exists( 'WP_Sheet_Editor_ACF' ) ) {
 								'save_value_callback'   => array( $this, 'update_taxonomy_cell' ),
 								'acf_field'             => $acf_field,
 								'list_separation_character' => ',',
-								'formatted' => array(
+								'formatted'             => array(
 									'editor'        => 'wp_chosen',
 									'selectOptions' => array(),
 									'chosenOptions' => array(
@@ -993,7 +989,6 @@ if ( ! class_exists( 'WP_Sheet_Editor_ACF' ) ) {
 								'supports_sql_formulas' => false,
 								'allow_plain_text'      => true,
 								'acf_field'             => $acf_field,
-								'allow_custom_format'   => true,
 								'default_value'         => $acf_field['default_value'],
 								'formatted'             => array(
 									'type'              => 'checkbox',
@@ -1022,7 +1017,6 @@ if ( ! class_exists( 'WP_Sheet_Editor_ACF' ) ) {
 								'supports_sql_formulas' => false,
 								'allow_plain_text'      => true,
 								'acf_field'             => $acf_field,
-								'allow_custom_format'   => true,
 								'prepare_value_for_database' => array( $this, '_prepare_gallery_for_database' ),
 								'prepare_value_for_display' => array( $this, 'prepare_gallery_value_for_display' ),
 							)
@@ -1179,7 +1173,17 @@ if ( ! class_exists( 'WP_Sheet_Editor_ACF' ) ) {
 							$subfield['label']      = implode( ' : ', array( $acf_field['label'], $i + 1, $subfield['label'] ) );
 							$repeater_field_group[] = $subfield;
 						}
-						$this->_register_columns_for_acf_fields( $repeater_field_group, $post_type, $editor );
+						$this->_register_columns_for_acf_fields(
+							$repeater_field_group,
+							$post_type,
+							$editor,
+							array(
+								'allow_for_global_sort' => false,
+								'allow_role_restrictions_in_columns_manager' => false,
+								'allow_readonly_option_in_columns_manager' => false,
+								'allow_custom_format'   => false,
+							)
+						);
 					}
 				} elseif ( in_array( $acf_field['type'], array( 'flexible_content' ) ) && class_exists( 'acf_pro' ) ) {
 					$this->flexible_content_keys[ $acf_field['name'] ] = array();
@@ -1216,7 +1220,8 @@ if ( ! class_exists( 'WP_Sheet_Editor_ACF' ) ) {
 							foreach ( $layout['sub_fields'] as $subfield ) {
 
 								// Save the subfield keys for processing the values during saving/reading
-								$this->flexible_content_keys[ $acf_field['name'] ][ $layout['name'] ][] = '/^' . preg_quote( $acf_field['name'], '/' ) . '=\d+=' . preg_quote( $layout['name'] . '=' . $subfield['name'], '/' ) . '$/';
+								$field_regex = '/^' . preg_quote( $acf_field['name'], '/' ) . '=\d+=' . preg_quote( $layout['name'] . '=' . $subfield['name'], '/' ) . '$/';
+								$this->flexible_content_keys[ $acf_field['name'] ][ $layout['name'] ][] = $field_regex;
 
 								$subfield['parent']                    = array(
 									'name'  => $acf_field['name'],
@@ -1225,12 +1230,22 @@ if ( ! class_exists( 'WP_Sheet_Editor_ACF' ) ) {
 								);
 								$subfield['name']                      = $acf_field['name'] . '=' . $i . '=' . $layout['name'] . '=' . $subfield['name'];
 								$this->flexible_content_columns_keys[] = $subfield['name'];
-								$subfield['label']                     = implode( ' : ', array( $acf_field['label'], __( 'Row', 'acf' ) . ' ' . ( $i + 1 ), $layout['label'], $subfield['label'] ) );
-								$repeater_field_group[]                = $subfield;
+								$this->flexible_content_columns_keys_parsed[ $subfield['name'] ] = array(
+									'main_key'    => $acf_field['name'],
+									'field_regex' => $field_regex,
+									'layout_key'  => $layout['name'],
+									'row_index'   => $i,
+								);
+								$subfield['label']      = implode( ' : ', array( $acf_field['label'], __( 'Row', 'acf' ) . ' ' . ( $i + 1 ), $layout['label'], $subfield['label'] ) );
+								$repeater_field_group[] = $subfield;
 							}
 							$extra_args = array(
 								'supports_sql_formulas'   => false,
 								'allow_to_prefetch_value' => false,
+								'allow_for_global_sort'   => false,
+								'allow_role_restrictions_in_columns_manager' => false,
+								'allow_readonly_option_in_columns_manager' => false,
+								'allow_custom_format'     => false,
 							);
 
 							if ( ! empty( $acf_field['_clone'] ) ) {
@@ -1428,6 +1443,11 @@ if ( ! class_exists( 'WP_Sheet_Editor_ACF' ) ) {
 		}
 
 		public function _get_repeater_count_values( $key, $post_type, $editor ) {
+			$is_flexible_child_field = empty( $this->remove_flexible_content_columns_from_prefetch( array( $key ), $post_type ) );
+			if ( $is_flexible_child_field ) {
+				return false;
+			}
+
 			$cache_key             = 'vgse_acf_repeater_values' . $key . $post_type;
 			$repeater_count_values = get_transient( $cache_key );
 			if ( method_exists( VGSE()->helpers, 'can_rescan_db_fields' ) && VGSE()->helpers->can_rescan_db_fields( $post_type ) ) {

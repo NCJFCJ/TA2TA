@@ -3,7 +3,7 @@
 Plugin Name: The Events Calendar: Community Events
 Plugin URI:  https://evnt.is/1acd
 Description: Community Events is an add-on providing additional functionality to the open source plugin The Events Calendar. Empower users to submit and manage their events on your website. <a href="https://theeventscalendar.com/products/community-events/?utm_campaign=in-app&utm_source=docblock&utm_medium=plugin-community">Check out the full feature list</a>. Need more features? Peruse our selection of <a href="https://theeventscalendar.com/products/?utm_campaign=in-app&utm_source=docblock&utm_medium=plugin-community" target="_blank">plugins</a>.
-Version:     4.10.15
+Version:     4.10.17
 Author:      The Events Calendar
 Author URI:  https://evnt.is/1aor
 Text Domain: tribe-events-community

@@ -3,7 +3,7 @@
         'name' => 'the-events-calendar/events-filterbar',
         'pretty_version' => 'dev-master',
         'version' => 'dev-master',
-        'reference' => '009317aef8ab141880e28e045ab7c243d1f9fa06',
+        'reference' => '5ef0f9eaf1a5e0a1477a5bc6e7375726b79d0d00',
         'type' => 'wordpress-plugin',
         'install_path' => __DIR__ . '/../../',
         'aliases' => array(),
@@ -13,7 +13,7 @@
         'the-events-calendar/events-filterbar' => array(
             'pretty_version' => 'dev-master',
             'version' => 'dev-master',
-            'reference' => '009317aef8ab141880e28e045ab7c243d1f9fa06',
+            'reference' => '5ef0f9eaf1a5e0a1477a5bc6e7375726b79d0d00',
             'type' => 'wordpress-plugin',
             'install_path' => __DIR__ . '/../../',
             'aliases' => array(),

@@ -1,0 +1,152 @@
+<!-- wp:template-part {"slug":"header-small","area":"header","tagName":"header"} /-->
+
+<!-- wp:group {"tagName":"main","align":"full"} -->
+<main class="wp-block-group alignfull">
+    <!-- wp:group {"backgroundType":"gradient","gradientValue":"linear-gradient(90deg,rgba(7,92,227,0.5) 0%,rgba(155,81,224,0.5) 100%)","topPaddingDesktop":11,"bottomPaddingDesktop":11,"leftPaddingDesktop":11,"rightPaddingDesktop":11,"topPaddingTablet":7,"bottomPaddingTablet":7,"leftPaddingTablet":7,"rightPaddingTablet":7,"topPaddingMobile":7,"bottomPaddingMobile":7,"leftPaddingMobile":7,"rightPaddingMobile":7,"topMarginDesktop":171,"bottomMarginDesktop":0,"leftMarginDesktop":0,"rightMarginDesktop":0,"marginLink":false,"variationSelected":true,"widthSetByUser":true,"containerBorderTopLeftRadius":7,"containerBorderTopRightRadius":7,"containerBorderBottomLeftRadius":7,"containerBorderBottomRightRadius":7,"className":"event-content"} -->
+    <div class="wp-block-group event-content">
+        <!-- wp:group {"widthDesktop":1280,"widthType":"px","backgroundType":"color","backgroundSizeTablet":"cover","backgroundSizeMobile":"cover","backgroundColor":"","topPaddingDesktop":13,"bottomPaddingDesktop":13,"leftPaddingDesktop":13,"rightPaddingDesktop":13,"variationSelected":true,"widthSetByUser":true} -->
+        <div class="wp-block-group">
+
+            <!-- wp:columns {"style":{"spacing":{"blockGap":{"top":"var:preset|spacing|40","left":"var:preset|spacing|40"}}}} -->
+            <div class="wp-block-columns single-event-columns">
+                <!-- wp:column {"verticalAlignment":"center","width":"66.66%","style":{"spacing":{"blockGap":"var:preset|spacing|30"},"typography":{"fontStyle":"normal","fontWeight":"600"}},"UAGDay":[]} -->
+                <div class="wp-block-column is-vertically-aligned-center" style="font-style:normal;font-weight:600;flex-basis:66.66%">
+                    <!-- wp:shortcode -->
+                        [event_type]
+                    <!-- /wp:shortcode -->
+
+                    <!-- wp:shortcode -->
+                        [event_id]
+                    <!-- /wp:shortcode -->
+
+                    <!-- wp:post-title {"textAlign":"left","className":"single-event-post-header","UAGDay":[]} /-->
+
+                    <!-- wp:shortcode {"UAGDay":[]} -->
+                        [event_time]
+                    <!-- /wp:shortcode -->
+
+                    <!-- wp:group {"style":{"typography":{"fontStyle":"italic","fontWeight":"700"},"spacing":{"padding":{"top":"0","right":"0","bottom":"0","left":"0"},"blockGap":"0"},"elements":{"link":{"color":{"text":"var:preset|color|primary"}}}},"layout":{"type":"default"},"fontSize":"normal"} -->
+                    <div class="wp-block-group has-link-color has-normal-font-size" style="padding-top:0;padding-right:0;padding-bottom:0;padding-left:0;font-style:italic;font-weight:700">
+                        <!-- wp:shortcode {"UAGDay":[]} -->
+                            [event_org]
+                        <!-- /wp:shortcode -->
+
+                        <!-- wp:shortcode -->
+                            [event_ta_project]
+                        <!-- /wp:shortcode -->
+                    </div>
+                    <!-- /wp:group -->
+                </div>
+                <!-- /wp:column -->
+                <!-- wp:column {"width":"33.33%","style":{"spacing":{"padding":{"top":"var:preset|spacing|30","right":"var:preset|spacing|30","bottom":"var:preset|spacing|30","left":"var:preset|spacing|30"}}},"layout":{"type":"default"}} -->
+                <div class="wp-block-column" style="padding-top:var(--wp--preset--spacing--30);padding-right:var(--wp--preset--spacing--30);padding-bottom:var(--wp--preset--spacing--30);padding-left:var(--wp--preset--spacing--30);flex-basis:33.33%">
+                    <!-- wp:shortcode -->
+                        [event_contact_name]
+                    <!-- /wp:shortcode -->
+                </div>
+                <!-- /wp:column -->
+            </div>
+            <!-- /wp:columns -->
+        </div>
+        <!-- /wp:group -->
+    </div>
+    <!-- /wp:group -->
+
+    <!-- wp:group {"className":"event-content-status"} -->
+    <div class="wp-block-group event-content-status">
+        <!-- wp:shortcode -->
+            [event_pending]
+        <!-- /wp:shortcode -->
+    </div>
+    <!-- /wp:group -->
+
+
+    <!-- wp:group {"widthDesktop":1200,"widthType":"px","variationSelected":true,"widthSetByUser":true} -->
+    <div class="wp-block-group">
+        <!-- wp:columns {"style":{"spacing":{"blockGap":{"top":"0","left":"0"}}}} -->
+        <div class="wp-block-columns">
+            <!-- wp:column {"width":"66.66%","style":{"spacing":{"padding":{"top":"var:preset|spacing|30","right":"0","bottom":"var:preset|spacing|30","left":"0"}}},"backgroundColor":"white"} -->
+            <div class="wp-block-column has-white-background-color has-background" style="padding-top:var(--wp--preset--spacing--30);padding-right:0;padding-bottom:var(--wp--preset--spacing--30);padding-left:0;flex-basis:66.66%"><!-- wp:group {"style":{"spacing":{"blockGap":"var:preset|spacing|30"}},"layout":{"type":"constrained"}} -->
+            <div class="wp-block-group">
+                <!-- wp:shortcode -->
+            [event_description]
+            <!-- /wp:shortcode -->
+            </div>
+            <!-- /wp:group -->
+            </div>
+            <!-- /wp:column -->
+
+            <!-- wp:column {"width":"33.33%"} -->
+            <div class="wp-block-column" style="flex-basis:33.33%">
+                <!-- wp:group {"style":{"spacing":{"blockGap":"var:preset|spacing|30"}},"layout":{"type":"default"}} -->
+                <div class="wp-block-group">
+                    <!-- wp:shortcode -->
+                        [event_webpage]
+                    <!-- /wp:shortcode -->
+                </div>
+                <!-- /wp:group -->
+
+                <!-- wp:group {"style":{"spacing":{"blockGap":"var:preset|spacing|30","padding":{"top":"var:preset|spacing|30","right":"var:preset|spacing|30","bottom":"var:preset|spacing|30","left":"var:preset|spacing|30"}}},"layout":{"type":"default"},"fontSize":"normal"} -->
+                <div class="wp-block-group has-normal-font-size" style="padding-top:var(--wp--preset--spacing--30);padding-right:var(--wp--preset--spacing--30);padding-bottom:var(--wp--preset--spacing--30);padding-left:var(--wp--preset--spacing--30)">
+                    <!-- wp:shortcode -->
+                        [event_virtual]
+                    <!-- /wp:shortcode -->
+
+                    <!-- wp:shortcode -->
+                        [event_registration]
+                    <!-- /wp:shortcode -->
+                </div>
+                <!-- /wp:group -->
+            </div>
+            <!-- /wp:column -->
+        </div>
+        <!-- /wp:columns -->
+
+        <!-- wp:separator {"backgroundColor":"luminous-vivid-orange","className":"is-style-dots"} -->
+        <hr class="wp-block-separator has-text-color has-luminous-vivid-orange-color has-alpha-channel-opacity has-luminous-vivid-orange-background-color has-background is-style-dots"/>
+        <!-- /wp:separator -->
+
+        <!-- wp:columns -->
+        <div class="wp-block-columns">
+            <!-- wp:column {"width":"33.34%","style":{"spacing":{"blockGap":"var:preset|spacing|30"}},"layout":{"type":"constrained","justifyContent":"center"},"UAGDay":[]} -->
+            <div class="wp-block-column" style="flex-basis:33.34%">
+                <!-- wp:heading {"level":5,"UAGDay":[]} -->
+                    <h5 class="wp-block-heading">Topic Area(s)</h5>
+                <!-- /wp:heading -->
+
+                <!-- wp:shortcode {"UAGDay":[]} -->
+                [event_topic_areas]
+                <!-- /wp:shortcode -->
+            </div>
+            <!-- /wp:column -->
+
+            <!-- wp:column {"width":"33.33%","style":{"spacing":{"blockGap":"var:preset|spacing|30"}},"layout":{"type":"constrained"},"UAGDay":[]} -->
+            <div class="wp-block-column" style="flex-basis:33.33%">
+                <!-- wp:heading {"level":5,"UAGDay":[]} -->
+                <h5 class="wp-block-heading">Grant Program(s)</h5>
+                <!-- /wp:heading -->
+
+                <!-- wp:shortcode {"UAGDay":[]} -->
+                [event_grant_programs]
+                <!-- /wp:shortcode -->
+            </div>
+            <!-- /wp:column -->
+            <!-- wp:column {"width":"33.34%","style":{"spacing":{"blockGap":"var:preset|spacing|30"}},"layout":{"type":"constrained","justifyContent":"center"}} -->
+            <div class="wp-block-column" style="flex-basis:33.34%">
+                <!-- wp:heading {"level":5,"UAGDay":[]} -->
+                <h5 class="wp-block-heading">Target Audience(s)</h5>
+                <!-- /wp:heading -->
+
+                <!-- wp:shortcode {"UAGDay":[]} -->
+                [event_target_audiences]
+                <!-- /wp:shortcode -->
+            </div>
+            <!-- /wp:column -->
+        </div>
+        <!-- /wp:columns -->
+    </div>
+    <!-- /wp:group -->
+</main>
+<!-- /wp:group -->
+
+<!-- wp:template-part {"slug":"footer","area":"footer","tagName":"footer"} /-->

@@ -51,7 +51,9 @@ Thumbs.db
 wp-config.php
 
 # Example themes
-/wp-content/themes/twenty*/
+#/wp-content/themes/twenty*/
+/wp-content/themes/astra/
+/wp-content/themes/ta2ta*/
 
 # Example plugin
 /wp-content/plugins/hello.php
